@@ -1,0 +1,10 @@
+{
+  "attachmentFolderPath": "99-assets",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "00-inbox",
+  "alwaysUpdateLinks": true,
+  "useMarkdownLinks": false,
+  "newLinkFormat": "shortest",
+  "showLineNumber": true,
+  "strictLineBreaks": false
+}

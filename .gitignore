@@ -1,0 +1,19 @@
+# Node
+node_modules/
+.svelte-kit/
+build/
+.vercel/
+.env
+.env.*
+!.env.example
+
+# Obsidian — se versiona la config compartida, no el estado local
+docs/.obsidian/workspace.json
+docs/.obsidian/workspace-mobile.json
+docs/.obsidian/cache
+docs/.obsidian/plugins/*/data.json
+
+# SO
+Thumbs.db
+desktop.ini
+.DS_Store
