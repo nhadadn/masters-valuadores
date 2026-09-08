@@ -9,7 +9,7 @@ una decisión mala documentada vale más que una buena olvidada.
 
 | # | Decisión | Estado | Fecha |
 |---|---|---|---|
-| — | Ninguna todavía | — | — |
+| 0001 | [[ADR-0001-lockup-web-y-paleta\|Lockup web derivado del logo, y de dónde sale la paleta]] | PROPUESTA | 2026-09-08 |
 
-No hay ADR porque no hay arquitectura decidida. Las decisiones abiertas están en
+Las decisiones abiertas están en
 [[decisiones-pendientes]]; cada una que se cierre nace aquí como ADR.

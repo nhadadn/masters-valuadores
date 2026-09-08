@@ -56,9 +56,16 @@ Definido fuera de Etapa 1, no bloqueado:
 |---|---|
 | LCP (4G simulada) | < 2.0 s |
 | CLS | < 0.1 |
+| INP | < 200 ms |
 | JS inicial | < 40 KB gzip |
 | Accesibilidad | WCAG 2.1 AA |
 | Objetivo táctil mínimo | 44 × 44 px |
+
+> [!note] INP añadido el 2026-09-08
+> El prompt original de la Fase 0 pedía LCP y CLS, no INP. INP reemplazó a FID
+> como Core Web Vital en 2024 y su umbral "bueno" es 200 ms al percentil 75.
+> Un sitio que cumple LCP y CLS pero no INP no cumple Core Web Vitals.
+> Fuente: web.dev/articles/vitals.
 
 Justificación del piso de accesibilidad: la audiencia llega en urgencia
 financiera, muchas veces con teléfono de gama baja y a plena luz del día.
