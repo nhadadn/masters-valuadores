@@ -1,0 +1,45 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Propuesta" },
+    { "id": "page-2", "name": "Maquetas" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html",        "x": 0,    "y": 0,    "w": 1280, "h": 1120, "page": "page-1", "title": "Portada" },
+    { "file": "Diagnostico.dc.html", "x": 1400, "y": 0,    "w": 1280, "h": 1120, "page": "page-1", "title": "1 · Dónde está Masters hoy" },
+    { "file": "DondeSeGana.dc.html", "x": 2800, "y": 0,    "w": 1280, "h": 1120, "page": "page-1", "title": "2 · Dónde se gana el mapa" },
+    { "file": "RutaA.dc.html",       "x": 0,    "y": 1260, "w": 1280, "h": 1120, "page": "page-1", "title": "Ruta A · Empeño" },
+    { "file": "RutaB.dc.html",       "x": 1400, "y": 1260, "w": 1280, "h": 1120, "page": "page-1", "title": "Ruta B · Multigiro MÁSTER" },
+    { "file": "Comparativa.dc.html", "x": 2800, "y": 1260, "w": 1280, "h": 1120, "page": "page-1", "title": "3 · Lado a lado" },
+    { "file": "Decisiones.dc.html",  "x": 0,    "y": 2520, "w": 1280, "h": 1120, "page": "page-1", "title": "4 · Decisiones de la junta" },
+    { "file": "Insumos.dc.html",     "x": 1400, "y": 2520, "w": 1280, "h": 1120, "page": "page-1", "title": "5 · Lo que necesitamos" },
+    { "file": "MaquetaA.dc.html",    "x": 0,    "y": 0,    "w": 390,  "h": 3080, "page": "page-2", "title": "Maqueta · Ruta A (móvil)" },
+    { "file": "MaquetaB.dc.html",    "x": 600,  "y": 0,    "w": 390,  "h": 2700, "page": "page-2", "title": "Maqueta · Ruta B (móvil)" }
+  ],
+  "annotations": [
+    {
+      "id": "orden-junta",
+      "page": "page-1",
+      "x": 0,
+      "y": -220,
+      "w": 900,
+      "text": "Orden para la junta:\n1 · dónde está hoy → 2 · dónde se gana → Ruta A → Ruta B → lado a lado → decisiones → lo que necesitamos.\n\nLas maquetas de celular están en la página «Maquetas» (menú de páginas, arriba)."
+    },
+    {
+      "id": "nota-recomendacion",
+      "page": "page-1",
+      "x": 4200,
+      "y": 1260,
+      "w": 340,
+      "text": "La recomendación va al final de este tablero, y no es cómoda: el sitio no es el primer movimiento. Decirlo antes de cobrar vale más que decirlo después."
+    },
+    {
+      "id": "por-que-sin-copy",
+      "page": "page-2",
+      "x": 0,
+      "y": -300,
+      "w": 990,
+      "text": "Por qué estas maquetas no traen texto:\n\nLos bloques punteados son huecos de contenido, a propósito. No le traemos a Cristóbal titulares inventados sobre su propio negocio — cada palabra del sitio se aprueba antes de escribirse, y lo que se aprueba es lo que se publica.\n\nLos bloques grises son fotos reales por tomar. No usamos banco de imágenes: en este giro una foto genérica se nota y cuesta confianza.\n\nLos botones y la estructura sí son reales: eso es lo que se está proponiendo."
+    }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}

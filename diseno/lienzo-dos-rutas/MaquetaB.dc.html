@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .slot { border: 1px dashed #A9B2B4; background: #F4F5F5; padding: 12px 14px; }
+    .slotlbl { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #6B7578; }
+    .slotline { height: 13px; background: #D6DADB; border-radius: 2px; margin-top: 9px; }
+    .photo { background: #DCE0E1; border: 1px solid #C6CDCE; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .photolbl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #5C6B6F; padding: 8px; line-height: 1.4; }
+    .sect { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #7E898B; }
+    .h2 { font-size: 25px; font-weight: 700; color: #20292B; line-height: 1.2; letter-spacing: -0.01em; }
+    .card { background: #FFFFFF; border: 1px solid #DDE1E2; padding: 14px 12px; min-height: 96px; display: flex; flex-direction: column; gap: 8px; justify-content: flex-start; }
+    .cardt { font-size: 15px; font-weight: 600; color: #20292B; line-height: 1.25; }
+    .cardk { font-size: 11px; color: #7E898B; line-height: 1.3; }
+    .btn { height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: 600; border-radius: 6px; }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column;">
+
+  <!-- header -->
+  <div style="height: 60px; background: #20292B; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; flex-shrink: 0;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 34px; height: 34px; border: 1px dashed #6B7578; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #A9B2B4; font-weight: 700;">M</div>
+      <div style="font-size: 10px; letter-spacing: 0.1em; color: #A9B2B4; font-weight: 600;">LOCKUP PLANO<br>ADR-0001</div>
+    </div>
+    <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <div style="padding: 30px 20px 26px 20px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #7E898B;">GRUPO MÁSTER · TORREÓN</div>
+    <div class="slot">
+      <div class="slotlbl">TITULAR — QUÉ ES EL GRUPO, EN UNA LÍNEA</div>
+      <div class="slotline" style="width: 100%; height: 22px;"></div>
+      <div class="slotline" style="width: 66%; height: 22px;"></div>
+    </div>
+    <div class="slot">
+      <div class="slotlbl">SUBTITULAR — POR QUÉ OCHO NEGOCIOS BAJO UNA MARCA</div>
+      <div class="slotline" style="width: 100%;"></div>
+      <div class="slotline" style="width: 58%;"></div>
+    </div>
+    <div class="btn" style="background: #3A4A52; color: #FFFFFF; margin-top: 4px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+      WhatsApp
+    </div>
+  </div>
+
+  <!-- los ocho giros -->
+  <div style="background: #F4F5F5; padding: 30px 20px; display: flex; flex-direction: column; gap: 16px;">
+    <div class="sect">EL REPARTIDOR — EL CORAZÓN DE ESTA RUTA</div>
+    <div class="h2">¿Qué necesitas hoy?</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg>
+        <div class="cardt">Empeño y préstamo</div>
+        <div class="cardk">auto · moto · maquinaria · oro</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 6.5 9 12 21M15 3l2.5 6L12 21"/></svg>
+        <div class="cardt">Joyería</div>
+        <div class="cardk">venta y compra de oro</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V4h9l8.6 8.6a1.4 1.4 0 0 1 0 .8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>
+        <div class="cardt">Bazar</div>
+        <div class="cardk">artículos seleccionados</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M7 7v12M12 7v12M17 7v12M8 3.5 12 6l4-2.5"/></svg>
+        <div class="cardt">Importaciones</div>
+        <div class="cardk">EE. UU. — México</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3.5a5 5 0 0 0-6.1 6.4L3 16.3 6.9 20l6.4-6.4a5 5 0 0 0 6.4-6.1L16.2 10l-2.7-2.7z"/></svg>
+        <div class="cardt">Taller y refaccionaria</div>
+        <div class="cardk">servicio y partes</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h11v10H2zM13 9h4.5l3.5 3.5V16h-8z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></svg>
+        <div class="cardt">Fletes y logística</div>
+        <div class="cardk">traslados</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V9l5-3v12M9 18h6V4l5 3v11"/><path d="M2 20h20"/></svg>
+        <div class="cardt">Renta de maquinaria</div>
+        <div class="cardk">equipo por día</div>
+      </div>
+
+      <div class="card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 20v-7M11 20V8M16 20v-4M21 20V5"/></svg>
+        <div class="cardt">Financiera</div>
+        <div class="cardk">crédito</div>
+      </div>
+
+    </div>
+    <div style="font-size: 12px; color: #7E898B; line-height: 1.45;">
+      Cada tarjeta lleva a su propia página, con su propia búsqueda en Google y su propio contenido.
+    </div>
+  </div>
+
+  <!-- el giro que trae la urgencia -->
+  <div style="padding: 30px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div class="sect">EL QUE TRAE LA URGENCIA</div>
+    <div class="h2">Empeño y préstamo</div>
+    <div class="slot">
+      <div class="slotlbl">RESUMEN CORTO — QUÉ ACEPTAN Y EN CUÁNTO TIEMPO</div>
+      <div class="slotline" style="width: 100%;"></div>
+      <div class="slotline" style="width: 70%;"></div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <div class="btn" style="flex: 1; background: #3A4A52; color: #FFFFFF; font-size: 15px;">Ver empeño</div>
+      <div class="btn" style="flex: 1; border: 2px solid #3A4A52; color: #20292B; font-size: 15px;">Llamar</div>
+    </div>
+  </div>
+
+  <!-- confianza -->
+  <div style="background: #20292B; padding: 30px 20px; display: flex; flex-direction: column; gap: 16px;">
+    <div class="sect" style="color: #8A9598;">LA CONFIANZA</div>
+    <div class="h2" style="color: #FFFFFF;">Un solo lugar, ocho maneras de ayudarte</div>
+    <div class="photo" style="height: 190px;"><div class="photolbl">FOTO REAL · fachada o panorámica del local<br>3:2 — sin banco de imágenes</div></div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+      <div class="photo" style="height: 88px;"><div class="photolbl">vitrina</div></div>
+      <div class="photo" style="height: 88px;"><div class="photolbl">taller</div></div>
+      <div class="photo" style="height: 88px;"><div class="photolbl">equipo</div></div>
+    </div>
+    <div style="font-size: 13px; color: #9DA8AB; line-height: 1.5;">
+      Ocho giros en un solo lugar. Esa combinación no se compra con presupuesto de publicidad.
+    </div>
+  </div>
+
+  <!-- ubicacion -->
+  <div style="padding: 30px 20px; display: flex; flex-direction: column; gap: 16px;">
+    <div class="sect">LA LOGÍSTICA</div>
+    <div class="h2">Dónde estamos</div>
+    <div class="photo" style="height: 150px;"><div class="photolbl">MAPA · ubicación exacta<br>enlazado a Google Maps</div></div>
+    <div class="slot">
+      <div class="slotlbl">DIRECCIÓN · TELÉFONO · HORARIOS</div>
+      <div class="slotline" style="width: 92%;"></div>
+      <div class="slotline" style="width: 66%;"></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background: #20292B; padding: 28px 20px 96px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 34px; height: 34px; border: 1px dashed #6B7578; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #A9B2B4; font-weight: 700;">M</div>
+      <div style="font-size: 15px; color: #FFFFFF; font-weight: 600;">Grupo MÁSTER</div>
+    </div>
+    <div style="font-size: 13px; color: #8A9598; line-height: 1.6;">Aviso de privacidad · Términos · Instagram · Facebook</div>
+  </div>
+
+  <!-- barra fija -->
+  <div style="position: relative; margin-top: -76px; margin-left: 16px; margin-right: 16px; height: 56px; background: #FFFFFF; border: 1px solid #C6CDCE; border-radius: 8px; display: flex; align-items: center; box-shadow: 0 6px 18px rgba(32,41,43,0.28);">
+    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; color: #20292B;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#20292B"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+      WhatsApp
+    </div>
+    <div style="width: 1px; height: 30px; background: #DDE1E2;"></div>
+    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: #20292B;">Llamar</div>
+  </div>
+  <div style="height: 20px;"></div>
+
+</div>
+</x-dc>
+</body>
+</html>

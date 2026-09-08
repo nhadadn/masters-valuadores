@@ -21,6 +21,7 @@ documentación se versione con el código. Abrir Obsidian → *Open folder as va
 | `20-specs/` | SDD: una spec por unidad de trabajo. Nada se implementa sin spec aprobada. |
 | `30-cliente/` | Datos del negocio, Etapa 1 y el tablero de pendientes. |
 | `40-seo/` | Mapa de páginas (§3) y `@graph` JSON-LD (§4). |
+| `50-propuestas/` | Lo que se le presentó al cliente y qué se decidió. |
 | `90-plantillas/` | Plantillas de SPEC, ADR y C4. |
 | `99-assets/` | Imágenes y adjuntos. |
 
