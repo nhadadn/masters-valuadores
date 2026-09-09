@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@700&family=Hanken+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: #767F82; }
+    .tok { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: #5C6B6F; }
+    .m { font-family: 'Archivo', system-ui, sans-serif; color: #14181A; }
+    .tr { display: grid; grid-template-columns: 1fr 190px; align-items: baseline; border-top: 1px solid #ECEEEE; padding: 11px 0; }
+    .note { font-size: 14px; line-height: 1.5; color: #5C6B6F; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; height: 1180px; background: #FFFFFF; box-sizing: border-box; padding: 48px 64px; display: flex; flex-direction: column;">
+
+  <div style="font-family: 'Libre Caslon Text', Georgia, serif; font-weight: 700; font-size: 36px; color: #20292B;">Escalas</div>
+  <div style="font-size: 17px; line-height: 1.55; color: #3A4A52; margin-top: 12px; max-width: 980px;">
+    Tipografía, espacio, radios, foco y tamaño táctil. Todo calibrado para el peor caso de esta
+    categoría: teléfono de gama baja, a plena luz, con prisa.
+  </div>
+
+  <div style="display: flex; gap: 44px; margin-top: 30px; flex-grow: 1;">
+
+    <div style="width: 640px; flex-shrink: 0;">
+      <div class="eyebrow">TIPOGRAFÍA — ARCHIVO, AUTOALOJADA Y SUBSET</div>
+      <div style="margin-top: 12px;">
+        <div class="tr"><div class="m" style="font-size: 34px; font-weight: 700; line-height: 1.12; letter-spacing: -0.015em;">Empeño y préstamo</div><div class="tok">display · 34/1.12 · 700</div></div>
+        <div class="tr"><div class="m" style="font-size: 28px; font-weight: 700; line-height: 1.15;">¿Aceptan lo que traigo?</div><div class="tok">h1 · 28/1.15 · 700</div></div>
+        <div class="tr"><div class="m" style="font-size: 22px; font-weight: 700; line-height: 1.25;">Cómo funciona</div><div class="tok">h2 · 22/1.25 · 700</div></div>
+        <div class="tr"><div class="m" style="font-size: 18px; font-weight: 600; line-height: 1.3;">Qué necesitas traer</div><div class="tok">h3 · 18/1.3 · 600</div></div>
+        <div class="tr"><div class="m" style="font-size: 17px; font-weight: 400; line-height: 1.55;">Texto corrido. Diecisiete píxeles, no dieciséis: se lee a un brazo de distancia, con el sol pegando en la pantalla.</div><div class="tok">cuerpo · 17/1.55 · 400</div></div>
+        <div class="tr"><div class="m" style="font-size: 17px; font-weight: 600; line-height: 1.55;">Texto corrido enfatizado</div><div class="tok">cuerpo-fuerte · 17 · 600</div></div>
+        <div class="tr"><div class="m" style="font-size: 14px; font-weight: 400; line-height: 1.45; color: #4E595F;">Pie de nota, condiciones y fuentes</div><div class="tok">pie · 14/1.45 · 400</div></div>
+        <div class="tr" style="border-bottom: 1px solid #ECEEEE;"><div class="m" style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; line-height: 1.2; color: #4E595F;">ETIQUETA DE SECCIÓN</div><div class="tok">etiqueta · 13 · 700 · .12em</div></div>
+      </div>
+      <div class="note" style="margin-top: 14px;">
+        Una sola familia. Dos familias cuestan otra petición de red y otro archivo que descargar, y el presupuesto de LCP es de 2 s en 4G.
+        Cero Google Fonts en producción: se autoaloja el woff2 con subset latino más las diacríticas del español.
+        <strong style="color: #A8482A; font-weight: 700;">La elección de familia se revisa cuando llegue el vectorial</strong> — la tipografía del logo es
+        una grotesca ancha con terminales cuadradas y hay que comparar contra ella.
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 28px;">
+
+      <div>
+        <div class="eyebrow">ESPACIO — BASE 4</div>
+        <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 16px;">
+          <div style="text-align:center;"><div style="width:4px; height:4px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">4</div></div>
+          <div style="text-align:center;"><div style="width:8px; height:8px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">8</div></div>
+          <div style="text-align:center;"><div style="width:12px; height:12px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">12</div></div>
+          <div style="text-align:center;"><div style="width:16px; height:16px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">16</div></div>
+          <div style="text-align:center;"><div style="width:24px; height:24px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">24</div></div>
+          <div style="text-align:center;"><div style="width:32px; height:32px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">32</div></div>
+          <div style="text-align:center;"><div style="width:48px; height:48px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">48</div></div>
+          <div style="text-align:center;"><div style="width:64px; height:64px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">64</div></div>
+          <div style="text-align:center;"><div style="width:96px; height:96px; background:#3A4449;"></div><div class="tok" style="margin-top:6px;">96</div></div>
+        </div>
+        <div class="note" style="margin-top: 12px;">Margen lateral en móvil: 20. Separación entre secciones: 48 en móvil, 96 en escritorio.</div>
+      </div>
+
+      <div>
+        <div class="eyebrow">RADIOS</div>
+        <div style="display: flex; gap: 18px; margin-top: 16px;">
+          <div style="text-align:center;"><div style="width:64px;height:52px;background:#E7EBEC;border:1px solid #D2D8DB;border-radius:0;"></div><div class="tok" style="margin-top:6px;">0 · bloques</div></div>
+          <div style="text-align:center;"><div style="width:64px;height:52px;background:#E7EBEC;border:1px solid #D2D8DB;border-radius:4px;"></div><div class="tok" style="margin-top:6px;">4 · campos</div></div>
+          <div style="text-align:center;"><div style="width:64px;height:52px;background:#E7EBEC;border:1px solid #D2D8DB;border-radius:8px;"></div><div class="tok" style="margin-top:6px;">8 · botones</div></div>
+          <div style="text-align:center;"><div style="width:64px;height:52px;background:#E7EBEC;border:1px solid #D2D8DB;border-radius:999px;"></div><div class="tok" style="margin-top:6px;">999 · pastillas</div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow">FOCO Y TAMAÑO TÁCTIL</div>
+        <div style="display: flex; gap: 22px; margin-top: 16px; align-items: center;">
+          <div style="height:48px; padding: 0 22px; background:#2A3237; color:#FFFFFF; border-radius:8px; display:flex; align-items:center; font-family:'Archivo',sans-serif; font-size:17px; font-weight:600; outline: 3px solid #14181A; outline-offset: 3px;">Con foco</div>
+          <div style="border: 1px dashed #B3BCC0; width: 48px; height: 48px; display:flex; align-items:center; justify-content:center; font-size: 11px; color:#4E595F; text-align:center; line-height:1.2;">48<br>×48</div>
+          <div class="note" style="flex-grow:1;">
+            Anillo de 3 px en <code>acero-950</code> con 3 px de separación: 17.87:1 contra la superficie.
+            El acento no sirve de anillo — 2.03:1 y desaparece.
+          </div>
+        </div>
+        <div class="note" style="margin-top: 12px;">Objetivo táctil: <strong style="color:#20292B; font-weight:700;">48 × 48 de casa, 44 × 44 como piso absoluto</strong>. Separación mínima entre objetivos: 8.</div>
+      </div>
+
+      <div>
+        <div class="eyebrow">MOVIMIENTO</div>
+        <div class="note" style="margin-top: 12px;">
+          120 ms para respuesta táctil, 200 ms para aparición, curva <code>ease-out</code>. Nada más.
+          Todo bajo <code>prefers-reduced-motion</code>. Sin animación de entrada al hacer scroll: cuesta INP y no aporta.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

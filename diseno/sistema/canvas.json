@@ -1,0 +1,34 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Fundamentos" },
+    { "id": "page-2", "name": "Componentes" },
+    { "id": "page-3", "name": "Prototipo" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html",    "x": 0,    "y": 0, "w": 1280, "h": 900,  "page": "page-1", "title": "Marca y monograma" },
+    { "file": "Color.dc.html",   "x": 1400, "y": 0, "w": 1280, "h": 1180, "page": "page-1", "title": "Color y contraste" },
+    { "file": "Escalas.dc.html", "x": 2800, "y": 0, "w": 1280, "h": 1180, "page": "page-1", "title": "Escalas" },
+    { "file": "Botones.dc.html", "x": 0,    "y": 0, "w": 1280, "h": 1060, "page": "page-2", "title": "Botones y CTA" },
+    { "file": "Piezas.dc.html",  "x": 1400, "y": 0, "w": 1280, "h": 1080, "page": "page-2", "title": "Section · Card · Field" },
+    { "file": "ProtoWhatsApp.dc.html", "x": 0, "y": 0, "w": 390, "h": 1180, "page": "page-3", "title": "Prototipo · contacto por WhatsApp", "is_interactive": true }
+  ],
+  "annotations": [
+    {
+      "id": "que-esta-medido",
+      "page": "page-1",
+      "x": 0,
+      "y": -230,
+      "w": 900,
+      "text": "Qué está medido y qué sigue provisional:\n\nMEDIDO — la rampa de acero (sale de los píxeles neutros del logo, que son el 85 % del archivo) y todos los ratios de contraste.\n\nPROVISIONAL — el monograma (reconstruido del JPG, no es el vectorial original), el acento #CCB642 y la familia tipográfica. Los tres se cierran con el archivo vectorial de Cristóbal."
+    },
+    {
+      "id": "como-usar-proto",
+      "page": "page-3",
+      "x": 470,
+      "y": 0,
+      "w": 420,
+      "text": "Toca cualquier botón de WhatsApp o cualquier tarjeta de bien.\n\nLa hoja de abajo enseña tres cosas: el mensaje que se manda, el enlace que se arma, y el evento que se registra para medir qué sección de la página trajo el contacto.\n\nEse último renglón es la respuesta a «¿de dónde vino este cliente?». Sin él, el sitio no se puede mejorar mes con mes.\n\nEl número está en __POR_CONFIRMAR__ a propósito."
+    }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}

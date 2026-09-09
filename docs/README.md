@@ -22,6 +22,7 @@ documentación se versione con el código. Abrir Obsidian → *Open folder as va
 | `30-cliente/` | Datos del negocio, Etapa 1 y el tablero de pendientes. |
 | `40-seo/` | Mapa de páginas (§3) y `@graph` JSON-LD (§4). |
 | `50-propuestas/` | Lo que se le presentó al cliente y qué se decidió. |
+| `60-diseno/` | Sistema de diseño: tokens, componentes y el prompt del lienzo. |
 | `90-plantillas/` | Plantillas de SPEC, ADR y C4. |
 | `99-assets/` | Imágenes y adjuntos. |
 

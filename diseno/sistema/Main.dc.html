@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: #767F82; }
+    .note { font-size: 14px; line-height: 1.5; color: #5C6B6F; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; height: 900px; background: #FFFFFF; box-sizing: border-box; padding: 48px 64px; display: flex; flex-direction: column;">
+
+  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+    <div style="font-family: 'Libre Caslon Text', Georgia, serif; font-weight: 700; font-size: 38px; color: #20292B; letter-spacing: -0.01em;">
+      Sistema de diseño · <span style="color: #C75B38;">Masters Valuadores</span>
+    </div>
+    <div style="font-family: 'Libre Caslon Text', Georgia, serif; font-size: 20px; color: #20292B;">
+      <span style="color: #C75B38;">N</span>azmelia
+    </div>
+  </div>
+
+  <div style="font-size: 17px; line-height: 1.55; color: #3A4A52; margin-top: 14px; max-width: 940px;">
+    Capa 1 de la Fase 0. Todo lo de aquí está medido, no elegido a ojo: la rampa de
+    acero sale de los píxeles del logo, y cada par de colores trae su ratio de contraste real.
+  </div>
+
+  <div style="display: flex; gap: 40px; margin-top: 38px; flex-grow: 1;">
+
+    <div style="width: 400px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px;">
+      <div class="eyebrow">MONOGRAMA RECONSTRUIDO</div>
+      <div style="background: #14181A; padding: 34px; display: flex; align-items: center; justify-content: center;">
+        <svg width="230" height="228" viewBox="0 0 260 258" role="img" aria-label="Monograma Máster">
+          <path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/>
+          <path fill="#8C979C" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/>
+        </svg>
+      </div>
+      <div class="note">
+        Dos trazos, sin bisel, sin textura, sin viñeta. Escala a cualquier tamaño y se recolorea.
+        <strong style="font-weight: 700; color: #20292B;">Es una reconstrucción geométrica del JPG, no el vectorial original.</strong>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 26px;">
+
+      <div>
+        <div class="eyebrow">LOCKUP HORIZONTAL — PARA EL ENCABEZADO</div>
+        <div style="background: #14181A; padding: 26px 30px; margin-top: 14px; display: flex; align-items: center; gap: 18px;">
+          <svg width="46" height="46" viewBox="0 0 260 258" aria-hidden="true">
+            <path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/>
+            <path fill="#E7EBEC" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/>
+          </svg>
+          <div style="font-family: 'Archivo', system-ui, sans-serif;">
+            <div style="font-size: 22px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.03em; line-height: 1;">MASTERS</div>
+            <div style="font-size: 13px; font-weight: 600; color: #CCB642; letter-spacing: 0.22em; line-height: 1; margin-top: 5px;">VALUADORES</div>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D2D8DB; padding: 26px 30px; margin-top: 10px; display: flex; align-items: center; gap: 18px;">
+          <svg width="46" height="46" viewBox="0 0 260 258" aria-hidden="true">
+            <path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/>
+            <path fill="#3A4449" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/>
+          </svg>
+          <div style="font-family: 'Archivo', system-ui, sans-serif;">
+            <div style="font-size: 22px; font-weight: 700; color: #14181A; letter-spacing: 0.03em; line-height: 1;">MASTERS</div>
+            <div style="font-size: 13px; font-weight: 600; color: #4E595F; letter-spacing: 0.22em; line-height: 1; margin-top: 5px;">VALUADORES</div>
+          </div>
+        </div>
+        <div class="note" style="margin-top: 10px;">Sobre fondo claro el acero sube a <code>acero-700</code>: el <code>acero-400</code> del monograma solo llega a 2.99:1 y no basta.</div>
+      </div>
+
+      <div>
+        <div class="eyebrow">ÍCONO — TAMAÑOS REALES, SIN AMPLIAR</div>
+        <div style="display: flex; align-items: flex-end; gap: 30px; margin-top: 14px;">
+          <div style="text-align: center;">
+            <div style="background: #14181A; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+              <svg width="46" height="46" viewBox="0 0 260 258" aria-hidden="true"><path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/><path fill="#E7EBEC" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/></svg>
+            </div>
+            <div class="note" style="font-size: 12px; margin-top: 8px;">64 px</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: #14181A; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+              <svg width="23" height="23" viewBox="0 0 260 258" aria-hidden="true"><path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/><path fill="#E7EBEC" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/></svg>
+            </div>
+            <div class="note" style="font-size: 12px; margin-top: 8px;">32 px</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: #14181A; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;">
+              <svg width="12" height="12" viewBox="0 0 260 258" aria-hidden="true"><path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/><path fill="#E7EBEC" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/></svg>
+            </div>
+            <div class="note" style="font-size: 12px; margin-top: 8px;">16 px</div>
+          </div>
+          <div style="flex-grow: 1; border-left: 1px solid #E2E5E5; padding-left: 30px;">
+            <div class="note">La insignia circular con «MASTERS VALUADORES» en cromo era ilegible por debajo de ~120 px. La M sola aguanta 16.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background: #F1ECE7; border-left: 4px solid #C75B38; padding: 22px 28px; margin-top: 30px;">
+    <div class="eyebrow">LO QUE ESTO ES Y LO QUE NO</div>
+    <div style="font-size: 16px; line-height: 1.55; color: #20292B; margin-top: 10px;">
+      Es una <strong style="font-weight: 700;">reconstrucción geométrica</strong> hecha a partir del JPG de 821 × 820 px, midiendo los bordes del original.
+      No es el vectorial de quien diseñó la marca, y difiere de él en detalles: el ancho de la banda de acero y el punto donde el color cambia
+      son aproximaciones dentro de unos pocos píxeles. Sirve para trabajar y para que Cristóbal vea de qué hablamos. No sustituye el archivo original,
+      y no se publica sin su autorización.
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

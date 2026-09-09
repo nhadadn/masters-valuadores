@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: #767F82; }
+    .sw { display: flex; align-items: center; gap: 14px; }
+    .chip { width: 58px; height: 46px; flex-shrink: 0; border-radius: 3px; }
+    .tok { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; color: #20292B; }
+    .hex { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; color: #5C6B6F; }
+    .ratio { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; color: #20292B; text-align: right; }
+    .row { display: grid; grid-template-columns: 1fr 128px 92px 92px; align-items: center; border-top: 1px solid #ECEEEE; padding: 9px 0; }
+    .ok { color: #2F6B4F; font-weight: 600; font-size: 13px; }
+    .warn { color: #A8482A; font-weight: 600; font-size: 13px; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; height: 1180px; background: #FFFFFF; box-sizing: border-box; padding: 48px 64px; display: flex; flex-direction: column;">
+
+  <div style="font-family: 'Libre Caslon Text', Georgia, serif; font-weight: 700; font-size: 36px; color: #20292B;">Color</div>
+  <div style="font-size: 17px; line-height: 1.55; color: #3A4A52; margin-top: 12px; max-width: 980px;">
+    La rampa de acero se derivó de los píxeles neutros del logo, que son el 85 % del archivo.
+    El acento se obtuvo balanceando el propio cromo de la marca hasta plata real y aplicando esa
+    misma corrección al amarillo. Todos los ratios de abajo están calculados, no estimados.
+  </div>
+
+  <div style="display: flex; gap: 44px; margin-top: 30px; flex-grow: 1;">
+
+    <div style="width: 380px; flex-shrink: 0;">
+      <div class="eyebrow">ACERO — 11 PASOS</div>
+      <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;">
+        <div class="sw"><div class="chip" style="background:#14181A;"></div><div><div class="tok">--acero-950</div><div class="hex">#14181A · tinta primaria</div></div></div>
+        <div class="sw"><div class="chip" style="background:#1C2225;"></div><div><div class="tok">--acero-900</div><div class="hex">#1C2225 · superficie oscura</div></div></div>
+        <div class="sw"><div class="chip" style="background:#2A3237;"></div><div><div class="tok">--acero-800</div><div class="hex">#2A3237 · acción primaria</div></div></div>
+        <div class="sw"><div class="chip" style="background:#3A4449;"></div><div><div class="tok">--acero-700</div><div class="hex">#3A4449 · marca en claro</div></div></div>
+        <div class="sw"><div class="chip" style="background:#4E595F;"></div><div><div class="tok">--acero-600</div><div class="hex">#4E595F · tinta secundaria</div></div></div>
+        <div class="sw"><div class="chip" style="background:#667276;"></div><div><div class="tok">--acero-500</div><div class="hex">#667276 · borde de campo</div></div></div>
+        <div class="sw"><div class="chip" style="background:#8C979C;"></div><div><div class="tok">--acero-400</div><div class="hex">#8C979C · el plata del logo</div></div></div>
+        <div class="sw"><div class="chip" style="background:#B3BCC0;"></div><div><div class="tok">--acero-300</div><div class="hex">#B3BCC0 · deshabilitado</div></div></div>
+        <div class="sw"><div class="chip" style="background:#D2D8DB;"></div><div><div class="tok">--acero-200</div><div class="hex">#D2D8DB · separador</div></div></div>
+        <div class="sw"><div class="chip" style="background:#E7EBEC;"></div><div><div class="tok">--acero-100</div><div class="hex">#E7EBEC · relleno suave</div></div></div>
+        <div class="sw"><div class="chip" style="background:#F4F6F7; border: 1px solid #E2E5E5;"></div><div><div class="tok">--acero-050</div><div class="hex">#F4F6F7 · superficie alterna</div></div></div>
+      </div>
+
+      <div class="eyebrow" style="margin-top: 26px;">ACENTO — PROVISIONAL</div>
+      <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;">
+        <div class="sw"><div class="chip" style="background:#CCB642;"></div><div><div class="tok">--oro-500</div><div class="hex">#CCB642 · relleno de bloque</div></div></div>
+        <div class="sw"><div class="chip" style="background:#9A8830;"></div><div><div class="tok">--oro-700</div><div class="hex">#9A8830 · borde del acento</div></div></div>
+      </div>
+      <div style="font-size: 13px; line-height: 1.5; color: #A8482A; margin-top: 12px;">
+        Los dos cambian cuando llegue el vectorial. Están aislados en dos variables para que sea una sustitución, no un rediseño.
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;">
+      <div class="eyebrow">CONTRASTE MEDIDO — WCAG 2.1</div>
+      <div style="display: grid; grid-template-columns: 1fr 128px 92px 92px; margin-top: 14px; padding-bottom: 8px; border-bottom: 2px solid #20292B;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #767F82;">PAR</div>
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #767F82;">MUESTRA</div>
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #767F82; text-align: right;">RATIO</div>
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #767F82; text-align: right;">AA</div>
+      </div>
+
+      <div class="row"><div>Tinta primaria sobre superficie</div><div style="background:#FFFFFF; border:1px solid #E2E5E5; color:#14181A; padding:6px 10px; font-size:14px;">Texto</div><div class="ratio">17.87:1</div><div class="ok" style="text-align:right;">Pasa</div></div>
+      <div class="row"><div>Tinta secundaria sobre superficie</div><div style="background:#FFFFFF; border:1px solid #E2E5E5; color:#4E595F; padding:6px 10px; font-size:14px;">Texto</div><div class="ratio">7.20:1</div><div class="ok" style="text-align:right;">Pasa</div></div>
+      <div class="row"><div>Texto sobre acción primaria</div><div style="background:#2A3237; color:#FFFFFF; padding:6px 10px; font-size:14px;">Texto</div><div class="ratio">13.04:1</div><div class="ok" style="text-align:right;">Pasa</div></div>
+      <div class="row"><div>Texto sobre el acento</div><div style="background:#CCB642; color:#14181A; padding:6px 10px; font-size:14px;">Texto</div><div class="ratio">8.80:1</div><div class="ok" style="text-align:right;">Pasa</div></div>
+      <div class="row"><div>Acento sobre tinta profunda</div><div style="background:#14181A; color:#CCB642; padding:6px 10px; font-size:14px;">Texto</div><div class="ratio">8.80:1</div><div class="ok" style="text-align:right;">Pasa</div></div>
+      <div class="row" style="background:#FDF6F3;"><div><strong style="font-weight:700;">Acento como relleno sobre blanco</strong></div><div style="background:#CCB642; color:#FFFFFF; padding:6px 10px; font-size:14px;">Bloque</div><div class="ratio">2.03:1</div><div class="warn" style="text-align:right;">Falla</div></div>
+      <div class="row"><div>Borde del acento sobre blanco</div><div style="background:#FFFFFF; border:2px solid #9A8830; padding:5px 9px; font-size:14px; color:#14181A;">Borde</div><div class="ratio">3.54:1</div><div class="ok" style="text-align:right;">3:1</div></div>
+      <div class="row" style="background:#FDF6F3;"><div><strong style="font-weight:700;">acero-300 como borde de campo</strong></div><div style="background:#FFFFFF; border:2px solid #B3BCC0; padding:5px 9px; font-size:14px; color:#14181A;">Campo</div><div class="ratio">1.93:1</div><div class="warn" style="text-align:right;">Falla</div></div>
+      <div class="row"><div>acero-500 como borde de campo</div><div style="background:#FFFFFF; border:2px solid #667276; padding:5px 9px; font-size:14px; color:#14181A;">Campo</div><div class="ratio">4.96:1</div><div class="ok" style="text-align:right;">3:1</div></div>
+      <div class="row" style="border-bottom: 1px solid #ECEEEE;"><div>Anillo de foco sobre superficie</div><div style="background:#FFFFFF; outline:3px solid #14181A; outline-offset:1px; padding:5px 9px; font-size:14px; color:#14181A; margin:4px;">Foco</div><div class="ratio">17.87:1</div><div class="ok" style="text-align:right;">3:1</div></div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin-top: 28px;">
+        <div style="background: #14181A; padding: 22px 24px;">
+          <div class="eyebrow" style="color:#8A9598;">DOS REGLAS QUE SALEN DE LA TABLA</div>
+          <div style="font-size: 15px; line-height: 1.55; color: #FFFFFF; margin-top: 12px;">
+            <strong style="font-weight:700;">1.</strong> El acento nunca es texto ni bloque suelto sobre fondo claro: 2.03:1.
+            Va como relleno con etiqueta casi negra encima, o sobre acero oscuro, o con borde <code style="color:#CCB642;">oro-700</code>.
+          </div>
+          <div style="font-size: 15px; line-height: 1.55; color: #FFFFFF; margin-top: 12px;">
+            <strong style="font-weight:700;">2.</strong> Los bordes de campo son <code style="color:#CCB642;">acero-500</code>, no <code style="color:#CCB642;">acero-300</code>.
+            El gris bonito da 1.93:1 y a plena luz del día desaparece.
+          </div>
+        </div>
+        <div style="border: 1px solid #D2D8DB; padding: 22px 24px;">
+          <div class="eyebrow">DE DÓNDE SALIÓ EL ACENTO</div>
+          <div style="font-size: 14px; line-height: 1.6; color: #3A4A52; margin-top: 12px;">
+            El amarillo del JPG mide <code>#A79E3C</code> en su percentil 85 — oliva, no oro, porque toda la
+            imagen trae una textura de concreto que la oscurece.
+          </div>
+          <div style="font-size: 14px; line-height: 1.6; color: #3A4A52; margin-top: 10px;">
+            Corrección aplicada: se balanceó el cromo del propio logo hasta gris neutro (ganancias 1.055 / 0.995 / 0.955)
+            y se subió la exposición hasta que ese cromo leyera como plata (×1.157). La misma operación sobre el
+            amarillo da <code>#CCB642</code>.
+          </div>
+          <div style="font-size: 14px; line-height: 1.6; color: #A8482A; margin-top: 10px;">
+            Es reproducible, no es una elección de gusto — y sigue siendo provisional.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
