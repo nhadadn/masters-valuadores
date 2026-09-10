@@ -58,4 +58,4 @@ Cada spec enlaza el nivel C4 que toca y los ADR de los que depende.
 
 | # | Spec | Estado |
 |---|---|---|
-| 0001 | [[SPEC-0001-armazon-fase-0]] | BLOQUEADA |
+| 0001 | [[SPEC-0001-armazon-fase-0]] | BORRADOR — lista para aprobar |

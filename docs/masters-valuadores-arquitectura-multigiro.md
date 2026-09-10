@@ -1,34 +1,42 @@
 ---
 tipo: fuente-de-verdad
-estado: VACÍO — bloqueado por Etapa 1
-version: 0.0.0
-actualizado: 2026-09-08
+estado: PARCIAL — §1 resuelta, §3 y §4 esperan Etapa 1
+version: 0.1.0
+actualizado: 2026-09-09
 ---
 
 # Arquitectura multigiro · Masters Valuadores
 
-> [!danger] Este documento está vacío a propósito
-> Es la **fuente de verdad** del proyecto. Su contenido es el entregable de la
-> **Etapa 1 · Data Intelligence**, que a la fecha **no se ha ejecutado**.
+> [!warning] Parcialmente lleno
+> El **alcance** ya está decidido (§1, ADR-0003). Lo que sigue faltando es lo que
+> entrega la **Etapa 1 · Data Intelligence**, que a la fecha **no se ha ejecutado**:
+> el orden de prioridad de los giros, los términos de búsqueda por giro y la
+> categoría primaria de Google.
 >
-> Ninguna ruta, ningún `department` del `@graph` y ninguna decisión de
-> arquitectura puede escribirse hasta que las §3 y §4 de este documento estén
-> llenas y aprobadas. Rellenarlas sin el estudio es construir a ciegas — que es
-> exactamente lo que la propuesta firmada vende no hacer.
+> Se pueden construir las rutas. No se puede abrir la ficha de Google todavía.
 
 ## §1 · Alcance
 
-`__POR_CONFIRMAR__`
+**RESUELTO** — Cristóbal eligió la Ruta B el 9 de septiembre de 2026.
+Ver [[ADR-0003-alcance-multigiro]].
 
-Tensión abierta a resolver aquí — ver [[decisiones-pendientes|D-05]]:
+El sitio es **multigiro bajo la marca MÁSTER**: una portada que reparte y una
+página propia por cada giro.
 
-- La **propuesta firmada** (28 jul 2026, pág. 4) describe una landing de una sola
-  página con 8 secciones, centrada en empeño y préstamo.
-- La **ficha del proyecto** describe 8 giros bajo la marca MÁSTER: valuadores,
-  financiera, importaciones, taller y refaccionaria, fletes y logística, bazar,
-  joyería, renta de maquinaria y equipo.
+| Giro | Estado |
+|---|---|
+| Empeño y préstamo | Confirmado · es el que trae la urgencia |
+| Joyería | Confirmado |
+| Bazar | Confirmado |
+| Taller y refaccionaria | Confirmado |
+| Fletes y logística | Confirmado |
+| Renta de maquinaria y equipo | Confirmado |
+| Financiera | Confirmado |
+| Importaciones | Confirmado como giro · `__POR_CONFIRMAR__` si es otra entidad legal (D-04) |
+| Avalúos periciales | `__POR_CONFIRMAR__` si el servicio existe (D-03) |
 
-No son lo mismo. De cuál gane depende si el `@graph` lleva `department` o no.
+Sigue sin decidirse el **orden de prioridad** de los giros y la **categoría
+primaria de Google**: ambos salen de la Etapa 1.
 
 ## §2 · Entidad y marca
 
@@ -36,17 +44,19 @@ No son lo mismo. De cuál gane depende si el `@graph` lleva `department` o no.
 
 ## §3 · Mapa de páginas
 
-`__POR_CONFIRMAR__`
+**PARCIAL.** La estructura quedó decidida por [[ADR-0003-alcance-multigiro]]:
+portada más una página por giro. Falta el **orden de prioridad** y los **slugs**,
+que dependen de qué término busca la gente — eso es Etapa 1.
 
-Detalle en [[mapa-de-paginas]]. Mientras esta sección esté vacía, el sitio tiene
-**una sola ruta** (`/`) con placeholder.
+Detalle y plantilla de llenado en [[mapa-de-paginas]].
 
 ## §4 · Grafo JSON-LD
 
-`__POR_CONFIRMAR__`
+**PARCIAL.** La forma estaba acordada y ahora la lista de `department` también:
+uno por giro de la §1. Sigue pendiente el `@type` secundario del `LocalBusiness`,
+que es la categoría primaria de Google (D-02, Etapa 1).
 
-Forma acordada: `Organization` + `LocalBusiness` (`@type` como array) + `WebSite`,
-con `department`. La **lista** de departments sale de §3. Detalle en [[jsonld-graph]].
+Detalle en [[jsonld-graph]].
 
 ## §5 · Presupuesto técnico
 
@@ -75,3 +85,4 @@ financiera, muchas veces con teléfono de gama baja y a plena luz del día.
 | Fecha | Cambio |
 |---|---|
 | 2026-09-08 | Documento creado vacío. Etapa 1 no ejecutada. |
+| 2026-09-09 | §1 resuelta: multigiro (ADR-0003). §3 y §4 pasan de vacías a parciales. |

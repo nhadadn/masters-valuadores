@@ -2,7 +2,7 @@
 tipo: datos
 estado: incompleto
 espejo_de: src/lib/config/business.ts
-actualizado: 2026-09-08
+actualizado: 2026-09-10
 ---
 
 # Perfil del negocio
@@ -18,7 +18,7 @@ valor "provisional" — un provisional se olvida y termina en producción.
 
 | Campo | Valor | Fuente |
 |---|---|---|
-| Nombre comercial | Masters Valuadores | Propuesta, portada |
+| Nombre comercial en el sitio | **MASTERS VALUADORES** | [[ADR-0004-identidad-plana]] |
 | Nombre legal | `__POR_CONFIRMAR__` | D-01 |
 | Marca paraguas | MÁSTER | Ficha del proyecto |
 | Ciudad | Torreón, Coahuila | Propuesta, portada |
@@ -26,15 +26,22 @@ valor "provisional" — un provisional se olvida y termina en producción.
 
 ## Contacto y ubicación
 
-| Campo | Valor |
-|---|---|
-| Calle y número | `__POR_CONFIRMAR__` |
-| Colonia / CP | `__POR_CONFIRMAR__` |
-| Teléfono | `__POR_CONFIRMAR__` |
-| WhatsApp | `__POR_CONFIRMAR__` |
-| Horarios | `__POR_CONFIRMAR__` |
-| Coordenadas | `__POR_CONFIRMAR__` |
-| Sucursales | `__POR_CONFIRMAR__` |
+| Campo | Valor | Grado |
+|---|---|---|
+| Calle y número | Lerdo 97 | **Documental** — publicado por el cliente |
+| Colonia / CP | Col. Laguna Sur, 27110 | **Documental** |
+| Ciudad | Torreón, Coahuila | **Documental** |
+| Teléfono | 871 507 3005 | **Documental** |
+| Correo | mastervaluadores@outlook.com | **Documental** |
+| WhatsApp | `__POR_CONFIRMAR__` — ¿es el mismo número? | — |
+| Horarios | `__POR_CONFIRMAR__` | — |
+| Coordenadas | `__POR_CONFIRMAR__` | — |
+| Sucursales | `__POR_CONFIRMAR__` | — |
+
+**Documental** significa: el cliente lo publicó él mismo, en dos piezas distintas.
+No es invención nuestra y tampoco es confirmación suya. Antes de que salga a producción,
+Cristóbal lo confirma por escrito — un dígito mal en el teléfono cuesta clientes y un
+código postal mal cuesta la ficha de Google.
 
 ## Presencia digital
 
@@ -46,12 +53,24 @@ valor "provisional" — un provisional se olvida y termina en producción.
 | Facebook | Activo, URL `__POR_CONFIRMAR__` | Propuesta, pág. 8 |
 | Dominio | `__POR_CONFIRMAR__` | D-07 |
 
-## Giros declarados
+## Giros
 
-De la ficha del proyecto. **No confirmado** cuáles entran al sitio — eso es D-05.
+Los ocho entran al sitio: [[ADR-0003-alcance-multigiro]].
 
 Valuadores · Financiera · Importaciones · Taller y refaccionaria ·
 Fletes y logística · Bazar · Joyería · Renta de maquinaria y equipo.
+
+Grafías en circulación, todas del propio cliente: `MASTERS`, `MÁSTER`, y
+`mastervaluadores@outlook.com` sin la S. El sitio usa MASTERS; el legal sigue abierto.
+
+### Contenido ya capturado — importaciones y maquinaria
+
+De las publicaciones del cliente, grado documental:
+
+- Importa de **México, Estados Unidos y Canadá**. Canadá no estaba en la ficha del proyecto.
+- Servicios: importación USA–México, equipos revisados, proceso seguro, financiamiento a la
+  medida, venta de equipo industrial y agrícola, entrega en todo México.
+- Tiene identidad propia y campaña activa. Es el giro con más material listo de los ocho.
 
 ## Categoría de Google
 

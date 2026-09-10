@@ -1,8 +1,8 @@
 ---
 tipo: seo
 corresponde_a: "§4 de masters-valuadores-arquitectura-multigiro"
-estado: FORMA DEFINIDA · DATOS VACÍOS
-actualizado: 2026-09-08
+estado: PARCIAL — forma y departments definidos, datos pendientes
+actualizado: 2026-09-09
 ---
 
 # §4 · Grafo JSON-LD
@@ -28,7 +28,9 @@ flowchart LR
     class LB,DEP warn
 ```
 
-La forma está definida. **Los datos no.**
+La forma está definida y, desde [[ADR-0003-alcance-multigiro]], la lista de
+`department` también: **un `department` por giro de la §1**. Lo que sigue sin
+definirse son los datos y el `@type` secundario.
 
 ## Origen de cada valor
 
@@ -45,7 +47,7 @@ Todo sale de `src/lib/config/business.ts`. `jsonld.ts` no acepta un solo literal
 | `LocalBusiness.telephone` | `__POR_CONFIRMAR__` | D-08 |
 | `LocalBusiness.openingHoursSpecification` | `__POR_CONFIRMAR__` | D-08 |
 | `LocalBusiness.geo` | `__POR_CONFIRMAR__` | D-11 |
-| `LocalBusiness.department[]` | `__POR_CONFIRMAR__` | D-05 · depende de §3 |
+| `LocalBusiness.department[]` | **Resuelto**: uno por giro | D-04 decide si importaciones sale del grafo |
 | `WebSite.url` | `__POR_CONFIRMAR__` | D-07 |
 
 ## Regla de build
