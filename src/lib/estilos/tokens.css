@@ -34,7 +34,18 @@
      no de lo que publica. Lo que publica manda. */
   --oro-500: #E7C041;   /* relleno de bloque y color de marca · 11.12:1 con etiqueta negro-950 */
   --oro-700: #9A7A22;   /* borde del acento sobre claro       ·  4.05:1 · pasa 3:1, NO texto AA */
-  --oro-800: #8A7227;   /* oro como TEXTO sobre claro         ·  4.65:1 · pasa AA */
+
+  /* --oro-800 es el ÚNICO oro que se puede escribir, y NO sobre cualquier claro.
+     «Claro» son dos superficies distintas en este sistema y dan resultados distintos:
+
+         sobre --blanco     #FFFFFF   4.65:1   pasa AA
+         sobre --crema-050  #F0EFED   4.05:1   NO PASA AA
+
+     El ADR-0007 §4 decía «sobre claro» sin distinguir; corregido por SPEC-0002.
+     Regla: el oro como texto va sobre --superficie o sobre oscuro, NUNCA sobre
+     --superficie-alterna. No se crea un oro más oscuro para tapar el caso: sería
+     inventarle a la marca un color que no publica. */
+  --oro-800: #8A7227;   /* oro como TEXTO · 4.65:1 sobre blanco · 4.05:1 sobre crema */
 
   /* ── Estado ──────────────────────────────────────────────────────────── */
   --error: #A8331E;
@@ -68,6 +79,16 @@
   --etiqueta-tam: 13px; --etiqueta-alto: 1.20; --etiqueta-peso: 700;
   --etiqueta-tracking: 0.12em;
 
+  /* ── Titular a dos tintas · ADR-0007 §4 ──────────────────────────────
+     Caja alta, apretado y en el cuarto peso. Es el gesto más reconocible de sus
+     publicaciones: «MAQUINARIA / LISTA PARA TRABAJAR».
+     El 900 de Archivo pesa 13.2 KB —MENOS que el 700 que ya se carga— y llega mucho
+     más cerca de su lockup que el 700. No es display suelto: solo portada y
+     encabezado de giro. Interlínea y tracking salen del ADR, no de gusto. */
+  --titular-peso: 900;
+  --titular-alto: 1.05;
+  --titular-tracking: -0.01em;
+
   /* ── Espacio · base 4 ────────────────────────────────────────────────── */
   --e-1: 4px;   --e-2: 8px;   --e-3: 12px;  --e-4: 16px;
   --e-6: 24px;  --e-8: 32px;  --e-12: 48px; --e-16: 64px; --e-24: 96px;
@@ -81,6 +102,39 @@
   --radio-campo: 4px;
   --radio-boton: 8px;
   --radio-pastilla: 999px;
+
+  /* ── La diagonal · ADR-0007 §1 ─────────────────────────────────────────
+     MEDIDO por detección de rectas sobre docs/99-assets/post-{joyeria,
+     maquinaria-lista,monedas}.jpg: 11 segmentos, 3 822 px de recta, 30.7° ± 0.8°
+     desde la vertical, SD 0.79°. Revisar con el vectorial, D-06.
+
+     LOS DOS PRIMEROS VALORES SE MUEVEN JUNTOS: --diagonal-tan es tan(--diagonal).
+     La tangente se guarda aparte a propósito. tan() de CSS existe desde Chrome 111,
+     pero un valor inválido DENTRO de una propiedad personalizada no cae al declarado
+     anterior: se invalida en tiempo de cómputo y rompe la pieza sin avisar. Una
+     multiplicación no falla en ningún navegador vivo.
+
+     Para linear-gradient el ángulo describe la LÍNEA del degradado, que es
+     PERPENDICULAR al borde de color: escribir 30deg daría un borde a 60° de la
+     vertical, el doble del error. Por eso existe --diagonal-degradado. */
+  --diagonal: 30deg;
+  --diagonal-tan: 0.57735;
+  --diagonal-degradado: calc(90deg + var(--diagonal));           /* 120deg · borde a 30° */
+  --diagonal-corte: calc(var(--tactil) * var(--diagonal-tan));   /* 27.7px sobre 48 de alto */
+
+  /* ── Insignia circular · ADR-0007 §3 ───────────────────────────────────
+     Círculo negro con glifo dorado: 11.12:1, válido. El círculo es DECORATIVO,
+     va aria-hidden; el significado lo carga la etiqueta de al lado.
+     Alcance enmendado por SPEC-0002: banda de contacto y diferenciadores. NO en la
+     tarjeta de giro, que ya lleva su Icono y su regla dorada. */
+  --insignia-tam: 48px;
+  --insignia-glifo: 24px;
+
+  /* ── La regla dorada · ADR-0007 §6 ─────────────────────────────────────
+     2 px de oro bajo el lockup y entre bloques. Cuesta nada y es de las cosas que
+     más los identifica. La regla de ENTRE «MASTERS» y «VALUADORES» no es esta:
+     esa espera al vectorial (D-06). */
+  --regla-dorada: 2px;
 
   /* ── Foco · el acento NO sirve de anillo ─────────────────────────────── */
   --foco-grosor: 3px;

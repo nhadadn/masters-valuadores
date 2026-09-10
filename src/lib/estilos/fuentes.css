@@ -1,6 +1,11 @@
 /**
  * Archivo, autoalojada y subset latino. Cero peticiones a Google Fonts · CA-09.
- * Archivos: static/fuentes/ · 42 KB los tres pesos juntos.
+ * Archivos: static/fuentes/ · 55.2 KB los CUATRO pesos juntos.
+ *
+ * Eran tres pesos y 42 KB. El 900 lo añade el ADR-0007 §4 para el titular a dos
+ * tintas: 13.2 KB, menos que el 700. Ningún visitante paga los cuatro de golpe —cada
+ * página descarga los que usa— pero el número total sube y se dice.
+ * Nada de esto cuenta contra el presupuesto de 40 KB de CA-10, que es de JavaScript.
  *
  * LA FUENTE DE RESPALDO ESTÁ CALIBRADA, no es un stack cualquiera.
  * Sin calibrar, el texto se reacomoda cuando Archivo termina de cargar y eso es
@@ -42,6 +47,17 @@
   font-display: swap;
   src: url('/fuentes/archivo-latin-700-normal.woff2') format('woff2');
 }
+/* El cuarto peso · ADR-0007 §4. Solo lo usa el titular a dos tintas, así que solo
+   se descarga en las páginas que lo llevan. Medido: 13 548 bytes, 13.2 KB — menos
+   que el 700 que ya se carga. No se precarga: `app.html` sigue precargando solo el
+   400, y esa decisión se revisa con el número del LCP, no antes. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fuentes/archivo-latin-900-normal.woff2') format('woff2');
+}
 
 /* Respaldo calibrado: mismas medidas de avance que Archivo, para que el cambio
    al cargar no mueva ni un renglón. */
@@ -67,5 +83,29 @@
   font-weight: 700;
   src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Roboto Bold');
   size-adjust: 98.3%;
+  line-gap-override: 0%;
+}
+/* Peso 900 · el respaldo del titular, que es probablemente el LCP. Sin calibrar, el
+   titular se reacomoda cuando Archivo termina de cargar y eso es CLS en la pieza más
+   grande de la página.
+
+   CÓMO SALIÓ ESTE NÚMERO, con su límite dicho: `herramientas/medir-respaldo.mjs`
+   midió los cuatro pesos con el mismo método. Los tres ya calibrados salieron
+   consistentes en forma —el 600 es el bajo, 400 y 700 casi iguales— pero desplazados
+   +1.2 pp respecto de lo escrito arriba, porque las frases de prueba no son las mismas
+   y la dispersión entre frases (2.5 a 3.7 pp) es mayor que ese desfase.
+
+   Así que NO se usó el valor absoluto medido (96.6%). Se ancló en el 600 ya calibrado
+   y se usó solo la razón, que es lo único que la medición establece con confianza:
+
+       95.1% × (96.6 ÷ 96.4) = 95.3%
+
+   Arial no tiene 900: el navegador cae a su 700, igual que con el 600. */
+@font-face {
+  font-family: 'Archivo Respaldo';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Roboto Bold');
+  size-adjust: 95.3%;
   line-gap-override: 0%;
 }
