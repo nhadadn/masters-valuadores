@@ -1,5 +1,4 @@
-import pw from '/opt/node-tools/node_modules/playwright/index.js';
-const { chromium } = pw;
+import { abrirChromium } from '../../herramientas/navegador.mjs';
 import { readFileSync, statSync } from 'node:fs';
 
 const FAMS = [['Archivo','archivo'],['Inter','inter'],['Barlow','barlow']];
@@ -13,7 +12,7 @@ const TITULARES=['Empeño y préstamo','Renta de maquinaria y equipo','Taller y 
 const ETIQUETAS=['RENTA DE MAQUINARIA Y EQUIPO','FLETES Y LOGÍSTICA'];
 const DIAC='áéíóúüñÁÉÍÓÚÜÑ¿¡«»';
 
-const b = await chromium.launch({ executablePath:'/opt/pw-browsers/chromium' });
+const b = await abrirChromium();
 const p = await b.newPage({ viewport:{width:900,height:900} });
 await p.setContent(`<style>${css}</style><body><canvas id="c"></canvas></body>`);
 await p.evaluate(async (FAMS)=>{

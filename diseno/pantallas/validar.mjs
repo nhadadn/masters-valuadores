@@ -1,5 +1,4 @@
-import pw from '/opt/node-tools/node_modules/playwright/index.js';
-const { chromium } = pw;
+import { abrirChromium } from '../../herramientas/navegador.mjs';
 
 const ARCHIVOS = [
   ['PortadaMovil.dc.html', 390, 3900],
@@ -8,7 +7,7 @@ const ARCHIVOS = [
   ['Anatomia.dc.html',     1280, 1180],
 ];
 
-const b = await chromium.launch({ executablePath:'/opt/pw-browsers/chromium' });
+const b = await abrirChromium();
 const total = { fallas: [], filas: [] };
 
 for (const [f,w,h] of ARCHIVOS) {

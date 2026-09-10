@@ -1,12 +1,12 @@
-import pw from '/opt/node-tools/node_modules/playwright/index.js';
-const { chromium } = pw; import { readFileSync } from 'node:fs';
+import { abrirChromium } from './navegador.mjs';
+import { readFileSync } from 'node:fs';
 const b64 = f => readFileSync(f).toString('base64');
 const css = [400,600,700].map(w=>`@font-face{font-family:'Archivo';font-weight:${w};src:url(data:font/woff2;base64,${b64(`archivo-latin-${w}-normal.woff2`)}) format('woff2');}`).join('');
 
 // Cada pieza con el ancho real de su caja y su rol tipográfico
 const PIEZAS = JSON.parse(readFileSync('piezas.json','utf8'));
 
-const b = await chromium.launch({ executablePath:'/opt/pw-browsers/chromium' });
+const b = await abrirChromium();
 const p = await b.newPage({ viewport:{width:420,height:900} });
 await p.setContent(`<style>${css}body{margin:0}</style><div id="c"></div>`);
 await p.evaluate(async()=>{ for(const w of [400,600,700]) await document.fonts.load(`${w} 17px "Archivo"`); await document.fonts.ready; });

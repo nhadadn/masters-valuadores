@@ -7,8 +7,7 @@
  *
  * Uso:  npx serve build -l 8123   y luego   node herramientas/validar-a11y.mjs
  */
-import pw from '/opt/node-tools/node_modules/playwright/index.js';
-const { chromium } = pw;
+import { abrirChromium } from './navegador.mjs';
 
 const BASE = process.env.BASE ?? 'http://127.0.0.1:8123';
 const RUTAS = [
@@ -18,7 +17,7 @@ const RUTAS = [
 ];
 const ANCHOS = [390, 1280];
 
-const navegador = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const navegador = await abrirChromium();
 const filas = [];
 
 for (const ancho of ANCHOS) {
