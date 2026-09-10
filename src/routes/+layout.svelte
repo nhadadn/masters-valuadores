@@ -7,6 +7,7 @@
   import Icono from '$componentes/Icono.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
+  import ReglaDorada from '$componentes/ReglaDorada.svelte';
   import type { Snippet } from 'svelte';
 
   let { children }: { children: Snippet } = $props();
@@ -33,6 +34,10 @@
     <span class="lockup">
       <span class="nombre">{negocio.nombreComercial}</span>
       <span class="bajada">VALUADORES</span>
+      <!-- ADR-0007 §6: la regla va BAJO el lockup. La de ENTRE «MASTERS» y
+           «VALUADORES», que es la que traen sus cinco piezas, espera al vectorial
+           (D-06): no se reconstruye a ojo lo que un archivo va a dar exacto. -->
+      <ReglaDorada ancho="completo" />
     </span>
   </a>
 

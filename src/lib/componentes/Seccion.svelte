@@ -5,6 +5,7 @@
    * El margen lateral de 20 vive aquí y en ningún otro lado.
    */
   import type { Snippet } from 'svelte';
+  import ReglaDorada from './ReglaDorada.svelte';
 
   interface Props {
     fondo?: 'blanco' | 'crema' | 'oscuro';
@@ -18,7 +19,13 @@
 
 <section {id} class="seccion {fondo}" class:amplia>
   <div class="caja">
-    {#if etiqueta}<p class="etiqueta">{etiqueta}</p>{/if}
+    <!-- ADR-0007 §6: la regla se repite como divisor entre bloques. Va con la
+         etiqueta, que es donde empieza el bloque, y solo si hay etiqueta: una regla
+         suelta sin nada que separar es adorno, no lenguaje. -->
+    {#if etiqueta}
+      <p class="etiqueta">{etiqueta}</p>
+      <div class="divisor"><ReglaDorada /></div>
+    {/if}
     {@render children()}
   </div>
 </section>
@@ -38,8 +45,9 @@
     font-weight: var(--etiqueta-peso);
     letter-spacing: var(--etiqueta-tracking);
     color: var(--tinta-secundaria);
-    margin-bottom: var(--e-3);
+    margin-bottom: var(--e-2);
   }
+  .divisor { margin-bottom: var(--e-3); }
   .oscuro .etiqueta { color: var(--tinta-tenue-oscuro); }
 
   @media (min-width: 768px) {

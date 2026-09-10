@@ -82,6 +82,7 @@ for (const ancho of ANCHOS) {
 
         const tarjetas = altos('.tarjeta');
         return {
+          encabezado: alto('header'),
           h1: alto('h1'),
           tarjetaMin: tarjetas.length ? Math.min(...tarjetas) : null,
           tarjetaMax: tarjetas.length ? Math.max(...tarjetas) : null,
@@ -98,12 +99,12 @@ for (const ancho of ANCHOS) {
 await navegador.close();
 
 console.log('\nSPEC-0002 · altos en px y desbordamiento horizontal\n');
-console.log('| Ancho | Ruta | h1 | tarjeta mín | tarjeta máx | pie | barra | desborde |');
-console.log('|---|---|---|---|---|---|---|---|');
+console.log('| Ancho | Ruta | encabezado | h1 | tarjeta mín | tarjeta máx | pie | barra | desborde |');
+console.log('|---|---|---|---|---|---|---|---|---|');
 for (const f of filas) {
   const v = (x) => (x === null ? '—' : x);
   console.log(
-    `| ${f.ancho} | ${f.ruta} | ${v(f.h1)} | ${v(f.tarjetaMin)} | ${v(f.tarjetaMax)} | ${v(f.pie)} | ${v(f.barra)} | ${f.desborde} |`
+    `| ${f.ancho} | ${f.ruta} | ${v(f.encabezado)} | ${v(f.h1)} | ${v(f.tarjetaMin)} | ${v(f.tarjetaMax)} | ${v(f.pie)} | ${v(f.barra)} | ${f.desborde} |`
   );
 }
 
