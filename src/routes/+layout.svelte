@@ -95,8 +95,24 @@
   </div>
 </footer>
 
+<!-- ADR-0007 §2: la banda de contacto «sirve dos veces: el pie de cada página y la
+     barra fija inferior en móvil». Esta es la segunda vez. Misma tierra negro-950,
+     misma regla dorada, mismo vocabulario de insignia circular — condensado a lo que
+     cabe en una tira: la acción de llamar y la de escribir.
+     Es además la única pieza de marca que está SIEMPRE en pantalla. -->
 <div class="barra-fija">
-  <BotonWhatsApp variante="barra" origen="barra-fija" sobreOscuro />
+  <!-- La insignia aparece SOLO con el teléfono confirmado, y hay que decir por qué.
+       Se probó con un anillo apagado mientras D-08 sigue abierta y salió peor en las
+       dos cuentas: un anillo gris no aporta marca —era el objetivo del cambio— y le
+       robaba 60 px al botón, que a 360 pasaba a envolver en dos renglones dentro de
+       una caja de 48. Un adorno que rompe la maqueta no es media pieza: es ruido.
+       El patrón queda cableado y aparece en oro el día que entre el número. -->
+  {#if estaConfirmado(tel)}
+    <a class="llamar-barra" href="tel:{String(tel).replace(/\s/g, '')}" aria-label="Llamar">
+      <Icono nombre="telefono" tam={24} grosor={1.8} />
+    </a>
+  {/if}
+  <div class="cta"><BotonWhatsApp variante="barra" origen="barra-fija" sobreOscuro /></div>
 </div>
 
 <style>
@@ -147,9 +163,22 @@
 
   .barra-fija {
     position: sticky; bottom: 0; z-index: 10;
+    display: flex; align-items: center; gap: var(--e-3);
     padding: var(--e-2) var(--margen-lateral);
     background: var(--superficie-oscura);
-    border-top: 2px solid var(--oro-500);
+    border-top: var(--regla-dorada) solid var(--oro-500);
+    --oro-texto: var(--oro-500);   /* superficie oscura · 11.12:1 */
+  }
+  .cta { flex: 1; min-width: 0; }
+  /* La insignia de la banda, a escala de tira. Anillo dorado sobre negro: 11.12:1.
+     48 px de diámetro, que es el objetivo táctil de casa, no un ícono decorado. */
+  .llamar-barra {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: var(--insignia-tam); height: var(--insignia-tam);
+    border-radius: var(--radio-pastilla);
+    box-shadow: inset 0 0 0 var(--regla-dorada) var(--oro-500);
+    color: var(--oro-500);
   }
 
   @media (min-width: 768px) {

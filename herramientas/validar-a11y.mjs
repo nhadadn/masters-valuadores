@@ -32,7 +32,37 @@ for (const ancho of ANCHOS) {
       const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
       const cr = (a, b) => { const la = L(a), lb = L(b), hi = Math.max(la, lb), lo = Math.min(la, lb); return (hi + 0.05) / (lo + 0.05); };
       const rgb = (s) => { const m = s.match(/[\d.]+/g); return m ? [+m[0], +m[1], +m[2], m[3] === undefined ? 1 : +m[3]] : null; };
-      const fondoDe = (el) => { let n = el; while (n && n !== document.documentElement) { const c = rgb(getComputedStyle(n).backgroundColor); if (c && c[3] > 0.5) return c.slice(0, 3); n = n.parentElement; } return [255, 255, 255]; };
+      // UN FONDO PUEDE VIVIR EN UN PSEUDO-ELEMENTO, y este validador no lo veía.
+      //
+      // El ADR-0007 §5 obliga a que el recorte de la arista vaya en un ::before, no
+      // sobre el elemento, porque clip-path recorta también el área sensible. La
+      // consecuencia es que el relleno del botón deja de estar en su backgroundColor.
+      // Este recorrido solo leía backgroundColor y llegaba al fondo del ancestro, así
+      // que reportaba 1:1 en un control que en pantalla da 9.29:1. Comprobado
+      // muestreando los píxeles del render, no deduciéndolo.
+      //
+      // Es una ceguera anterior a esa pieza: le pasaba a cualquier elemento con fondo
+      // en pseudo-elemento. Se arregla aquí y no en el componente.
+      const fondoPseudo = (el) => {
+        for (const p of ['::before', '::after']) {
+          const cs = getComputedStyle(el, p);
+          if (!cs || cs.content === 'none') continue;
+          const c = rgb(cs.backgroundColor);
+          if (c && c[3] > 0.5) return c.slice(0, 3);
+        }
+        return null;
+      };
+      const fondoDe = (el) => {
+        let n = el;
+        while (n && n !== document.documentElement) {
+          const c = rgb(getComputedStyle(n).backgroundColor);
+          if (c && c[3] > 0.5) return c.slice(0, 3);
+          const p = fondoPseudo(n);
+          if (p) return p;
+          n = n.parentElement;
+        }
+        return [255, 255, 255];
+      };
 
       const contraste = [];
       let minR = 99;

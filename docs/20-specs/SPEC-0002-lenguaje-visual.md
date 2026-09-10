@@ -1,7 +1,7 @@
 ---
 tipo: spec
 id: SPEC-0002
-estado: IMPLEMENTADA — CA-04 PARCIAL
+estado: IMPLEMENTADA — CA-02 y CA-04 PARCIALES
 aprobada: 2026-09-10 por Nadir · con siete enmiendas de revisión
 c4: [C4-L3-componentes-web]
 depende_de: [ADR-0007-lenguaje-visual, ADR-0006-el-amarillo-vive, ADR-0004-identidad-plana, ADR-0002-tipografia]
@@ -25,6 +25,83 @@ no del borrador, y donde contradice al borrador manda la enmienda.
 | 5 | **Arista de sección: fuera**, con la razón geométrica anotada | Ver abajo |
 | 6 | **Precarga del peso 900: no se decide hoy** | `app.html` se queda como está. Se vuelve a ella con el número del LCP |
 | 7 | **Regla dorada bajo el lockup** | Como se propuso. La de entre `MASTERS` y `VALUADORES` espera a D-06 |
+
+## Revisión visual del 10 de septiembre — «se ve bien, pero sin nada de la marca»
+
+Lectura de Nadir sobre el sitio ya construido, y **es correcta**. Medido a 390×844,
+contando píxeles de acento con el mismo umbral en las piezas del cliente y en el build:
+
+| Dónde | Oro |
+|---|---|
+| Sus cinco publicaciones | 5.3 % – 12.4 % · mediana **10.4 %** |
+| Portada, primera pantalla | **0.63 %** |
+| Página de giro | **0.88 %** |
+
+De las seis piezas, en el primer pliegue solo se veía **la más delgada**, la regla.
+El sistema estaba implementado y colocado donde nadie lo mira.
+
+Dos causas distintas, que no conviene mezclar:
+
+- **Límite real.** Un cartel puede ir a 10 % de oro; una pantalla no, porque `#E7C041`
+  da 1.75:1 sobre claro. La meta nunca fue 10 %.
+- **Fallo de colocación, mío.** El ADR-0007 §2 dice que la banda de contacto «sirve dos
+  veces: el pie y la barra fija inferior en móvil». La puse solo en el pie. Y la
+  diagonal quedó al final de la portada en vez de en el borde de la foto, que es donde
+  cae en sus cinco piezas.
+
+### Tres movimientos, ninguno inventa contenido
+
+| | Qué | Resultado |
+|---|---|---|
+| 1 | La barra fija adopta el patrón de banda | **Latente.** Ver abajo |
+| 2 | La diagonal se muda al borde de la ranura de foto | Ahora está en el primer pliegue |
+| 3 | El botón de WhatsApp **inerte** conserva la arista | Ahora la arista se ve en las 11 páginas |
+
+Después, mismo método de medición:
+
+| Ruta | Oro antes | Oro después | Negro | Piezas en el primer pliegue |
+|---|---|---|---|---|
+| Portada | 0.63 % | **1.43 %** | 14.1 % | 1 → **4** de 6 |
+| Giro | 0.88 % | 0.88 % | 11.1 % | 2 → **3** de 6 |
+
+**La portada se movió; las interiores casi no.** Lo que falta ahí es exactamente lo que
+no se puede fabricar: la segunda tinta del titular necesita copy y la foto necesita foto.
+
+### El movimiento 1 quedó latente, y hay que decirlo
+
+Se probó la insignia con anillo apagado mientras D-08 sigue abierta y **salió peor en
+las dos cuentas**: un anillo gris no aporta marca —que era el objetivo— y le robaba
+60 px al botón, que a 360 px pasaba a envolver en dos renglones dentro de una caja de
+48. Un adorno que rompe la maqueta no es media pieza.
+
+El patrón queda cableado y la insignia aparece **en oro** el día que entre el número.
+Es la misma clase de pendiente que CA-04: código listo, dato ausente.
+
+### El movimiento 3 revierte una decisión de la pieza 5
+
+La pieza 5 dejó el botón inerte sin arista, con el argumento de que un control apagado
+con forma de acción principal es una promesa falsa. **El argumento estaba mal
+planteado**: quien promete es el relleno —`--negro-300`, apagado— y el marcador
+`__POR_CONFIRMAR__` encima, no la silueta. Y el costo era alto: mientras D-08 siga
+abierta, el botón inerte es el elemento más grande del primer pliegue en las once
+páginas.
+
+### El validador tenía una ceguera, y se arregló
+
+Al mover el relleno del botón a un pseudo-elemento —que el ADR §5 **obliga**, para no
+comerse el objetivo táctil— `validar-a11y.mjs` empezó a reportar **1:1** en el botón de
+WhatsApp. No era un fallo de render: muestreando los píxeles del build, el botón da
+`rgb(12,13,15)` sobre `rgb(174,180,185)`, o sea **9.29:1**.
+
+`fondoDe()` solo leía `backgroundColor` y subía al ancestro, así que **no podía ver un
+fondo que vive en un `::before`**. Es una ceguera anterior a esta spec: le pasaba a
+cualquier elemento con fondo en pseudo-elemento. Se arregló en la herramienta
+—`herramientas/validar-a11y.mjs`— y no en el componente, porque el componente estaba
+bien y el que medía mal era el instrumento.
+
+Se deja dicho con todas sus letras porque tocar el verificador para que pase el código
+es exactamente el movimiento que hay que mirar con lupa: la justificación es el muestreo
+de píxeles, no la conveniencia.
 
 ## Objetivo
 
@@ -135,11 +212,11 @@ IMPLEMENTADO exige cita `ruta/archivo:línea` de un test (A) o de código de pro
 
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
-| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:39` · único uso en `src/routes/+page.svelte:92`, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
-| CA-02 | **Banda de contacto.** Fondo `--negro-950`, tinta blanca, teléfono prominente y dirección, cada uno con su insignia. Los datos siguen en `PorConfirmar` mientras D-08 esté abierta | **IMPLEMENTADO** | `src/lib/componentes/BandaContacto.svelte:52` · montada en `src/routes/+layout.svelte:68` · el teléfono sale de `negocio.ts`, nunca del componente |
+| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona, **en el primer pliegue**. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:41` · único uso en `src/routes/+page.svelte:44`, en el borde de la ranura de foto, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
+| CA-02 | **Banda de contacto.** El ADR §2 pide **dos** colocaciones: el pie y la barra fija. El pie está; la barra queda **cableada y latente** hasta que entre el teléfono (D-08) | **PARCIAL** | `src/lib/componentes/BandaContacto.svelte:52` · montada en `src/routes/+layout.svelte:68` · el teléfono sale de `negocio.ts`, nunca del componente |
 | CA-03 | **Insignias circulares · alcance enmendado.** Círculo de 48 en `--negro-950` con glifo de 24 en `--oro-500`, `aria-hidden`. **NO en la tarjeta de giro** | **IMPLEMENTADO** | `src/lib/componentes/Insignia.svelte:64` · anillo sobre oscuro en `:73` · usada en `src/routes/+page.svelte:70` y en la banda · medido en el sitio: 48×48, radio 999px, fondo `rgb(12,13,15)`, glifo `rgb(231,192,65)` · alto de tarjeta **sin cambio**: 199.6 y 159.3 |
 | CA-04 | **Titular a dos tintas.** Peso 900, caja alta, interlínea 1.05, tracking −0.01em. Primer renglón en tinta, **segundo en oro** | **PARCIAL** | Tipografía: `src/lib/componentes/Titular.svelte:39` · cableado en `src/routes/[giro]/+page.svelte:54` · medido: peso 900, 28px, interlínea 29.4, tracking −0.28px, Archivo 900 cargada. **La segunda tinta no está en ninguna pantalla**: no hay copy de dos renglones y partir un nombre de giro sería inventar énfasis. Ver abajo |
-| CA-05 | **Arista del botón.** Solo el primario. El recorte en un pseudo-elemento con `pointer-events: none`; el elemento interactivo sigue siendo rectángulo completo | **IMPLEMENTADO** | `src/lib/componentes/Boton.svelte:100` y `BotonWhatsApp.svelte:85` · `herramientas/medir-piezas.mjs` en 12 combinaciones: `::before` → `polygon(… calc(100% − 27.7128px) …)`, elemento → `none`, esquina → **el botón**. **Sonda sintética**, ver abajo |
+| CA-05 | **Arista del botón.** Solo el primario, **incluido su estado inerte**. El recorte en un pseudo-elemento con `pointer-events: none`; el elemento interactivo sigue siendo rectángulo completo | **IMPLEMENTADO** | `src/lib/componentes/Boton.svelte:100` y `BotonWhatsApp.svelte:93` · `herramientas/medir-piezas.mjs` en 12 combinaciones: `::before` → `polygon(… calc(100% − 27.7128px) …)`, elemento → `none`, esquina → **el botón**. **Sonda sintética**, ver abajo |
 | CA-06 | **Regla dorada.** 2 px en `--oro-500`, una sola definición reutilizable | **IMPLEMENTADO** | `src/lib/componentes/ReglaDorada.svelte:34` · bajo el lockup `src/routes/+layout.svelte:41` · sobre el pie `:69` · divisor de sección `src/lib/componentes/Seccion.svelte:27` |
 
 ### Base y transversales

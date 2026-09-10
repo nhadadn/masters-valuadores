@@ -60,22 +60,34 @@
      esta pantalla la acción primaria es escribir por WhatsApp, no el submit de un
      formulario que hoy ni existe. Lleva el mismo tratamiento que `Boton.primario`.
 
-     TRES EXCEPCIONES, cada una con su razón:
-     · `inerte` NO la lleva. Un control apagado que se ve como la acción principal es
-       una promesa falsa; ya se ve apagado, y así se queda.
+     EL ESTADO INERTE TAMBIÉN LA LLEVA — corregido el 10 de septiembre.
+     Primero se decidió que no, con el argumento de que un control apagado con forma
+     de acción principal es una promesa falsa. El argumento estaba mal planteado:
+     quien promete es el RELLENO —negro-300, apagado— y el marcador
+     `__POR_CONFIRMAR__` que lleva encima, no la silueta. Y el costo de la decisión
+     era alto: mientras D-08 siga abierta, el botón inerte es el elemento más grande
+     del primer pliegue en las once páginas, así que dejarlo sin arista era dejar el
+     sitio sin marca justo donde se mira.
+
+     DOS EXCEPCIONES QUE SÍ SE SOSTIENEN:
      · `barra` NO la lleva. La barra fija es una tira de utilidad a sangre, no un
-       sello. Además en la portada se vería a la vez que el de la entrada, y sus
-       piezas tienen un sello por composición, no dos.
+       sello, y en la portada se vería a la vez que el de la entrada: sus piezas
+       tienen un sello por composición, no dos.
      · El recorte va en el pseudo-elemento, nunca sobre el <a>: `clip-path` recorta
-       también el área sensible. Ver la nota larga en `Boton.svelte`. */
-  .wa:not(.inerte):not(.barra) {
+       también el área sensible. Ver la nota larga en `Boton.svelte`.
+
+     LÍMITE CONOCIDO: --diagonal-corte es 48 × tan(30°), o sea el corte de un control
+     de alto estándar. Si un botón creciera de alto, el corte seguiría siendo 27.7 px
+     y el ángulo visible se abriría. CSS no puede leer el alto propio como longitud.
+     Todos los botones del sistema son de un renglón y 48 px: se mide y se vigila. */
+  .wa:not(.barra) {
     position: relative;
     isolation: isolate;
     background: transparent;
     border-radius: var(--radio-bloque);
     padding-inline-end: calc(var(--e-4) + var(--diagonal-corte) / 2);
   }
-  .wa:not(.inerte):not(.barra)::before {
+  .wa:not(.barra)::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -84,7 +96,9 @@
     background: var(--accion);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
   }
-  .wa.oscuro:not(.inerte):not(.barra)::before { background: var(--blanco); }
+  .wa.oscuro:not(.barra)::before { background: var(--blanco); }
+  /* El relleno apagado se mantiene: es lo que dice «esto no se puede tocar». */
+  .wa.inerte:not(.barra)::before { background: var(--negro-300); }
 
   /* Inerte a propósito: sin número confirmado no hay a dónde mandar a nadie. */
   .inerte { background: var(--negro-300); color: var(--negro-950); cursor: not-allowed; flex-wrap: wrap; }

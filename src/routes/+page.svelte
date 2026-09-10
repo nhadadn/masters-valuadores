@@ -36,7 +36,14 @@
         </Boton>
       </div>
     </div>
-    <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
+    <!-- ADR-0007 §1. LA ÚNICA diagonal del sitio, y va AQUÍ: en sus cinco piezas la
+         diagonal cae exactamente en el borde de la fotografía, separándola del panel
+         del titular. Este es ese borde. Antes estaba al final de la portada, donde
+         era correcta y no la veía nadie. -->
+    <div class="lugar-foto">
+      <BandaDiagonal />
+      <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
+    </div>
   </div>
 </Seccion>
 
@@ -86,11 +93,6 @@
   </div>
 </Seccion>
 
-<!-- ADR-0007 §1. LA ÚNICA diagonal del sitio. Va aquí, entrando a la sección oscura,
-     porque es donde el oro da 11.12:1 y se lee a plena luz. Si alguien añade otra en
-     cualquier página, deja de ser un gesto y pasa a ser ruido. -->
-<BandaDiagonal />
-
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
   <Hueco etiqueta="TÍTULO — LA INVITACIÓN A ESCRIBIR" renglones={2} sobreOscuro como="h2" />
   <div class="acciones">
@@ -103,6 +105,13 @@
 
 <style>
   .entrada { display: grid; gap: var(--e-6); }
+  /* La banda y la ranura viajan juntas: en escritorio son la columna derecha, no dos
+     filas sueltas. La diagonal es el borde superior del lugar de la foto.
+
+     `minmax(0, 1fr)` no es adorno: una reja anidada arrastra el mínimo automático de
+     su contenido hacia arriba, y la etiqueta larga de la ranura empujaba la columna a
+     388 px dentro de 320 disponibles. Eso desbordaba 48 px a 360 y 18 a 390. */
+  .lugar-foto { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
   .palabra { display: grid; gap: var(--e-3); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-2); }
 
