@@ -59,6 +59,11 @@
   --tinta-sobre-oscuro:  var(--blanco);
   --tinta-tenue-oscuro:  var(--negro-300);   /* 8.49:1 sobre negro-900 */
   --acento-sobre-oscuro: var(--oro-500);     /* 11.12:1 sobre negro-950 */
+  /* El oro COMO TEXTO, resuelto por la superficie que lo contiene.
+     Aquí vale lo de --superficie, que es blanca: --oro-800 da 4.65:1 y pasa.
+     Cada superficie que no sea blanca lo redefine —Seccion.svelte y el pie— porque
+     sobre crema el mismo color da 4.05:1 y NO pasa. Nadie escribe --oro-800 a pelo. */
+  --oro-texto:           var(--oro-800);     /* 4.65:1 sobre blanco */
   --borde-campo:         var(--negro-500);
   --borde-sutil:         var(--negro-200);
   --accion:              var(--negro-950);

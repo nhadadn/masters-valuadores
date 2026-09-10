@@ -12,6 +12,7 @@
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Tarjeta from '$componentes/Tarjeta.svelte';
   import Icono from '$componentes/Icono.svelte';
+  import Insignia from '$componentes/Insignia.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
@@ -59,11 +60,15 @@
 
 <Seccion etiqueta="POR QUÉ AQUÍ">
   <Hueco etiqueta="TÍTULO DE SECCIÓN — UNA LÍNEA" renglones={1} como="h2" />
+  <!-- ADR-0007 §3: aquí la insignia SÍ entra, y sustituye la regla dorada que este
+       bloque llevaba de borde. El texto sigue siendo hueco: la etiqueta en versalitas
+       y la segunda línea en oro llegan con el copy, no antes. -->
   <ul class="diferenciadores">
     {#each ['mapa', 'reloj', 'empeno'] as ic, i}
       <li>
-        <Icono nombre={ic} tam={28} />
-        <Hueco etiqueta="DIFERENCIADOR {i + 1} — TÍTULO Y UNA LÍNEA" renglones={2} />
+        <Insignia icono={ic}>
+          <Hueco etiqueta="DIFERENCIADOR {i + 1} — TÍTULO Y UNA LÍNEA" renglones={2} />
+        </Insignia>
       </li>
     {/each}
   </ul>
@@ -112,8 +117,9 @@
   .fila code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; border: 1px solid var(--negro-400); padding: 1px 5px; }
   .nota { margin-top: auto; font-size: 11px; line-height: 1.3; color: var(--tinta-secundaria); }
 
+  /* Sin borde dorado: la insignia es la que trae el acento ahora. Dos gestos de oro
+     en el mismo bloque compiten y ninguno significa nada. */
   .diferenciadores { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
-  .diferenciadores li { display: grid; gap: var(--e-3); border-left: 3px solid var(--oro-500); padding-left: var(--e-4); }
 
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); justify-items: start; }
@@ -125,7 +131,6 @@
     .reticula { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-3); }
     .bloqueados { min-height: 150px; }
     .diferenciadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .diferenciadores li { border-left: 0; border-top: 3px solid var(--oro-500); padding-left: 0; padding-top: var(--e-4); }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>

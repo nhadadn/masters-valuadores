@@ -39,6 +39,15 @@
   .crema  { background: var(--superficie-alterna); color: var(--tinta); }
   .oscuro { background: var(--superficie-oscura); color: var(--tinta-sobre-oscuro); }
 
+  /* Cada superficie resuelve qué es «oro como texto» sobre ella. Calculado:
+       blanco #FFFFFF → --oro-800  4.65:1  pasa AA          (el valor de tokens.css)
+       crema  #F0EFED → --oro-800  4.05:1  NO PASA          → baja a tinta secundaria
+       oscuro #0C0D0F → --oro-500 11.12:1  pasa de sobra
+     Sobre crema el oro de texto simplemente no existe, y es preferible a un renglón
+     que no se lee a plena luz. No se inventa un oro más oscuro para taparlo. */
+  .crema  { --oro-texto: var(--tinta-secundaria); }
+  .oscuro { --oro-texto: var(--oro-500); }
+
   .etiqueta {
     font-size: var(--etiqueta-tam);
     line-height: var(--etiqueta-alto);
