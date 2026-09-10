@@ -1,0 +1,71 @@
+/**
+ * Archivo, autoalojada y subset latino. Cero peticiones a Google Fonts · CA-09.
+ * Archivos: static/fuentes/ · 42 KB los tres pesos juntos.
+ *
+ * LA FUENTE DE RESPALDO ESTÁ CALIBRADA, no es un stack cualquiera.
+ * Sin calibrar, el texto se reacomoda cuando Archivo termina de cargar y eso es
+ * CLS que se paga en cada visita. Los size-adjust de abajo se midieron comparando
+ * el ancho de tres frases reales del proyecto en Archivo contra Arial, peso por
+ * peso, en navegador:
+ *
+ *   peso 400 → 0.983    peso 600 → 0.951 *    peso 700 → 0.983
+ *
+ *   * Arial no tiene 600: el navegador cae a su 700, por eso la relación cambia.
+ *
+ * Calibrado contra la familia métrica Arial / Liberation / Helvetica, que es a lo
+ * que resuelve el stack en escritorio y lo más cercano a Roboto en Android. En un
+ * teléfono con otra métrica el ajuste es aproximado, no exacto: se documenta así
+ * en vez de fingir precisión que no se midió.
+ */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fuentes/archivo-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fuentes/archivo-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fuentes/archivo-latin-700-normal.woff2') format('woff2');
+}
+
+/* Respaldo calibrado: mismas medidas de avance que Archivo, para que el cambio
+   al cargar no mueva ni un renglón. */
+@font-face {
+  font-family: 'Archivo Respaldo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 98.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo Respaldo';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Roboto Medium');
+  size-adjust: 95.1%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo Respaldo';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Roboto Bold');
+  size-adjust: 98.3%;
+  line-gap-override: 0%;
+}

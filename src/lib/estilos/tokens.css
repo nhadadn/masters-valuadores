@@ -1,0 +1,98 @@
+/**
+ * CAPA DE TOKENS · Masters Valuadores
+ *
+ * Única fuente de verdad visual. Ningún componente escribe un color, un tamaño
+ * ni un espacio literal: todos leen de aquí.
+ *
+ * Procedencia de cada familia de valores:
+ *   Color        medido de las publicaciones y del logotipo del cliente · ADR-0004, ADR-0005
+ *   Tipografía   Archivo, elegida contra Inter y Barlow con métricas medidas · ADR-0002
+ *   Contraste    calculado con la fórmula WCAG 2.1 · diseno/sistema/verificar-contraste.py
+ *   Espacio      base 4 · docs/60-diseno/sistema-de-diseno.md
+ *
+ * Los ratios en los comentarios están calculados, no estimados.
+ */
+
+:root {
+  /* ── Neutros · anclados en el negro de marca ─────────────────────────── */
+  --negro-950: #0C0D0F;   /* tinta primaria, acción primaria, anillo de foco · 19.44:1 */
+  --negro-900: #16181B;   /* superficie oscura                               · 17.79:1 */
+  --negro-800: #232629;   /* estado presionado                               · 15.21:1 */
+  --negro-700: #33373B;   /* hover del primario                              · 12.00:1 */
+  --negro-600: #474C51;   /* tinta secundaria                                ·  8.68:1 */
+  --negro-500: #5F656B;   /* borde de campo. NO negro-300: ese da 2.09        ·  5.90:1 */
+  --negro-400: #848A90;   /* piso de borde no-texto                          ·  3.49:1 */
+  --negro-300: #AEB4B9;   /* deshabilitado                                   ·  2.09:1 */
+  --negro-200: #D3D7DA;   /* separador                                       ·  1.45:1 */
+  --negro-100: #E9EBED;   /* relleno suave                                   ·  1.20:1 */
+  --crema-050: #F0EFED;   /* superficie alterna. Cálida, no gris             ·  1.08:1 */
+  --blanco:    #FFFFFF;
+
+  /* ── Acento · el amarillo que la marca usa · ADR-0004, confirmado por ADR-0006 ──
+     Medido en las cinco publicaciones vivas del cliente: mediana #E7BF42, a una
+     unidad de este valor. El oro corporativo #B58000 salió de archivos de logotipo,
+     no de lo que publica. Lo que publica manda. */
+  --oro-500: #E7C041;   /* relleno de bloque y color de marca · 11.12:1 con etiqueta negro-950 */
+  --oro-700: #9A7A22;   /* borde del acento sobre claro       ·  4.05:1 · pasa 3:1, NO texto AA */
+  --oro-800: #8A7227;   /* oro como TEXTO sobre claro         ·  4.65:1 · pasa AA */
+
+  /* ── Estado ──────────────────────────────────────────────────────────── */
+  --error: #A8331E;
+
+  /* ── Roles semánticos ────────────────────────────────────────────────── */
+  --superficie:          var(--blanco);
+  --superficie-alterna:  var(--crema-050);
+  --superficie-oscura:   var(--negro-950);
+  --tinta:               var(--negro-950);
+  --tinta-secundaria:    var(--negro-600);
+  --tinta-sobre-oscuro:  var(--blanco);
+  --tinta-tenue-oscuro:  var(--negro-300);   /* 8.49:1 sobre negro-900 */
+  --acento-sobre-oscuro: var(--oro-500);     /* 11.12:1 sobre negro-950 */
+  --borde-campo:         var(--negro-500);
+  --borde-sutil:         var(--negro-200);
+  --accion:              var(--negro-950);
+  --accion-hover:        var(--negro-700);
+  --accion-presionada:   var(--negro-800);
+
+  /* ── Tipografía ──────────────────────────────────────────────────────── */
+  --fuente-base: 'Archivo', 'Archivo Respaldo', Arial, Helvetica, sans-serif;
+
+  --display-tam: 34px;  --display-alto: 1.12;  --display-peso: 700;
+  --h1-tam: 28px;       --h1-alto: 1.15;       --h1-peso: 700;
+  --h2-tam: 22px;       --h2-alto: 1.25;       --h2-peso: 700;
+  --h3-tam: 18px;       --h3-alto: 1.30;       --h3-peso: 600;
+  /* Cuerpo a 17, no 16: esta audiencia lee a un brazo de distancia, con sol y prisa. */
+  --cuerpo-tam: 17px;   --cuerpo-alto: 1.55;   --cuerpo-peso: 400;
+  --cuerpo-fuerte-peso: 600;
+  --pie-tam: 14px;      --pie-alto: 1.45;      --pie-peso: 400;
+  --etiqueta-tam: 13px; --etiqueta-alto: 1.20; --etiqueta-peso: 700;
+  --etiqueta-tracking: 0.12em;
+
+  /* ── Espacio · base 4 ────────────────────────────────────────────────── */
+  --e-1: 4px;   --e-2: 8px;   --e-3: 12px;  --e-4: 16px;
+  --e-6: 24px;  --e-8: 32px;  --e-12: 48px; --e-16: 64px; --e-24: 96px;
+  --margen-lateral: 20px;      /* fijo en móvil. El contenido no lo invade nunca. */
+  --seccion-vertical: 32px;
+  --seccion-vertical-amplia: 64px;
+  --ancho-maximo: 1120px;
+
+  /* ── Radios ──────────────────────────────────────────────────────────── */
+  --radio-bloque: 0;
+  --radio-campo: 4px;
+  --radio-boton: 8px;
+  --radio-pastilla: 999px;
+
+  /* ── Foco · el acento NO sirve de anillo ─────────────────────────────── */
+  --foco-grosor: 3px;
+  --foco-separacion: 3px;
+  --foco-color: var(--negro-950);
+
+  /* ── Objetivo táctil ─────────────────────────────────────────────────── */
+  --tactil: 48px;         /* de casa */
+  --tactil-piso: 44px;    /* piso absoluto, WCAG 2.5.5. Solo secundarios. */
+
+  /* ── Movimiento ──────────────────────────────────────────────────────── */
+  --mov-tactil: 120ms;
+  --mov-aparicion: 200ms;
+  --mov-curva: ease-out;
+}

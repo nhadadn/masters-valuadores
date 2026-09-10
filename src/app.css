@@ -1,0 +1,4 @@
+/* Orden deliberado: tokens, fuentes, base. Ninguna regla propia vive aquí. */
+@import './lib/estilos/tokens.css';
+@import './lib/estilos/fuentes.css';
+@import './lib/estilos/base.css';

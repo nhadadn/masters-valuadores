@@ -1,0 +1,101 @@
+/**
+ * Validación de accesibilidad sobre el SITIO CONSTRUIDO, no sobre el dibujo.
+ *
+ * Recorre cada página prerenderizada en un navegador real, con la fuente cargada,
+ * y mide tres cosas: el contraste de todo texto contra su fondo resuelto, el
+ * tamaño de todos los objetivos táctiles, y si algún dato de negocio se coló.
+ *
+ * Uso:  npx serve build -l 8123   y luego   node herramientas/validar-a11y.mjs
+ */
+import pw from '/opt/node-tools/node_modules/playwright/index.js';
+const { chromium } = pw;
+
+const BASE = process.env.BASE ?? 'http://127.0.0.1:8123';
+const RUTAS = [
+  '/', '/empeno-y-prestamo/', '/joyeria/', '/bazar/', '/taller-y-refaccionaria/',
+  '/fletes-y-logistica/', '/renta-de-maquinaria/', '/financiera/',
+  '/contacto/', '/aviso-de-privacidad/', '/terminos/'
+];
+const ANCHOS = [390, 1280];
+
+const navegador = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const filas = [];
+
+for (const ancho of ANCHOS) {
+  for (const ruta of RUTAS) {
+    const p = await navegador.newPage({ viewport: { width: ancho, height: 900 } });
+    await p.goto(BASE + ruta, { waitUntil: 'networkidle' });
+    await p.evaluate(() => document.fonts.ready);
+    await p.waitForTimeout(400);
+
+    const r = await p.evaluate(() => {
+      const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+      const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+      const cr = (a, b) => { const la = L(a), lb = L(b), hi = Math.max(la, lb), lo = Math.min(la, lb); return (hi + 0.05) / (lo + 0.05); };
+      const rgb = (s) => { const m = s.match(/[\d.]+/g); return m ? [+m[0], +m[1], +m[2], m[3] === undefined ? 1 : +m[3]] : null; };
+      const fondoDe = (el) => { let n = el; while (n && n !== document.documentElement) { const c = rgb(getComputedStyle(n).backgroundColor); if (c && c[3] > 0.5) return c.slice(0, 3); n = n.parentElement; } return [255, 255, 255]; };
+
+      const contraste = [];
+      let minR = 99;
+      for (const el of document.querySelectorAll('*')) {
+        const txt = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent.trim()).join('');
+        if (!txt) continue;
+        const cs = getComputedStyle(el);
+        if (cs.visibility === 'hidden' || cs.display === 'none') continue;
+        if (el.closest('[hidden]') || el.offsetParent === null && cs.position !== 'fixed' && cs.position !== 'sticky') continue;
+        const fg = rgb(cs.color); if (!fg) continue;
+        const ratio = cr(fg.slice(0, 3), fondoDe(el));
+        const px = parseFloat(cs.fontSize), peso = parseInt(cs.fontWeight) || 400;
+        const piso = (px >= 24 || (px >= 18.66 && peso >= 700)) ? 3 : 4.5;
+        if (ratio < minR) minR = ratio;
+        if (ratio < piso) contraste.push({ txt: txt.slice(0, 40), ratio: +ratio.toFixed(2), piso, px, peso, color: cs.color });
+      }
+
+      const tactil = [];
+      let minT = 9999;
+      for (const el of document.querySelectorAll('a, button, summary, input, [role="button"]')) {
+        if (el.closest('[aria-hidden="true"]')) continue;
+        const b = el.getBoundingClientRect();
+        if (b.width < 1 || b.height < 1) continue;
+        const m = Math.min(b.width, b.height);
+        if (m < minT) minT = m;
+        if (m < 44) tactil.push({ txt: (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 32), w: Math.round(b.width), h: Math.round(b.height) });
+      }
+
+      const cuerpo = document.body.innerText;
+      return {
+        minR: +minR.toFixed(2), contraste,
+        minT: Math.round(minT), tactil,
+        pendientes: document.querySelectorAll('[data-pendiente]').length,
+        h1: document.querySelectorAll('h1').length,
+        idioma: document.documentElement.lang,
+        titulo: document.title.length > 0,
+        cifras: (cuerpo.match(/\b\d{3}[ .-]?\d{3}[ .-]?\d{4}\b|\$\s?\d|\b\d{1,2}:\d{2}\b/g) ?? [])
+      };
+    });
+    filas.push({ ancho, ruta, ...r });
+    await p.close();
+  }
+}
+await navegador.close();
+
+const malo = (f) => f.contraste.length || f.tactil.length || f.cifras.length || f.h1 !== 1 || f.idioma !== 'es-MX' || !f.titulo;
+
+console.log('| Ancho | Ruta | Contraste mín. | Táctil mín. | Huecos | h1 | Veredicto |');
+console.log('|---|---|---|---|---|---|---|');
+for (const f of filas) {
+  console.log(`| ${f.ancho} | ${f.ruta} | ${f.minR}:1 | ${f.minT} px | ${f.pendientes} | ${f.h1} | ${malo(f) ? 'NO CUMPLE' : 'CUMPLE'} |`);
+}
+const fallidas = filas.filter(malo);
+if (fallidas.length) {
+  console.log('\n--- detalle ---');
+  for (const f of fallidas) {
+    console.log(`\n${f.ancho}px ${f.ruta}`);
+    f.contraste.forEach((x) => console.log('  contraste:', JSON.stringify(x)));
+    f.tactil.forEach((x) => console.log('  táctil:', JSON.stringify(x)));
+    if (f.cifras.length) console.log('  cifras:', f.cifras.join(' | '));
+    if (f.h1 !== 1) console.log('  h1:', f.h1);
+  }
+}
+console.log(`\nVEREDICTO: ${fallidas.length ? 'NO CUMPLE' : 'CUMPLE'} · ${filas.length} combinaciones página × ancho`);
+process.exit(fallidas.length ? 1 : 0);
