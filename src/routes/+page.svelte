@@ -13,6 +13,7 @@
   import Tarjeta from '$componentes/Tarjeta.svelte';
   import Icono from '$componentes/Icono.svelte';
   import Insignia from '$componentes/Insignia.svelte';
+  import BandaDiagonal from '$componentes/BandaDiagonal.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
@@ -84,6 +85,11 @@
     </div>
   </div>
 </Seccion>
+
+<!-- ADR-0007 §1. LA ÚNICA diagonal del sitio. Va aquí, entrando a la sección oscura,
+     porque es donde el oro da 11.12:1 y se lee a plena luz. Si alguien añade otra en
+     cualquier página, deja de ser un gesto y pasa a ser ruido. -->
+<BandaDiagonal />
 
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
   <Hueco etiqueta="TÍTULO — LA INVITACIÓN A ESCRIBIR" renglones={2} sobreOscuro como="h2" />

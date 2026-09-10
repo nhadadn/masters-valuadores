@@ -8,6 +8,7 @@
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import ReglaDorada from '$componentes/ReglaDorada.svelte';
+  import BandaContacto from '$componentes/BandaContacto.svelte';
   import type { Snippet } from 'svelte';
 
   let { children }: { children: Snippet } = $props();
@@ -62,16 +63,20 @@
 <main id="contenido">{@render children()}</main>
 
 <footer>
+  <!-- ADR-0007 §2. La banda va arriba del pie, no dentro: es lo que alguien busca
+       cuando ya decidió llamar, y en sus piezas cierra la composición. -->
+  <BandaContacto />
+  <div class="regla-pie"><ReglaDorada ancho="completo" /></div>
   <div class="caja">
     <div class="bloque">
       <p class="nombre-pie">{negocio.nombreComercial} VALUADORES</p>
       <p class="dato">Razón social <PorConfirmar que="nombre legal" decision="D-01" sobreOscuro /></p>
     </div>
     <div class="bloque">
-      <p class="etiqueta">DÓNDE ESTAMOS</p>
-      <p class="dato"><PorConfirmar que="calle, número, colonia y CP" decision="D-08" sobreOscuro /></p>
-      <p class="dato"><PorConfirmar que="teléfono y WhatsApp" decision="D-08" sobreOscuro /></p>
+      <p class="etiqueta">HORARIOS Y REDES</p>
+      <!-- Dirección y teléfono ya no se repiten aquí: viven en la banda de arriba. -->
       <p class="dato"><PorConfirmar que="horarios de cada día" decision="D-08" sobreOscuro /></p>
+      <p class="dato"><PorConfirmar que="WhatsApp" decision="D-08" sobreOscuro /></p>
       <p class="dato"><PorConfirmar que="Instagram y Facebook" decision="D-10" sobreOscuro /></p>
     </div>
     <div class="bloque">
@@ -114,8 +119,18 @@
   }
   .inerte { border-color: var(--negro-500); color: var(--negro-400); }
 
-  footer { background: var(--negro-900); color: var(--tinta-sobre-oscuro); padding: var(--e-8) var(--margen-lateral) var(--e-12); }
-  .caja { max-width: var(--ancho-maximo); margin-inline: auto; display: grid; gap: var(--e-6); }
+  /* El pie ya no pinta ni padding propio arriba: la banda de contacto lo hace, y
+     lleva su propio fondo negro-950. El resto del pie queda en negro-900 para que la
+     banda se lea como banda y no como más pie. */
+  footer {
+    background: var(--negro-900); color: var(--tinta-sobre-oscuro);
+    --oro-texto: var(--oro-500);   /* superficie oscura: 11.12:1 */
+  }
+  .regla-pie { background: var(--superficie-oscura); }
+  .caja {
+    max-width: var(--ancho-maximo); margin-inline: auto; display: grid; gap: var(--e-6);
+    padding: var(--e-8) var(--margen-lateral) var(--e-12);
+  }
   .nombre-pie { font-weight: 700; letter-spacing: 0.03em; }
   .etiqueta {
     font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso);
@@ -145,7 +160,7 @@
       min-height: var(--tactil-piso); padding: 0 var(--e-3);
       font-size: var(--cuerpo-tam);
     }
-    footer { padding-inline: var(--e-12); }
+    .caja { padding-inline: var(--e-12); }
     .caja { grid-template-columns: 1.2fr 1fr 1fr 0.8fr; gap: var(--e-12); }
     .barra-fija { display: none; }   /* en escritorio el contacto vive en el encabezado */
   }
