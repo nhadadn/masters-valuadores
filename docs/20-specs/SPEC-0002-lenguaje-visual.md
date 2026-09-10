@@ -1,7 +1,7 @@
 ---
 tipo: spec
 id: SPEC-0002
-estado: APROBADA
+estado: IMPLEMENTADA — CA-04 PARCIAL
 aprobada: 2026-09-10 por Nadir · con siete enmiendas de revisión
 c4: [C4-L3-componentes-web]
 depende_de: [ADR-0007-lenguaje-visual, ADR-0006-el-amarillo-vive, ADR-0004-identidad-plana, ADR-0002-tipografia]
@@ -135,23 +135,45 @@ IMPLEMENTADO exige cita `ruta/archivo:línea` de un test (A) o de código de pro
 
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
-| CA-01 | **Diagonal.** Existe una banda de acento inclinada al ángulo de `--diagonal`, resuelta con `linear-gradient`, en **una sola** zona de la portada. Ninguna otra pantalla la repite: el conteo de usos de la clase en `src/` es exactamente 1. El validador no reporta desbordamiento horizontal a 390 ni a 1280 | NO INICIADO | — |
-| CA-02 | **Banda de contacto.** El pie y la barra fija inferior comparten el mismo patrón: fondo `--negro-950`, tinta blanca, teléfono con insignia circular y dirección con insignia circular. Los dos datos siguen saliendo de `PorConfirmar` mientras D-08 esté abierta. El pie deja de ser `--negro-900` | NO INICIADO | — |
-| CA-03 | **Insignias circulares · alcance enmendado.** Círculo de 48 en `--negro-950` con glifo de 24 en `--oro-500`, `aria-hidden`, etiqueta en versalitas y segunda línea en oro. Va en **dos** lugares y solo dos: la **banda de contacto** y el bloque de **diferenciadores** de portada. **NO va en la tarjeta de giro**, que conserva su `.filo`. `grep` confirma cero usos en `Tarjeta.svelte`. El validador sigue en 22/22 CUMPLE | NO INICIADO | — |
-| CA-04 | **Titular a dos tintas.** `h1` en peso 900, caja alta, interlínea 1.05, tracking −0.01em, primer renglón `--negro-950` y segundo `--oro-800`. Solo en portada y encabezado de giro; `grep` confirma que ninguna subsección lo usa | NO INICIADO | — |
-| CA-05 | **Arista del botón.** El botón **primario** —y solo él— lleva arista inclinada en su borde de salida. El recorte vive en un pseudo-elemento con `pointer-events: none`; el elemento interactivo sigue siendo un rectángulo completo. `document.elementFromPoint()` en la esquina recortada devuelve el botón | NO INICIADO | — |
-| CA-06 | **Regla dorada.** Divisor de 2 px en `--oro-500` bajo el lockup del encabezado y entre bloques de sección, como una sola regla reutilizable, no como tres reglas parecidas | NO INICIADO | — |
+| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:39` · único uso en `src/routes/+page.svelte:92`, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
+| CA-02 | **Banda de contacto.** Fondo `--negro-950`, tinta blanca, teléfono prominente y dirección, cada uno con su insignia. Los datos siguen en `PorConfirmar` mientras D-08 esté abierta | **IMPLEMENTADO** | `src/lib/componentes/BandaContacto.svelte:52` · montada en `src/routes/+layout.svelte:68` · el teléfono sale de `negocio.ts`, nunca del componente |
+| CA-03 | **Insignias circulares · alcance enmendado.** Círculo de 48 en `--negro-950` con glifo de 24 en `--oro-500`, `aria-hidden`. **NO en la tarjeta de giro** | **IMPLEMENTADO** | `src/lib/componentes/Insignia.svelte:64` · anillo sobre oscuro en `:73` · usada en `src/routes/+page.svelte:70` y en la banda · medido en el sitio: 48×48, radio 999px, fondo `rgb(12,13,15)`, glifo `rgb(231,192,65)` · alto de tarjeta **sin cambio**: 199.6 y 159.3 |
+| CA-04 | **Titular a dos tintas.** Peso 900, caja alta, interlínea 1.05, tracking −0.01em. Primer renglón en tinta, **segundo en oro** | **PARCIAL** | Tipografía: `src/lib/componentes/Titular.svelte:39` · cableado en `src/routes/[giro]/+page.svelte:54` · medido: peso 900, 28px, interlínea 29.4, tracking −0.28px, Archivo 900 cargada. **La segunda tinta no está en ninguna pantalla**: no hay copy de dos renglones y partir un nombre de giro sería inventar énfasis. Ver abajo |
+| CA-05 | **Arista del botón.** Solo el primario. El recorte en un pseudo-elemento con `pointer-events: none`; el elemento interactivo sigue siendo rectángulo completo | **IMPLEMENTADO** | `src/lib/componentes/Boton.svelte:100` y `BotonWhatsApp.svelte:85` · `herramientas/medir-piezas.mjs` en 12 combinaciones: `::before` → `polygon(… calc(100% − 27.7128px) …)`, elemento → `none`, esquina → **el botón**. **Sonda sintética**, ver abajo |
+| CA-06 | **Regla dorada.** 2 px en `--oro-500`, una sola definición reutilizable | **IMPLEMENTADO** | `src/lib/componentes/ReglaDorada.svelte:34` · bajo el lockup `src/routes/+layout.svelte:41` · sobre el pie `:69` · divisor de sección `src/lib/componentes/Seccion.svelte:27` |
 
 ### Base y transversales
 
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
-| CA-07 | **Peso 900 cableado.** `@font-face` de 900 en `fuentes.css`, y su respaldo `Archivo Respaldo` **con `size-adjust` medido**, no copiado del 700. Sin eso el titular se reacomoda al cargar la fuente y eso es CLS en el LCP — ADR-0002 lo exige explícitamente | NO INICIADO | — |
-| CA-08 | **Cero JavaScript.** `csr = false` intacto y `herramientas/presupuesto.mjs` en **0 KB** en las 11 páginas, igual que hoy | NO INICIADO | — |
-| CA-09 | **Contraste.** `node herramientas/validar-a11y.mjs` en **22/22 CUMPLE** y `python verificar-contraste.py` en 0 hallazgos. Ningún oro suelto sobre claro | NO INICIADO | — |
-| CA-10 | **Táctil.** Mínimo ≥ 44 px en las 22 combinaciones. Ningún recorte reduce área sensible | NO INICIADO | — |
-| CA-11 | **Sin CLS.** Se reporta el alto de la tarjeta de giro y del `h1` **antes y después**, a 390 y a 1280. Si cambia, se dice el número; no se declara «sin CLS» sin medirlo | NO INICIADO | — |
-| CA-12 | **Ningún literal.** Ningún componente escribe un color, un tamaño o un espacio a mano. Todo token nuevo lleva comentario de procedencia y ratio calculado, como los 98 renglones que ya están | NO INICIADO | — |
+| CA-07 | **Peso 900 cableado** con `size-adjust` **medido**, no copiado del 700 | **IMPLEMENTADO** | `src/lib/estilos/fuentes.css:57` · respaldo en `:109` con `size-adjust: 95.3%` · derivación en `herramientas/medir-respaldo.mjs`, con su límite escrito |
+| CA-08 | **Cero JavaScript.** `csr = false` intacto y presupuesto en **0 KB** | **IMPLEMENTADO** | `src/routes/+layout.ts:28` sin tocar · `herramientas/presupuesto.mjs`: **0 KB en las 11 páginas**, margen de 40.00 KB |
+| CA-09 | **Contraste.** Validador en 22/22. Ningún oro suelto sobre claro | **IMPLEMENTADO** | `herramientas/validar-a11y.mjs`: **22/22 CUMPLE**, mínimo 4.94:1, igual que la línea base · restricción hecha estructura en `src/lib/estilos/tokens.css:50` y `src/lib/componentes/Seccion.svelte:40` |
+| CA-10 | **Táctil.** Mínimo ≥ 44 px. Ningún recorte reduce área sensible | **IMPLEMENTADO** | `validar-a11y.mjs`: **44 px** mínimo en las 22 · `medir-piezas.mjs`: la esquina recortada responde **el botón**, y el `clip-path` del elemento es `none` |
+| CA-11 | **Sin CLS declarado sin medir.** Altos antes y después | **IMPLEMENTADO** | `herramientas/medir-piezas.mjs` · tabla completa abajo. Tres cosas cambian de alto y las tres se reportan con número |
+| CA-12 | **Ningún literal.** Todo token nuevo con procedencia y ratio | **IMPLEMENTADO** | `src/lib/estilos/tokens.css:111-146` · los seis componentes nuevos leen solo `var(--…)` |
+
+### CA-11 · los altos, antes y después
+
+| Ancho | Qué | Antes | Después | Por qué |
+|---|---|---|---|---|
+| 360 | `h1` Empeño y préstamo | 32 px | **59 px** | caja alta a 900: pasa de 1 renglón a 2 |
+| 360 | `h1` Renta de maquinaria y equipo | 64 px | **88 px** | pasa de 2 renglones a 3 |
+| 390 | `h1` Empeño y préstamo | 32.2 px | **29.4 px** | mismo renglón, interlínea 1.05 en vez de 1.15 |
+| 390 | `h1` Renta de maquinaria y equipo | 64.4 px | **58.8 px** | igual, dos renglones |
+| 360 / 390 / 1280 | pie | 975.7 / 890.8 / 420.1 | **1073 / 1016.4 / 518.1** | la banda de contacto, bajo el pliegue |
+| todos | encabezado | 56 / 76 | **56 / 76** | el `min-height` absorbe la regla dorada |
+| todos | tarjeta de giro | 199.6 / 159.3 | **199.6 / 159.3** | sin cambio — la comprobación de que la enmienda 3 se respetó |
+| todos | barra fija | 66 / 0 | **66 / 0** | sin cambio |
+
+Nada de esto es CLS de tiempo de ejecución: son alturas de maquetación fijadas en el
+prerender. El CLS real que había que evitar —el titular reacomodándose cuando Archivo
+900 termina de cargar— lo cubre el `size-adjust` de CA-07.
+
+**360 px no lo mide `validar-a11y.mjs`, que va a 390 y 1280.** Se añadió a
+`medir-piezas.mjs` porque el titular cruza de dos a tres renglones justo debajo de 390,
+y la audiencia de este sitio usa Android de gama baja, donde 360 es el ancho común. A
+390 no se ve el peor caso de quien va a entrar.
 
 ## Hallazgos que esta spec destapó antes de implementar
 
@@ -208,6 +230,47 @@ como `devDependency` —herramienta, **0 bytes al visitante**— y los tres scri
 importar por ruta absoluta. Nadir lo calificó, correctamente, como **corregir un defecto,
 no meter una dependencia**: tal como estaban, los tres scripts solo corrían en una
 máquina concreta y en ninguna otra.
+
+## Lo que quedó a medias, dicho con su nombre
+
+### CA-04 · la segunda tinta no existe en ninguna pantalla
+
+El primitivo acepta `segunda` y **nadie se la pasa**. Los nombres de giro son de un
+renglón y cuatro de los siete son **una sola palabra** —Joyería, Bazar, Financiera,
+Taller—. Partir «Empeño y préstamo» en dos y teñir la mitad de oro sería inventar un
+énfasis que el cliente no autorizó, y el titular de portada es un hueco.
+
+Lo que sí está: la caja alta, el peso 900, la interlínea y el tracking, sobre contenido
+real. Es la mitad tipográfica de la pieza. **La otra mitad llega con el copy**, no antes.
+
+Por eso CA-04 dice PARCIAL y no IMPLEMENTADO. Hay cita de código; no hay la pieza que
+el ADR describe.
+
+### CA-05 · la sonda es sintética, y por una razón que conviene saber
+
+**Hoy el sitio no renderiza ningún botón primario.** El submit del formulario está
+bloqueado por D-13 —`src/routes/contacto/+page.svelte:49`— y el de WhatsApp sale inerte
+porque falta el número. No hay un solo botón con arista visible para un visitante.
+
+La sonda clona un botón real del DOM y le cambia la variante, así que el clon conserva
+la clase de ámbito de Svelte y recibe **el CSS publicado**. Lo sintético es la presencia
+del botón, no la regla que se verifica. En cuanto se cierre D-13 o llegue el número, la
+arista aparece sola.
+
+### La diagonal no puede hacer su trabajo todavía
+
+En sus piezas la diagonal **corta una fotografía contra un panel de texto**. Sin la foto
+de la fachada, lo que hay es una banda decorativa entrando a la sección oscura: correcta,
+al ángulo medido, pero decorativa. Está escrito en el propio componente.
+
+Es la misma proporción que el ADR-0007 puso por delante: **el lenguaje visual acerca
+aproximadamente la mitad del camino, y la otra mitad son fotos que no existen.**
+
+### `verificar-contraste.py` no mide el sitio
+
+Sale en 0 hallazgos, y hay que decir qué comprueba: **solo los lienzos de
+`diseno/sistema/`**, no `src/` ni el HTML construido. No es evidencia de nada de esta
+spec. Lo que cubre el sitio es `validar-a11y.mjs`.
 
 ## Datos que faltan
 
