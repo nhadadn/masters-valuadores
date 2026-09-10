@@ -1,8 +1,9 @@
 ---
 tipo: adr
 id: ADR-0007
-estado: ACEPTADA
+estado: ACEPTADA — §3 y §4 enmendados por SPEC-0002
 fecha: 2026-09-10
+enmendada: 2026-09-10 por [[SPEC-0002-lenguaje-visual]] · §3 alcance de la insignia · §4 el oro sobre crema
 decide: Nadir
 implementa: Claude Code
 depende_de: [ADR-0004-identidad-plana, ADR-0006-el-amarillo-vive]
@@ -38,6 +39,11 @@ directa sobre `docs/99-assets/post-*.jpg`.
 > detección falló en dos de las cinco piezas. **Esos números no se usan.** Lo de abajo
 > es observación, y los valores concretos se fijan comparando contra las piezas y luego
 > se congelan como token.
+>
+> **Actualización del 10 de septiembre.** Una segunda medición —detección de rectas
+> filtrada al cuadrante de la banda dorada— sí cerró: 11 segmentos, 3 822 px de recta,
+> **30.7° ± 0.8°** desde la vertical, SD 0.79°. El token queda en `--diagonal: 30deg`.
+> Ver [[SPEC-0002-lenguaje-visual|SPEC-0002]].
 
 | # | Lo que hacen | Lo que hacía el build |
 |---|---|---|
@@ -74,7 +80,15 @@ Sirve dos veces: el **pie** de cada página y la **barra fija** inferior en móv
 
 ### 3 · Insignias circulares
 
-Reemplaza la regla dorada de las tarjetas. Círculo de 48 de diámetro en `--negro-950`,
+> **ENMENDADO el 10 de septiembre por [[SPEC-0002-lenguaje-visual|SPEC-0002]], enmienda 3.**
+> Este párrafo decía que la insignia *reemplaza la regla dorada de las tarjetas*. **Es un
+> error y queda sin efecto.** La tarjeta de giro ya lleva un `Icono` de 26 px
+> (`Tarjeta.svelte:19`), ocho círculos negros en retícula se leen como una cuadrícula de
+> lunares, y 48 px rompen el alto fijo de `Tarjeta.svelte:28` —que existe justamente para
+> no pagar CLS—. **La tarjeta conserva su `.filo`.** La insignia va en la banda de
+> contacto y en el bloque de diferenciadores, y en ningún otro lado.
+
+Círculo de 48 de diámetro en `--negro-950`,
 glifo de 24 en `--oro-500`, etiqueta en versalitas y segunda línea en oro.
 
 - El círculo es **decorativo**: `aria-hidden`. El significado lo carga la etiqueta.
@@ -90,9 +104,16 @@ reconocible: «MAQUINARIA / LISTA PARA TRABAJAR».
 - **Peso 900.** Medido: Archivo 900 pesa **13.2 KB**, menos que el 700 que ya se carga,
   y llega mucho más cerca de su lockup. Se añade como cuarto peso.
 - Interlínea 1.05, tracking −0.01em, caja alta.
-- **El segundo renglón va en `--oro-800` `#8A7227` (4.65:1) sobre claro**, o en
+- **El segundo renglón va en `--oro-800` `#8A7227` sobre BLANCO (4.65:1)**, o en
   `--oro-500` sobre oscuro (11.12:1). Aquí es donde el `oro-800` que sobrevivió de la
   dirección B se gana su lugar.
+
+  > **CORREGIDO el 10 de septiembre por [[SPEC-0002-lenguaje-visual|SPEC-0002]], enmienda 4.**
+  > Este renglón decía «sobre claro» sin distinguir, y **«claro» son dos superficies
+  > distintas en este sistema**. Calculado: `--oro-800` da **4.65:1 sobre `--blanco`** y
+  > **4.05:1 sobre `--crema-050`**. Lo segundo **no pasa AA**. El oro como texto va sobre
+  > `--superficie` u oscuro, **nunca sobre `--superficie-alterna`**. No se crea un oro más
+  > oscuro: sería un color que la marca no publica.
 - Solo en la portada y en el encabezado de cada giro. No en subsecciones.
 
 ### 5 · La arista del botón
