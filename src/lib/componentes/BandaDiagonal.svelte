@@ -21,10 +21,25 @@
    * claro daría 1.75:1: visible de cerca, invisible a plena luz, que es la condición
    * de esta audiencia.
    *
-   * LO QUE ESTO NO ES: en sus piezas la diagonal corta una fotografía contra un panel
-   * de texto. Sin la foto de la fachada esto es un gesto decorativo, no el gesto. El
-   * ADR-0007 lo dice sin rodeos: el lenguaje visual acerca la mitad del camino, y la
-   * otra mitad son fotos que no existen.
+   * DÓNDE PUEDE VIVIR: solo sobre una masa oscura y ALTA. Se intentó como remate de la
+   * ranura de foto de la entrada, para subirla al primer pliegue, y salió mal: una
+   * barra negra con una mancha amarilla encima de una caja gris, sin cortar ni
+   * enmarcar nada. La razón es geométrica y es la misma de la enmienda 5 —a 30° de la
+   * vertical, el recorrido horizontal depende del ALTO de la caja:
+   *
+   *     alto  48 px  →   27.7 px de recorrido   ← la banda de remate: nada
+   *     alto 197 px  →  113.7 px                ← ranura de foto a 390
+   *     alto 371 px  →  214.2 px                ← ranura de foto a 1280
+   *
+   * Sobre 660 px de columna en escritorio, 27.7 px de recorrido no se leen como corte
+   * porque no lo son.
+   *
+   * LO QUE ESTO NO ES: en sus piezas la diagonal corta una FOTOGRAFÍA contra un panel
+   * de texto. Nace de que hay una masa oscura que cortar. Sin la foto de la fachada
+   * esto es un gesto decorativo, no el gesto, y por eso vive donde el sitio sí tiene
+   * masa oscura: la sección de contacto. Se muda a la entrada el día que exista la
+   * foto. El ADR-0007 lo dice sin rodeos: el lenguaje visual acerca la mitad del
+   * camino, y la otra mitad son fotos que no existen.
    */
 </script>
 

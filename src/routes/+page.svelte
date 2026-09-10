@@ -36,14 +36,19 @@
         </Boton>
       </div>
     </div>
-    <!-- ADR-0007 §1. LA ÚNICA diagonal del sitio, y va AQUÍ: en sus cinco piezas la
-         diagonal cae exactamente en el borde de la fotografía, separándola del panel
-         del titular. Este es ese borde. Antes estaba al final de la portada, donde
-         era correcta y no la veía nadie. -->
-    <div class="lugar-foto">
-      <BandaDiagonal />
-      <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
-    </div>
+    <!-- Aquí NO va la diagonal, y conviene dejar escrito por qué se intentó y se
+         quitó. En sus piezas la diagonal es el borde de una FOTOGRAFÍA: nace de que
+         hay una masa oscura que cortar. Puesta como remate sobre esta ranura gris se
+         convertía en una barra negra con una mancha amarilla encima de una caja gris,
+         sin cortar ni enmarcar nada.
+
+         La geometría lo explica y es la misma de la enmienda 5: una recta inclinada
+         desde la vertical necesita ALTO, y una banda de remate no lo tiene. Los
+         números están en `BandaDiagonal.svelte` y en la SPEC-0002.
+
+         Vuelve aquí el día que exista la foto de la fachada, que es cuando habrá algo
+         que cortar. Ver D-06 y el hueco de la fachada. -->
+    <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
   </div>
 </Seccion>
 
@@ -93,6 +98,12 @@
   </div>
 </Seccion>
 
+<!-- ADR-0007 §1. LA ÚNICA diagonal del sitio. Entra a la sección oscura, que es la
+     única masa oscura y alta que hay hoy en la portada: 30° de la vertical necesitan
+     alto, y el oro sobre negro da 11.12:1. Si alguien la repite en otra pantalla, deja
+     de ser un gesto y pasa a ser ruido. -->
+<BandaDiagonal />
+
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
   <Hueco etiqueta="TÍTULO — LA INVITACIÓN A ESCRIBIR" renglones={2} sobreOscuro como="h2" />
   <div class="acciones">
@@ -105,13 +116,6 @@
 
 <style>
   .entrada { display: grid; gap: var(--e-6); }
-  /* La banda y la ranura viajan juntas: en escritorio son la columna derecha, no dos
-     filas sueltas. La diagonal es el borde superior del lugar de la foto.
-
-     `minmax(0, 1fr)` no es adorno: una reja anidada arrastra el mínimo automático de
-     su contenido hacia arriba, y la etiqueta larga de la ranura empujaba la columna a
-     388 px dentro de 320 disponibles. Eso desbordaba 48 px a 360 y 18 a 390. */
-  .lugar-foto { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
   .palabra { display: grid; gap: var(--e-3); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-2); }
 

@@ -53,19 +53,38 @@ Dos causas distintas, que no conviene mezclar:
 
 | | Qué | Resultado |
 |---|---|---|
-| 1 | La barra fija adopta el patrón de banda | **Latente.** Ver abajo |
-| 2 | La diagonal se muda al borde de la ranura de foto | Ahora está en el primer pliegue |
-| 3 | El botón de WhatsApp **inerte** conserva la arista | Ahora la arista se ve en las 11 páginas |
+| 1 | La barra fija adopta el patrón de banda | **Latente** hasta D-08. Ver abajo |
+| 2 | La diagonal se muda al borde de la ranura de foto | **Revertido.** Ver abajo |
+| 3 | El botón de WhatsApp **inerte** conserva la arista | **Hecho.** La arista se ve en las 11 páginas |
 
-Después, mismo método de medición:
+Resultado real, mismo método de medición:
 
 | Ruta | Oro antes | Oro después | Negro | Piezas en el primer pliegue |
 |---|---|---|---|---|
-| Portada | 0.63 % | **1.43 %** | 14.1 % | 1 → **4** de 6 |
-| Giro | 0.88 % | 0.88 % | 11.1 % | 2 → **3** de 6 |
+| Portada | 0.63 % | 0.63 % | 9.1 % | 1 → **2** de 6 |
+| Giro | 0.88 % | 0.88 % | 10.4 % | 2 → **3** de 6 |
 
-**La portada se movió; las interiores casi no.** Lo que falta ahí es exactamente lo que
-no se puede fabricar: la segunda tinta del titular necesita copy y la foto necesita foto.
+**De los tres movimientos solo uno quedó en pie.** El oro no se movió: la arista es
+negra, no dorada. Lo que subió al primer pliegue es forma, no color.
+
+### El movimiento 2 se revirtió, y la razón está medida
+
+Puesta como remate sobre la ranura de foto, la diagonal se convertía en una barra negra
+con una mancha amarilla encima de una caja gris, sin cortar ni enmarcar nada. Es la
+misma geometría de la enmienda 5: **una recta a 30° de la vertical necesita ALTO.**
+
+| Alto de la caja | Recorrido horizontal |
+|---|---|
+| 48 px · la banda de remate | **27.7 px** |
+| 197 px · ranura de foto a 390 | 113.7 px |
+| 371 px · ranura de foto a 1280 | 214.2 px |
+
+27.7 px de recorrido sobre 660 px de columna en escritorio no se leen como corte porque
+no lo son.
+
+**La diagonal es el borde de una fotografía.** Nace de que hay una masa oscura que
+cortar, y hoy la única del sitio es la sección de contacto. Vuelve a la entrada el día
+que exista la foto de la fachada, que es cuando habrá algo que cortar.
 
 ### El movimiento 1 quedó latente, y hay que decirlo
 
@@ -212,7 +231,7 @@ IMPLEMENTADO exige cita `ruta/archivo:línea` de un test (A) o de código de pro
 
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
-| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona, **en el primer pliegue**. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:41` · único uso en `src/routes/+page.svelte:44`, en el borde de la ranura de foto, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
+| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:56` · único uso en `src/routes/+page.svelte:105`, entrando a la sección oscura, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
 | CA-02 | **Banda de contacto.** El ADR §2 pide **dos** colocaciones: el pie y la barra fija. El pie está; la barra queda **cableada y latente** hasta que entre el teléfono (D-08) | **PARCIAL** | `src/lib/componentes/BandaContacto.svelte:52` · montada en `src/routes/+layout.svelte:68` · el teléfono sale de `negocio.ts`, nunca del componente |
 | CA-03 | **Insignias circulares · alcance enmendado.** Círculo de 48 en `--negro-950` con glifo de 24 en `--oro-500`, `aria-hidden`. **NO en la tarjeta de giro** | **IMPLEMENTADO** | `src/lib/componentes/Insignia.svelte:64` · anillo sobre oscuro en `:73` · usada en `src/routes/+page.svelte:70` y en la banda · medido en el sitio: 48×48, radio 999px, fondo `rgb(12,13,15)`, glifo `rgb(231,192,65)` · alto de tarjeta **sin cambio**: 199.6 y 159.3 |
 | CA-04 | **Titular a dos tintas.** Peso 900, caja alta, interlínea 1.05, tracking −0.01em. Primer renglón en tinta, **segundo en oro** | **PARCIAL** | Tipografía: `src/lib/componentes/Titular.svelte:39` · cableado en `src/routes/[giro]/+page.svelte:54` · medido: peso 900, 28px, interlínea 29.4, tracking −0.28px, Archivo 900 cargada. **La segunda tinta no está en ninguna pantalla**: no hay copy de dos renglones y partir un nombre de giro sería inventar énfasis. Ver abajo |
