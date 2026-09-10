@@ -1,16 +1,83 @@
 {
   "pages": [
-    { "id": "page-1", "name": "Fundamentos" },
-    { "id": "page-2", "name": "Componentes" },
-    { "id": "page-3", "name": "Prototipo" }
+    {
+      "id": "page-1",
+      "name": "Fundamentos"
+    },
+    {
+      "id": "page-2",
+      "name": "Componentes"
+    },
+    {
+      "id": "page-3",
+      "name": "Prototipo"
+    }
   ],
   "artboards": [
-    { "file": "Main.dc.html",    "x": 0,    "y": 0, "w": 1280, "h": 900,  "page": "page-1", "title": "Marca y monograma" },
-    { "file": "Color.dc.html",   "x": 1400, "y": 0, "w": 1280, "h": 1180, "page": "page-1", "title": "Color y contraste" },
-    { "file": "Escalas.dc.html", "x": 2800, "y": 0, "w": 1280, "h": 1180, "page": "page-1", "title": "Escalas" },
-    { "file": "Botones.dc.html", "x": 0,    "y": 0, "w": 1280, "h": 1060, "page": "page-2", "title": "Botones y CTA" },
-    { "file": "Piezas.dc.html",  "x": 1400, "y": 0, "w": 1280, "h": 1080, "page": "page-2", "title": "Section · Card · Field" },
-    { "file": "ProtoWhatsApp.dc.html", "x": 0, "y": 0, "w": 390, "h": 1180, "page": "page-3", "title": "Prototipo · contacto por WhatsApp", "is_interactive": true }
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 900,
+      "page": "page-1",
+      "title": "Marca y monograma"
+    },
+    {
+      "file": "Color.dc.html",
+      "x": 1400,
+      "y": 0,
+      "w": 1280,
+      "h": 1420,
+      "page": "page-1",
+      "title": "Color y contraste"
+    },
+    {
+      "file": "Escalas.dc.html",
+      "x": 2800,
+      "y": 0,
+      "w": 1280,
+      "h": 1180,
+      "page": "page-1",
+      "title": "Escalas"
+    },
+    {
+      "file": "Tipografia.dc.html",
+      "x": 4200,
+      "y": 0,
+      "w": 1280,
+      "h": 1760,
+      "page": "page-1",
+      "title": "Tipografía · Archivo"
+    },
+    {
+      "file": "Botones.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1060,
+      "page": "page-2",
+      "title": "Botones y CTA"
+    },
+    {
+      "file": "Piezas.dc.html",
+      "x": 1400,
+      "y": 0,
+      "w": 1280,
+      "h": 1160,
+      "page": "page-2",
+      "title": "Section · Card · Field"
+    },
+    {
+      "file": "ProtoWhatsApp.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 1180,
+      "page": "page-3",
+      "title": "Prototipo · contacto por WhatsApp",
+      "is_interactive": true
+    }
   ],
   "annotations": [
     {
@@ -19,7 +86,7 @@
       "x": 0,
       "y": -230,
       "w": 900,
-      "text": "Qué está medido y qué sigue provisional:\n\nMEDIDO — la rampa de acero (sale de los píxeles neutros del logo, que son el 85 % del archivo) y todos los ratios de contraste.\n\nPROVISIONAL — el monograma (reconstruido del JPG, no es el vectorial original), el acento #CCB642 y la familia tipográfica. Los tres se cierran con el archivo vectorial de Cristóbal."
+      "text": "Qué está medido y qué es decisión:\n\nMEDIDO — el negro #0C0D0F y la crema #F0EFED, tomados de dos publicaciones distintas del cliente que dieron el mismo valor. Y el oro #B58000, moda del logotipo de joyería medida por separado en el monograma y en el texto. Todos los ratios de contraste están calculados.\n\nDERIVADO — los pasos oro-300 (#D6A52F) y oro-700 (#8C6300) son el mismo tono subido y bajado en valor. No son mediciones.\n\nDECISIÓN DE TRABAJO — el acento es la dirección B del ADR-0005, elegida por Nadir el 10 de septiembre. Cristóbal todavía no la autoriza (D-14). El amarillo industrial #E7C041 no se descartó: queda reservado para las líneas pesadas.\n\nPROVISIONAL — la geometría del monograma (reconstruida, no es el vectorial) y la familia tipográfica. Las dos se cierran con el archivo de quien diseña las publicaciones del cliente."
     },
     {
       "id": "como-usar-proto",
@@ -28,7 +95,18 @@
       "y": 0,
       "w": 420,
       "text": "Toca cualquier botón de WhatsApp o cualquier tarjeta de bien.\n\nLa hoja de abajo enseña tres cosas: el mensaje que se manda, el enlace que se arma, y el evento que se registra para medir qué sección de la página trajo el contacto.\n\nEse último renglón es la respuesta a «¿de dónde vino este cliente?». Sin él, el sitio no se puede mejorar mes con mes.\n\nEl número está en __POR_CONFIRMAR__ a propósito."
+    },
+    {
+      "id": "tipografia-cerrada",
+      "page": "page-1",
+      "x": 4200,
+      "y": -250,
+      "w": 900,
+      "text": "La tipografía quedó CERRADA el 10 de septiembre: Archivo (ADR-0002 ACEPTADA).\n\nSe midieron tres candidatas en navegador sobre los woff2 reales de Fontsource, no a ojo. Archivo gana por peso (42 KB contra 71 de Inter) y por economía de renglón (45 caracteres contra 42; la misma sección ocupa 512 px contra 539). El argumento en contra queda registrado: Inter tiene la altura de x más grande, 9.3 px contra 9.0 — una diferencia de 0.3 px, por debajo de lo que el ojo distingue.\n\nLos archivos ya viven en el repo, en static/fuentes/. Con eso CA-09 de la SPEC-0001 deja de depender de terceros.\n\nHallazgo que condiciona todas las pantallas: «Renta de maquinaria y equipo» no cabe en un renglón de h1 a 28 px en ninguna de las tres. La escala no se encoge; se diseña para dos renglones."
     }
   ],
-  "launch": { "view": "canvas", "page": "page-1" }
+  "launch": {
+    "view": "canvas",
+    "page": "page-1"
+  }
 }

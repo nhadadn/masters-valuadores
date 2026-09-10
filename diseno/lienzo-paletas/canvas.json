@@ -1,0 +1,102 @@
+{
+  "pages": [
+    {
+      "id": "page-0",
+      "name": "Evidencia · ADR-0006"
+    },
+    {
+      "id": "page-1",
+      "name": "Las tres paletas"
+    },
+    {
+      "id": "page-2",
+      "name": "Decisión"
+    }
+  ],
+  "artboards": [
+    {
+      "file": "Evidencia.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1440,
+      "page": "page-0",
+      "title": "La evidencia que tumba la dirección B"
+    },
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1080,
+      "page": "page-1",
+      "title": "De dónde sale cada color"
+    },
+    {
+      "file": "DirA.dc.html",
+      "x": 1400,
+      "y": 0,
+      "w": 1280,
+      "h": 1180,
+      "page": "page-1",
+      "title": "A · Industrial"
+    },
+    {
+      "file": "DirB.dc.html",
+      "x": 2800,
+      "y": 0,
+      "w": 1280,
+      "h": 1180,
+      "page": "page-1",
+      "title": "B · Valuación"
+    },
+    {
+      "file": "DirC.dc.html",
+      "x": 4200,
+      "y": 0,
+      "w": 1280,
+      "h": 1180,
+      "page": "page-1",
+      "title": "C · Dos registros"
+    },
+    {
+      "file": "Comparativa.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1800,
+      "page": "page-2",
+      "title": "Las tres lado a lado y la recomendación"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "por-que-esta-hoja",
+      "page": "page-0",
+      "x": 1360,
+      "y": 0,
+      "w": 460,
+      "text": "Esta hoja llegó DESPUÉS de las otras y las corrige.\n\nEl 10 de septiembre por la tarde el cliente entregó cinco publicaciones vivas, de cinco giros distintos. El ADR-0005 —la dirección B, el oro corporativo— se sostenía en una sola premisa: que el amarillo plano pertenecía únicamente a maquinaria.\n\nHay una pieza de JOYERÍA y una de MONEDAS entre las cinco, y las dos usan el amarillo plano. La premisa era falsa.\n\nLo medido: 25 211 píxeles del monograma en las cinco piezas. Mediana #E7BF42, a una unidad del #E7C041 que ya estaba en el ADR-0004 antes de que yo lo cambiara.\n\nEl #B58000 salió de archivos de logotipo. Estas cinco son lo que el cliente publica. Lo que publica manda.\n\nLas hojas de las tres direcciones siguen siendo válidas como análisis de contraste. Lo que ya no vale es su recomendación."
+    },
+    {
+      "id": "que-esta-medido",
+      "page": "page-1",
+      "x": 0,
+      "y": -250,
+      "w": 940,
+      "text": "Qué está medido y qué es decisión:\n\nMEDIDO — los cinco valores de origen (#E7C041 en dos posts de maquinaria; #B58000 en el monograma y el texto del logotipo de joyería; #B57700 en el logo rugged) y todos los ratios de contraste de las tres hojas.\n\nDERIVADO — oro-corp-300 (#D6A52F) y oro-corp-700 (#8C6300) son el mismo tono medido, subido y bajado en valor. No son mediciones.\n\nDECISIÓN — elegir un valor único de una familia con degradado metálico. La moda es sólida, pero el hex final es un criterio, no una lectura.\n\nNO CAMBIA — tipografía, escala, espacio, radios, foco y objetivos táctiles. Este anexo solo toca color."
+    },
+    {
+      "id": "como-usarlo",
+      "page": "page-2",
+      "x": 1360,
+      "y": 0,
+      "w": 440,
+      "text": "Esta hoja es para la junta con Cristóbal.\n\nLa columna del teléfono es la misma sección en las tres. Si una se ve mejor, es la paleta — no el diseño.\n\nLa tabla de en medio no es opinión: son ratios calculados. Los dos primeros renglones son los que deciden, porque describen algo que el amarillo industrial no puede hacer en ninguna pantalla.\n\nLa recomendación está firmada, pero la decisión es del cliente. Si elige A, el sistema publicado sigue vigente sin tocar una línea."
+    }
+  ],
+  "launch": {
+    "view": "canvas",
+    "page": "page-0"
+  }
+}

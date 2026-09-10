@@ -15,46 +15,46 @@
     .tok { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: #5C6B6F; }
     .note { font-size: 14px; line-height: 1.5; color: #5C6B6F; }
     .m { font-family: 'Archivo', system-ui, sans-serif; }
-    .field { height: 52px; border: 2px solid #667276; border-radius: 4px; padding: 0 14px; display: flex; align-items: center;
-             font-family: 'Archivo', sans-serif; font-size: 17px; color: #14181A; background: #FFFFFF; box-sizing: border-box; }
-    .lbl { font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; color: #14181A; }
+    .field { height: 52px; border: 2px solid #5F656B; border-radius: 4px; padding: 0 14px; display: flex; align-items: center;
+             font-family: 'Archivo', sans-serif; font-size: 17px; color: #0C0D0F; background: #FFFFFF; box-sizing: border-box; }
+    .lbl { font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; color: #0C0D0F; }
   </style>
 </helmet>
 
-<div style="width: 1280px; height: 1080px; background: #FFFFFF; box-sizing: border-box; padding: 48px 64px; display: flex; flex-direction: column;">
+<div style="width: 1280px; height: 1160px; background: #FFFFFF; box-sizing: border-box; padding: 48px 64px; display: flex; flex-direction: column;">
 
   <div style="font-family: 'Libre Caslon Text', Georgia, serif; font-weight: 700; font-size: 36px; color: #20292B;">Piezas</div>
   <div style="font-size: 17px; line-height: 1.55; color: #3A4A52; margin-top: 12px; max-width: 980px;">
-    Section, Card y Field. Breadcrumb queda fuera hasta que cierre el alcance: en una landing única no tiene jerarquía donde vivir.
+    Section, Card, Field y Breadcrumb. El multigiro le devolvió al Breadcrumb los dos niveles de jerarquía que necesitaba para existir.
   </div>
 
   <div style="display: flex; gap: 34px; margin-top: 32px;">
 
     <div style="width: 430px; flex-shrink: 0;">
       <div class="eyebrow">SECTION — LA UNIDAD DE LA PÁGINA</div>
-      <div style="margin-top: 14px; border: 1px dashed #B3BCC0;">
-        <div style="background: #F4F6F7; padding: 28px 22px;">
-          <div class="m" style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #4E595F;">ETIQUETA DE SECCIÓN</div>
-          <div class="m" style="font-size: 28px; font-weight: 700; color: #14181A; line-height: 1.15; margin-top: 12px;">El título de la sección</div>
-          <div class="m" style="font-size: 17px; line-height: 1.55; color: #14181A; margin-top: 12px;">El contenido va aquí, con 16 de separación entre bloques y 20 de margen lateral.</div>
+      <div style="margin-top: 14px; border: 1px dashed #AEB4B9;">
+        <div style="background: #F0EFED; padding: 28px 22px;">
+          <div class="m" style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #474C51;">ETIQUETA DE SECCIÓN</div>
+          <div class="m" style="font-size: 28px; font-weight: 700; color: #0C0D0F; line-height: 1.15; margin-top: 12px;">El título de la sección</div>
+          <div class="m" style="font-size: 17px; line-height: 1.55; color: #0C0D0F; margin-top: 12px;">El contenido va aquí, con 16 de separación entre bloques y 20 de margen lateral.</div>
         </div>
       </div>
       <div class="note" style="margin-top: 12px;">
-        Alterna <code>blanco</code> y <code>acero-050</code> entre secciones consecutivas. Sin sombras, sin tarjetas flotantes:
+        Alterna <code>blanco</code> y <code>crema-050</code> entre secciones consecutivas. Sin sombras, sin tarjetas flotantes:
         el contraste de superficie basta y no cuesta pintura.
       </div>
 
       <div class="eyebrow" style="margin-top: 30px;">CARD — GIRO O BIEN ACEPTADO</div>
       <div style="display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-top: 14px;">
-        <div style="background:#FFFFFF; border:1px solid #B3BCC0; border-radius:4px; padding:16px 14px; min-height:92px; display:flex; flex-direction:column; gap:6px;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A4449" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>
-          <div class="m" style="font-size:16px; font-weight:600; color:#14181A;">Reposo</div>
-          <div class="m" style="font-size:13px; color:#4E595F;">borde acero-300</div>
+        <div style="background:#FFFFFF; border:1px solid #AEB4B9; border-radius:4px; padding:16px 14px; min-height:92px; display:flex; flex-direction:column; gap:6px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#33373B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>
+          <div class="m" style="font-size:16px; font-weight:600; color:#0C0D0F;">Reposo</div>
+          <div class="m" style="font-size:13px; color:#474C51;">borde negro-300</div>
         </div>
-        <div style="background:#FFFFFF; border:2px solid #2A3237; border-radius:4px; padding:15px 13px; min-height:92px; display:flex; flex-direction:column; gap:6px;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#14181A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>
-          <div class="m" style="font-size:16px; font-weight:600; color:#14181A;">Presionada</div>
-          <div class="m" style="font-size:13px; color:#4E595F;">borde acero-800</div>
+        <div style="background:#FFFFFF; border:2px solid #0C0D0F; border-radius:4px; padding:15px 13px; min-height:92px; display:flex; flex-direction:column; gap:6px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0C0D0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>
+          <div class="m" style="font-size:16px; font-weight:600; color:#0C0D0F;">Presionada</div>
+          <div class="m" style="font-size:13px; color:#474C51;">borde negro-800</div>
         </div>
       </div>
       <div class="note" style="margin-top: 12px;">
@@ -67,13 +67,13 @@
       <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 14px;">
         <div>
           <div class="lbl">Reposo</div>
-          <div class="field" style="margin-top: 7px; color:#4E595F;">Texto de ayuda</div>
-          <div class="tok" style="margin-top: 6px;">borde acero-500 · 4.96:1</div>
+          <div class="field" style="margin-top: 7px; color:#474C51;">Texto de ayuda</div>
+          <div class="tok" style="margin-top: 6px;">borde negro-500 · 5.90:1</div>
         </div>
         <div>
           <div class="lbl">Con foco</div>
-          <div class="field" style="margin-top: 7px; border-color:#14181A; outline: 3px solid #14181A; outline-offset: 2px;">Escribiendo</div>
-          <div class="tok" style="margin-top: 6px;">anillo acero-950</div>
+          <div class="field" style="margin-top: 7px; border-color:#0C0D0F; outline: 3px solid #0C0D0F; outline-offset: 2px;">Escribiendo</div>
+          <div class="tok" style="margin-top: 6px;">anillo negro-950</div>
         </div>
         <div>
           <div class="lbl">Con error</div>
@@ -86,36 +86,36 @@
         </div>
         <div>
           <div class="lbl">Inactivo</div>
-          <div class="field" style="margin-top: 7px; border-color:#B3BCC0; background:#F4F6F7; color:#767F82;">No disponible</div>
+          <div class="field" style="margin-top: 7px; border-color:#AEB4B9; background:#F0EFED; color:#767F82;">No disponible</div>
         </div>
       </div>
     </div>
 
     <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 18px;">
-      <div style="background:#14181A; padding: 22px 24px;">
+      <div style="background:#0C0D0F; padding: 22px 24px;">
         <div class="eyebrow" style="color:#8A9598;">LA REGLA QUE SOSTIENE EL TEST</div>
         <div style="font-size: 15px; line-height: 1.55; color:#FFFFFF; margin-top: 12px;">
           Ningún componente escribe un teléfono, un horario, un precio ni un nombre legal.
-          Todo eso sale de <code style="color:#CCB642;">business.ts</code>. Si un dato se filtra a un componente,
+          Todo eso sale de <code style="color:#D6A52F;">business.ts</code>. Si un dato se filtra a un componente,
           el test que bloquea la publicación deja de servir.
         </div>
       </div>
-      <div style="border:1px solid #D2D8DB; padding: 22px 24px;">
+      <div style="border:1px solid #D3D7DA; padding: 22px 24px;">
         <div class="eyebrow">TODO EN ESTA HOJA ES DIBUJO</div>
         <div class="note" style="margin-top: 12px;">
           Nada de esto está implementado todavía. Son especificaciones para que el código las cumpla, no capturas de un sitio que exista.
           Cada pieza sube a implementada cuando tenga su test y su cita <code>archivo:línea</code>.
         </div>
       </div>
-      <div style="border:1px solid #D2D8DB; padding: 22px 24px;">
+      <div style="border:1px solid #D3D7DA; padding: 22px 24px;">
         <div class="eyebrow">INVENTARIO DE LA FASE 0</div>
         <div style="display:flex; flex-direction:column; gap:9px; margin-top: 12px;">
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#14181A;"><span>Button</span><span class="tok">especificado</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#14181A;"><span>WhatsAppCTA</span><span class="tok">especificado · 3 variantes</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#14181A;"><span>Section</span><span class="tok">especificado</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#14181A;"><span>Card</span><span class="tok">especificado</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#14181A;"><span>Field</span><span class="tok">especificado · 4 estados</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:15px; color:#767F82;"><span>Breadcrumb</span><span class="tok" style="color:#A8482A;">bloqueado por el alcance</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#0C0D0F;"><span>Button</span><span class="tok">especificado</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#0C0D0F;"><span>WhatsAppCTA</span><span class="tok">especificado · 3 variantes</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#0C0D0F;"><span>Section</span><span class="tok">especificado</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#0C0D0F;"><span>Card</span><span class="tok">especificado</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#0C0D0F;"><span>Field</span><span class="tok">especificado · 4 estados</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px; color:#20292B;"><span>Breadcrumb</span><span class="tok" style="color:#2F6B4F;">desbloqueado por ADR-0003</span></div>
           <div style="display:flex; justify-content:space-between; font-size:15px; color:#767F82;"><span>Placeholder · ImageSlot</span><span class="tok">ya en uso en las maquetas</span></div>
         </div>
       </div>

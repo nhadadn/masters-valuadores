@@ -1,0 +1,121 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@700&family=Hanken+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: #767F82; }
+    .tok { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #20292B; }
+    .hex { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #5C6B6F; }
+    .ratio { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #20292B; text-align: right; }
+    .row { display: grid; grid-template-columns: 1fr 96px 74px 74px; align-items: center; border-top: 1px solid #ECEEEE; padding: 8px 0; font-size: 14px; color: #20292B; }
+    .ok { color: #2F6B4F; font-weight: 600; font-size: 12px; }
+    .warn { color: #A8482A; font-weight: 600; font-size: 12px; }
+    .li { display:flex; gap:10px; font-size:15px; line-height:1.5; color:#20292B; }
+    .d { color:#C75B38; font-weight:700; flex-shrink:0; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 1180px; background:#FFFFFF; box-sizing:border-box; padding:44px 56px; display:flex; flex-direction:column;">
+  <div style="display:flex; align-items:baseline; gap:18px;">
+    <div style="background:#20292B; color:#FFFFFF; font-size:12px; font-weight:700; letter-spacing:0.2em; padding:7px 13px;">DIRECCIÓN C</div>
+    <div style="font-family:'Libre Caslon Text',Georgia,serif; font-weight:700; font-size:38px; color:#20292B;">Dos registros</div>
+  </div>
+  <div style="font-size:16px; line-height:1.55; color:#3A4A52; margin-top:12px; max-width:900px;">Oro corporativo como espina de marca; el amarillo industrial reservado como acento de sección para las líneas pesadas.</div>
+
+  <div style="display:flex; gap:32px; margin-top:28px; flex-grow:1;">
+
+    <div style="flex-grow:1; display:flex; flex-direction:column; gap:28px;">
+      <div style="display:flex; gap:30px;">
+        <div style="width:300px; flex-shrink:0;">
+          <div class="eyebrow">PALETA Y PROCEDENCIA</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;"><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#0C0D0F;"></div>
+      <div><div class="tok">--negro-950</div><div class="hex">#0C0D0F · espina · tinta y acción</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#B58000;"></div>
+      <div><div class="tok">--oro-corp-500</div><div class="hex">#B58000 · espina · acento del grupo</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#8C6300;"></div>
+      <div><div class="tok">--oro-corp-700</div><div class="hex">#8C6300 · espina · oro como texto</div></div></div><div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#767F82;margin:14px 0 8px;">ACENTO POR GIRO — SOLO EN LAS PESADAS</div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#E7C041;"></div>
+      <div><div class="tok">--oro-500</div><div class="hex">#E7C041 · maquinaria · importaciones</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#9A7A22;"></div>
+      <div><div class="tok">--oro-700</div><div class="hex">#9A7A22 · borde del acento pesado</div></div></div><div style="font-size:13px;line-height:1.5;color:#3A4A52;margin-top:10px;">Los dos amarillos existen en el material del cliente. Esta dirección no elige: le da a cada uno el trabajo que ya hace. El oro manda en la marca; el amarillo aparece solo dentro de las secciones de maquinaria, importaciones, taller, fletes y renta.</div></div>
+        </div>
+        <div style="flex-grow:1;">
+          <div class="eyebrow">CONTRASTE CALCULADO</div>
+          <div style="display:grid; grid-template-columns:1fr 96px 74px 74px; margin-top:12px; padding-bottom:7px; border-bottom:2px solid #20292B;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;">PAR</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;">MUESTRA</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;text-align:right;">RATIO</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;text-align:right;">AA</div>
+          </div>
+          <div class="row"><div>Espina — tinta sobre superficie</div><div><span style="background:#FFF;border:1px solid #E2E5E5;color:#0C0D0F;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">19.44:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div>Espina — relleno sobre blanco</div><div><span style="background:#B58000;color:#0C0D0F;padding:5px 9px;font-size:13px;">Bloque</span></div><div class="ratio">3.47:1</div><div class="ok" style="text-align:right;">3:1</div></div><div class="row"><div>Espina — oro como texto</div><div><span style="background:#FFF;color:#8C6300;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">5.38:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div>Giro pesado — etiqueta sobre amarillo</div><div><span style="background:#E7C041;color:#0C0D0F;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">11.12:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div><strong>Giro pesado — amarillo suelto sobre blanco</strong></div><div><span style="background:#E7C041;color:#FFF;padding:5px 9px;font-size:13px;">Bloque</span></div><div class="ratio">1.75:1</div><div class="warn" style="text-align:right;">Falla</div></div><div class="row"><div>Giro pesado — con borde oro-700</div><div><span style="background:#FFF;border:2px solid #9A7A22;padding:4px 8px;font-size:13px;">Borde</span></div><div class="ratio">4.05:1</div><div class="ok" style="text-align:right;">3:1</div></div>
+          <div style="border-top:1px solid #ECEEEE;"></div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;">
+        <div style="border:1px solid #DFDAD4; padding:18px 20px;">
+          <div class="eyebrow" style="color:#2F6B4F;">QUÉ GANA</div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px;"><div class="li"><span class="d">·</span><span>No tira nada. Los dos amarillos que el cliente ya usa siguen vivos, cada uno donde funciona.</span></div><div class="li"><span class="d">·</span><span>Le da al multigiro un mecanismo real de diferenciación por sección, no solo un ícono distinto.</span></div><div class="li"><span class="d">·</span><span>La marca queda en un solo registro — el del grupo — aunque las secciones cambien de temperatura.</span></div></div>
+        </div>
+        <div style="border:1px solid #DFDAD4; padding:18px 20px;">
+          <div class="eyebrow" style="color:#C75B38;">QUÉ CUESTA</div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px;"><div class="li"><span class="d">·</span><span><strong>Es la más cara de sostener.</strong> Dos acentos son dos juegos de reglas, y las reglas de cada uno son distintas.</span></div><div class="li"><span class="d">·</span><span>Sin disciplina se degrada rápido: en cuanto alguien mete el amarillo en una sección de joyería, el sistema se cae.</span></div><div class="li"><span class="d">·</span><span>Exige que la Fase 0 defina el mapa giro→acento antes de escribir el primer componente.</span></div><div class="li"><span class="d">·</span><span>Los dos amarillos juntos, en la misma pantalla, se ven como un error de impresión. Nunca pueden coincidir.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex-shrink:0;">
+      <div class="eyebrow" style="margin-bottom:14px;">LA MISMA SECCIÓN</div>
+      
+<div style="width: 340px; flex-shrink: 0; border: 1px solid #D3D7DA; background: #FFFFFF;">
+  <div style="height: 52px; background: #0C0D0F; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <svg width="26" height="26" viewBox="0 0 260 258" aria-hidden="true"><path fill="#B58000" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z"/><path fill="#FFFFFF" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z"/></svg>
+    <div style="font-family: 'Archivo', sans-serif;">
+      <div style="font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.03em; line-height: 1;">MASTERS</div>
+      <div style="font-size: 8px; font-weight: 600; color: #D6A52F; letter-spacing: 0.2em; line-height: 1; margin-top: 3px;">VALUADORES</div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family:'Archivo',sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #474C51;">GRUPO MÁSTER · TORREÓN</div>
+    <div style="border: 1px dashed #AEB4B9; background: #F0EFED; padding: 10px 12px;">
+      <div style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #474C51;">TITULAR — PENDIENTE</div>
+      <div style="height: 14px; background: #D3D7DA; border-radius: 2px; margin-top: 7px;"></div>
+      <div style="height: 14px; background: #D3D7DA; border-radius: 2px; margin-top: 6px; width: 64%;"></div>
+    </div>
+    <div style="height: 44px; border-radius: 8px; background: #0C0D0F; color:#FFFFFF; display:flex; align-items:center; justify-content:center; gap:8px; font-family:'Archivo',sans-serif; font-size:15px; font-weight:600;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg> WhatsApp
+    </div>
+    <div style="height: 44px; border-radius: 8px; border: 2px solid #0C0D0F; color:#0C0D0F; display:flex; align-items:center; justify-content:center; font-family:'Archivo',sans-serif; font-size:15px; font-weight:600; box-sizing:border-box;">Llamar</div>
+  </div>
+
+  <div style="background: #B58000;  padding: 14px 16px; margin: 0 16px;">
+    <div style="font-family:'Archivo',sans-serif; font-size: 15px; font-weight: 700; color: #0C0D0F;">Franja de acento</div>
+    <div style="font-family:'Archivo',sans-serif; font-size: 12px; color: #0C0D0F; opacity: .85; margin-top: 3px;">Oro corporativo en la espina; amarillo solo por giro</div>
+  </div>
+
+  <div style="padding: 16px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px;">
+    <div style="border: 1px solid #9A7A22; padding: 11px 10px; min-height: 74px; display:flex; flex-direction:column; gap:5px;">
+      <div style="width:22px;height:3px;background:#B58000;"></div>
+      <div style="font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; color:#0C0D0F;">Empeño</div>
+      <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#474C51;">y préstamo</div>
+    </div>
+    <div style="border: 1px solid #9A7A22; border-top: 5px solid #E7C041; padding: 8px 10px 11px; min-height: 74px; display:flex; flex-direction:column; gap:5px;">
+      <div style="width:22px;height:3px;background:#E7C041;"></div>
+      <div style="font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; color:#0C0D0F;">Maquinaria</div>
+      <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#474C51;">e importaciones</div>
+    </div>
+  </div>
+
+  <div style="background: #0C0D0F; padding: 14px 16px; display:flex; align-items:center; gap:10px;">
+    <svg width="20" height="20" viewBox="0 0 260 258" aria-hidden="true"><path fill="#B58000" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z"/><path fill="#FFFFFF" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z"/></svg>
+    <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#D6A52F;">871 507 3005 · Torreón, Coah.</div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+</x-dc></body></html>

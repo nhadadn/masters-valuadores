@@ -1,0 +1,123 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@700&family=Hanken+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+    a { color: #C75B38; } a:hover { color: #A8482A; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: #767F82; }
+    .tok { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #20292B; }
+    .hex { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #5C6B6F; }
+    .ratio { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #20292B; text-align: right; }
+    .row { display: grid; grid-template-columns: 1fr 96px 74px 74px; align-items: center; border-top: 1px solid #ECEEEE; padding: 8px 0; font-size: 14px; color: #20292B; }
+    .ok { color: #2F6B4F; font-weight: 600; font-size: 12px; }
+    .warn { color: #A8482A; font-weight: 600; font-size: 12px; }
+    .li { display:flex; gap:10px; font-size:15px; line-height:1.5; color:#20292B; }
+    .d { color:#C75B38; font-weight:700; flex-shrink:0; }
+  </style>
+</helmet>
+<div style="width: 1280px; height: 1180px; background:#FFFFFF; box-sizing:border-box; padding:44px 56px; display:flex; flex-direction:column;">
+  <div style="display:flex; align-items:baseline; gap:18px;">
+    <div style="background:#20292B; color:#FFFFFF; font-size:12px; font-weight:700; letter-spacing:0.2em; padding:7px 13px;">DIRECCIÓN B</div>
+    <div style="font-family:'Libre Caslon Text',Georgia,serif; font-weight:700; font-size:38px; color:#20292B;">Valuación</div>
+  </div>
+  <div style="font-size:16px; line-height:1.55; color:#3A4A52; margin-top:12px; max-width:900px;">Negro y oro profundo, medidos del logotipo de joyería y confirmados en el logo rugged. Es la dirección que pediste: acorde al giro general del corporativo.</div>
+
+  <div style="display:flex; gap:32px; margin-top:28px; flex-grow:1;">
+
+    <div style="flex-grow:1; display:flex; flex-direction:column; gap:28px;">
+      <div style="display:flex; gap:30px;">
+        <div style="width:300px; flex-shrink:0;">
+          <div class="eyebrow">PALETA Y PROCEDENCIA</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;"><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#0C0D0F;"></div>
+      <div><div class="tok">--negro-950</div><div class="hex">#0C0D0F · tinta y acción</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#474C51;"></div>
+      <div><div class="tok">--negro-600</div><div class="hex">#474C51 · tinta secundaria</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#F0EFED;border: 1px solid #D3D7DA;"></div>
+      <div><div class="tok">--crema-050</div><div class="hex">#F0EFED · superficie alterna</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#D6A52F;"></div>
+      <div><div class="tok">--oro-corp-300</div><div class="hex">#D6A52F · oro sobre negro</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#B58000;"></div>
+      <div><div class="tok">--oro-corp-500</div><div class="hex">#B58000 · acento · relleno</div></div></div><div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:52px;height:40px;flex-shrink:0;border-radius:3px;background:#8C6300;"></div>
+      <div><div class="tok">--oro-corp-700</div><div class="hex">#8C6300 · oro como texto y borde</div></div></div><div style="font-size:13px;line-height:1.5;color:#3A4A52;margin-top:10px;"><code>#B58000</code> es la moda del oro en el <strong>logotipo de joyería</strong>, y reaparece como <code>#B57700</code> en el <strong>logo rugged con banderas</strong>: dos piezas distintas, misma familia. Los pasos 300 y 700 son el mismo tono subido y bajado en valor.</div></div>
+        </div>
+        <div style="flex-grow:1;">
+          <div class="eyebrow">CONTRASTE CALCULADO</div>
+          <div style="display:grid; grid-template-columns:1fr 96px 74px 74px; margin-top:12px; padding-bottom:7px; border-bottom:2px solid #20292B;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;">PAR</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;">MUESTRA</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;text-align:right;">RATIO</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#767F82;text-align:right;">AA</div>
+          </div>
+          <div class="row"><div>Tinta sobre superficie</div><div><span style="background:#FFF;border:1px solid #E2E5E5;color:#0C0D0F;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">19.44:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div>Oro-300 sobre el negro</div><div><span style="background:#0C0D0F;color:#D6A52F;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">8.59:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div>Etiqueta sobre el acento</div><div><span style="background:#B58000;color:#0C0D0F;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">5.60:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div><strong>Acento como relleno sobre blanco</strong></div><div><span style="background:#B58000;color:#FFF;padding:5px 9px;font-size:13px;">Bloque</span></div><div class="ratio">3.47:1</div><div class="ok" style="text-align:right;">3:1</div></div><div class="row"><div><strong>Oro-700 como texto sobre blanco</strong></div><div><span style="background:#FFF;color:#8C6300;padding:5px 9px;font-size:13px;">Texto</span></div><div class="ratio">5.38:1</div><div class="ok" style="text-align:right;">Pasa</div></div><div class="row"><div>Relleno sobre la crema alterna</div><div><span style="background:#B58000;color:#0C0D0F;padding:5px 9px;font-size:13px;border:0;">Bloque</span></div><div class="ratio">3.02:1</div><div class="ok" style="text-align:right;">3:1</div></div>
+          <div style="border-top:1px solid #ECEEEE;"></div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;">
+        <div style="border:1px solid #DFDAD4; padding:18px 20px;">
+          <div class="eyebrow" style="color:#2F6B4F;">QUÉ GANA</div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px;"><div class="li"><span class="d">·</span><span>El acento <strong>se sostiene solo</strong> sobre blanco. Un bloque de oro no necesita borde para existir: 3.47:1.</span></div><div class="li"><span class="d">·</span><span><strong>Se puede escribir en oro.</strong> <code>oro-700</code> da 5.38:1 sobre blanco — pasa AA. El amarillo industrial no llega ni de lejos.</span></div><div class="li"><span class="d">·</span><span>Lee valuación, metal, resguardo. Cubre joyería, empeño, financiera y valuadores sin pelearse con las pesadas.</span></div><div class="li"><span class="d">·</span><span>Es el registro que el propio nombre del grupo promete.</span></div></div>
+        </div>
+        <div style="border:1px solid #DFDAD4; padding:18px 20px;">
+          <div class="eyebrow" style="color:#C75B38;">QUÉ CUESTA</div>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px;"><div class="li"><span class="d">·</span><span>La medición es de arte con degradado metálico, no plano. La moda es sólida, pero el valor único es una decisión, no una lectura directa.</span></div><div class="li"><span class="d">·</span><span>Sobre la crema alterna cae a 3.02:1. Pasa, pero sin margen: ahí el bloque va sobre blanco o con borde.</span></div><div class="li"><span class="d">·</span><span>Menos voltaje que el amarillo. Gana en clase, pierde en grito.</span></div><div class="li"><span class="d">·</span><span>Se aleja del amarillo que hoy sale en sus publicaciones de maquinaria.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex-shrink:0;">
+      <div class="eyebrow" style="margin-bottom:14px;">LA MISMA SECCIÓN</div>
+      
+<div style="width: 340px; flex-shrink: 0; border: 1px solid #D3D7DA; background: #FFFFFF;">
+  <div style="height: 52px; background: #0C0D0F; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <svg width="26" height="26" viewBox="0 0 260 258" aria-hidden="true"><path fill="#B58000" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z"/><path fill="#FFFFFF" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z"/></svg>
+    <div style="font-family: 'Archivo', sans-serif;">
+      <div style="font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.03em; line-height: 1;">MASTERS</div>
+      <div style="font-size: 8px; font-weight: 600; color: #D6A52F; letter-spacing: 0.2em; line-height: 1; margin-top: 3px;">VALUADORES</div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family:'Archivo',sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #474C51;">GRUPO MÁSTER · TORREÓN</div>
+    <div style="border: 1px dashed #AEB4B9; background: #F0EFED; padding: 10px 12px;">
+      <div style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #474C51;">TITULAR — PENDIENTE</div>
+      <div style="height: 14px; background: #D3D7DA; border-radius: 2px; margin-top: 7px;"></div>
+      <div style="height: 14px; background: #D3D7DA; border-radius: 2px; margin-top: 6px; width: 64%;"></div>
+    </div>
+    <div style="height: 44px; border-radius: 8px; background: #0C0D0F; color:#FFFFFF; display:flex; align-items:center; justify-content:center; gap:8px; font-family:'Archivo',sans-serif; font-size:15px; font-weight:600;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg> WhatsApp
+    </div>
+    <div style="height: 44px; border-radius: 8px; border: 2px solid #0C0D0F; color:#0C0D0F; display:flex; align-items:center; justify-content:center; font-family:'Archivo',sans-serif; font-size:15px; font-weight:600; box-sizing:border-box;">Llamar</div>
+  </div>
+
+  <div style="background: #B58000;  padding: 14px 16px; margin: 0 16px;">
+    <div style="font-family:'Archivo',sans-serif; font-size: 15px; font-weight: 700; color: #0C0D0F;">Franja de acento</div>
+    <div style="font-family:'Archivo',sans-serif; font-size: 12px; color: #0C0D0F; opacity: .85; margin-top: 3px;">Se sostiene sola sobre blanco: 3.47:1</div>
+  </div>
+
+  <div style="padding: 16px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px;">
+    <div style="border: 1px solid #D3D7DA; padding: 11px 10px; min-height: 74px; display:flex; flex-direction:column; gap:5px;">
+      <div style="width:22px;height:3px;background:#B58000;"></div>
+      <div style="font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; color:#0C0D0F;">Empeño</div>
+      <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#474C51;">y préstamo</div>
+    </div>
+    <div style="border: 1px solid #D3D7DA; border-top: 5px solid #B58000; padding: 8px 10px 11px; min-height: 74px; display:flex; flex-direction:column; gap:5px;">
+      <div style="width:22px;height:3px;background:#B58000;"></div>
+      <div style="font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; color:#0C0D0F;">Maquinaria</div>
+      <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#474C51;">e importaciones</div>
+    </div>
+  </div>
+
+  <div style="background: #0C0D0F; padding: 14px 16px; display:flex; align-items:center; gap:10px;">
+    <svg width="20" height="20" viewBox="0 0 260 258" aria-hidden="true"><path fill="#B58000" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z"/><path fill="#FFFFFF" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z"/></svg>
+    <div style="font-family:'Archivo',sans-serif; font-size:11px; color:#D6A52F;">871 507 3005 · Torreón, Coah.</div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+</x-dc></body></html>

@@ -10,17 +10,17 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap">
   <style>
     body { margin: 0; font-family: 'Archivo', system-ui, sans-serif; }
-    a { color: #14181A; } a:hover { color: #000000; }
-    .sect { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #4E595F; }
-    .h2 { font-size: 22px; font-weight: 700; color: #14181A; line-height: 1.25; }
-    .body { font-size: 17px; line-height: 1.55; color: #14181A; }
-    .card { background: #FFFFFF; border: 1px solid #B3BCC0; border-radius: 4px; padding: 14px 12px; min-height: 92px;
+    a { color: #0C0D0F; } a:hover { color: #000000; }
+    .sect { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #474C51; }
+    .h2 { font-size: 22px; font-weight: 700; color: #0C0D0F; line-height: 1.25; }
+    .body { font-size: 17px; line-height: 1.55; color: #0C0D0F; }
+    .card { background: #FFFFFF; border: 1px solid #AEB4B9; border-radius: 4px; padding: 14px 12px; min-height: 92px;
             display: flex; flex-direction: column; gap: 6px; justify-content: center; cursor: pointer; }
     .btn { height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;
            font-size: 17px; font-weight: 600; cursor: pointer; box-sizing: border-box; }
-    .slot { border: 1px dashed #B3BCC0; background: #F4F6F7; padding: 12px 14px; }
-    .slotlbl { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #4E595F; }
-    .slotline { height: 13px; background: #D2D8DB; border-radius: 2px; margin-top: 9px; }
+    .slot { border: 1px dashed #AEB4B9; background: #F0EFED; padding: 12px 14px; }
+    .slotlbl { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #474C51; }
+    .slotline { height: 13px; background: #D3D7DA; border-radius: 2px; margin-top: 9px; }
   </style>
 </helmet>
 
@@ -28,14 +28,14 @@
 
   <div style="height: 100%; overflow: hidden; display: flex; flex-direction: column;">
 
-    <div style="height: 60px; background: #14181A; display: flex; align-items: center; gap: 12px; padding: 0 18px; flex-shrink: 0;">
+    <div style="height: 60px; background: #0C0D0F; display: flex; align-items: center; gap: 12px; padding: 0 18px; flex-shrink: 0;">
       <svg width="30" height="30" viewBox="0 0 260 258" aria-hidden="true">
-        <path fill="#CCB642" d="M5,20 L130,145 L130,220 L46,152 L46,258 L0,258 L0,24 Z"/>
-        <path fill="#E7EBEC" d="M5,20 L16,8 L64,8 L130,74 L196,8 L244,8 L260,24 L260,258 L214,258 L214,152 L130,220 L130,145 Z"/>
+        <path fill="#B58000" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z"/>
+        <path fill="#E9EBED" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z"/>
       </svg>
       <div>
         <div style="font-size: 16px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.03em; line-height: 1;">MASTERS</div>
-        <div style="font-size: 9px; font-weight: 600; color: #CCB642; letter-spacing: 0.22em; line-height: 1; margin-top: 3px;">VALUADORES</div>
+        <div style="font-size: 9px; font-weight: 600; color: #D6A52F; letter-spacing: 0.22em; line-height: 1; margin-top: 3px;">VALUADORES</div>
       </div>
     </div>
 
@@ -45,80 +45,80 @@
         <div class="slotline" style="width: 100%; height: 20px;"></div>
         <div class="slotline" style="width: 68%; height: 20px;"></div>
       </div>
-      <div class="btn" style="background: #2A3237; color: #FFFFFF;" onClick="{{ heroPick }}">
+      <div class="btn" style="background: #0C0D0F; color: #FFFFFF;" onClick="{{ heroPick }}">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
         WhatsApp
       </div>
     </div>
 
-    <div style="background: #F4F6F7; padding: 26px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="background: #F0EFED; padding: 26px 20px; display: flex; flex-direction: column; gap: 14px;">
       <div class="sect">1 · LA PRIMERA PREGUNTA</div>
       <div class="h2">¿Aceptan lo que traigo?</div>
       <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
         <sc-for list="{{ bienes }}" as="bien" hint-placeholder-count="5">
           <div class="card" onClick="{{ bien.pick }}">
-            <div style="font-size: 16px; font-weight: 600; color: #14181A;">{{ bien.titulo }}</div>
-            <div style="font-size: 13px; color: #4E595F; line-height: 1.35;">{{ bien.pie }}</div>
-            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #14181A;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="#14181A" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+            <div style="font-size: 16px; font-weight: 600; color: #0C0D0F;">{{ bien.titulo }}</div>
+            <div style="font-size: 13px; color: #474C51; line-height: 1.35;">{{ bien.pie }}</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #0C0D0F;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#0C0D0F" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
               Preguntar
             </div>
           </div>
         </sc-for>
       </div>
-      <div style="font-size: 13px; color: #4E595F; line-height: 1.45;">Toca cualquiera para ver el mensaje que se manda.</div>
+      <div style="font-size: 13px; color: #474C51; line-height: 1.45;">Toca cualquiera para ver el mensaje que se manda.</div>
     </div>
 
     <div style="padding: 26px 20px; display: flex; flex-direction: column; gap: 14px;">
       <div class="sect">5 · LO QUE NADIE PREGUNTA EN VOZ ALTA</div>
       <div class="h2">Preguntas frecuentes</div>
-      <div style="background:#FFFFFF; border:1px solid #B3BCC0; border-radius:4px; padding:15px 14px; display:flex; justify-content:space-between; align-items:center; min-height:48px; box-sizing:border-box;">
-        <div style="font-size: 15px; color: #14181A;">¿Puedo recuperar mi bien?</div>
-        <div style="color: #4E595F; font-size: 20px;">+</div>
+      <div style="background:#FFFFFF; border:1px solid #AEB4B9; border-radius:4px; padding:15px 14px; display:flex; justify-content:space-between; align-items:center; min-height:48px; box-sizing:border-box;">
+        <div style="font-size: 15px; color: #0C0D0F;">¿Puedo recuperar mi bien?</div>
+        <div style="color: #474C51; font-size: 20px;">+</div>
       </div>
-      <div class="btn" style="border: 2px solid #2A3237; color: #14181A; height: 44px; font-size: 15px;" onClick="{{ faqPick }}">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#14181A" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+      <div class="btn" style="border: 2px solid #0C0D0F; color: #0C0D0F; height: 44px; font-size: 15px;" onClick="{{ faqPick }}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#0C0D0F" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
         Preguntar otra cosa
       </div>
     </div>
 
   </div>
 
-  <div style="position: absolute; left: 16px; right: 16px; bottom: 16px; height: 56px; background: #FFFFFF; border: 1px solid #B3BCC0; border-radius: 8px; display: flex; align-items: center; box-shadow: 0 4px 16px rgba(20,24,26,0.22);">
-    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; color: #14181A; cursor: pointer;" onClick="{{ barraPick }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="#14181A" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
+  <div style="position: absolute; left: 16px; right: 16px; bottom: 16px; height: 56px; background: #FFFFFF; border: 1px solid #AEB4B9; border-radius: 8px; display: flex; align-items: center; box-shadow: 0 4px 16px rgba(20,24,26,0.22);">
+    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; color: #0C0D0F; cursor: pointer;" onClick="{{ barraPick }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#0C0D0F" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>
       WhatsApp
     </div>
-    <div style="width: 1px; height: 30px; background: #D2D8DB;"></div>
-    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: #14181A;">Llamar</div>
+    <div style="width: 1px; height: 30px; background: #D3D7DA;"></div>
+    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: #0C0D0F;">Llamar</div>
   </div>
 
   <sc-if value="{{ abierto }}" hint-placeholder-val="{{ true }}">
     <div style="position: absolute; inset: 0; background: rgba(20,24,26,0.55);" onClick="{{ cerrar }}"></div>
-    <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-top: 4px solid #CCB642; padding: 22px 20px 24px 20px; box-shadow: 0 -8px 28px rgba(20,24,26,0.3);">
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-top: 4px solid #B58000; padding: 22px 20px 24px 20px; box-shadow: 0 -8px 28px rgba(20,24,26,0.3);">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 14px;">
         <div>
           <div class="sect">LO QUE SE ENVÍA</div>
-          <div style="font-size: 19px; font-weight: 700; color: #14181A; margin-top: 6px;">Desde: {{ etiqueta }}</div>
+          <div style="font-size: 19px; font-weight: 700; color: #0C0D0F; margin-top: 6px;">Desde: {{ etiqueta }}</div>
         </div>
         <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;" onClick="{{ cerrar }}">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14181A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0C0D0F" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </div>
       </div>
 
-      <div style="background: #F4F6F7; border-left: 3px solid #2A3237; padding: 14px 16px; margin-top: 16px;">
-        <div style="font-size: 16px; line-height: 1.5; color: #14181A;">{{ mensaje }}</div>
+      <div style="background: #F0EFED; border-left: 3px solid #B58000; padding: 14px 16px; margin-top: 16px;">
+        <div style="font-size: 16px; line-height: 1.5; color: #0C0D0F;">{{ mensaje }}</div>
       </div>
 
       <div style="margin-top: 14px;">
         <div class="sect">ENLACE</div>
-        <div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #4E595F; margin-top: 6px; word-break: break-all; line-height: 1.5;">{{ url }}</div>
+        <div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #474C51; margin-top: 6px; word-break: break-all; line-height: 1.5;">{{ url }}</div>
       </div>
 
-      <div style="display: flex; gap: 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #D2D8DB;">
+      <div style="display: flex; gap: 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #D3D7DA;">
         <div style="flex: 1;">
           <div class="sect">SE REGISTRA COMO</div>
-          <div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #14181A; margin-top: 6px;">{{ evento }}</div>
+          <div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #0C0D0F; margin-top: 6px;">{{ evento }}</div>
         </div>
       </div>
 

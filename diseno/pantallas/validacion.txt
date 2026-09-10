@@ -1,0 +1,10 @@
+| Artboard | Contraste mínimo | Táctil mínimo | Huecos | __POR_CONFIRMAR__ | Cifras sospechosas | Veredicto |
+|---|---|---|---|---|---|---|
+| PortadaMovil | 4.94:1 | 48 px | 7 | 7 | 0 | CUMPLE |
+| GiroMovil | 4.94:1 | 44 px | 11 | 8 | 0 | CUMPLE |
+| PortadaEscritorio | 4.94:1 | 44 px | 7 | 7 | 0 | CUMPLE |
+| Anatomia | 4.83:1 | 48 px | 2 | 0 | 0 | CUMPLE |
+
+--- detalle ---
+
+VEREDICTO GLOBAL: CUMPLE

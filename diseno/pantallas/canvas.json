@@ -1,0 +1,34 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Resumen" },
+    { "id": "page-2", "name": "Móvil" },
+    { "id": "page-3", "name": "Escritorio" },
+    { "id": "page-4", "name": "Anatomía" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html",              "x": 0,    "y": 0, "w": 1280, "h": 1120, "page": "page-1", "title": "Qué es esto y qué se validó" },
+    { "file": "PortadaMovil.dc.html",      "x": 0,    "y": 0, "w": 390,  "h": 3840, "page": "page-2", "title": "Portada repartidora · 390" },
+    { "file": "GiroMovil.dc.html",         "x": 520,  "y": 0, "w": 390,  "h": 4115, "page": "page-2", "title": "Giro · empeño · 390" },
+    { "file": "PortadaEscritorio.dc.html", "x": 0,    "y": 0, "w": 1280, "h": 2582, "page": "page-3", "title": "Portada · 1280" },
+    { "file": "Anatomia.dc.html",          "x": 0,    "y": 0, "w": 1280, "h": 1180, "page": "page-4", "title": "Anatomía · medidas reales" }
+  ],
+  "annotations": [
+    {
+      "id": "como-leer",
+      "page": "page-2",
+      "x": 1040,
+      "y": 0,
+      "w": 460,
+      "text": "Cómo leer estas dos pantallas:\n\nTODO RECUADRO PUNTEADO es contenido que el cliente no ha aprobado. La etiqueta en versalitas dice qué TRABAJO hace ese texto, no qué dice. Son 18 entre las dos.\n\nLOS BLOQUES GRISES son fotos que no existen. Llevan la relación de aspecto y qué foto va ahí. Nada de banco de imágenes.\n\n__POR_CONFIRMAR__ es un dato de negocio real que falta: dirección, teléfono, horarios, razón social. Se ve a propósito.\n\nLA PORTADA REPARTE. Su trabajo no es vender, es mandar al giro correcto. Por eso la retícula de ocho es la sección más grande.\n\nLA PÁGINA DE GIRO se ordena por las preguntas del visitante, no por un temario. Ese orden es la única decisión de composición tomada sin el cliente, y se toma así porque el orden del temario le sirve al negocio, no a quien busca."
+    },
+    {
+      "id": "tarjeta-fija",
+      "page": "page-4",
+      "x": 0,
+      "y": -240,
+      "w": 900,
+      "text": "El número que más discusión ahorra está en esta hoja: la tarjeta de giro mide 176 de alto porque «Renta de maquinaria y equipo» ocupa TRES renglones a 143 de ancho de columna. Medido en navegador con Archivo cargada, no estimado.\n\nSi la tarjeta creciera con su contenido, la retícula de ocho se desalinearía en cuanto un nombre pasara de renglón — y ese desalineo mueve todo lo de abajo cuando carga la fuente, que es CLS que se paga en cada visita.\n\nA 1280 el mismo nombre cabe en dos renglones y la tarjeta baja a 150. El alto es función del ancho de columna, no una constante."
+    }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}
