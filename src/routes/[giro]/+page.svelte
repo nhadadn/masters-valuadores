@@ -15,6 +15,7 @@
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
+  import Titular from '$componentes/Titular.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -47,7 +48,10 @@
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>
 
 <Seccion etiqueta="LÍNEA DE NEGOCIO">
-  <h1>{giro.nombre}</h1>
+  <!-- ADR-0007 §4. Sin `segunda`: los nombres de giro son de un renglón —cuatro de
+       los siete son una sola palabra— y partirlos para teñir la mitad sería inventar
+       un énfasis que nadie autorizó. La segunda tinta espera copy. -->
+  <div class="encabezado"><Titular primera={giro.nombre} /></div>
   <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
   <div class="acciones">
     <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
@@ -138,7 +142,9 @@
 
 <style>
   .migas { padding: 0 var(--margen-lateral); background: var(--superficie); }
-  h1 { font-size: var(--h1-tam); line-height: var(--h1-alto); font-weight: var(--h1-peso); margin-bottom: var(--e-4); }
+  /* El titular vive en su propio componente desde el ADR-0007 §4. Aquí solo el
+     espacio de abajo, que es composición de esta página y no del primitivo. */
+  .encabezado { margin-bottom: var(--e-4); }
   h2 {
     display: flex; align-items: center; gap: var(--e-3);
     font-size: var(--h2-tam); line-height: var(--h2-alto); font-weight: var(--h2-peso);

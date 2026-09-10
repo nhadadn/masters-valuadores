@@ -22,7 +22,11 @@ const BASE = process.env.BASE ?? 'http://127.0.0.1:8123';
 // /contacto/ entra porque es la única página con un botón primario real:
 // `contacto/+page.svelte:53`, el submit del formulario. Sin ella CA-05 no se puede ver.
 const RUTAS = ['/', '/empeno-y-prestamo/', '/renta-de-maquinaria/', '/contacto/'];
-const ANCHOS = [390, 1280];
+// 360 entra a propósito y no está en validar-a11y.mjs, que mide 390 y 1280.
+// La audiencia es teléfono de gama baja y 360 px es el ancho más común de Android.
+// Medido: el titular de «Renta de maquinaria y equipo» pasa de dos a tres renglones
+// justo debajo de 390, así que a 390 no se ve el peor caso de esta audiencia.
+const ANCHOS = [360, 390, 1280];
 
 const navegador = await abrirChromium();
 const filas = [];
