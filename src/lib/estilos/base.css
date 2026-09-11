@@ -54,4 +54,11 @@ a { color: inherit; text-decoration: none; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  /* Acortar la duración no basta: sin esto el desplazamiento de las tarjetas y el
+     crecimiento de la regla seguirían ocurriendo, solo que de golpe — que para
+     alguien con sensibilidad al movimiento es peor, no mejor. Se anulan en origen. */
+  :root {
+    --mov-elevacion: 0px;
+    --mov-crecer: 1;
+  }
 }

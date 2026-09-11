@@ -60,8 +60,13 @@
     font-weight: var(--cuerpo-fuerte-peso);
     line-height: 1;
     cursor: pointer;
-    transition: background-color var(--mov-tactil) var(--mov-curva);
+    transition:
+      background-color var(--mov-tactil) var(--mov-curva),
+      transform var(--mov-tactil) var(--mov-curva);
   }
+  /* Respuesta al toque. En un teléfono lento el cambio de color tarda en
+     verse; el hundimiento se siente de inmediato y evita el doble toque. */
+  .boton:active { transform: translateY(1px); }
   .completo { width: 100%; }
 
   /* ── La arista · ADR-0007 §5 ────────────────────────────────────────────

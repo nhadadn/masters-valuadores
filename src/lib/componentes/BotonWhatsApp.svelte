@@ -49,7 +49,11 @@
     color: var(--tinta-sobre-oscuro);
     font-weight: var(--cuerpo-fuerte-peso);
     line-height: 1;
+    transition: transform var(--mov-tactil) var(--mov-curva);
   }
+  /* El inerte NO se hunde: hundirse es acusar recibo de una acción, y aquí
+     no hay acción hasta que entre el número. */
+  .wa:not(.inerte):active { transform: translateY(1px); }
   .bloque { width: 100%; }
   .linea { min-height: var(--tactil-piso); }
   .barra { width: 100%; }

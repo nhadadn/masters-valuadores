@@ -33,11 +33,29 @@
     background: var(--superficie);
     border: 1px solid var(--negro-400);
     color: var(--tinta);
-    transition: border-color var(--mov-tactil) var(--mov-curva);
+    /* Solo `transform` y `border-color`: ninguno de los dos reflowea, así que la
+       retícula no se mueve y no hay CLS. El alto fijo sigue intacto. */
+    transition:
+      border-color var(--mov-tactil) var(--mov-curva),
+      transform var(--mov-tactil) var(--mov-curva);
   }
-  .tarjeta:hover { border-color: var(--negro-950); }
+  .tarjeta:hover,
+  .tarjeta:focus-visible {
+    border-color: var(--negro-950);
+    transform: translateY(var(--mov-elevacion));
+  }
+  /* El dedo espera que lo presionado baje. Sin esto, en táctil la tarjeta se queda
+     levantada después del toque y parece trabada. */
+  .tarjeta:active { transform: translateY(0); }
 
-  .filo { width: 26px; height: 3px; background: var(--oro-500); margin-bottom: var(--e-3); }
+  .filo {
+    width: 26px; height: 3px; background: var(--oro-500); margin-bottom: var(--e-3);
+    /* `scaleX` y no `width`: crecer con width dispara maquetación en cada cuadro. */
+    transform-origin: left center;
+    transition: transform var(--mov-tactil) var(--mov-curva);
+  }
+  .tarjeta:hover .filo,
+  .tarjeta:focus-visible .filo { transform: scaleX(var(--mov-crecer)); }
 
   .titulo {
     display: block;

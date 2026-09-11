@@ -150,8 +150,18 @@
   --tactil: 48px;         /* de casa */
   --tactil-piso: 44px;    /* piso absoluto, WCAG 2.5.5. Solo secundarios. */
 
-  /* ── Movimiento ──────────────────────────────────────────────────────── */
+  /* ── Movimiento ──────────────────────────────────────────────────────────
+     El movimiento de este sitio es de RESPUESTA, no de entrada: se mueve lo que
+     el visitante toca, no lo que aparece. La audiencia llega con prisa, desde un
+     teléfono de gama baja y a plena luz; una animación de entrada le retrasa el
+     contenido que vino a leer para impresionar a quien no está mirando.
+
+     --mov-elevacion vale 0 bajo `prefers-reduced-motion`. Ver `base.css`: el bloque
+     de reducción de ahí solo acorta la duración, así que sin esto el desplazamiento
+     seguiría ocurriendo, de golpe. */
   --mov-tactil: 120ms;
   --mov-aparicion: 200ms;
   --mov-curva: ease-out;
+  --mov-elevacion: -2px;
+  --mov-crecer: 1.6;
 }
