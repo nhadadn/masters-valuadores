@@ -21,9 +21,11 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0010 | [[ADR-0010-degradados-de-superficie\|El fondo deja de ser blanco, y el acero vuelve con fuente]] | **ACEPTADA** · enmienda el 0004 | 2026-09-10 |
 | 0011 | [[ADR-0011-entrada-oscura\|La entrada va en oscuro]] | **ACEPTADA** · se aparta de sus piezas, con la razón escrita | 2026-09-10 |
 | 0012 | [[ADR-0012-tema-oscuro\|El sitio entero va en oscuro]] | **ACEPTADA** · extiende el 0011 · **riesgo de luz solar sin medir** | 2026-09-10 |
-| 0013 | [[ADR-0013-sin-dominio-no-se-indexa\|Mientras no haya dominio, el sitio no se deja indexar]] | **ACEPTADA** · se abre sola al cerrar D-07 | 2026-09-11 |
+| 0013 | [[ADR-0013-sin-dominio-no-se-indexa\|Mientras no haya dominio, el sitio no se deja indexar]] | **ACEPTADA** · **enmendada por el 0017**: ya no se abre sola | 2026-09-11 |
 | 0014 | [[ADR-0014-alinearse-a-la-categoria-de-google\|El sitio se alinea con la categoría que Google ya les puso]] | **ACEPTADA** · enmienda el 0008 · abre D-18 | 2026-09-11 |
 | 0015 | [[ADR-0015-mapa-incrustado\|Entra el mapa de Google incrustado]] | **ACEPTADA** · **primer tercero del sitio · 643.8 KB medidos** | 2026-09-11 |
+| 0016 | [[ADR-0016-despliegue-de-vista-previa\|El borrador se cuelga en Vercel, sin dejar de ser borrador]] | **ACEPTADA** · enmienda el 0013 | 2026-09-11 |
+| 0017 | [[ADR-0017-indexacion-separada-del-dominio\|Tener dominio y estar indexable dejan de ser lo mismo]] | **ACEPTADA** · enmienda el 0013 · **D-07 ya no enciende la indexación** | 2026-09-11 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

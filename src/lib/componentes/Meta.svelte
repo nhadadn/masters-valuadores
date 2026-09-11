@@ -16,7 +16,7 @@
   import { page } from '$app/state';
   import { negocio } from '$lib/config/negocio';
   import { fichaDe } from '$lib/seo/meta';
-  import { paginaDe, absoluta, hayOrigen, ORIGEN_TARJETA, IMAGEN_TARJETA } from '$lib/seo/enlaces';
+  import { paginaDe, absoluta, hayOrigen, seIndexa, ORIGEN_TARJETA, IMAGEN_TARJETA } from '$lib/seo/enlaces';
 
   const ruta = $derived(page.url.pathname);
   const ficha = $derived(fichaDe(ruta));
@@ -43,9 +43,9 @@
    * sitio son huecos etiquetados y un aviso de borrador, y cualquier URL donde
    * esté colgado es provisional. Se abre solo al cerrar D-07.
    */
-  const robots = $derived(!hayOrigen ? 'noindex, nofollow' : indexable ? 'index, follow' : 'noindex, follow');
+  const robots = $derived(!seIndexa ? 'noindex, nofollow' : indexable ? 'index, follow' : 'noindex, follow');
 
-  const porQue = '<!-- robots=noindex: el dominio (D-07) sigue abierto y no hay canonica que proteja esta URL. Ver ADR-0013. Se abre solo al escribir el dominio en negocio.ts. -->';
+  const porQue = '<!-- robots=noindex a proposito. Hacen falta DOS cosas: dominio (D-07) e INDEXACION_ABIERTA en src/lib/seo/enlaces.ts. Van separadas desde el ADR-0017: tener dominio no es lo mismo que tener contenido listo. -->';
 </script>
 
 <svelte:head>
@@ -57,7 +57,7 @@
   {/if}
 
   <meta name="robots" content={robots} />
-  {#if !hayOrigen}{@html porQue}{/if}
+  {#if !seIndexa}{@html porQue}{/if}
   {#if canonica}
     <link rel="canonical" href={canonica} />
   {/if}

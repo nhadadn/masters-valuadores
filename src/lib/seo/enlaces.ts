@@ -35,6 +35,36 @@ export const ORIGEN: Dato<string> = estaConfirmado(negocio.dominio)
 export const hayOrigen = estaConfirmado(ORIGEN);
 
 /**
+ * ── EL INTERRUPTOR DE INDEXACIÓN · ADR-0017 ───────────────────────────────
+ *
+ * El [[ADR-0013]] ató la indexación al dominio: sin dominio, `noindex`; con
+ * dominio, abierto. Parecía elegante —se abre solo, nadie tiene que acordarse— y
+ * era un error de diseño: **son dos cosas distintas y solo coinciden hoy**.
+ *
+ *   tener dominio      = saber cuál es la dirección buena
+ *   estar indexable    = que el CONTENIDO merezca que Google lo enseñe
+ *
+ * El día que se compre el dominio, el sitio seguirá siendo un borrador con 27
+ * huecos etiquetados, marcas `__POR_CONFIRMAR__` a la vista y una banda que dice
+ * BORRADOR en cada página. Atados, comprar el dominio le enseñaría eso a Google —
+ * que es justo lo que el ADR-0013 existía para evitar. La regla se habría vuelto en
+ * contra de su propio motivo.
+ *
+ * Ahora el dominio hace su trabajo —canónicas, `og:url`, `og:image` correctas— y la
+ * indexación espera aquí, a que alguien la abra a propósito.
+ *
+ * PARA ABRIRLA hay que tocar DOS sitios, y el test `seo.test.ts` no deja olvidar el
+ * segundo:
+ *   1 · este `true`
+ *   2 · quitar la cabecera `X-Robots-Tag` de `vercel.json`, que es un cerrojo de
+ *       servidor y manda por encima de cualquier etiqueta del HTML
+ */
+export const INDEXACION_ABIERTA = false;
+
+/** Indexable de verdad: hace falta dirección buena Y permiso. */
+export const seIndexa = hayOrigen && INDEXACION_ABIERTA;
+
+/**
  * ORIGEN DE VISTA PREVIA · no es el dominio del negocio, y la diferencia importa.
  *
  * El sitio se despliega en Vercel para que Nadir lo vea en su teléfono y se lo pase a
@@ -118,8 +148,8 @@ export const IMAGEN_TARJETA = {
  *
  * Sin dominio sale vacío a propósito. Ver ADR-0013.
  */
-export function construirSitemap(origen: Dato<string> = ORIGEN): string {
-  const cuerpo = estaConfirmado(origen)
+export function construirSitemap(origen: Dato<string> = ORIGEN, abierta = INDEXACION_ABIERTA): string {
+  const cuerpo = estaConfirmado(origen) && abierta
     ? paginasIndexables.map((p) => `  <url><loc>${absoluta(p.ruta, origen)}</loc></url>`).join('\n')
     : '  <!-- Vacío a propósito: el dominio (D-07) sigue sin decidirse y cada entrada\n' +
       '       de un sitemap necesita URL absoluta. No se inventa. Ver ADR-0013. -->';
@@ -139,8 +169,8 @@ ${cuerpo}
  * impresión del proyecto queda hecha con el borrador, y luego compite contra el
  * dominio bueno. Ver ADR-0013.
  */
-export function construirRobots(origen: Dato<string> = ORIGEN): string {
-  if (!estaConfirmado(origen)) {
+export function construirRobots(origen: Dato<string> = ORIGEN, abierta = INDEXACION_ABIERTA): string {
+  if (!estaConfirmado(origen) || !abierta) {
     return `# Sitio EN CONSTRUCCIÓN. No se indexa nada todavía.
 #
 # El dominio definitivo no está decidido (D-07), así que cualquier URL donde esto

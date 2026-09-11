@@ -3,7 +3,7 @@ import { readdirSync, statSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import {
   paginas, paginasIndexables, construirSitemap, construirRobots,
-  absoluta, IMAGEN_TARJETA
+  absoluta, IMAGEN_TARJETA, INDEXACION_ABIERTA
 } from '$lib/seo/enlaces';
 import { fichas } from '$lib/seo/meta';
 import { girosConstruibles } from '$lib/datos/giros';
@@ -113,29 +113,31 @@ describe('CA-S10 · el inventario coincide con lo que hay en disco', () => {
 });
 
 describe('CA-S3 · el sitemap apunta exactamente a las páginas indexables', () => {
+  // Con dominio Y permiso: desde el ADR-0017 hacen falta las dos cosas, así que
+  // estas pruebas de FORMA piden el estado abierto explícitamente.
   const locs = (xml: string) => [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 
   it('con dominio: una <loc> por página indexable, absoluta y con barra', () => {
-    const xml = construirSitemap(FALSO);
+    const xml = construirSitemap(FALSO, true);
     expect(locs(xml)).toEqual(paginasIndexables.map((p) => `${FALSO}${p.ruta}`));
     for (const l of locs(xml)) expect(l.startsWith('https://')).toBe(true);
   });
 
   it('las legales NO entran: un sitemap no pide que indexen lo que lleva noindex', () => {
-    const xml = construirSitemap(FALSO);
+    const xml = construirSitemap(FALSO, true);
     expect(xml).not.toContain('/terminos/');
     expect(xml).not.toContain('/aviso-de-privacidad/');
   });
 
   it('es XML bien formado y declara el esquema de sitemaps.org', () => {
-    const xml = construirSitemap(FALSO);
+    const xml = construirSitemap(FALSO, true);
     expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
     expect(xml).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
     expect(xml.trimEnd().endsWith('</urlset>')).toBe(true);
   });
 
   it('no lleva lastmod ni priority: Google los ignora o los castiga', () => {
-    const xml = construirSitemap(FALSO);
+    const xml = construirSitemap(FALSO, true);
     expect(xml).not.toContain('<lastmod>');
     expect(xml).not.toContain('<priority>');
     expect(xml).not.toContain('<changefreq>');
@@ -207,12 +209,59 @@ describe('CA-S5 · sin dominio el sitio no se deja indexar · ADR-0013', () => {
     expect(absoluta('/', POR_CONFIRMAR)).toBe(POR_CONFIRMAR);
   });
 
-  it('con dominio se abre solo: permite todo salvo las legales, y anuncia el sitemap', () => {
-    const txt = construirRobots(FALSO);
+  /**
+   * ── EL DOMINIO YA NO ABRE LA INDEXACIÓN SOLO · ADR-0017 ──────────────────
+   * Este test decía «con dominio se abre solo» y era la regla del ADR-0013.
+   * Se separó: tener dominio es saber cuál es la dirección buena; estar indexable
+   * es que el contenido merezca enseñarse. Hoy lo primero está cerca y lo segundo
+   * no, así que hacen falta las dos cosas.
+   */
+  it('con dominio pero sin permiso, sigue cerrado', () => {
+    const txt = construirRobots(FALSO, false);
+    expect(txt).toContain('Disallow: /');
+    expect(txt).not.toContain('Sitemap:');
+    expect(construirSitemap(FALSO, false)).not.toContain('<loc>');
+  });
+
+  it('con dominio Y permiso: permite todo salvo las legales, y anuncia el sitemap', () => {
+    const txt = construirRobots(FALSO, true);
     expect(txt).toContain('Allow: /');
     expect(txt).toContain('Disallow: /terminos/');
     expect(txt).toContain('Disallow: /aviso-de-privacidad/');
     expect(txt).toContain(`Sitemap: ${FALSO}/sitemap.xml`);
+  });
+
+  it('sin dominio, el permiso solo no alcanza', () => {
+    expect(construirRobots(POR_CONFIRMAR, true)).toContain('Disallow: /');
+    expect(construirSitemap(POR_CONFIRMAR, true)).not.toContain('<loc>');
+  });
+
+  /**
+   * EL SEGUNDO CERROJO VIVE FUERA DEL CÓDIGO, Y ESO ES UNA TRAMPA.
+   *
+   * `vercel.json` manda `X-Robots-Tag: noindex, nofollow` en TODAS las respuestas.
+   * Es una cabecera de servidor: gana sobre cualquier etiqueta del HTML. Si alguien
+   * pone `INDEXACION_ABIERTA = true` y no la quita, el sitio sigue sin indexarse y
+   * el síntoma es «lo abrimos y Google no hace nada» — semanas para descubrirlo.
+   *
+   * Este test cruza los dos y obliga a que digan lo mismo.
+   */
+  it('el interruptor y la cabecera de Vercel no se contradicen', () => {
+    const vercel = readFileSync('vercel.json', 'utf8');
+    const cabeceraCierra = /X-Robots-Tag[\s\S]*?noindex/.test(vercel);
+    if (INDEXACION_ABIERTA) {
+      expect(
+        cabeceraCierra,
+        'INDEXACION_ABIERTA es true pero vercel.json sigue mandando X-Robots-Tag: noindex. ' +
+        'La cabecera gana sobre el HTML: quítala o el sitio no se indexa igual.'
+      ).toBe(false);
+    } else {
+      expect(
+        cabeceraCierra,
+        'INDEXACION_ABIERTA es false: la cabecera de vercel.json debe seguir cerrando, ' +
+        'que es el cerrojo que no depende de que nadie lea el HTML.'
+      ).toBe(true);
+    }
   });
 });
 
