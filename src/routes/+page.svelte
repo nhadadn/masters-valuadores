@@ -130,8 +130,8 @@
        al visitante.» — del borrador. -->
   <h2 class="titulo-seccion" data-propuesta="true">Elige la línea que buscas</h2>
   <ul class="reticula">
-    {#each girosConstruibles as g}
-      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} foto={g.fotoProvisional} fotoAlt={g.fotoAlt} /></li>
+    {#each girosConstruibles as g, i}
+      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} foto={g.fotoProvisional} fotoAlt={g.fotoAlt} indice={i} /></li>
     {/each}
     <li>
       <div class="bloqueados">

@@ -22,7 +22,7 @@
 import { abrirChromium } from './navegador.mjs';
 
 const BASE = process.argv[2] ?? process.env.BASE ?? 'http://127.0.0.1:8124';
-const RUTA = '/empeno-y-prestamo/';
+const RUTA = process.env.RUTA ?? '/empeno-y-prestamo/';
 const VENTANA_MS = Number(process.env.VENTANA ?? 6000);
 
 const navegador = await abrirChromium();
@@ -38,7 +38,7 @@ async function medir(apagar) {
   await p.evaluate(() => document.fonts.ready);
   // Las tarjetas TIENEN que estar a la vista: fuera de pantalla el navegador
   // puede no componer nada y el número saldría regalado.
-  await p.locator('.bienes').scrollIntoViewIfNeeded();
+  await p.locator('.bienes, .reticula').first().scrollIntoViewIfNeeded();
   await p.waitForTimeout(500);
 
   if (apagar) {

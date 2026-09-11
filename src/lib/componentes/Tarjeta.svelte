@@ -10,6 +10,7 @@
    */
   import Icono from './Icono.svelte';
   import Foto from './Foto.svelte';
+  import Destello from './Destello.svelte';
 
   interface Props {
     href: string;
@@ -24,11 +25,14 @@
     foto?: string;
     /** Describe LA FOTO. Nunca afirma que el local sea de Masters. */
     fotoAlt?: string;
+    /** Posición en la retícula: escalona el destello. Ver `Destello.svelte`. */
+    indice?: number;
   }
-  let { href, titulo, icono, nota, foto, fotoAlt }: Props = $props();
+  let { href, titulo, icono, nota, foto, fotoAlt, indice = 0 }: Props = $props();
 </script>
 
 <a {href} class="tarjeta" class:conFoto={foto}>
+  <Destello {indice} />
   {#if foto}
     <!-- La foto va ARRIBA y el ícono sigue abajo con el título. Son dos cosas
          distintas: la foto dice de qué va la línea de un vistazo, el ícono la
@@ -58,6 +62,11 @@
 
 <style>
   .tarjeta {
+    /* `position` e `isolation` son lo que el destello necesita del contenedor; el
+       `overflow` ya estaba para que la banda de foto llegue al borde. Ver la nota
+       de requisitos en `Destello.svelte`. */
+    position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     min-height: 176px;                 /* medido: caja de título de 79 = 3 renglones */

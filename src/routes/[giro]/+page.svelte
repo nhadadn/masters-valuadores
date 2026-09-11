@@ -19,6 +19,7 @@
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
+  import Destello from '$componentes/Destello.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -84,15 +85,13 @@
   {#if giro.bienesPropuestos?.length}
     <ul class="bienes">
       {#each giro.bienesPropuestos as bien, i}
-        <!-- `--i` escalona el destello. Sin él las seis tarjetas destellarían a la
-             vez y parecería un parpadeo de la pantalla, no un reflejo de vitrina. -->
-        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'} style="--i: {i}">
+        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'}>
           <!-- MARCA DE AGUA · el ícono del bien, grande y tenue al fondo.
                `aria-hidden`: no aporta nada a quien no ve la pantalla — el nombre
                del bien ya está escrito al lado, y anunciar «imagen de una moneda»
                antes de «Monedas» solo estorba. -->
           <span class="agua" aria-hidden="true"><Icono nombre={bien.icono} tam={96} grosor={1.1} /></span>
-          <span class="destello" aria-hidden="true"></span>
+          <Destello indice={i} />
           <span class="que">{bien.que}</span>
           <span class="fuente">
             {#if bien.fuente === 'letrero'}Está en su letrero
@@ -236,56 +235,11 @@
   }
   .apuesta .agua { opacity: 0.09; }   /* lo deducido pesa menos, también de fondo */
 
-  /* ── EL DESTELLO · PERMANENTE ────────────────────────────────────────────
-     Una banda de luz que cruza cada tarjeta en bucle, como el reflejo que recorre
-     una vitrina. Decisión de Nadir, 11 de septiembre, reafirmada después de que se
-     le pusiera el costo encima.
-
-     ANTES ERA AL ENTRAR EN PANTALLA, con `animation-timeline` ligado al scroll. Esa
-     versión tenía una virtud —solo corría mientras te movías— y un defecto: quien
-     llegaba y se quedaba quieto no veía nada nunca. Ahora corre siempre.
-
-     LO QUE ESO CUESTA, MEDIDO Y NO SUPUESTO. Ver `herramientas/medir-animacion.mjs`:
-     el navegador resuelve esto en el compositor porque solo anima `transform`, así
-     que no recalcula estilo ni rehace la maqueta en ningún cuadro. Lo que sí gasta
-     es GPU mientras la pestaña está a la vista, y eso no se puede llevar a cero
-     estando encendido: es el precio de la decisión.
-
-     LO QUE SÍ SE ACOTÓ:
-       · El barrido dura 1.3 s y el ciclo 8 s, así que el 84 % del tiempo la banda
-         está parada fuera de la tarjeta. Un destello, no un estrobo.
-       · `--i` escalona cada tarjeta medio segundo. Las seis a la vez se leerían como
-         un parpadeo de la pantalla.
-       · `prefers-reduced-motion` lo apaga entero. No baja la duración: lo apaga.
-       · `transform` y nada más. Animar `background-position` haría lo mismo a la
-         vista y repintaría en cada cuadro. */
-  .destello { display: none; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .destello {
-      display: block;
-      position: absolute; inset: 0; z-index: -1;
-      pointer-events: none;
-      background: linear-gradient(
-        105deg,
-        transparent 38%,
-        rgba(231, 192, 65, 0.16) 50%,
-        transparent 62%
-      );
-      transform: translateX(-140%);
-      animation: cruzar 8s linear infinite;
-      animation-delay: calc(var(--i, 0) * 0.5s);
-    }
-  }
-
-  /* El movimiento ocupa el primer 16 % del ciclo —1.3 s de 8— y el resto la banda
-     espera fuera de cuadro. Comprimir el gesto y alargar la pausa es lo que separa
-     un reflejo de un parpadeo. */
-  @keyframes cruzar {
-    0%   { transform: translateX(-140%); }
-    16%  { transform: translateX(140%); }
-    100% { transform: translateX(140%); }
-  }
+  /* El destello vive en «Destello.svelte» desde que se pidió también para las
+     tarjetas de la portada. Aquí quedaban veinte líneas de CSS que habrían sido la
+     segunda copia, y dos copias se separan en cuanto alguien ajusta una.
+     Lo que esta tarjeta SÍ tiene que aportar es el contenedor —«position»,
+     «overflow» e «isolation»—, arriba en «.bienes li». */
   /* Lo deducido se marca: borde punteado, el mismo lenguaje de «esto falta». */
   .bienes li.apuesta { border-style: dashed; border-color: var(--oro-700); }
   .que { font-size: var(--cuerpo-tam); font-weight: var(--cuerpo-fuerte-peso); line-height: 1.25; }
