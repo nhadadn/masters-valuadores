@@ -83,8 +83,10 @@
        deducido es una apuesta nuestra. -->
   {#if giro.bienesPropuestos?.length}
     <ul class="bienes">
-      {#each giro.bienesPropuestos as bien}
-        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'}>
+      {#each giro.bienesPropuestos as bien, i}
+        <!-- `--i` escalona el destello. Sin él las seis tarjetas destellarían a la
+             vez y parecería un parpadeo de la pantalla, no un reflejo de vitrina. -->
+        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'} style="--i: {i}">
           <!-- MARCA DE AGUA · el ícono del bien, grande y tenue al fondo.
                `aria-hidden`: no aporta nada a quien no ve la pantalla — el nombre
                del bien ya está escrito al lado, y anunciar «imagen de una moneda»
@@ -234,63 +236,55 @@
   }
   .apuesta .agua { opacity: 0.09; }   /* lo deducido pesa menos, también de fondo */
 
-  /* ── EL DESTELLO ─────────────────────────────────────────────────────────
-     Una banda de luz que cruza la tarjeta UNA vez, cuando entra en pantalla.
+  /* ── EL DESTELLO · PERMANENTE ────────────────────────────────────────────
+     Una banda de luz que cruza cada tarjeta en bucle, como el reflejo que recorre
+     una vitrina. Decisión de Nadir, 11 de septiembre, reafirmada después de que se
+     le pusiera el costo encima.
 
-     «Al entrar en pantalla» pide normalmente un IntersectionObserver, y este sitio
-     tiene CERO JavaScript (`csr = false`). Se resuelve con `animation-timeline:
-     view()`, que es CSS puro: el navegador liga el avance de la animación a la
-     posición del elemento en la ventana.
+     ANTES ERA AL ENTRAR EN PANTALLA, con `animation-timeline` ligado al scroll. Esa
+     versión tenía una virtud —solo corría mientras te movías— y un defecto: quien
+     llegaba y se quedaba quieto no veía nada nunca. Ahora corre siempre.
 
-     Va dentro de `@supports` A PROPÓSITO. Sin esa guarda, un navegador que no
-     entienda `view()` aplicaría la animación con la línea de tiempo del documento y
-     las seis tarjetas destellarían a la vez al cargar, casi siempre fuera de
-     pantalla. Donde no hay soporte no hay animación, que es la degradación correcta.
+     LO QUE ESO CUESTA, MEDIDO Y NO SUPUESTO. Ver `herramientas/medir-animacion.mjs`:
+     el navegador resuelve esto en el compositor porque solo anima `transform`, así
+     que no recalcula estilo ni rehace la maqueta en ningún cuadro. Lo que sí gasta
+     es GPU mientras la pestaña está a la vista, y eso no se puede llevar a cero
+     estando encendido: es el precio de la decisión.
 
-     `transform` y nada más: se resuelve en el compositor y no repinta. En el
-     teléfono de gama baja del contrato eso es la diferencia entre un gesto y una
-     factura de batería. */
+     LO QUE SÍ SE ACOTÓ:
+       · El barrido dura 1.3 s y el ciclo 8 s, así que el 84 % del tiempo la banda
+         está parada fuera de la tarjeta. Un destello, no un estrobo.
+       · `--i` escalona cada tarjeta medio segundo. Las seis a la vez se leerían como
+         un parpadeo de la pantalla.
+       · `prefers-reduced-motion` lo apaga entero. No baja la duración: lo apaga.
+       · `transform` y nada más. Animar `background-position` haría lo mismo a la
+         vista y repintaría en cada cuadro. */
   .destello { display: none; }
 
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      /* LA LÍNEA DE TIEMPO SE DECLARA EN LA TARJETA, NO EN EL DESTELLO.
-         Con «animation-timeline: view()» puesto en el destello, el navegador busca
-         el contenedor de scroll más cercano — y el «overflow: hidden» de la tarjeta
-         la convierte a ELLA en contenedor. El destello medía su avance contra una
-         caja que nunca se desplaza, así que salía terminado desde el primer cuadro.
-         Medido: a 40 px de scroll ya estaba en el final.
-         Nombrando la línea de tiempo en la tarjeta, lo que se mide es la tarjeta
-         dentro de la página, que es lo que se quería. */
-      .bienes li { view-timeline-name: --bien; }
-      .destello {
-        display: block;
-        position: absolute; inset: 0; z-index: -1;
-        pointer-events: none;
-        background: linear-gradient(
-          105deg,
-          transparent 38%,
-          rgba(231, 192, 65, 0.16) 50%,
-          transparent 62%
-        );
-        transform: translateX(-140%);
-        animation: cruzar linear both;
-        animation-timeline: --bien;
-        /* EL RANGO SE MIDIÓ, y el primero estaba mal.
-           Se puso `entry 10% cover 38%` a ojo. Medido con el scroll paso a paso: a
-           40 px de desplazamiento la tarjeta apenas asomaba por el borde inferior y
-           el destello YA HABÍA TERMINADO. Una animación que se acaba antes de que
-           el elemento se vea no es sutil: es invisible.
-           Mezclar `entry` con `cover` fue el error — `cover` empieza a contar mucho
-           antes. Ahora el recorrido va de cuando la tarjeta está entrando a cuando
-           ya subió un cuarto de pantalla, que es donde el ojo está. */
-        animation-range: entry 20% contain 25%;
-      }
+  @media (prefers-reduced-motion: no-preference) {
+    .destello {
+      display: block;
+      position: absolute; inset: 0; z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(
+        105deg,
+        transparent 38%,
+        rgba(231, 192, 65, 0.16) 50%,
+        transparent 62%
+      );
+      transform: translateX(-140%);
+      animation: cruzar 8s linear infinite;
+      animation-delay: calc(var(--i, 0) * 0.5s);
     }
   }
 
+  /* El movimiento ocupa el primer 16 % del ciclo —1.3 s de 8— y el resto la banda
+     espera fuera de cuadro. Comprimir el gesto y alargar la pausa es lo que separa
+     un reflejo de un parpadeo. */
   @keyframes cruzar {
-    to { transform: translateX(140%); }
+    0%   { transform: translateX(-140%); }
+    16%  { transform: translateX(140%); }
+    100% { transform: translateX(140%); }
   }
   /* Lo deducido se marca: borde punteado, el mismo lenguaje de «esto falta». */
   .bienes li.apuesta { border-style: dashed; border-color: var(--oro-700); }
