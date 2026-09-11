@@ -15,7 +15,7 @@ enmienda: ADR-0013-sin-dominio-no-se-indexa
 > *«Quisiera cargar nuestra app a este dominio de Vercel que es mío para poder con ello
 > compartir al cliente o ver en mi celular directo.»* — Nadir
 
-El sitio se despliega en **`masters-valuadores.vercel.app`**, una dirección de Nadir.
+El sitio se despliega en **`masters-valuadores-borrador.vercel.app`**, una dirección de Nadir.
 Sirve para dos cosas concretas: verlo en un teléfono real, y pasárselo a Cristóbal.
 
 **No es publicar.** Es poner el borrador donde se pueda mirar.

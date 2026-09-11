@@ -53,7 +53,7 @@ export const hayOrigen = estaConfirmado(ORIGEN);
  *
  * Se borra el día que cierre D-07.
  */
-export const ORIGEN_VISTA_PREVIA = 'https://masters-valuadores.vercel.app';
+export const ORIGEN_VISTA_PREVIA = 'https://masters-valuadores-borrador.vercel.app';
 
 /** Solo para la tarjeta de enlace. El dominio real manda en cuanto exista. */
 export const ORIGEN_TARJETA: string = hayOrigen ? String(ORIGEN) : ORIGEN_VISTA_PREVIA;
