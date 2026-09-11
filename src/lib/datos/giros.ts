@@ -20,6 +20,17 @@ export interface Giro {
   nombre: string;
   /** Nombre corto para navegación y migas, cuando el largo no cabe. */
   nombreCorto: string;
+  /**
+   * Frase de la tarjeta · PROPUESTA SIN APROBAR.
+   *
+   * Sale de `docs/70-contenido/propuesta-textos.md`, que Cristóbal todavía no
+   * corrige. Cada una dice qué es ese giro POR DEFINICIÓN —no qué tan bueno es—,
+   * así que ninguna afirma nada que él tenga que sostener.
+   *
+   * Se distingue del resto de este archivo a propósito: `nombre` está documentado
+   * por el cliente, esto es borrador nuestro. Ver `AvisoBorrador.svelte`.
+   */
+  frasePropuesta?: string;
   icono: string;
   estado: EstadoGiro;
   /** Qué decisión lo destraba, si está bloqueado. */
@@ -27,13 +38,13 @@ export interface Giro {
 }
 
 export const giros: Giro[] = [
-  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',           nombreCorto: 'Empeño',      icono: 'empeno',  estado: 'construible' },
-  { slug: 'joyeria',             nombre: 'Joyería',                     nombreCorto: 'Joyería',     icono: 'joyeria', estado: 'construible' },
-  { slug: 'bazar',               nombre: 'Bazar',                       nombreCorto: 'Bazar',       icono: 'bazar',   estado: 'construible' },
-  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',   nombreCorto: 'Taller',      icono: 'taller',  estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',          nombreCorto: 'Fletes',      icono: 'fletes',  estado: 'construible' },
-  { slug: 'renta-de-maquinaria', nombre: 'Renta de maquinaria y equipo', nombreCorto: 'Maquinaria', icono: 'renta',   estado: 'construible' },
-  { slug: 'financiera',          nombre: 'Financiera',                  nombreCorto: 'Financiera',  icono: 'finan',   estado: 'construible' },
+  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',           nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', icono: 'empeno',  estado: 'construible' },
+  { slug: 'joyeria',             nombre: 'Joyería',                     nombreCorto: 'Joyería',     frasePropuesta: 'Compra y venta de joyería', icono: 'joyeria', estado: 'construible' },
+  { slug: 'bazar',               nombre: 'Bazar',                       nombreCorto: 'Bazar',       frasePropuesta: 'Artículos de segunda mano en venta', icono: 'bazar',   estado: 'construible' },
+  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',   nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', icono: 'taller',  estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',          nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', icono: 'fletes',  estado: 'construible' },
+  { slug: 'renta-de-maquinaria', nombre: 'Renta de maquinaria y equipo', nombreCorto: 'Maquinaria', frasePropuesta: 'Maquinaria y equipo en renta', icono: 'renta',   estado: 'construible' },
+  { slug: 'financiera',          nombre: 'Financiera',                  nombreCorto: 'Financiera',  frasePropuesta: 'Servicios financieros', icono: 'finan',   estado: 'construible' },
 
   // No se construyen hasta que se cierren sus decisiones. Aparecen en la portada
   // como bloqueados a propósito: lo que falta decidir se ve, no se esconde.

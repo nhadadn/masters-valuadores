@@ -3,7 +3,9 @@
    * Portada REPARTIDORA. Su trabajo no es vender: es mandar al giro correcto.
    * Por eso la retícula de líneas es la sección más grande de la página.
    *
-   * Cero copy. Todo lo que sería mensaje sale como hueco etiquetado.
+   * El copy que hay es PROPUESTA SIN APROBAR, literal de
+   * `docs/70-contenido/propuesta-textos.md`. Lo que no está propuesto sigue siendo
+   * hueco etiquetado, y lo que es dato de negocio sigue en `__POR_CONFIRMAR__`.
    */
   import Seccion from '$componentes/Seccion.svelte';
   import Hueco from '$componentes/Hueco.svelte';
@@ -15,8 +17,42 @@
   import Insignia from '$componentes/Insignia.svelte';
   import BandaDiagonal from '$componentes/BandaDiagonal.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
+  import Titular from '$componentes/Titular.svelte';
+  import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
+
+  /**
+   * TEXTO PROPUESTO, SIN APROBAR · docs/70-contenido/propuesta-textos.md
+   *
+   * Va literal del borrador. No lo reescribo: el trabajo de Cristóbal es corregir
+   * encima, y para eso tiene que leer lo que se le propuso, no mi versión.
+   *
+   * LA GRAFÍA DE LA MARCA NO SE ESCRIBE AQUÍ. El borrador dice «Todo MÁSTER» y el
+   * ADR-0004 decidió que la grafía del sitio es `MASTERS`. Ese choque no lo resuelvo
+   * yo: sale de `negocio.nombreComercial`, que es la fuente única, y cambia solo
+   * cuando cierre D-01.
+   *
+   * OJO CON «SIETE LÍNEAS»: es literal del borrador y hoy coincide con los giros
+   * construibles. Si se destraba importaciones (D-04) o avalúos (D-03), la frase se
+   * queda mal. El propio borrador ya señalaba ese riesgo en otra alternativa.
+   */
+  const DIFERENCIADORES = [
+    {
+      icono: 'mapa',
+      titulo: 'Todo en un mismo lugar',
+      linea: 'Siete líneas de negocio bajo la misma marca. No te mandamos a otro lado.'
+    },
+    {
+      icono: 'empeno',
+      titulo: 'Aquí hay local, cara y vitrina',
+      linea: 'No somos una aplicación ni un número que nadie contesta. Puedes venir y vernos.'
+    },
+    // El tercero NO se rellena. El borrador es explícito: necesita un dato de
+    // Cristóbal —años, si es negocio familiar, qué hacen distinto, o cobertura—.
+    // Sin ese dato el bloque se queda vacío, pero no se inventa.
+    { icono: 'reloj', titulo: null, linea: null }
+  ];
 </script>
 
 <svelte:head>
@@ -24,11 +60,25 @@
   <meta name="description" content="__POR_CONFIRMAR__ · descripción de la portada, no se inventa" />
 </svelte:head>
 
+<AvisoBorrador />
+
 <Seccion etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
   <div class="entrada">
     <div class="palabra">
-      <Hueco etiqueta="TITULAR — QUÉ HACEN Y DÓNDE, EN UNA LÍNEA" renglones={2} como="h1" />
-      <Hueco etiqueta="SUBTITULAR — LA PROMESA CONCRETA, EN DOS RENGLONES" renglones={2} />
+      <!-- El corte a dos tintas no es invención: el borrador ya escribió el titular
+           en dos frases —qué hacen y dónde, luego la marca—. Es el mismo patrón de
+           «MAQUINARIA / LISTA PARA TRABAJAR» de sus cinco piezas. ADR-0007 §4. -->
+      <div data-propuesta="true">
+        <Titular
+          tam="display"
+          primera="Empeño, joyería y maquinaria en Torreón."
+          segunda="Todo {negocio.nombreComercial}."
+        />
+      </div>
+      <p class="subtitular" data-propuesta="true">
+        Cada línea tiene su propia página: qué hacemos, qué necesitas traer y cómo
+        encontrarnos. Si tienes una duda, escríbenos por WhatsApp.
+      </p>
       <div class="acciones">
         <BotonWhatsApp origen="portada-entrada" />
         <Boton variante="secundario" href="/contacto/">
@@ -53,10 +103,12 @@
 </Seccion>
 
 <Seccion fondo="crema" etiqueta="NUESTRAS LÍNEAS">
-  <Hueco etiqueta="TÍTULO DE SECCIÓN — UNA LÍNEA" renglones={1} como="h2" />
+  <!-- «Es una instrucción, no un eslogan: es exactamente lo que esa sección le pide
+       al visitante.» — del borrador. -->
+  <h2 class="titulo-seccion" data-propuesta="true">Elige la línea que buscas</h2>
   <ul class="reticula">
     {#each girosConstruibles as g}
-      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} /></li>
+      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} /></li>
     {/each}
     <li>
       <div class="bloqueados">
@@ -77,10 +129,17 @@
        bloque llevaba de borde. El texto sigue siendo hueco: la etiqueta en versalitas
        y la segunda línea en oro llegan con el copy, no antes. -->
   <ul class="diferenciadores">
-    {#each ['mapa', 'reloj', 'empeno'] as ic, i}
+    {#each DIFERENCIADORES as d, i}
       <li>
-        <Insignia icono={ic}>
-          <Hueco etiqueta="DIFERENCIADOR {i + 1} — TÍTULO Y UNA LÍNEA" renglones={2} />
+        <Insignia icono={d.icono} sobreOscuro={false}>
+          {#if d.titulo}
+            <div data-propuesta="true">
+              <p class="dif-titulo">{d.titulo}</p>
+              <p class="dif-linea">{d.linea}</p>
+            </div>
+          {:else}
+            <Hueco etiqueta="DIFERENCIADOR {i + 1} — NECESITA UN DATO DE CRISTÓBAL" renglones={2} />
+          {/if}
         </Insignia>
       </li>
     {/each}
@@ -105,7 +164,9 @@
 <BandaDiagonal />
 
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
-  <Hueco etiqueta="TÍTULO — LA INVITACIÓN A ESCRIBIR" renglones={2} sobreOscuro como="h2" />
+  <h2 class="titulo-seccion oscuro" data-propuesta="true">
+    ¿Tienes una duda? Escríbenos y te contestamos.
+  </h2>
   <div class="acciones">
     <BotonWhatsApp origen="portada-contacto" sobreOscuro />
     <Boton variante="secundario" href="/contacto/" sobreOscuro>
@@ -116,6 +177,34 @@
 
 <style>
   .entrada { display: grid; gap: var(--e-6); }
+
+  /* ── Texto propuesto ──────────────────────────────────────────────────────
+     Sin tratamiento especial: propuesto no significa provisional en lo visual.
+     Se ve como se va a ver cuando Cristóbal lo apruebe, y lo que dice que es
+     borrador es la banda de arriba. */
+  .subtitular {
+    font-size: var(--cuerpo-tam);
+    line-height: var(--cuerpo-alto);
+    color: var(--tinta-secundaria);
+  }
+  .titulo-seccion {
+    font-size: var(--h2-tam);
+    line-height: var(--h2-alto);
+    font-weight: var(--h2-peso);
+    margin-bottom: var(--e-4);
+  }
+  .titulo-seccion.oscuro { color: var(--tinta-sobre-oscuro); }
+  .dif-titulo {
+    font-size: var(--cuerpo-tam);
+    line-height: var(--h3-alto);
+    font-weight: var(--cuerpo-fuerte-peso);
+  }
+  .dif-linea {
+    margin-top: var(--e-1);
+    font-size: var(--pie-tam);
+    line-height: var(--pie-alto);
+    color: var(--tinta-secundaria);
+  }
   .palabra { display: grid; gap: var(--e-3); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-2); }
 

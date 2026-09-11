@@ -18,7 +18,10 @@
   <span class="filo" aria-hidden="true"></span>
   <Icono nombre={icono} tam={26} />
   <span class="titulo">{titulo}</span>
-  <span class="pie">{nota ?? 'QUÉ RESUELVE — PENDIENTE'}</span>
+  <!-- Dos cosas distintas con dos tratamientos distintos: sin `nota` esto es un
+       rótulo de hueco —versalitas, borde punteado— y con `nota` es una frase que se
+       lee, así que baja a peso normal y sin tracking de etiqueta. -->
+  <span class="pie" class:frase={nota}>{nota ?? 'QUÉ RESUELVE — PENDIENTE'}</span>
 </a>
 
 <style>
@@ -54,10 +57,25 @@
     letter-spacing: var(--etiqueta-tracking);
     color: var(--tinta-secundaria);
   }
+  /* El alto también es FIJO, por la misma razón que el del título: las frases van de
+     uno a tres renglones y la retícula se desalineaba —medido, 191.3 contra 231.9 px—.
+     Medido en navegador sobre las siete frases propuestas, a 156 px de columna:
+     el peor caso es «Dejas un bien en garantía y sales con efectivo» con 69.9 px.
+     Si el copy se alarga al corregirlo, hay que volver a medir. */
+  .pie.frase {
+    min-height: 70px;
+    border-top: 1px solid var(--borde-sutil);
+    font-size: var(--pie-tam);
+    line-height: var(--pie-alto);
+    font-weight: var(--cuerpo-peso);
+    letter-spacing: normal;
+  }
 
   /* A 243 de columna el nombre más largo cabe en dos renglones: la tarjeta baja. */
   @media (min-width: 768px) {
     .tarjeta { min-height: 150px; }
     .titulo { min-height: 53px; }
+    /* A 271 px de columna el peor caso baja a dos renglones: 49.6 px, medido. */
+    .pie.frase { min-height: 50px; }
   }
 </style>
