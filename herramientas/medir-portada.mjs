@@ -49,13 +49,54 @@ p.on('response', async (r) => {
   });
 });
 
+/**
+ * ── SE CALIENTA ANTES DE MEDIR, Y ESTO COSTÓ UN DIAGNÓSTICO EQUIVOCADO ──────
+ *
+ * La primera versión medía a la primera carga. Contra un despliegue recién hecho en
+ * Vercel eso pega con la CDN fría, y el TTFB se dispara: dio **4464 ms de LCP** y con
+ * ese número se concluyó que el mapa incrustado estaba costando el LCP.
+ *
+ * Era falso. Con la CDN caliente la misma página da 1588–1932 ms, que es BUENO, y lo
+ * daba también antes de quitar el mapa. El número no medía el sitio: medía el primer
+ * golpe a un servidor dormido.
+ *
+ * Una carga de descarte antes de medir. Cuesta unos segundos y evita confundir la
+ * infraestructura con el producto.
+ */
+await p.goto(BASE + RUTA, { waitUntil: 'load' });
+await p.waitForTimeout(500);
+await p.goto('about:blank');
 await p.goto(BASE + RUTA, { waitUntil: 'load' });
 
+/**
+ * El LCP a secas no dice nada accionable. Lo que hace falta es QUÉ elemento es y
+ * DÓNDE se fue el tiempo: si el cuello es la red, el servidor, la fuente o la imagen,
+ * cada uno se arregla distinto y tres de los cuatro no se arreglan tocando la imagen.
+ */
 const lcp = await p.evaluate(() => new Promise((res) => {
-  let v = 0;
-  new PerformanceObserver((l) => { for (const e of l.getEntries()) v = e.startTime; })
+  let e = null;
+  new PerformanceObserver((l) => { for (const x of l.getEntries()) e = x; })
     .observe({ type: 'largest-contentful-paint', buffered: true });
-  setTimeout(() => res(Math.round(v)), 3000);
+  setTimeout(() => {
+    const n = performance.getEntriesByType('navigation')[0] ?? {};
+    const pintados = Object.fromEntries(
+      performance.getEntriesByType('paint').map((x) => [x.name, Math.round(x.startTime)])
+    );
+    const recurso = e?.url ? performance.getEntriesByName(e.url)[0] : null;
+    res({
+      ms: Math.round(e?.startTime ?? 0),
+      elemento: e?.element ? `${e.element.tagName.toLowerCase()}${e.element.className ? '.' + String(e.element.className).split(' ')[0] : ''}` : '—',
+      url: e?.url ? e.url.replace(location.origin, '') : '(texto, sin archivo)',
+      ttfb: Math.round(n.responseStart ?? 0),
+      htmlListo: Math.round(n.domContentLoadedEventEnd ?? 0),
+      primerPintado: pintados['first-contentful-paint'] ?? 0,
+      recurso: recurso ? {
+        pedido: Math.round(recurso.startTime),
+        empezoAlLlegar: Math.round(recurso.responseStart),
+        termino: Math.round(recurso.responseEnd)
+      } : null
+    });
+  }, 3500);
 }));
 
 const primeraPantalla = await p.evaluate(() => {
@@ -88,7 +129,18 @@ for (const r of pedidos) porTipo[r.tipo] = (porTipo[r.tipo] ?? 0) + r.bytes;
 const terceros = pedidos.filter((r) => r.tercero);
 
 console.log(`\nPortada · 390 px · 4G a 1.6 Mbps con 150 ms · CPU a 1/4\n`);
-console.log(`  LCP                    ${lcp} ms      ${lcp < 2500 ? '✓ bueno' : lcp < 4000 ? '△ mejorable' : '✗ malo'}  (umbral 2500)`);
+
+const veredicto = lcp.ms < 2500 ? '✓ bueno' : lcp.ms < 4000 ? '△ mejorable' : '✗ malo';
+console.log(`  LCP                    ${lcp.ms} ms      ${veredicto}  (umbral 2500)`);
+console.log(`    elemento             ${lcp.elemento}  ${lcp.url}`);
+console.log(`    TTFB                 ${lcp.ttfb} ms  · lo que tarda el servidor en contestar`);
+console.log(`    primer pintado       ${lcp.primerPintado} ms`);
+console.log(`    HTML listo           ${lcp.htmlListo} ms`);
+if (lcp.recurso) {
+  console.log(`    el archivo del LCP   se pide a ${lcp.recurso.pedido} ms · empieza a llegar a ` +
+              `${lcp.recurso.empezoAlLlegar} ms · termina a ${lcp.recurso.termino} ms`);
+}
+console.log('');
 console.log(`  Peso total             ${kb(total)} KB en ${pedidos.length} peticiones`);
 for (const [t, b] of Object.entries(porTipo).sort((a, b) => b[1] - a[1])) {
   console.log(`    ${t.padEnd(20)} ${String(kb(b)).padStart(7)} KB`);

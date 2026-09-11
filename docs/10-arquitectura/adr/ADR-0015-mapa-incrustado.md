@@ -90,24 +90,31 @@ parece visualmente a quitarla.
 
 ## ENMENDADO el mismo día · se adopta cargar al tocar
 
-Faltaba un número, y apareció al medir la portada **en vivo** con
-`herramientas/medir-portada.mjs`, en las condiciones del contrato —390 px, 4G a
-1.6 Mbps, CPU a un cuarto—:
+Al medir la portada **en vivo** con `herramientas/medir-portada.mjs`, en las
+condiciones del contrato —390 px, 4G a 1.6 Mbps, CPU a un cuarto—:
 
 ```
-LCP            4464 ms   ·  umbral 2500  ·  MALO
 Peso total     590.4 KB en 31 peticiones
 De terceros    450.1 KB en 17  →  el 76 %
 JavaScript     425.6 KB
 ```
 
-**No era el peso: era el LCP.** El ADR original midió bytes y CLS y los dos parecían
-tolerables. Lo que no se había medido es lo único que decide si alguien con prisa se
-queda, y sale reprobado por casi el doble del umbral.
+**El sitio cuyo primer principio es «CERO JavaScript en el cliente» estaba sirviendo
+425.6 KB de JavaScript.** Ninguno propio —todo dentro del iframe— pero el visitante lo
+descarga igual. El ADR original midió bytes y CLS; no midió que tres cuartas partes de
+la página fueran de un tercero.
 
-Y hay un segundo hecho que el ADR original no vio: **el sitio cuyo primer principio es
-«CERO JavaScript en el cliente» estaba sirviendo 425.6 KB de JavaScript.** Ninguno
-propio —todo dentro del iframe— pero el visitante lo descarga igual.
+### Una corrección, porque el primer diagnóstico estaba mal
+
+Esa misma medición reportó **4464 ms de LCP** y con ese número se dijo que el mapa
+estaba costando el LCP. **Era falso.** El dato se tomó con la CDN de Vercel fría,
+recién desplegado; repetido en caliente, la misma página da **1588–1932 ms**, que es
+BUENO — y lo daba también con el mapa a la vista.
+
+El LCP nunca estuvo mal. Lo que estaba mal era el peso.
+
+`medir-portada.mjs` ahora hace una carga de descarte antes de medir, para no volver a
+confundir un servidor dormido con el producto.
 
 Con eso sobre la mesa, Nadir eligió cargar al tocar. Medido después del cambio:
 
@@ -118,6 +125,7 @@ Con eso sobre la mesa, Nadir eligió cargar al tocar. Medido después del cambio
 | JavaScript | 425.6 KB | **0 KB** |
 | Terceros | 450.1 KB | **0 KB** |
 | LCP local | 1824 ms | **1372 ms** |
+| LCP en vivo, en caliente | ~1900 ms | **1588–1932 ms** |
 
 El mapa sigue siendo un mapa de Google real e incrustado. Lo que cambia es **quién
 paga**: antes lo pagaba todo el que abría la portada; ahora solo quien lo pide.
