@@ -105,7 +105,13 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: var(--accion);
+    /* ACABADO METÁLICO · ADR-0019. El color plano va SIEMPRE con el degradado y
+       lleva el stop más oscuro: un background-image deja el background-color en
+       transparente y la medición de contraste se va al fondo del ancestro. Aquí ya
+       pasó una vez y se reportó 1:1 sobre un botón que daba 9.29:1. */
+    background-color: var(--metal-oro-peor);
+    background-image: var(--metal-oro);
+    box-shadow: var(--metal-filo);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
     transition: background-color var(--mov-tactil) var(--mov-curva);
   }

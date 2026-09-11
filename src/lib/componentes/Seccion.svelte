@@ -37,13 +37,77 @@
 
   /* Degradados dentro de una banda de luminancia · ADR-0010. El peor extremo de
      cada uno está calculado en tokens.css; ninguno baja de 15:1 con su tinta. */
-  /* NINGUNA sección pinta fondo · ADR-0012. Todas dejan pasar el campo y su
-     resplandor. Las tres variantes quedan como el mismo cristal; se conservan porque
-     todavía resuelven tintas y porque volver a diferenciarlas es cambiar esto y nada
-     más. */
+  /* ── DOS REGISTROS, COMO SU MARCA · ADR-0019 ──────────────────────────────
+     Aquí decía: «NINGUNA sección pinta fondo · ADR-0012. […] Las tres variantes
+     quedan como el mismo cristal; se conservan porque todavía resuelven tintas y
+     porque **volver a diferenciarlas es cambiar esto y nada más**.»
+
+     Se cumplió: es esto y nada más. La puerta quedó abierta a propósito y la tanda
+     del 11 de septiembre dio la razón para cruzarla — su material tiene dos
+     registros y el sitio se había quedado con uno, el más oscuro de los dos.
+
+     `blanco` y `oscuro` siguen dejando pasar el campo. `crema` pasa a ser el
+     REGISTRO CLARO y lo hace de la única forma que este sistema permite: **cambiando
+     el valor de los roles, no el CSS de los componentes**. Todo lo que hay dentro
+     —tarjetas, huecos, botones, insignias, el destello— lee estos mismos nombres y
+     se da la vuelta solo. Ningún componente sabe en qué registro está. */
   .blanco,
-  .crema,
   .oscuro { background: transparent; color: var(--tinta-sobre-oscuro); }
+
+  .crema {
+    /* EL COLOR PLANO VA ADEMÁS DEL DEGRADADO, y con el PEOR extremo.
+       Un `background-image` deja el `background-color` en transparente, así que
+       cualquiera que resuelva el fondo —el validador de contraste, y también un
+       navegador que falle al pintar el degradado— acaba leyendo el campo oscuro de
+       `body` que hay detrás. Ya pasó una vez con los botones y se midió 1:1 sobre
+       texto que en pantalla daba 9.29:1.
+       Se declara `--acero-100`, el extremo MÁS OSCURO de la rampa, para que la
+       medición salga pesimista y nunca optimista. */
+    background-color: var(--acero-100);
+    background-image: var(--grad-claro);
+    color: var(--tinta);
+
+    /* Superficies: la tarjeta es BLANCA y se levanta del campo de acero. Es como
+       funcionan sus piezas — un panel encima de un campo, no algo flotando. */
+    --panel: var(--blanco);
+    --panel-borde: var(--negro-400);      /* 3.49:1 · piso de borde no-texto */
+    --superficie: var(--blanco);
+    --superficie-alterna: var(--acero-025);
+    --superficie-oscura: var(--negro-950);
+
+    /* Tintas invertidas. Los ratios son los de tokens.css sobre blanco. */
+    --tinta: var(--negro-950);            /* 19.44:1 */
+    --tinta-secundaria: var(--negro-600); /*  8.68:1 */
+    --tinta-suave: var(--negro-600);
+    --borde-campo: var(--negro-500);      /*  5.90:1 */
+
+    /* `--tinta-sobre-oscuro` NO se toca, y el validador enseñó por qué. Se redefinió
+       a negro pensando que significaba «la tinta del fondo de la sección», y significa
+       lo que dice: tinta sobre una superficie OSCURA. El rótulo «FOTO DE ARCHIVO»
+       pinta su propia pastilla oscura y lo usa para su texto — quedó negro sobre
+       negro, 1:1, en las cuatro tarjetas de la portada.
+       El campo claro ya resuelve su tinta con `color: var(--tinta)`, arriba. */
+
+    /* EL ORO SOBRE CLARO SOLO ES TEXTO GRANDE, y eso ya estaba escrito en
+       tokens.css: «el oro como texto va sobre --superficie o sobre oscuro, NUNCA
+       sobre --superficie-alterna». El campo de acero es esa superficie alterna.
+
+       Medido: `--oro-800` sobre `--acero-100` da 3.36:1. Pasa el piso de 3 del texto
+       grande y NO pasa el 4.5 del texto normal — el validador lo cazó en «Cómo
+       llegar», 17 px en negrita.
+
+       Es exactamente lo que hacen sus piezas claras: en la nº 8 el titular grande va
+       en oro y todo lo demás en negro. Así que el par de tokens que ya existía para
+       esto se usa para esto:
+
+         --oro-texto         texto normal  → en claro NO hay oro. Va tinta.
+         --oro-texto-grande  display       → oro, con 3.36:1
+
+       No se inventa un oro más oscuro para tapar el caso: sería un color que la
+       marca no usa, y tokens.css ya lo prohíbe por escrito. */
+    --oro-texto: var(--negro-950);
+    --oro-texto-grande: var(--oro-800);
+  }
 
   .etiqueta {
     font-size: var(--etiqueta-tam);

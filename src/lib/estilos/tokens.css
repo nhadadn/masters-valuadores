@@ -135,6 +135,51 @@
 
      Los paneles son OPACOS: el resplandor pasa por detrás y nunca cruza su texto. */
   --grad-campo:  linear-gradient(180deg, var(--campo-alto) 0%, var(--campo-bajo) 100%);
+
+  /* ── EL SEGUNDO REGISTRO · claro, de acero · ADR-0019 ──────────────────────
+     La tanda del 11 de septiembre trajo veinticuatro piezas suyas y dejaron ver algo
+     que el ADR-0012 había aplanado: **su marca tiene DOS registros**, no uno.
+
+       industrial   campo claro de acero, negro pesado, oro   piezas 1-8, 16, 19
+       lujo         negro o mármol, oro, serifas              piezas 11-14, 18, 20
+
+     El sitio se había quedado en negro de arriba abajo, que es **más oscuro que su
+     propia marca**. Esto devuelve el registro claro.
+
+     La rampa no se inventa: es la del ADR-0010, con sus ratios ya calculados sobre el
+     PEOR extremo. Se paró en `--acero-100` para que el oro grande conserve 3.36:1, no
+     por gusto. Volver a usarla es recuperar trabajo hecho, no empezar de cero.
+
+     Y hay un efecto que no es de diseño: el campo claro **reduce el riesgo que el
+     ADR-0012 dejó sin medir** —un sitio negro a pleno sol en un teléfono barato—.
+     Ese riesgo se anotó tres veces y nunca se probó; esto lo esquiva por la mitad. */
+  --grad-claro:  linear-gradient(180deg, var(--acero-025) 0%, var(--acero-100) 100%);
+
+  /* ── ORO METÁLICO · ADR-0019 ──────────────────────────────────────────────
+     «Que se vea top tier», dicho por el cliente. La veta está en su propio material:
+     el logotipo del tablero de marca (pieza 10) es un «M» de acero y oro con
+     relieve, biselado y con brillo. No es un render que haya que inventar — es suyo.
+
+     Esto lleva ese acabado al oro de las superficies: un degradado en diagonal que
+     va de oro claro a oro sombra y vuelve a subir, que es como se comporta el metal
+     pulido cuando le da la luz de lado.
+
+     LOS DOS TOKENS VAN JUNTOS Y NO SE SEPARAN. Un `background-image` deja el
+     `background-color` en transparente, y este repo ya pagó ese error: se midió 1:1
+     sobre un botón que en pantalla daba 9.29:1, porque el validador resolvía el
+     fondo del ancestro. `--metal-oro-peor` es el stop MÁS OSCURO del degradado, y se
+     declara como color plano para que cualquier medición salga pesimista.
+
+     Negro sobre ese peor stop: 8.89:1. El oro plano daba 11.12:1, así que el
+     acabado cuesta contraste — sigue muy por encima del 4.5 y queda anotado. */
+  --metal-oro:      linear-gradient(135deg, #F2D883 0%, var(--oro-500) 38%, #C9A438 62%, var(--oro-500) 100%);
+  --metal-oro-peor: #C9A438;
+  /* El filo de luz que separa una pieza metálica del fondo. Un píxel, no una sombra
+     difusa: las sombras suaves leen a «tarjeta de aplicación», no a metal. */
+  --metal-filo:     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  /* Resplandor de oro sobre claro: mucho más tenue. Al 0.20 que usa el oscuro, sobre
+     acero se lee como una mancha sucia en vez de como luz. */
+  --resplandor-claro: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.22) 0%, rgba(231, 192, 65, 0) 70%);
   --resplandor:  radial-gradient(closest-side, rgba(231, 192, 65, 0.20) 0%, rgba(231, 192, 65, 0) 100%);
 
   /* Las superficies OPACAS y fijas —encabezado, banda de contacto, barra— no pueden

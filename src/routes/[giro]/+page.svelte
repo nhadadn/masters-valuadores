@@ -233,7 +233,7 @@
      contra `--superficie`, que es opaca. */
   .agua {
     position: absolute; right: -18px; bottom: -22px; z-index: -1;
-    color: var(--oro-500); opacity: 0.13;
+    color: var(--oro-texto); opacity: 0.13;
     pointer-events: none; line-height: 0;
   }
   .apuesta .agua { opacity: 0.09; }   /* lo deducido pesa menos, también de fondo */
@@ -250,7 +250,10 @@
     font-size: var(--etiqueta-tam); line-height: var(--etiqueta-alto);
     letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria);
   }
-  .apuesta .fuente { color: var(--oro-500); }
+  /* `--oro-texto` y no `--oro-500`: el 500 sobre un panel claro da 1.87:1 y deja de
+     ser texto. Es la misma bomba de relojería de siempre —un color literal escrito en
+     un componente— y esta vez la destapó el registro claro del ADR-0019. */
+  .apuesta .fuente { color: var(--oro-texto); }
   .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
 
   .pasos { display: grid; gap: var(--e-4); }

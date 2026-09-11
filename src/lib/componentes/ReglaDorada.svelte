@@ -32,7 +32,10 @@
   .regla {
     display: block;
     height: var(--regla-dorada);
-    background: var(--oro-500);
+    /* Metal, no pintura plana · ADR-0019. Dos píxeles de alto no dan para un
+       bisel, pero sí para que la luz recorra la barra en diagonal. */
+    background-color: var(--oro-500);
+    background-image: var(--metal-oro);
   }
   .corto { width: var(--e-12); }
   .completo { width: 100%; }
