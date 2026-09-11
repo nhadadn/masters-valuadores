@@ -33,7 +33,7 @@ describe('los department salen de los giros y solo de los construibles', () => {
 
   it('hay un department por giro construible', () => {
     expect(local.department).toHaveLength(girosConstruibles.length);
-    expect(girosConstruibles.length).toBe(7);
+    expect(girosConstruibles.length).toBe(4);   // ADR-0008
   });
 
   it('ningún giro bloqueado aparece: declararlo sería prometer una página que no existe', () => {

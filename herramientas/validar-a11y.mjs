@@ -10,9 +10,12 @@
 import { abrirChromium } from './navegador.mjs';
 
 const BASE = process.env.BASE ?? 'http://127.0.0.1:8123';
+// Cuatro giros desde el ADR-0008. Esta lista está a mano y es una trampa: si alguien
+// cambia `giros.ts` y olvida esto, el validador pide páginas que ya no existen y
+// reporta menos cobertura de la que cree tener. Se actualiza junto con los datos.
 const RUTAS = [
-  '/', '/empeno-y-prestamo/', '/joyeria/', '/bazar/', '/taller-y-refaccionaria/',
-  '/fletes-y-logistica/', '/renta-de-maquinaria/', '/financiera/',
+  '/', '/empeno-y-prestamo/', '/compra-venta-de-maquinaria/',
+  '/fletes-y-logistica/', '/taller-y-refaccionaria/',
   '/contacto/', '/aviso-de-privacidad/', '/terminos/'
 ];
 const ANCHOS = [390, 1280];

@@ -55,7 +55,7 @@ Dos causas distintas, que no conviene mezclar:
 |---|---|---|
 | 1 | La barra fija adopta el patrón de banda | **Latente** hasta D-08. Ver abajo |
 | 2 | La diagonal se muda al borde de la ranura de foto | **Revertido.** Ver abajo |
-| 3 | El botón de WhatsApp **inerte** conserva la arista | **Hecho.** La arista se ve en las 11 páginas |
+| 3 | El botón de WhatsApp **inerte** conserva la arista | **Hecho.** La arista se ve en todas las páginas |
 
 Resultado real, mismo método de medición:
 
@@ -309,7 +309,7 @@ IMPLEMENTADO exige cita `ruta/archivo:línea` de un test (A) o de código de pro
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
 | CA-07 | **Peso 900 cableado** con `size-adjust` **medido**, no copiado del 700 | **IMPLEMENTADO** | `src/lib/estilos/fuentes.css:57` · respaldo en `:109` con `size-adjust: 95.3%` · derivación en `herramientas/medir-respaldo.mjs`, con su límite escrito |
-| CA-08 | **Cero JavaScript.** `csr = false` intacto y presupuesto en **0 KB** | **IMPLEMENTADO** | `src/routes/+layout.ts:28` sin tocar · `herramientas/presupuesto.mjs`: **0 KB en las 11 páginas**, margen de 40.00 KB |
+| CA-08 | **Cero JavaScript.** `csr = false` intacto y presupuesto en **0 KB** | **IMPLEMENTADO** | `src/routes/+layout.ts:28` sin tocar · `herramientas/presupuesto.mjs`: **0 KB en todas las páginas**, margen de 40.00 KB |
 | CA-09 | **Contraste.** Validador en 22/22. Ningún oro suelto sobre claro | **IMPLEMENTADO** | `herramientas/validar-a11y.mjs`: **22/22 CUMPLE**, mínimo 4.94:1, igual que la línea base · restricción hecha estructura en `src/lib/estilos/tokens.css:50` y `src/lib/componentes/Seccion.svelte:40` |
 | CA-10 | **Táctil.** Mínimo ≥ 44 px. Ningún recorte reduce área sensible | **IMPLEMENTADO** | `validar-a11y.mjs`: **44 px** mínimo en las 22 · `medir-piezas.mjs`: la esquina recortada responde **el botón**, y el `clip-path` del elemento es `none` |
 | CA-11 | **Sin CLS declarado sin medir.** Altos antes y después | **IMPLEMENTADO** | `herramientas/medir-piezas.mjs` · tabla completa abajo. Tres cosas cambian de alto y las tres se reportan con número |

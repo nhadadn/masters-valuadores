@@ -14,7 +14,9 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0003 | [[ADR-0003-alcance-multigiro\|El sitio es multigiro bajo la marca MÁSTER]] | **ACEPTADA** | 2026-09-09 |
 | 0004 | [[ADR-0004-identidad-plana\|La identidad del sitio es la plana negro y amarillo]] | **ACEPTADA** · enmendada por 0005 | 2026-09-10 |
 | 0005 | [[ADR-0005-acento-corporativo\|Cuál de los dos amarillos del cliente es el acento del sistema]] | ACEPTADA (trabajo) · **en revisión por 0006** | 2026-09-10 |
-| 0006 | [[ADR-0006-el-amarillo-vive\|El amarillo plano no era de maquinaria: es de toda la marca]] | PROPUESTA · revierte el 0005 | 2026-09-10 |
+| 0006 | [[ADR-0006-el-amarillo-vive\|El amarillo plano no era de maquinaria: es de toda la marca]] | **ACEPTADA** · revierte el 0005 | 2026-09-10 |
+| 0007 | [[ADR-0007-lenguaje-visual\|El lenguaje visual sale de sus piezas, no de mi gusto]] | **ACEPTADA** · §3 y §4 enmendados por SPEC-0002 | 2026-09-10 |
+| 0008 | [[ADR-0008-alcance-de-cuatro-giros\|El sitio se enfoca en cuatro giros, y maquinaria cambia de negocio]] | **ACEPTADA** · enmienda el 0003 | 2026-09-10 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

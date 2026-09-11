@@ -33,15 +33,19 @@
    * yo: sale de `negocio.nombreComercial`, que es la fuente única, y cambia solo
    * cuando cierre D-01.
    *
-   * OJO CON «SIETE LÍNEAS»: es literal del borrador y hoy coincide con los giros
-   * construibles. Si se destraba importaciones (D-04) o avalúos (D-03), la frase se
-   * queda mal. El propio borrador ya señalaba ese riesgo en otra alternativa.
+   * EL NÚMERO DE LÍNEAS SE DERIVA, NO SE ESCRIBE. El borrador decía «Siete líneas»
+   * y el ADR-0008 lo dejó en cuatro el mismo día. Escribir el número a mano ya se
+   * quedó mal una vez; ahora sale de `girosConstruibles.length` y no puede mentir.
+   * El propio borrador ya había señalado ese riesgo para otra alternativa.
    */
-  const DIFERENCIADORES = [
+  const CUANTAS = ['cero', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+  const lineas = $derived(CUANTAS[girosConstruibles.length] ?? String(girosConstruibles.length));
+
+  const DIFERENCIADORES = $derived([
     {
       icono: 'mapa',
       titulo: 'Todo en un mismo lugar',
-      linea: 'Siete líneas de negocio bajo la misma marca. No te mandamos a otro lado.'
+      linea: `${lineas[0].toUpperCase()}${lineas.slice(1)} líneas de negocio bajo la misma marca. No te mandamos a otro lado.`
     },
     {
       icono: 'empeno',
@@ -52,7 +56,7 @@
     // Cristóbal —años, si es negocio familiar, qué hacen distinto, o cobertura—.
     // Sin ese dato el bloque se queda vacío, pero no se inventa.
     { icono: 'reloj', titulo: null, linea: null }
-  ];
+  ]);
 </script>
 
 <svelte:head>
@@ -69,9 +73,14 @@
            en dos frases —qué hacen y dónde, luego la marca—. Es el mismo patrón de
            «MAQUINARIA / LISTA PARA TRABAJAR» de sus cinco piezas. ADR-0007 §4. -->
       <div data-propuesta="true">
+        <!-- AJUSTADO por el ADR-0008. El borrador decía «Empeño, joyería y
+             maquinaria», y joyería ya no es un giro del sitio: habría quedado
+             prometiendo algo que no existe. El propio borrador anticipaba este
+             ajuste —«si Cristóbal sabe que la gente llega más por X, se reordena»—,
+             así que la estructura es suya y solo cambian las líneas nombradas. -->
         <Titular
           tam="display"
-          primera="Empeño, joyería y maquinaria en Torreón."
+          primera="Empeño, maquinaria, fletes y taller en Torreón."
           segunda="Todo {negocio.nombreComercial}."
         />
       </div>

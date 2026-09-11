@@ -38,13 +38,17 @@ export interface Giro {
 }
 
 export const giros: Giro[] = [
-  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',           nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', icono: 'empeno',  estado: 'construible' },
-  { slug: 'joyeria',             nombre: 'Joyería',                     nombreCorto: 'Joyería',     frasePropuesta: 'Compra y venta de joyería', icono: 'joyeria', estado: 'construible' },
-  { slug: 'bazar',               nombre: 'Bazar',                       nombreCorto: 'Bazar',       frasePropuesta: 'Artículos de segunda mano en venta', icono: 'bazar',   estado: 'construible' },
-  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',   nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', icono: 'taller',  estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',          nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', icono: 'fletes',  estado: 'construible' },
-  { slug: 'renta-de-maquinaria', nombre: 'Renta de maquinaria y equipo', nombreCorto: 'Maquinaria', frasePropuesta: 'Maquinaria y equipo en renta', icono: 'renta',   estado: 'construible' },
-  { slug: 'financiera',          nombre: 'Financiera',                  nombreCorto: 'Financiera',  frasePropuesta: 'Servicios financieros', icono: 'finan',   estado: 'construible' },
+  // CUATRO GIROS · ADR-0008. El orden es el que dijo el cliente, NO una prioridad
+  // de búsqueda: esa sale de la Etapa 1 y sigue sin ejecutarse.
+  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', icono: 'empeno',  estado: 'construible' },
+  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', icono: 'renta', estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', icono: 'fletes',  estado: 'construible' },
+  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', icono: 'taller',  estado: 'construible' },
+
+  // SALIERON el 10 de septiembre por el ADR-0008: joyería, bazar y financiera.
+  // No se borran de la historia: el ADR registra qué se soltó y qué costó.
+  // Joyería era el giro con el material vivo más fuerte —dos de sus cinco
+  // publicaciones— y con ella se queda sin casa la D-15, «Compramos monedas».
 
   // No se construyen hasta que se cierren sus decisiones. Aparecen en la portada
   // como bloqueados a propósito: lo que falta decidir se ve, no se esconde.

@@ -8,6 +8,23 @@ decide: Cristóbal
 
 # Propuesta de textos · portada y página de empeño
 
+> **AVISO DEL 10 DE SEPTIEMBRE · el alcance cambió después de escribir esto.**
+> El [[ADR-0008-alcance-de-cuatro-giros|ADR-0008]] redujo el sitio a cuatro giros:
+> empeños, compra venta de maquinaria, fletes y taller. Por lo tanto:
+>
+> - **Sobran tres frases** de la tabla de líneas: joyería, bazar y financiera.
+> - **La de maquinaria cambia de negocio**: decía «Maquinaria y equipo en renta» y
+>   ahora es compra venta. En el sitio está como «Compra y venta de maquinaria y
+>   equipo», y es propuesta igual que el resto.
+> - **El titular se ajustó.** Decía «Empeño, joyería y maquinaria en Torreón» y
+>   joyería ya no existe en el sitio; quedó «Empeño, maquinaria, fletes y taller en
+>   Torreón». La estructura sigue siendo la de este borrador, que ya anticipaba el
+>   reordenamiento.
+> - **«Siete líneas»** del primer diferenciador ya no se escribe a mano: se deriva de
+>   los datos, para que no vuelva a quedarse mal.
+>
+> El resto del documento se conserva tal cual. Es el registro de lo que se propuso.
+
 ## Cómo leer esto
 
 **Ninguna línea de aquí está aprobada.** Es un borrador para que Cristóbal corrija

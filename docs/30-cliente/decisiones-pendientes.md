@@ -84,6 +84,24 @@ de paletas.
 joyería, como decisión de trabajo. Sigue abierta con Cristóbal, porque es una suposición
 sobre cómo organiza él su negocio, no un dato.
 
+## Lo que cambió el 10 de septiembre · ADR-0008
+
+El cliente enfocó el sitio en **cuatro giros**: empeños, compra venta de maquinaria,
+fletes y taller. Joyería, bazar y financiera **salieron**, y la renta de maquinaria fue
+sustituida por compra venta. Ver [[ADR-0008-alcance-de-cuatro-giros]].
+
+Eso mueve tres decisiones de este tablero:
+
+| # | Qué le pasó |
+|---|---|
+| **D-15** · «Compramos monedas» | **Queda huérfana.** Se estaba tratando como parte de joyería, y joyería ya no es un giro del sitio. Hay que preguntarle a Cristóbal si monedas entra en algún lado o si también sale |
+| **D-04** · ¿importaciones es otra entidad legal? | **Se agrava.** Con compra venta de maquinaria dentro del sitio, importaciones se le encima: sus piezas anuncian «IMPORTAMOS MAQUINARIA» y «VENTA DE EQUIPOS». Ya no es solo una pregunta contable — ahora decide si son una página o dos |
+| **D-16** · alcance real de cada giro | **Se reduce pero se agudiza.** Sobran las preguntas de joyería y bazar; queda por saber qué cubre exactamente «compra venta de maquinaria» y si la **renta** sigue siendo negocio, porque `post-renta-herramienta.jpg` la anuncia hoy |
+
+**Pregunta nueva para Cristóbal:** su publicación de renta de herramienta es una de las
+cinco piezas vivas. ¿La renta de maquinaria y herramienta sale del sitio a propósito, o
+se quedó fuera por descuido al enfocar?
+
 ## Cerradas
 
 | # | Decisión | Resuelta | Dónde quedó |

@@ -100,7 +100,7 @@ src/lib/datos/              giros e íconos
 src/lib/estilos/            tokens.css · fuentes.css · base.css. Ningún componente escribe un color
 src/lib/componentes/        los primitivos. CERO librería de UI
 src/lib/seo/jsonld.ts       el @graph. Lanza excepción si falta un dato
-src/routes/                 11 páginas, todas prerenderizadas
+src/routes/                 8 páginas, todas prerenderizadas · ADR-0008
 herramientas/               presupuesto de JS y validación de accesibilidad
 ```
 
@@ -116,7 +116,7 @@ a **esa** ruta y solo esa paga.
 durante el prerender, así que la excepción revienta la publicación. `npm run build`
 sale con código 1 hoy, y **eso es correcto**. Escotilla: `npm run build:revision`.
 
-**3 · Una sola ruta `[giro]`.** Las siete páginas de giro son la misma plantilla.
+**3 · Una sola ruta `[giro]`.** Las cuatro páginas de giro son la misma plantilla.
 `entries()` en `src/routes/[giro]/+page.ts:14` las prerenderiza igual.
 
 ---
@@ -141,7 +141,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-11 páginas · **0 KB de JS** en todas · HTML de 2.5 a 4 KB gzip · 31 tests ·
+8 páginas · **0 KB de JS** en todas · HTML de 2.8 a 4.5 KB gzip · 37 tests ·
 contraste mínimo 4.94:1 · objetivo táctil mínimo 44 px · 22/22 combinaciones
 página × ancho cumplen.
 
