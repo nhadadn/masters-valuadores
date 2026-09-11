@@ -84,13 +84,46 @@ Se construyó y se midió la variante de **cargar al tocar**: el mismo iframe de
 El navegador **no pide el iframe mientras el `<details>` esté cerrado**: comprobado, no
 supuesto.
 
-**No se implementó**, y la razón es de respeto a la decisión, no técnica: Nadir eligió
-«incrustar el mapa» sobre «quitar la ranura», y la variante al tocar se parece
-visualmente a quitarla. Cambiar eso por mi cuenta sería sustituir su criterio en la
-pregunta que acababa de contestar.
+**No se implementó ese día**, y la razón fue de respeto a la decisión, no técnica:
+Nadir eligió «incrustar el mapa» sobre «quitar la ranura», y la variante al tocar se
+parece visualmente a quitarla.
 
-**Queda a una línea de distancia.** Si con estos números prefiere la otra, es envolver
-el `<div class="marco">` en un `<details>`.
+## ENMENDADO el mismo día · se adopta cargar al tocar
+
+Faltaba un número, y apareció al medir la portada **en vivo** con
+`herramientas/medir-portada.mjs`, en las condiciones del contrato —390 px, 4G a
+1.6 Mbps, CPU a un cuarto—:
+
+```
+LCP            4464 ms   ·  umbral 2500  ·  MALO
+Peso total     590.4 KB en 31 peticiones
+De terceros    450.1 KB en 17  →  el 76 %
+JavaScript     425.6 KB
+```
+
+**No era el peso: era el LCP.** El ADR original midió bytes y CLS y los dos parecían
+tolerables. Lo que no se había medido es lo único que decide si alguien con prisa se
+queda, y sale reprobado por casi el doble del umbral.
+
+Y hay un segundo hecho que el ADR original no vio: **el sitio cuyo primer principio es
+«CERO JavaScript en el cliente» estaba sirviendo 425.6 KB de JavaScript.** Ninguno
+propio —todo dentro del iframe— pero el visitante lo descarga igual.
+
+Con eso sobre la mesa, Nadir eligió cargar al tocar. Medido después del cambio:
+
+| | Antes | Después |
+|---|---|---|
+| Peso de la portada | 590.4 KB | **140.3 KB** |
+| Peticiones | 31 | **14** |
+| JavaScript | 425.6 KB | **0 KB** |
+| Terceros | 450.1 KB | **0 KB** |
+| LCP local | 1824 ms | **1372 ms** |
+
+El mapa sigue siendo un mapa de Google real e incrustado. Lo que cambia es **quién
+paga**: antes lo pagaba todo el que abría la portada; ahora solo quien lo pide.
+
+El control dice **«Ver el mapa · lo carga Google»**: el visitante sabe que va a
+invocar a un tercero *antes* de tocarlo, no después.
 
 ## Qué se acotó, y qué no
 

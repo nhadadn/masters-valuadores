@@ -29,26 +29,69 @@
 </script>
 
 {#if estaConfirmado(src)}
-  <div class="marco">
-    <iframe
-      {src}
-      title="Mapa de ubicación de {negocio.nombreComercial} VALUADORES"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
+  <!--
+    EL MAPA NO SE DESCARGA HASTA QUE ALGUIEN LO PIDE · medido, no supuesto.
+
+    `<details>` nativo, cero JavaScript, igual que el acordeón de preguntas. Mientras
+    está cerrado el navegador NO pide el iframe, y eso es la diferencia entera:
+
+                          a la vista      al tocar
+      peso de la portada    590.4 KB       140.3 KB
+      peticiones                  31             14
+      JavaScript              425.6 KB          0 KB
+      de terceros             450.1 KB          0 KB
+
+    El mapa sigue siendo un mapa de Google real e incrustado. Lo que cambia es quién
+    paga: antes lo pagaba todo el que abría la portada, ahora solo quien lo pide.
+  -->
+  <details class="caja">
+    <summary>
+      <span class="etiqueta">Ver el mapa</span>
+      <!-- Se dice quién lo carga ANTES de cargarlo. Es un tercero y el visitante
+           merece saberlo antes de tocar, no después. -->
+      <span class="nota">lo carga Google</span>
+    </summary>
+    <div class="marco">
+      <iframe
+        {src}
+        title="Mapa de ubicación de {negocio.nombreComercial} VALUADORES"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </details>
 {:else}
   <RanuraImagen relacion="4 / 3" etiqueta="MAPA — FALTAN LAS COORDENADAS (D-11)" />
 {/if}
 
 <style>
+  /* La caja existe cerrada y abierta: el borde dorado ancla la sección igual que
+     antes, aunque dentro todavía no haya mapa. */
+  .caja {
+    border-radius: var(--radio-bloque);
+    border: var(--regla-dorada) solid var(--oro-500);
+    background: var(--panel);
+    overflow: hidden;
+  }
+  summary {
+    display: flex; align-items: center; gap: var(--e-3); flex-wrap: wrap;
+    min-height: var(--tactil);          /* objetivo táctil de casa, no un enlace fino */
+    padding: var(--e-3) var(--e-4);
+    cursor: pointer; list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .etiqueta {
+    font-weight: var(--cuerpo-fuerte-peso);
+    color: var(--oro-texto);
+    text-decoration: underline;
+  }
+  .nota { font-size: var(--pie-tam); color: var(--tinta-secundaria); }
+
   /* El alto se reserva ANTES de cargar. Es lo que mantiene el CLS en cero. */
   .marco {
     aspect-ratio: 4 / 3;
     width: 100%;
     overflow: hidden;
-    border-radius: var(--radio-bloque);
-    border: var(--regla-dorada) solid var(--oro-500);
     background: var(--panel);
   }
   iframe {

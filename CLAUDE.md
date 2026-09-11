@@ -146,7 +146,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 105 tests ·
+8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 110 tests ·
 contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px · 16/16 combinaciones
 página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
@@ -159,10 +159,11 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens vivos y SEO · 105 tests
+npm test                              # grafo, giros, fugas, tokens vivos y SEO · 110 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
-node herramientas/presupuesto.mjs     # CA-10, tras un build
+node herramientas/presupuesto.mjs     # CA-10 · JS propio y terceros sin declarar
+node herramientas/medir-portada.mjs   # peso real y LCP en 4G de gama baja
 npx serve build                       # en una terminal…
 node herramientas/validar-a11y.mjs    # …y esto en otra
 python diseno/sistema/verificar-contraste.py
