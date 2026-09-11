@@ -106,7 +106,7 @@ src/lib/seo/jsonld.ts       el @graph. Lanza excepción si falta un dato
 src/lib/seo/enlaces.ts      origen del sitio, inventario de páginas, sitemap y robots
 src/lib/seo/meta.ts         título y descripción de cada ruta. TODAS son propuesta
 src/routes/                 8 páginas, todas prerenderizadas · ADR-0008
-herramientas/               presupuesto de JS y validación de accesibilidad
+herramientas/               presupuesto de JS, accesibilidad, peso y generadores de imagen
 ```
 
 ### Tres decisiones que hay que respetar

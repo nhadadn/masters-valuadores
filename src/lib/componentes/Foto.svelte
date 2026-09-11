@@ -87,20 +87,28 @@
   <div class="lienzo" class:tenida={provisional} class:cortada={diagonal}>
     <picture>
     <!--
-      WEBP CON JPEG DE RESPALDO.
+      TRES FORMATOS, EN ORDEN DE PREFERENCIA · AVIF → WebP → JPEG.
 
-      `<picture>` no es adorno: el navegador elige el primer `<source>` que entiende y
-      cae solo al `<img>` si no entiende ninguno. Los dos llevan el MISMO `sizes` y los
-      mismos anchos, así que la elección de tamaño no cambia — solo el formato.
+      `<picture>` no es adorno: el navegador toma el primer `<source>` que entiende y
+      cae al `<img>` si no entiende ninguno. Los tres llevan el MISMO `sizes` y los
+      mismos cuatro anchos, así que la elección de TAMAÑO no cambia — solo el formato.
 
-      Medido sobre lo que la portada descarga de verdad en un teléfono —la fachada de
-      800 y las cuatro miniaturas de 400—: 169 KB en JPEG contra 130 en WebP, un 23 %
-      menos sin tocar una sola decisión de diseño.
+      Medido sobre lo que la portada descarga de verdad en un teléfono, que es la
+      fachada de 800 más las cuatro miniaturas de 400:
 
-      AVIF comprimiría otro 15–25 % por encima de esto, pero Chromium no sabe
-      CODIFICARLO desde un canvas y habría que meter un codificador como dependencia.
-      Eso es una decisión con costo, no un paso de una optimización. Ver hacer-webp.mjs.
+          JPEG 169.0 KB  →  WebP 130.1 KB  →  AVIF 95.4 KB
+
+      Un 44 % menos que el punto de partida, sin tocar una decisión de diseño.
+
+      El AVIF no se generó con el navegador como el WebP: Chromium no sabe
+      codificarlo y devuelve un PNG disfrazado. Se genera con ffmpeg, y la calidad se
+      eligió con SSIM y no a ojo. Toda la historia en `herramientas/hacer-avif.mjs`.
     -->
+    <source
+      type="image/avif"
+      srcset="/fotos/{nombre}-400.avif 400w, /fotos/{nombre}-600.avif 600w, /fotos/{nombre}-800.avif 800w, /fotos/{nombre}-1600.avif 1600w"
+      sizes={tamanos}
+    />
     <source
       type="image/webp"
       srcset="/fotos/{nombre}-400.webp 400w, /fotos/{nombre}-600.webp 600w, /fotos/{nombre}-800.webp 800w, /fotos/{nombre}-1600.webp 1600w"
