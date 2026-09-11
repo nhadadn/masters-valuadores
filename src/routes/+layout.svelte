@@ -115,7 +115,18 @@
   <div class="cta"><BotonWhatsApp variante="barra" origen="barra-fija" sobreOscuro /></div>
 </div>
 
+<!-- WhatsApp persistente en ESCRITORIO · tomado de la referencia. En móvil ese papel
+     ya lo hace la barra fija; en escritorio no había nada permanente y el visitante
+     que baja se queda sin acción a la vista. Es un enlace, no un widget: cero
+     JavaScript. Se oculta por debajo de 768 para no duplicar la barra. -->
+<div class="flotante">
+  <BotonWhatsApp variante="linea" origen="flotante-escritorio" texto="WhatsApp" />
+</div>
+
 <style>
+  /* Fija a la ventana, fuera del flujo: no empuja nada y no cambia ningún alto. */
+  .flotante { display: none; }
+
   header {
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; justify-content: space-between; gap: var(--e-4);
@@ -194,6 +205,13 @@
       font-size: var(--cuerpo-tam);
     }
     .caja { padding-inline: var(--e-12); }
+    .flotante {
+      display: block;
+      position: fixed;
+      right: var(--e-6);
+      bottom: var(--e-6);
+      z-index: 20;
+    }
     .caja { grid-template-columns: 1.2fr 1fr 1fr 0.8fr; gap: var(--e-12); }
     .barra-fija { display: none; }   /* en escritorio el contacto vive en el encabezado */
   }

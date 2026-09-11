@@ -84,7 +84,29 @@ Desde el [[ADR-0008-alcance-de-cuatro-giros|ADR-0008]] son cuatro:
 taller. Una foto de archivo de una excavadora bonita convierte el sitio en una promesa
 que el local no puede cumplir cuando el visitante llegue.
 
-### 4 · La cara
+### 4 · Bienes sobre fondo liso · PARA RECORTAR
+
+> **Cinco o seis objetos, cada uno solo, sobre una pared o un cartón liso.**
+
+Esta es nueva y sale de la referencia que le gusta al cliente,
+`prestamoexpress.com.mx`: su portada es un objeto grande **recortado** flotando sobre
+un campo de color. Y no es un invento de ellos — **es lo que hacen las cinco
+publicaciones de Masters**: la excavadora, la joyería, las monedas, todas recortadas
+contra un fondo de color con el titular al lado.
+
+Para poder recortar un objeto hace falta que la foto lo permita:
+
+- **Un solo objeto por foto**, centrado, completo, sin cortar bordes.
+- **Fondo liso y de un solo tono** —una pared, un cartón, una lona— y **distinto** del
+  objeto. Un taladro negro sobre una mesa negra no se puede recortar.
+- **Luz pareja, sin sombra dura** debajo. A la sombra, en día nublado, o junto a una
+  puerta abierta.
+- Cuáles: uno por giro. Una máquina, una herramienta, algo de lo que empeñan, y lo que
+  cargan en fletes.
+
+Sin estas, el héroe rotatorio de la portada no se puede armar. Con estas, sí.
+
+### 5 · La cara
 
 > **Cristóbal, o quien atiende, en el local.**
 

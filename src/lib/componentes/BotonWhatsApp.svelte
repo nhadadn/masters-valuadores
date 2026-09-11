@@ -15,12 +15,25 @@
     /** De qué sección salió el contacto. Es la respuesta a «¿de dónde vino este cliente?». */
     origen: string;
     texto?: string;
+    /**
+     * Mensaje que WhatsApp deja escrito por el visitante. Es TEXTO DE INTERFAZ, no una
+     * afirmación sobre el negocio: solo dice de qué quiere hablar. Llega preclasificado
+     * y le ahorra a quien contesta la primera pregunta.
+     */
+    mensaje?: string;
   }
-  let { variante = 'bloque', sobreOscuro = false, origen, texto = 'WhatsApp' }: Props = $props();
+  let {
+    variante = 'bloque', sobreOscuro = false, origen, texto = 'WhatsApp', mensaje
+  }: Props = $props();
 
   const numero = $derived(sucursalPrincipal.whatsapp);
   const listo = $derived(estaConfirmado(numero));
-  const enlace = $derived(listo ? `https://wa.me/${String(numero).replace(/\D/g, '')}` : undefined);
+  const enlace = $derived(
+    listo
+      ? `https://wa.me/${String(numero).replace(/\D/g, '')}` +
+        (mensaje ? `?text=${encodeURIComponent(mensaje)}` : '')
+      : undefined
+  );
 </script>
 
 {#if listo}

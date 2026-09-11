@@ -197,6 +197,36 @@
      tiene dónde vivir de verdad. Hasta entonces, no hay diagonal: es mejor que no
      esté a que esté de adorno. Ver CA-01 en la SPEC-0002. -->
 
+<!-- ── LÍNEAS DE WHATSAPP · tomado de la referencia que le gusta al cliente ──────
+     De `prestamoexpress.com.mx` se toma ESTRUCTURA, no aspecto: una línea por
+     categoría, cada una con su ícono y con LA LISTA DE LO QUE CUBRE. Allí dice
+     «Línea Autos y Maquinaria — Retroexcavadora, Cargadores, Excavadoras…».
+
+     Hace tres cosas a la vez: el mensaje llega preclasificado, el visitante ve que
+     hay alguien que entiende SU caso, y —lo que más importa aquí— esa lista es
+     exactamente el «qué bienes aceptan» que a Masters le falta. Le da casa a la
+     información que de todos modos hay que pedirle a Cristóbal.
+
+     DIFERENCIA CON LA REFERENCIA: ellos tienen cuatro números distintos. Masters
+     tiene uno solo, así que lo que separa las líneas es el MENSAJE PREVIO, no el
+     número. Cuando el cliente confirme si hay más de un número, esto ya está listo. -->
+<Seccion etiqueta="TE ATENDEMOS POR WHATSAPP">
+  <h2 class="titulo-seccion" data-propuesta="true">Escríbenos por la línea que te toca</h2>
+  <ul class="lineas">
+    {#each girosConstruibles as g}
+      <li>
+        <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
+        <Hueco etiqueta="QUÉ ENTRA EN ESTA LÍNEA — LA LISTA DE BIENES, LA DA CRISTÓBAL" renglones={3} />
+        <BotonWhatsApp
+          origen="linea-{g.slug}"
+          texto="Escribir por {g.nombreCorto.toLowerCase()}"
+          mensaje="Hola, escribo por {g.nombre.toLowerCase()}."
+        />
+      </li>
+    {/each}
+  </ul>
+</Seccion>
+
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
   <h2 class="titulo-seccion oscuro" data-propuesta="true">
     ¿Tienes una duda? Escríbenos y te contestamos.
@@ -265,6 +295,18 @@
      en el mismo bloque compiten y ninguno significa nada. */
   .diferenciadores { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
 
+  /* Una línea por giro. En móvil van apiladas; a partir de 768 en cuatro columnas,
+     como en la referencia. */
+  .lineas { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
+  /* `1fr` en la fila del medio empuja el botón al fondo, así los cuatro quedan a la
+     misma altura aunque las listas midan distinto. Sin esto la retícula se desalinea
+     igual que se desalinearon las tarjetas de giro. */
+  .lineas li {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--e-3);
+  }
+
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); justify-items: start; }
   .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
@@ -275,6 +317,7 @@
     .reticula { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-3); }
     .bloqueados { min-height: 150px; }
     .diferenciadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lineas { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-4); }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>
