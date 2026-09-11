@@ -141,6 +141,10 @@
   --tinta-secundaria:    var(--negro-600);
   --tinta-sobre-oscuro:  var(--blanco);
   --tinta-tenue-oscuro:  var(--negro-300);   /* 8.49:1 sobre negro-900 */
+  /* La tinta secundaria RESUELTA POR SUPERFICIE. Sin esto, un párrafo secundario
+     puesto en una sección oscura se quedaba en negro-600 sobre negro y desaparecía.
+     `Seccion.svelte` la redefine en oscuro, igual que hace con el oro. */
+  --tinta-suave:         var(--tinta-secundaria);
   --acento-sobre-oscuro: var(--oro-500);     /* 11.12:1 sobre negro-950 */
   /* El oro COMO TEXTO, resuelto por la superficie que lo contiene.
      Aquí vale lo de --superficie, que es blanca: --oro-800 da 4.65:1 y pasa.

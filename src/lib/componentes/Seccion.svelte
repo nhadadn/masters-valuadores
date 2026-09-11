@@ -66,7 +66,11 @@
      que no se lee a plena luz. No se inventa un oro más oscuro para taparlo. */
   .blanco,
   .crema  { --oro-texto: var(--tinta-secundaria); }
-  .oscuro { --oro-texto: var(--oro-500); --oro-texto-grande: var(--oro-500); }
+  .oscuro {
+    --oro-texto: var(--oro-500);
+    --oro-texto-grande: var(--oro-500);
+    --tinta-suave: var(--tinta-tenue-oscuro);   /* 9.29:1 sobre negro-950 */
+  }
 
   .etiqueta {
     font-size: var(--etiqueta-tam);

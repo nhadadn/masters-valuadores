@@ -40,7 +40,10 @@
     line-height: var(--titular-alto);
     letter-spacing: var(--titular-tracking);
     text-transform: uppercase;
-    color: var(--tinta);
+    /* HEREDA de la superficie, no escribe --tinta a pelo. Al poner la entrada en
+       oscuro (ADR-0011) el titular se quedó en negro-950 sobre negro: 1.92:1, y el
+       validador lo cazó. La sección ya declara la tinta que le toca. */
+    color: inherit;
     /* Sin esto, una palabra larga en caja alta a 900 desborda el margen lateral en
        un teléfono angosto, y el validador revienta por desbordamiento horizontal. */
     overflow-wrap: break-word;

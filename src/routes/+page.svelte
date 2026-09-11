@@ -67,7 +67,10 @@
 
 <AvisoBorrador />
 
-<Seccion etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
+<!-- ENTRADA OSCURA · ADR-0011. Se aparta de sus cinco piezas, donde el panel del
+     titular es claro y lo oscuro es la fotografía. Decidido por Nadir el 10 de
+     septiembre, con el argumento y el costo en el ADR. -->
+<Seccion fondo="oscuro" etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
   <div class="entrada">
     <div class="palabra">
       <!-- El corte a dos tintas no es invención: el borrador ya escribió el titular
@@ -90,8 +93,8 @@
         encontrarnos. Si tienes una duda, escríbenos por WhatsApp.
       </p>
       <div class="acciones">
-        <BotonWhatsApp origen="portada-entrada" />
-        <Boton variante="secundario" href="/contacto/">
+        <BotonWhatsApp origen="portada-entrada" sobreOscuro />
+        <Boton variante="secundario" href="/contacto/" sobreOscuro>
           <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
         </Boton>
       </div>
@@ -213,10 +216,12 @@
      Sin tratamiento especial: propuesto no significa provisional en lo visual.
      Se ve como se va a ver cuando Cristóbal lo apruebe, y lo que dice que es
      borrador es la banda de arriba. */
+  /* `--tinta-suave` y no `--tinta-secundaria`: en la entrada oscura el negro-600
+     desaparecería sobre el negro. La superficie resuelve cuál toca. */
   .subtitular {
     font-size: var(--cuerpo-tam);
     line-height: var(--cuerpo-alto);
-    color: var(--tinta-secundaria);
+    color: var(--tinta-suave);
   }
   .titulo-seccion {
     font-size: var(--h2-tam);
