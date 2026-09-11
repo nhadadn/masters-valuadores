@@ -84,6 +84,53 @@ Se declara siempre `background-color` con el **extremo peor** además del degrad
 es decoración: es lo que hace que la medición sea honesta, y sirve de respaldo si el
 degradado no pinta.
 
+## Segunda pasada · 10 de septiembre, tarde
+
+> *«No veo aún uniforme el fondo, además, se ve negro sin estilo ni ningún tipo de
+> atractivo.»* — Nadir
+
+Las dos cosas eran ciertas y tenían causas distintas.
+
+### El claro no era uniforme porque la alternancia peleaba con la rampa
+
+La sección alterna llevaba un velo del 4.5 %. Medido bajando por la página, el fondo
+hacía **231 → 237 → 225**: subía y bajaba en vez de descender. Eso es exactamente lo que
+se lee como «no uniforme».
+
+**La alternancia se retiró.** El ritmo entre secciones ya lo llevan la etiqueta, la
+regla dorada y la cinta de palabras; una cuarta señal no hacía falta y además peleaba
+con el fondo. Medido después, en veinte cortes: **253 · 251 · 249 · 248 · 246 · 244 ·
+242 · 241 · 239 · 237 · 236 · 234 · 233 · 231 · 230.** Monótono, sin un salto.
+
+### El oscuro era negro plano porque no tenía luz
+
+Era una rampa de gris a negro y nada más. Ahora lleva **dos capas**: un resplandor de
+oro que entra por arriba a la derecha, y debajo la rampa que sigue bajando hasta el
+negro del pie.
+
+El resplandor **no es una forma** —eso fue la franja diagonal que se retiró— **es luz
+ambiente**. Y cita al edificio: el contenedor amarillo está ARRIBA de la fachada negra.
+
+Medido en el render, cruzando el tramo oscuro: `rgb(25,28,31)` frío a la izquierda,
+`rgb(60,58,43)` cálido a la derecha. Ya no es negro plano.
+
+**El 18 % no es a ojo, es el techo.** Calculado sobre el punto donde el oro pega con más
+fuerza:
+
+| Oro | Blanco encima | `negro-300` encima |
+|---|---|---|
+| 10 % | 12.34:1 | 5.89:1 |
+| **18 %** | **10.14:1** | **4.84:1** ← el elegido |
+| 22 % | 9.20:1 | **4.39:1** ← ya no pasa AA |
+
+Quien marca el límite no es el blanco: es `negro-300`, la tinta tenue del pie.
+
+### Una sola tierra oscura, no cuatro negros
+
+El encabezado, la sección oscura, la banda de contacto, el pie y la barra fija llevaban
+**cuatro valores distintos** —grafito, negro-950, negro-900— pegados unos a otros. Ahora
+comparten el mismo fondo compuesto. Eso era la otra mitad de «no se ve uniforme».
+
 ## Lo que NO cambia
 
 - La **identidad sigue plana**. El ADR-0004 decidió el tratamiento —sin bisel, sin

@@ -49,7 +49,10 @@
 
 <style>
   .banda {
-    background: var(--superficie-oscura);
+    /* Misma tierra que la sección oscura, no un negro aparte. El pie era negro-900,
+       la banda negro-950 y la sección grafito: tres negros distintos pegados. */
+    background-color: var(--oscuro-peor);
+    background-image: var(--grad-oscuro);
     color: var(--tinta-sobre-oscuro);
     /* Superficie oscura: aquí el oro sí puede ser texto, a 11.12:1. */
     --oro-texto: var(--oro-500);

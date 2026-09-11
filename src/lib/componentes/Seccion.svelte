@@ -38,16 +38,16 @@
   /* Degradados dentro de una banda de luminancia · ADR-0010. El peor extremo de
      cada uno está calculado en tokens.css; ninguno baja de 15:1 con su tinta. */
   /* Las claras NO pintan fondo: dejan pasar el degradado continuo de `body`. Pintar
-     aquí era lo que producía el bandeo —cada sección reiniciaba su rampa—.
-     La alterna solo añade un velo del 4.5 %, que oscurece sin cortar la rampa y
-     empuja el contraste hacia arriba, nunca hacia abajo. */
-  .blanco { background: transparent; color: var(--tinta); }
-  .crema  { background: var(--velo-alterno); color: var(--tinta); }
+     aquí era lo que producía el bandeo, y el velo de la alterna era lo que hacía que
+     la rampa no se viera uniforme. Las dos son ahora la misma superficie. */
+  .blanco,
+  .crema { background: transparent; color: var(--tinta); }
 
   /* La oscura sí es opaca: es otro mundo, no una variación del claro.
-     `background-color` con el extremo PEOR, para que la medición sea pesimista. */
+     `background-color` declara el punto MÁS CLARO del conjunto —donde el resplandor
+     dorado pega más fuerte— para que la medición de contraste sea pesimista. */
   .oscuro {
-    background-color: var(--grafito);         /* peor extremo · blanco 15.23:1 */
+    background-color: var(--oscuro-peor);     /* blanco 10.14:1 · negro-300 4.84:1 */
     background-image: var(--grad-oscuro);
     color: var(--tinta-sobre-oscuro);
   }

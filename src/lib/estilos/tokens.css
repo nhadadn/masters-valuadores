@@ -87,14 +87,39 @@
 
      Ahora el degradado vive en `body`, cubre el lienzo entero y baja de una vez de
      arriba abajo, como el edificio: claro arriba, oscuro abajo. Las secciones claras
-     son TRANSPARENTES y dejan pasar ese fondo; la alterna solo añade un velo, así que
-     sigue alternando sin cortar la rampa. */
+     son TRANSPARENTES y dejan pasar ese fondo.
+
+     LA ALTERNANCIA CLARA SE RETIRÓ. El velo del 4.5 % que llevaba la sección crema
+     hacía que la rampa subiera y bajara —medido: 231 → 237 → 225 bajando por la
+     página— y eso es justo lo que se veía como «no uniforme». El ritmo entre
+     secciones ya lo llevan la etiqueta, la regla dorada y la cinta; no hacía falta
+     una cuarta señal, y esa además peleaba con el fondo. */
   --grad-pagina:  linear-gradient(180deg, var(--blanco) 0%, var(--acero-050) 55%, var(--acero-100) 100%);
-  --velo-alterno: rgba(12, 13, 15, 0.045);   /* oscurece sin romper la rampa ni el contraste */
-  /* El tramo oscuro sigue BAJANDO, no sube: la página entera se oscurece de arriba
-     abajo y termina en el negro del pie. Al revés —grafito abajo— la rampa se rompía
-     a mitad de la página y el pie parecía otro sitio. */
-  --grad-oscuro:  linear-gradient(180deg, var(--grafito) 0%, var(--negro-950) 100%);
+  /* ── El tramo oscuro · negro con luz de oro ──────────────────────────────
+     «Se ve negro sin estilo ni ningún tipo de atractivo» — Nadir, y era cierto: era
+     una rampa de gris a negro y nada más.
+
+     Ahora lleva DOS capas: un resplandor de oro que entra por arriba a la derecha,
+     y debajo la rampa que sigue bajando hasta el negro del pie. El resplandor no es
+     una forma —eso fue la franja que se quitó— es luz ambiente, y cita al edificio:
+     el contenedor amarillo está ARRIBA de la fachada negra.
+
+     EL 18 % NO ES A OJO, ES EL TECHO. Calculado sobre el punto más claro posible,
+     que es donde el oro pega con más fuerza sobre grafito:
+
+         oro al 10%  → blanco 12.34:1 · negro-300 5.89:1
+         oro al 18%  → blanco 10.14:1 · negro-300 4.84:1   ← aquí
+         oro al 22%  → blanco  9.20:1 · negro-300 4.39:1   ← ya NO pasa AA
+
+     `negro-300` es la tinta tenue del pie y es la que marca el límite, no el blanco.
+
+     El rgba se escribe a mano porque `color-mix()` con un token no tiene soporte
+     seguro en teléfono viejo. Es --oro-500 #E7C041 al 18 %. Si cambia el acento,
+     cambia aquí también. */
+  --grad-oscuro:
+    radial-gradient(125% 105% at 88% 0%, rgba(231, 192, 65, 0.18) 0%, rgba(231, 192, 65, 0) 62%),
+    linear-gradient(180deg, var(--grafito) 0%, var(--negro-950) 100%);
+  --oscuro-peor: #45422E;   /* el punto más claro de lo anterior · blanco 10.14:1 */
   --tinta:               var(--negro-950);
   --tinta-secundaria:    var(--negro-600);
   --tinta-sobre-oscuro:  var(--blanco);

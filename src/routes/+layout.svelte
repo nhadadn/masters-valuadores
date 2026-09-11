@@ -120,7 +120,9 @@
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; justify-content: space-between; gap: var(--e-4);
     min-height: 56px; padding: 0 var(--margen-lateral);
-    background: var(--superficie-oscura); color: var(--tinta-sobre-oscuro);
+    background-color: var(--oscuro-peor);
+    background-image: var(--grad-oscuro);
+    color: var(--tinta-sobre-oscuro);
   }
   .marca { display: flex; align-items: center; gap: var(--e-3); min-height: var(--tactil); }
   .lockup { display: flex; flex-direction: column; gap: 3px; }
@@ -140,14 +142,13 @@
      (negro-950), la sección oscura (grafito→negro-950) y la barra fija. Ahora el pie
      es el punto más oscuro y la rampa termina donde tiene que terminar. */
   footer {
-    background: var(--superficie-oscura); color: var(--tinta-sobre-oscuro);
+    background-color: var(--negro-950); color: var(--tinta-sobre-oscuro);
     --oro-texto: var(--oro-500);   /* superficie oscura: 11.12:1 */
   }
-  .regla-pie { background: var(--superficie-oscura); }
+  .regla-pie { background: var(--negro-950); }
   .caja {
     max-width: var(--ancho-maximo); margin-inline: auto; display: grid; gap: var(--e-6);
     padding: var(--e-8) var(--margen-lateral) var(--e-12);
-    background: var(--negro-900);   /* un escalón, para que la banda se lea como banda */
   }
   .nombre-pie { font-weight: 700; letter-spacing: 0.03em; }
   .etiqueta {
@@ -167,7 +168,8 @@
     position: sticky; bottom: 0; z-index: 10;
     display: flex; align-items: center; gap: var(--e-3);
     padding: var(--e-2) var(--margen-lateral);
-    background: var(--superficie-oscura);
+    background-color: var(--oscuro-peor);
+    background-image: var(--grad-oscuro);
     border-top: var(--regla-dorada) solid var(--oro-500);
     --oro-texto: var(--oro-500);   /* superficie oscura · 11.12:1 */
   }
