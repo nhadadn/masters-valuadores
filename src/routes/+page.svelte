@@ -117,6 +117,7 @@
       alto={900}
       provisional={false}
       prioritaria
+      diagonal
     />
   </div>
 </Seccion>
@@ -208,15 +209,29 @@
 <Seccion etiqueta="TE ATENDEMOS POR WHATSAPP">
   <h2 class="titulo-seccion" data-propuesta="true">Escríbenos por la línea que te toca</h2>
   <ul class="lineas">
-    {#each girosConstruibles as g}
-      <li>
+    {#each girosConstruibles as g, i}
+      <!-- LA PRIMERA OCUPA EL DOBLE · decisión de Nadir, 11 de septiembre.
+           Cuatro fotos idénticas en fila se leían como hoja de contactos: mismo
+           tamaño, mismo recorte, mismo peso, y nada decía cuál línea manda.
+
+           EL COSTO, ANOTADO: esto presupone que empeño es la línea principal, y eso
+           lo decide el estudio de búsqueda de la Etapa 1, no nosotros. Va atado al
+           ORDEN de `giros.ts`, que también es provisional: el día que cambie el
+           orden, cambia sola cuál se agranda. Es lo correcto — el destaque sigue a
+           la prioridad, no a un giro escrito a mano aquí. -->
+      <li class:principal={i === 0}>
         <!-- La imagen entra porque la referencia que le gusta al cliente apoya cada
              línea en una foto, y porque sin ella este bloque es solo texto. Sigue
              siendo de archivo y rotulada: ADR-0009.
              Se reusa la del giro a propósito — la misma imagen aquí y en su página
              ayuda a reconocer, no a confundir. -->
         {#if g.fotoProvisional}
-          <Foto nombre={g.fotoProvisional} alt={g.fotoAlt ?? ''} relacion="3 / 2" compacto />
+          <Foto
+            nombre={g.fotoProvisional}
+            alt={g.fotoAlt ?? ''}
+            relacion={i === 0 ? '16 / 9' : '3 / 2'}
+            compacto={i !== 0}
+          />
         {/if}
         <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
         <Hueco etiqueta="QUÉ ENTRA EN ESTA LÍNEA — LA LISTA DE BIENES, LA DA CRISTÓBAL" renglones={3} />
@@ -320,7 +335,28 @@
     .reticula { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-3); }
     .bloqueados { min-height: 150px; }
     .diferenciadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .lineas { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-4); }
+    /* PRIMER INTENTO, MEDIDO Y DESCARTADO: seis columnas con la principal en tres y
+       una para cada una de las otras. La geometría no daba — si la principal se
+       queda la mitad, las otras tres reciben un sexto cada una: 180 px a 1280 de
+       ancho. El resultado fue texto en columnas de dos palabras («COMPRA VENTA / DE
+       MAQUINARIA») y botones envueltos en dos renglones.
+
+       La jerarquía no cabe en una sola fila. Va en dos: la principal ocupa el ancho
+       entero y por dentro se parte en foto + contenido, y las otras tres se reparten
+       tres columnas cómodas debajo. */
+    .lineas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--e-6) var(--e-4); }
+    .lineas .principal {
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr auto;
+      column-gap: var(--e-8);
+      align-items: start;
+    }
+    /* La foto de la principal toma la columna izquierda entera; el resto se apila
+       a su derecha. `:global` porque el `<figure>` lo pinta `Foto.svelte`, y va
+       anclado a `.principal` para que no se escape de esta sección. */
+    .lineas .principal :global(.foto) { grid-column: 1; grid-row: 1 / -1; align-self: stretch; }
+    .lineas .principal > :not(:global(.foto)) { grid-column: 2; }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>
