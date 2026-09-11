@@ -122,6 +122,72 @@ Se deja dicho con todas sus letras porque tocar el verificador para que pase el 
 es exactamente el movimiento que hay que mirar con lupa: la justificación es el muestreo
 de píxeles, no la conveniencia.
 
+## Segunda revisión visual — «se ve MUY demasiado genérico»
+
+Misma crítica que abrió el ADR-0007, repetida sobre el sitio ya con las seis piezas.
+Medido en la primera pantalla de la portada a 390 px:
+
+| | |
+|---|---|
+| **Andamio** — huecos, ranuras y marcas de por confirmar | **48.1 %** del área |
+| **Marca** — reglas, insignias, diagonal | **0.12 %** del área |
+
+Ninguna filigrana sobrevive a esa proporción. El diagnóstico no era que las seis piezas
+estuvieran mal hechas: era que estaban pintadas alrededor de 18 cajas punteadas grises.
+
+### La causa: el andamio estaba vestido de herramienta, no de marca
+
+`Hueco.svelte` mezclaba dos cosas y solo enseñaba una:
+
+| | |
+|---|---|
+| Que falta contenido | **Se veía** — borde punteado, marcador, barras grises |
+| Qué **papel tipográfico** va a tener ese contenido | **Se escondía** — todo a 13 px gris |
+
+Un titular pendiente se dibujaba como etiqueta gris de 13 px. Ahora se dibuja en su
+papel real —caja alta, peso 900, dos tintas— **con exactamente las mismas palabras**.
+
+### Las dos tintas sin inventar el corte
+
+Las etiquetas de rol ya venían partidas por un guion largo —«TITULAR — QUÉ HACEN Y
+DÓNDE»—: el papel a un lado, su descripción al otro. **Ese corte ya estaba escrito** y
+es el que va a dos tintas. Las etiquetas sin guion van en una sola; no se les inventa
+una partición.
+
+Aquí es donde el gesto más reconocible del ADR-0007 §4 **por fin se ve**, aunque el
+titular real siga esperando copy.
+
+### Contraste: por qué solo `h1` y `h2`
+
+El oro de texto sobre el crema del hueco da **4.05:1**. El piso de WCAG baja a **3:1**
+para texto grande —24 px, o 18.66 px en negrita—, así que a escala de titular (34 px) y
+de h2 (22 px) en peso 900 pasa con margen. A 18 px **no pasaría**: `h3` y `p` conservan
+el tratamiento de etiqueta de siempre.
+
+### Qué se movió, medido
+
+| Ruta | Oro antes | Oro después |
+|---|---|---|
+| Portada 390 | 0.63 % | **3.17 %** |
+| Portada 1280 | 0.04 % | **1.06 %** |
+| Giro 390 | 0.88 % | 0.91 % |
+
+**Las páginas de giro casi no se mueven, y la razón importa:** su `h1` es contenido real
+—el nombre del giro— y su segunda tinta sigue esperando copy. Lo que se vistió fue el
+andamio; donde ya hay contenido real, no hay andamio que vestir.
+
+### Qué NO se disimuló
+
+- El marcador `[PENDIENTE: contenido no aprobado]` sigue arriba de cada hueco, literal.
+  **CA-01 de la SPEC-0001 se mantiene.**
+- El borde punteado sigue.
+- `data-pendiente` sigue, y el validador sigue contando las mismas marcas.
+- Ni una palabra nueva. El texto grande es la etiqueta de rol que ya estaba escrita.
+
+El alto del hueco de titular crece de 46.8 a **142.8 px** a 390 y de 31.2 a **107.1** a
+1280. Es el costo de dibujar un titular como titular, y se paga a cambio de que la
+entrada deje de parecer una maqueta.
+
 ## Objetivo
 
 Cablear las seis piezas del [[ADR-0007-lenguaje-visual|ADR-0007]] sobre el armazón de
