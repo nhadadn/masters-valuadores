@@ -20,6 +20,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0009 | [[ADR-0009-fotografia-de-banco\|Entran fotografías de banco, como provisionales]] | **ACEPTADA** · revierte en parte el 0007 | 2026-09-10 |
 | 0010 | [[ADR-0010-degradados-de-superficie\|El fondo deja de ser blanco, y el acero vuelve con fuente]] | **ACEPTADA** · enmienda el 0004 | 2026-09-10 |
 | 0011 | [[ADR-0011-entrada-oscura\|La entrada va en oscuro]] | **ACEPTADA** · se aparta de sus piezas, con la razón escrita | 2026-09-10 |
+| 0012 | [[ADR-0012-tema-oscuro\|El sitio entero va en oscuro]] | **ACEPTADA** · extiende el 0011 · **riesgo de luz solar sin medir** | 2026-09-10 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

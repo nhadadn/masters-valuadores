@@ -9,12 +9,11 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  /* El degradado de la página vive AQUÍ y en ningún otro sitio · ADR-0010.
-     `background-color` declara el extremo PEOR —el más oscuro— para que cualquier
-     medición de contraste caiga del lado pesimista, y para que haya respaldo si el
-     degradado no pinta. Las secciones claras son transparentes encima de esto. */
-  background-color: var(--acero-100);
-  background-image: var(--grad-pagina);
+  /* EL CAMPO · ADR-0012. Vive aquí y en ningún otro sitio; las secciones son
+     transparentes encima. `background-color` declara el extremo MÁS CLARO —no el más
+     oscuro— para que cualquier medición de contraste caiga del lado pesimista. */
+  background-color: var(--campo-alto);
+  background-image: var(--grad-campo);
   color: var(--tinta);
   font-family: var(--fuente-base);
   font-size: var(--cuerpo-tam);
@@ -37,6 +36,34 @@ a { color: inherit; text-decoration: none; }
   outline-offset: var(--foco-separacion);
 }
 :focus:not(:focus-visible) { outline: none; }
+
+/* ── El resplandor que se mueve · ADR-0012 ──────────────────────────────────
+   Una mancha de oro grande y difusa, fija a la ventana, que se desplaza despacio
+   por detrás de todo. Es lo que hace que el fondo no se vea muerto.
+
+   SE ANIMA `transform` Y NADA MÁS. Animar `background-position` repinta el área
+   entera en cada cuadro; `transform` lo resuelve el compositor y no repinta. En un
+   teléfono de gama baja esa diferencia es batería y fluidez, no elegancia.
+
+   Va detrás de todo con z-index -1 y `pointer-events: none`: no intercepta un solo
+   toque. Los paneles son opacos, así que pasa por detrás de ellos y nunca cruza su
+   texto — el contraste garantizado es el del campo, en el peor fotograma. */
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  top: -30vmax;
+  left: -30vmax;
+  width: 90vmax;
+  height: 90vmax;
+  background: var(--resplandor);
+  animation: vagar 28s ease-in-out infinite alternate;
+}
+@keyframes vagar {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(60vw, 40vh, 0); }
+}
 
 /* Salto al contenido: primer tabulador de la página. */
 .salto-contenido {
@@ -66,4 +93,7 @@ a { color: inherit; text-decoration: none; }
     --mov-elevacion: 0px;
     --mov-crecer: 1;
   }
+  /* El resplandor se queda quieto, no desaparece: el fondo sigue teniendo color,
+     solo deja de moverse. */
+  body::before { animation: none; }
 }

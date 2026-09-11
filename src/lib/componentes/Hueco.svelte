@@ -119,7 +119,7 @@
     display: block;
     height: 14px;
     border-radius: 2px;
-    background: var(--negro-200);
+    background: var(--panel-borde);   /* la barra que simula un renglón */
     margin-top: var(--e-2);
   }
 

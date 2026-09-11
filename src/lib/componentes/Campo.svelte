@@ -52,7 +52,7 @@
      pero el campo de acero lo tumba a 4.26:1 y no pasa AA. Tinta secundaria da
      6.27:1 en el punto más oscuro de la rampa. */
   input::placeholder { color: var(--tinta-secundaria); }
-  input:disabled { background: var(--negro-100); border-color: var(--negro-300); color: var(--tinta-secundaria); }
+  input:disabled { background: var(--negro-900); border-color: var(--panel-borde); color: var(--tinta-secundaria); }
   .conError { border-color: var(--error); }
   .error { display: flex; gap: var(--e-2); align-items: flex-start; font-size: var(--pie-tam); color: var(--error); }
   .error svg { flex-shrink: 0; margin-top: 2px; }

@@ -46,7 +46,7 @@
     padding: 0 var(--e-4);
     border-radius: var(--radio-boton);
     background: var(--accion);
-    color: var(--tinta-sobre-oscuro);
+    color: var(--tinta-sobre-accion);   /* 11.12:1 sobre el oro */
     font-weight: var(--cuerpo-fuerte-peso);
     line-height: 1;
     transition: transform var(--mov-tactil) var(--mov-curva);
@@ -57,7 +57,7 @@
   .bloque { width: 100%; }
   .linea { min-height: var(--tactil-piso); }
   .barra { width: 100%; }
-  .oscuro { background: var(--blanco); color: var(--negro-950); }
+  /* `sobreOscuro` deja de invertir: todo el sitio es oscuro · ADR-0012. */
 
   /* ── La arista · ADR-0007 §5 ────────────────────────────────────────────
      Este es el botón primario REAL del sitio: el ADR dice «el botón primario» y en
@@ -100,17 +100,16 @@
     background: var(--accion);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
   }
-  .wa.oscuro:not(.barra)::before { background: var(--blanco); }
   /* El relleno apagado se mantiene: es lo que dice «esto no se puede tocar». */
-  .wa.inerte:not(.barra)::before { background: var(--negro-300); }
+  .wa.inerte:not(.barra)::before { background: var(--panel-borde); }
 
   /* Inerte a propósito: sin número confirmado no hay a dónde mandar a nadie. */
-  .inerte { background: var(--negro-300); color: var(--negro-950); cursor: not-allowed; flex-wrap: wrap; }
+  .inerte { background: var(--panel-borde); color: var(--tinta-secundaria); cursor: not-allowed; flex-wrap: wrap; }
   .marca {
     font-family: ui-monospace, Menlo, monospace;
     font-size: var(--pie-tam);
-    background: var(--negro-100);
-    border: 1px solid var(--negro-500);
+    background: var(--negro-800);
+    border: 1px solid var(--panel-borde);
     padding: 1px 6px;
   }
 </style>

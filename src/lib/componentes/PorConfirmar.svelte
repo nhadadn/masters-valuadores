@@ -20,8 +20,9 @@
   code {
     font-family: ui-monospace, Menlo, monospace;
     font-size: var(--pie-tam);
-    background: var(--negro-100);
-    border: 1px solid var(--negro-400);
+    /* Tema oscuro · ADR-0012: los rellenos claros pasan a panel. */
+    background: var(--negro-800);
+    border: 1px solid var(--panel-borde);
     color: var(--tinta-secundaria);
     padding: 1px 6px;
   }

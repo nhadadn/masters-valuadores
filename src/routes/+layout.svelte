@@ -160,7 +160,7 @@
   footer li a {
     display: block; min-height: var(--tactil-piso);
     display: flex; align-items: center;
-    font-size: var(--pie-tam); color: var(--negro-200);
+    font-size: var(--pie-tam); color: var(--tinta-secundaria);
   }
   footer li a:hover { color: var(--blanco); }
 

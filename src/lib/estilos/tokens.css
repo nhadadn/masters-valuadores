@@ -80,93 +80,62 @@
   /* ── Estado ──────────────────────────────────────────────────────────── */
   --error: #A8331E;
 
-  /* ── Roles semánticos ────────────────────────────────────────────────── */
-  --superficie:          var(--blanco);
-  --superficie-alterna:  var(--crema-050);
+  /* ── Roles semánticos · TEMA OSCURO · ADR-0012 ───────────────────────────
+     El sitio entero es oscuro desde el 10 de septiembre. Lo importante de este
+     bloque: los roles cambiaron de valor y NINGÚN componente tuvo que cambiar de
+     token. Por eso existían.
+
+     La jerarquía se invierte: el CAMPO es lo más oscuro y los PANELES se levantan
+     encima, que es justo al revés de lo que había —campo de acero, paneles blancos—
+     pero la misma idea. */
+  --campo-alto:          #16181B;   /* arranque del campo · blanco 17.79:1 */
+  --campo-bajo:          var(--negro-950);
+  --panel:               #2A2F34;   /* tarjetas y huecos · se levanta 1.32:1 del campo */
+  --panel-borde:         #3C4248;
+
+  --superficie:          var(--panel);
+  --superficie-alterna:  var(--panel);
   --superficie-oscura:   var(--negro-950);
 
-  /* ── Degradados de superficie · ADR-0010 ─────────────────────────────────
-     «Un fondo blanco no transmite nada» — Nadir, 10 de septiembre, con la foto
-     de la fachada por delante.
-
-     EL LÍMITE QUE NO SE NEGOCIA: un degradado que fuera de amarillo a negro
-     detrás de texto no tiene tinta posible —ninguna funciona en los dos
-     extremos—. Por eso cada degradado se queda DENTRO de una banda de
-     luminancia: claro con claro, oscuro con oscuro. El amarillo entra como
-     arista y como bloque, nunca como extremo de un degradado con texto encima.
-     Es, además, lo que hace el edificio: contenedor amarillo ARRIBA de la
-     fachada negra, no fundido con ella.
-
-     UN SOLO DEGRADADO PARA TODA LA PÁGINA, NO UNO POR SECCIÓN. El primer intento le
-     puso su propio degradado a cada sección y el resultado fue bandeo: el fondo se
-     oscurecía 400 px y de golpe volvía a blanco al empezar la siguiente. Medido en el
-     render: blanco→acero, crema→acero, blanco→acero… cuatro reinicios en una pantalla.
-
-     Ahora el degradado vive en `body`, cubre el lienzo entero y baja de una vez de
-     arriba abajo, como el edificio: claro arriba, oscuro abajo. Las secciones claras
-     son TRANSPARENTES y dejan pasar ese fondo.
-
-     LA ALTERNANCIA CLARA SE RETIRÓ. El velo del 4.5 % que llevaba la sección crema
-     hacía que la rampa subiera y bajara —medido: 231 → 237 → 225 bajando por la
-     página— y eso es justo lo que se veía como «no uniforme». El ritmo entre
-     secciones ya lo llevan la etiqueta, la regla dorada y la cinta; no hacía falta
-     una cuarta señal, y esa además peleaba con el fondo. */
-  --grad-pagina:  linear-gradient(180deg, var(--acero-025) 0%, var(--acero-050) 55%, var(--acero-100) 100%);
-  /* ── El tramo oscuro · negro con luz de oro ──────────────────────────────
-     «Se ve negro sin estilo ni ningún tipo de atractivo» — Nadir, y era cierto: era
-     una rampa de gris a negro y nada más.
-
-     Ahora lleva DOS capas: un resplandor de oro que entra por arriba a la derecha,
-     y debajo la rampa que sigue bajando hasta el negro del pie. El resplandor no es
-     una forma —eso fue la franja que se quitó— es luz ambiente, y cita al edificio:
-     el contenedor amarillo está ARRIBA de la fachada negra.
-
-     EL 18 % NO ES A OJO, ES EL TECHO. Calculado sobre el punto más claro posible,
-     que es donde el oro pega con más fuerza sobre grafito:
-
-         oro al 10%  → blanco 12.34:1 · negro-300 5.89:1
-         oro al 18%  → blanco 10.14:1 · negro-300 4.84:1   ← aquí
-         oro al 22%  → blanco  9.20:1 · negro-300 4.39:1   ← ya NO pasa AA
-
-     `negro-300` es la tinta tenue del pie y es la que marca el límite, no el blanco.
-
-     El rgba se escribe a mano porque `color-mix()` con un token no tiene soporte
-     seguro en teléfono viejo. Es --oro-500 #E7C041 al 18 %. Si cambia el acento,
-     cambia aquí también. */
-  --grad-oscuro:
-    radial-gradient(125% 105% at 88% 0%, rgba(231, 192, 65, 0.18) 0%, rgba(231, 192, 65, 0) 62%),
-    linear-gradient(180deg, var(--grafito) 0%, var(--negro-950) 100%);
-  --oscuro-peor: #45422E;   /* el punto más claro de lo anterior · blanco 10.14:1 */
-  --tinta:               var(--negro-950);
-  --tinta-secundaria:    var(--negro-600);
+  --tinta:               var(--blanco);            /* 13.51:1 sobre panel */
+  --tinta-secundaria:    var(--negro-200);         /*  9.33:1 sobre panel */
+  --tinta-suave:         var(--negro-200);
   --tinta-sobre-oscuro:  var(--blanco);
-  --tinta-tenue-oscuro:  var(--negro-300);   /* 8.49:1 sobre negro-900 */
-  /* La tinta secundaria RESUELTA POR SUPERFICIE. Sin esto, un párrafo secundario
-     puesto en una sección oscura se quedaba en negro-600 sobre negro y desaparecía.
-     `Seccion.svelte` la redefine en oscuro, igual que hace con el oro. */
-  --tinta-suave:         var(--tinta-secundaria);
-  --acento-sobre-oscuro: var(--oro-500);     /* 11.12:1 sobre negro-950 */
-  /* El oro COMO TEXTO, resuelto por la superficie que lo contiene.
-     Aquí vale lo de --superficie, que es blanca: --oro-800 da 4.65:1 y pasa.
-     Cada superficie que no sea blanca lo redefine —Seccion.svelte y el pie— porque
-     sobre crema el mismo color da 4.05:1 y NO pasa. Nadie escribe --oro-800 a pelo. */
-  --oro-texto:           var(--oro-800);     /* 4.65:1 sobre blanco */
+  --tinta-tenue-oscuro:  var(--negro-300);
+  --acento-sobre-oscuro: var(--oro-500);
 
-  /* El oro de TEXTO GRANDE, que es otro caso y no se puede mezclar con el de arriba.
-     La WCAG baja el piso a 3:1 para texto de 24 px o de 18.66 en negrita, y --oro-800
-     lo pasa sobre TODAS las superficies claras del sistema:
+  /* EL ORO YA NO NECESITA PASO OSCURO. Todo el sitio es oscuro, así que el acento va
+     en --oro-500 y da 11.12:1 sobre el campo y 7.73:1 sobre el panel. El --oro-800,
+     que existía para poder escribir oro sobre claro, se queda sin trabajo: no hay
+     claro. No se borra —el ADR-0006 lo justificó y puede volver— pero no se usa. */
+  --oro-texto:           var(--oro-500);
+  --oro-texto-grande:    var(--oro-500);
 
-         blanco 4.65:1 · crema 4.05:1 · acero 4.00:1   ← todas por encima de 3:1
+  --borde-campo:         var(--panel-borde);
+  --borde-sutil:         #33383E;
 
-     Por eso el titular a dos tintas conserva su oro donde el texto de cuerpo no puede.
-     Sin este token, el degradado del ADR-0010 habría apagado el gesto más reconocible
-     de la marca para salvar un caso que no era el suyo. */
-  --oro-texto-grande:    var(--oro-800);
-  --borde-campo:         var(--negro-500);
-  --borde-sutil:         var(--negro-200);
-  --accion:              var(--negro-950);
-  --accion-hover:        var(--negro-700);
-  --accion-presionada:   var(--negro-800);
+  /* LA ACCIÓN PRIMARIA PASA A ORO, y no es capricho: sobre un sitio oscuro un botón
+     negro desaparece. El oro como relleno con etiqueta oscura encima da 11.12:1 y es
+     exactamente el uso que el ADR-0007 autoriza para el acento. */
+  --accion:              var(--oro-500);
+  --accion-hover:        #F0CE63;
+  --accion-presionada:   var(--oro-700);
+  --tinta-sobre-accion:  var(--negro-950);         /* 11.12:1 sobre el oro */
+
+  /* ── El campo · degradado y resplandor que se mueve · ADR-0012 ───────────
+     El campo baja de --campo-alto a negro. Encima, un resplandor de oro que NO está
+     quieto: se desplaza despacio, así que el fondo bajo el texto cambia con el
+     tiempo y el contraste hay que garantizarlo en el PEOR FOTOGRAMA, no en uno.
+
+     Calculado sobre el punto más claro del campo, que es donde el oro pega más:
+
+         oro al 10%  blanco 14.59:1 · negro-300 6.97:1
+         oro al 20%  blanco 11.37:1 · negro-300 5.43:1   ← el elegido
+         oro al 26%  blanco  9.72:1 · negro-300 4.64:1   ← sin margen para algo que se mueve
+
+     Los paneles son OPACOS: el resplandor pasa por detrás y nunca cruza su texto. */
+  --grad-campo:  linear-gradient(180deg, var(--campo-alto) 0%, var(--campo-bajo) 100%);
+  --resplandor:  radial-gradient(closest-side, rgba(231, 192, 65, 0.20) 0%, rgba(231, 192, 65, 0) 100%);
 
   /* ── Tipografía ──────────────────────────────────────────────────────── */
   --fuente-base: 'Archivo', 'Archivo Respaldo', Arial, Helvetica, sans-serif;

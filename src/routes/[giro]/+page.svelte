@@ -171,7 +171,7 @@
 
   .bienes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); }
   .bienes li { display: grid; gap: var(--e-2); min-height: 96px; padding: var(--e-3); background: var(--superficie); border: 1px solid var(--negro-400); align-content: start; }
-  .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--negro-400); background: var(--negro-100); }
+  .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
 
   .pasos { display: grid; gap: var(--e-4); }
   .pasos li { border-left: 2px solid var(--oro-500); padding-left: var(--e-3); }

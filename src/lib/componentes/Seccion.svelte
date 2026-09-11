@@ -37,40 +37,13 @@
 
   /* Degradados dentro de una banda de luminancia · ADR-0010. El peor extremo de
      cada uno está calculado en tokens.css; ninguno baja de 15:1 con su tinta. */
-  /* Las claras NO pintan fondo: dejan pasar el degradado continuo de `body`. Pintar
-     aquí era lo que producía el bandeo, y el velo de la alterna era lo que hacía que
-     la rampa no se viera uniforme. Las dos son ahora la misma superficie. */
+  /* NINGUNA sección pinta fondo · ADR-0012. Todas dejan pasar el campo y su
+     resplandor. Las tres variantes quedan como el mismo cristal; se conservan porque
+     todavía resuelven tintas y porque volver a diferenciarlas es cambiar esto y nada
+     más. */
   .blanco,
-  .crema { background: transparent; color: var(--tinta); }
-
-  /* La oscura sí es opaca: es otro mundo, no una variación del claro.
-     `background-color` declara el punto MÁS CLARO del conjunto —donde el resplandor
-     dorado pega más fuerte— para que la medición de contraste sea pesimista. */
-  .oscuro {
-    background-color: var(--oscuro-peor);     /* blanco 10.14:1 · negro-300 4.84:1 */
-    background-image: var(--grad-oscuro);
-    color: var(--tinta-sobre-oscuro);
-  }
-
-  /* Cada superficie resuelve qué es «oro como texto» sobre ella. Calculado:
-       blanco  #FFFFFF → --oro-800  4.65:1  pasa AA
-       crema   #F0EFED → --oro-800  4.05:1  NO PASA
-       acero   #ECEEF0 → --oro-800  4.00:1  NO PASA  ← extremo de los dos degradados claros
-       oscuro  #0C0D0F → --oro-500 11.12:1  pasa de sobra
-
-     Desde el ADR-0010 las superficies claras son DEGRADADOS que terminan en acero,
-     así que el oro de texto no pasa en ninguna de las dos: las dos bajan a tinta
-     secundaria. El titular de portada conserva su oro porque es texto GRANDE en
-     peso 900, y ahí el piso de la WCAG baja a 3:1.
-     Sobre crema el oro de texto simplemente no existe, y es preferible a un renglón
-     que no se lee a plena luz. No se inventa un oro más oscuro para taparlo. */
-  .blanco,
-  .crema  { --oro-texto: var(--tinta-secundaria); }
-  .oscuro {
-    --oro-texto: var(--oro-500);
-    --oro-texto-grande: var(--oro-500);
-    --tinta-suave: var(--tinta-tenue-oscuro);   /* 9.29:1 sobre negro-950 */
-  }
+  .crema,
+  .oscuro { background: transparent; color: var(--tinta-sobre-oscuro); }
 
   .etiqueta {
     font-size: var(--etiqueta-tam);

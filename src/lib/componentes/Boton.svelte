@@ -85,12 +85,16 @@
      Sin radio: el sello de sus piezas es un paralelogramo de arista viva, no una
      pastilla. El anillo de foco sigue el rectángulo, que es lo correcto: es el
      objetivo real. */
+  /* LA ETIQUETA VA EN TINTA OSCURA, no en blanca · ADR-0012. Desde que la acción
+     primaria es oro, blanco encima daría 1.75:1. El validador NO puede cazarlo
+     porque hoy no se dibuja ningún botón primario —D-13 bloquea el submit y el de
+     WhatsApp sale inerte—, así que se razona en vez de esperarlo. */
   .primario {
     position: relative;
     isolation: isolate;
     background: transparent;
     border-radius: var(--radio-bloque);
-    color: var(--tinta-sobre-oscuro);
+    color: var(--tinta-sobre-accion);
     /* Que la etiqueta no se meta debajo del corte cuando el botón no es de ancho
        completo. Medio corte basta: a media altura el recorte ha comido la mitad. */
     padding-inline-end: calc(var(--e-4) + var(--diagonal-corte) / 2);
@@ -108,20 +112,21 @@
   .primario:hover::before { background: var(--accion-hover); }
   .primario:active::before { background: var(--accion-presionada); }
 
-  .secundario { background: var(--superficie); color: var(--tinta); box-shadow: inset 0 0 0 2px var(--accion); }
-  .secundario:hover { background: var(--negro-100); }
+  /* El secundario es contorno sobre el campo, no un bloque claro. */
+  .secundario { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 2px var(--tinta); }
+  .secundario:hover { background: rgba(255, 255, 255, 0.10); }
 
   .terciario { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; padding: 0 var(--e-2); }
 
-  .acento { background: var(--oro-500); color: var(--negro-950); }
-  .acento:hover { background: var(--oro-700); color: var(--blanco); }
+  /* `acento` y `primario` son ya lo mismo desde el ADR-0012. Se conserva la
+     variante para no romper llamadas, y su hover deja de usar --oro-700 con blanco
+     encima, que daba 4.05:1 y nunca pasó AA. */
+  .acento { background: var(--oro-500); color: var(--tinta-sobre-accion); }
+  .acento:hover { background: var(--accion-hover); color: var(--tinta-sobre-accion); }
 
-  /* Sobre superficie oscura el primario se invierte: blanco con tinta negra.
-     El fondo vive en el pseudo-elemento, así que la inversión también. */
-  .oscuro.primario { color: var(--negro-950); }
-  .oscuro.primario::before { background: var(--blanco); }
-  .oscuro.primario:hover::before { background: var(--negro-100); }
-  .oscuro.secundario { background: transparent; color: var(--blanco); box-shadow: inset 0 0 0 2px var(--blanco); }
-  .oscuro.secundario:hover { background: rgba(255, 255, 255, 0.12); }
+  /* `sobreOscuro` ya no invierte nada: el sitio entero es oscuro desde el ADR-0012,
+     así que la variante oscura y la normal coinciden. La bandera se conserva porque
+     la usan las páginas y quitarla sería ruido; el día que vuelva una superficie
+     clara, aquí es donde se diferencia otra vez. */
   .oscuro.terciario { color: var(--blanco); }
 </style>
