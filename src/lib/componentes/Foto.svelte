@@ -85,6 +85,27 @@
     El primer intento tapaba la foto con una capa de oro y la anulaba.
   -->
   <div class="lienzo" class:tenida={provisional} class:cortada={diagonal}>
+    <picture>
+    <!--
+      WEBP CON JPEG DE RESPALDO.
+
+      `<picture>` no es adorno: el navegador elige el primer `<source>` que entiende y
+      cae solo al `<img>` si no entiende ninguno. Los dos llevan el MISMO `sizes` y los
+      mismos anchos, así que la elección de tamaño no cambia — solo el formato.
+
+      Medido sobre lo que la portada descarga de verdad en un teléfono —la fachada de
+      800 y las cuatro miniaturas de 400—: 169 KB en JPEG contra 130 en WebP, un 23 %
+      menos sin tocar una sola decisión de diseño.
+
+      AVIF comprimiría otro 15–25 % por encima de esto, pero Chromium no sabe
+      CODIFICARLO desde un canvas y habría que meter un codificador como dependencia.
+      Eso es una decisión con costo, no un paso de una optimización. Ver hacer-webp.mjs.
+    -->
+    <source
+      type="image/webp"
+      srcset="/fotos/{nombre}-400.webp 400w, /fotos/{nombre}-600.webp 600w, /fotos/{nombre}-800.webp 800w, /fotos/{nombre}-1600.webp 1600w"
+      sizes={tamanos}
+    />
     <img
       src="/fotos/{nombre}-800.jpg"
       srcset="/fotos/{nombre}-400.jpg 400w, /fotos/{nombre}-600.jpg 600w, /fotos/{nombre}-800.jpg 800w, /fotos/{nombre}-1600.jpg 1600w"
@@ -97,6 +118,7 @@
       decoding="async"
       style="aspect-ratio: {relacion}"
     />
+    </picture>
     {#if provisional}
       <!--
         EL RÓTULO BAJA DE VOLUMEN, NO DE CONTENIDO.
