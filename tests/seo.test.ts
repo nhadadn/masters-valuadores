@@ -149,11 +149,58 @@ describe('CA-S5 · sin dominio el sitio no se deja indexar · ADR-0013', () => {
     expect(xml).toContain('D-07');
   });
 
-  it('robots.txt prohíbe todo y no anuncia sitemap', () => {
-    const txt = construirRobots(POR_CONFIRMAR);
-    expect(txt).toContain('Disallow: /');
-    expect(txt).not.toContain('Allow: /');
-    expect(txt).not.toContain('Sitemap:');
+  /**
+   * Este test decía `expect(txt).not.toContain('Allow: /')` y cazó el ADR-0016,
+   * que es exactamente lo que tenía que hacer. Pero afirmaba de más: que NADIE
+   * pudiera pasar, cuando lo que hay que sostener es que **ningún buscador** pase.
+   *
+   * Los lectores de vista previa sí pasan a propósito desde el ADR-0016: sin ellos,
+   * mandarle el borrador a Cristóbal por WhatsApp llega sin tarjeta. No indexan.
+   *
+   * Ahora se leen los grupos de verdad en vez de buscar cadenas sueltas.
+   */
+  const grupos = (txt: string) => {
+    const salida: { agentes: string[]; reglas: string[] }[] = [];
+    let actual: { agentes: string[]; reglas: string[] } | null = null;
+    for (const cruda of txt.split('\n')) {
+      const linea = cruda.replace(/#.*$/, '').trim();
+      if (!linea) continue;
+      const [clave, ...resto] = linea.split(':');
+      const valor = resto.join(':').trim();
+      if (/^user-agent$/i.test(clave)) {
+        if (!actual || actual.reglas.length) { actual = { agentes: [], reglas: [] }; salida.push(actual); }
+        actual.agentes.push(valor);
+      } else if (actual) {
+        actual.reglas.push(`${clave}: ${valor}`);
+      }
+    }
+    return salida;
+  };
+
+  it('el grupo comodín prohíbe todo, que es lo que deja fuera a los buscadores', () => {
+    const g = grupos(construirRobots(POR_CONFIRMAR)).find((x) => x.agentes.includes('*'));
+    expect(g, 'no hay grupo User-agent: *').toBeDefined();
+    expect(g!.reglas).toContain('Disallow: /');
+    expect(g!.reglas.some((r) => r.startsWith('Allow:'))).toBe(false);
+  });
+
+  it('ningún buscador tiene grupo propio que lo deje entrar', () => {
+    const BUSCADORES = ['googlebot', 'bingbot', 'yandex', 'duckduckbot', 'baiduspider'];
+    for (const g of grupos(construirRobots(POR_CONFIRMAR))) {
+      const esBuscador = g.agentes.some((a) => BUSCADORES.includes(a.toLowerCase()));
+      if (esBuscador) expect(g.reglas, `${g.agentes.join(', ')} tiene permiso`).toContain('Disallow: /');
+    }
+  });
+
+  it('los lectores de vista previa sí pasan · ADR-0016', () => {
+    const g = grupos(construirRobots(POR_CONFIRMAR)).find((x) => x.agentes.includes('WhatsApp'));
+    expect(g, 'WhatsApp no tiene grupo: el enlace llegaría sin tarjeta').toBeDefined();
+    expect(g!.reglas).toContain('Allow: /');
+    expect(g!.agentes).toContain('facebookexternalhit');
+  });
+
+  it('sin dominio no se anuncia sitemap', () => {
+    expect(construirRobots(POR_CONFIRMAR)).not.toContain('Sitemap:');
   });
 
   it('no se puede armar una URL absoluta con el dominio abierto', () => {

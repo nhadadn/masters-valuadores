@@ -34,6 +34,30 @@ export const ORIGEN: Dato<string> = estaConfirmado(negocio.dominio)
 
 export const hayOrigen = estaConfirmado(ORIGEN);
 
+/**
+ * ORIGEN DE VISTA PREVIA · no es el dominio del negocio, y la diferencia importa.
+ *
+ * El sitio se despliega en Vercel para que Nadir lo vea en su teléfono y se lo pase a
+ * Cristóbal. Esa dirección **no es un dato de negocio**: es dónde está colgado el
+ * borrador hoy. No entra en `negocio.ts` y no cierra D-07.
+ *
+ * Sirve para UNA sola cosa: darle URL absoluta a `og:url` y `og:image`, que la exigen.
+ * Sin ella, mandar el enlace por WhatsApp llega como texto pelado — sin fachada, sin
+ * título y sin descripción, que es justo lo que se construyó en SPEC-0003.
+ *
+ * LO QUE **NO** HACE, y por eso no contradice al ADR-0013:
+ *   · No emite canónica. Una canónica apuntando a un dominio provisional es la
+ *     trampa exacta que ese ADR evita.
+ *   · No abre la indexación. Las páginas siguen `noindex, nofollow`.
+ *   · No entra al sitemap.
+ *
+ * Se borra el día que cierre D-07.
+ */
+export const ORIGEN_VISTA_PREVIA = 'https://masters-valuadores.vercel.app';
+
+/** Solo para la tarjeta de enlace. El dominio real manda en cuanto exista. */
+export const ORIGEN_TARJETA: string = hayOrigen ? String(ORIGEN) : ORIGEN_VISTA_PREVIA;
+
 export interface Pagina {
   /** Con barra final: `trailingSlash: 'always'` en `src/routes/+layout.ts:9`. */
   ruta: string;
@@ -127,6 +151,19 @@ export function construirRobots(origen: Dato<string> = ORIGEN): string {
 # src/lib/config/negocio.ts, este archivo pasa a permitir el rastreo y aparece la
 # línea Sitemap. No hay que acordarse de nada.
 
+# Los lectores de VISTA PREVIA sí pasan, y son la excepción a propósito. No indexan:
+# solo leen las etiquetas Open Graph para dibujar la tarjeta cuando alguien pega el
+# enlace en WhatsApp. Sin esto, pasarle el borrador al cliente llega como texto
+# pelado — sin fachada, sin título y sin descripción.
+User-agent: facebookexternalhit
+User-agent: WhatsApp
+User-agent: Twitterbot
+User-agent: Slackbot-LinkExpanding
+User-agent: TelegramBot
+Allow: /
+
+# Todo lo demás —buscadores incluidos— fuera. Y además cada página lleva su propio
+# «noindex», así que son dos cerrojos y no uno.
 User-agent: *
 Disallow: /
 `;

@@ -16,14 +16,27 @@
   import { page } from '$app/state';
   import { negocio } from '$lib/config/negocio';
   import { fichaDe } from '$lib/seo/meta';
-  import { paginaDe, absoluta, hayOrigen, IMAGEN_TARJETA } from '$lib/seo/enlaces';
+  import { paginaDe, absoluta, hayOrigen, ORIGEN_TARJETA, IMAGEN_TARJETA } from '$lib/seo/enlaces';
 
   const ruta = $derived(page.url.pathname);
   const ficha = $derived(fichaDe(ruta));
   const indexable = $derived(paginaDe(ruta)?.indexable ?? false);
 
+  /**
+   * La canónica SOLO sale con el dominio de verdad. Apuntarla a la dirección de
+   * vista previa sería declarar que la versión buena vive en Vercel — la trampa
+   * exacta que el ADR-0013 evita.
+   */
   const canonica = $derived(hayOrigen ? String(absoluta(ruta)) : null);
-  const imagen = $derived(hayOrigen ? String(absoluta(IMAGEN_TARJETA.ruta)) : null);
+
+  /**
+   * La TARJETA sí usa la vista previa, porque `og:url` y `og:image` exigen URL
+   * absoluta y sin ellas el enlace llega pelado a WhatsApp — que es el canal por el
+   * que este borrador se le pasa al cliente. No abre la indexación: el `noindex` de
+   * abajo no depende de esto.
+   */
+  const urlTarjeta = $derived(`${ORIGEN_TARJETA}${ruta}`);
+  const imagen = $derived(`${ORIGEN_TARJETA}${IMAGEN_TARJETA.ruta}`);
 
   /**
    * `noindex` mientras no haya dominio · ADR-0013. No es prudencia de más: hoy el
@@ -47,24 +60,17 @@
   {#if !hayOrigen}{@html porQue}{/if}
   {#if canonica}
     <link rel="canonical" href={canonica} />
-    <meta property="og:url" content={canonica} />
   {/if}
 
+  <meta property="og:url" content={urlTarjeta} />
   <meta property="og:site_name" content="{negocio.nombreComercial} VALUADORES" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_MX" />
 
-  {#if imagen}
-    <meta property="og:image" content={imagen} />
-    <meta property="og:image:width" content={String(IMAGEN_TARJETA.ancho)} />
-    <meta property="og:image:height" content={String(IMAGEN_TARJETA.alto)} />
-    <meta property="og:image:alt" content={IMAGEN_TARJETA.alt} />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta name="twitter:card" content="summary_large_image" />
-  {:else}
-    <!-- Sin origen no hay imagen: og:image EXIGE URL absoluta. Una tarjeta sin
-         imagen sigue mostrando título y descripción, que es mejor que nada y
-         permite verificar el cableado hoy. -->
-    <meta name="twitter:card" content="summary" />
-  {/if}
+  <meta property="og:image" content={imagen} />
+  <meta property="og:image:width" content={String(IMAGEN_TARJETA.ancho)} />
+  <meta property="og:image:height" content={String(IMAGEN_TARJETA.alto)} />
+  <meta property="og:image:alt" content={IMAGEN_TARJETA.alt} />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
