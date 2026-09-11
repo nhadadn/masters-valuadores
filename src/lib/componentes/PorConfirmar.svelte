@@ -25,7 +25,10 @@
     color: var(--tinta-secundaria);
     padding: 1px 6px;
   }
-  .nota { font-size: var(--pie-tam); line-height: var(--pie-alto); color: var(--negro-500); }
+  /* Sube de --negro-500 a tinta secundaria · ADR-0010. Sobre blanco daba 5.90:1,
+     pero el campo de acero lo tumba a 4.26:1 y no pasa AA. Tinta secundaria da
+     6.27:1 en el punto más oscuro de la rampa. */
+  .nota { font-size: var(--pie-tam); line-height: var(--pie-alto); color: var(--tinta-secundaria); }
   .oscuro code { background: var(--negro-800); border-color: var(--negro-600); color: var(--negro-200); }
   .oscuro .nota { color: var(--tinta-tenue-oscuro); }
 </style>

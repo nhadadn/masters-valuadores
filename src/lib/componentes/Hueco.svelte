@@ -35,7 +35,7 @@
    *
    * ── CONTRASTE · POR QUÉ SOLO h1 Y h2 ──────────────────────────────────────
    *
-   * El oro de texto sobre el crema del hueco da 4.05:1. El piso de WCAG baja a 3:1
+   * El oro de texto sobre el blanco del hueco da 4.65:1. El piso de WCAG baja a 3:1
    * para texto grande —24 px, o 18.66 px en negrita—, así que a escala de titular
    * (34 px) y de h2 (22 px) en peso 900 pasa con margen. A escala de h3 (18 px) NO
    * pasaría, así que h3 y p conservan el tratamiento de etiqueta de siempre.
@@ -75,7 +75,10 @@
 <style>
   .hueco {
     border: 1px dashed var(--negro-400);
-    background: var(--crema-050);
+    /* BLANCO, no crema. Sobre el campo de acero frío el crema cálido se ve sucio,
+       y en blanco el hueco se levanta del fondo como las tarjetas. De paso el oro
+       del titular sube de 4.05:1 a 4.65:1. */
+    background: var(--superficie);
     padding: var(--e-3) var(--e-3);
   }
   /* El marcador se separa de la etiqueta para que el papel tipográfico pueda crecer

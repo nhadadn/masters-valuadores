@@ -45,5 +45,8 @@
     font-weight: var(--etiqueta-peso);
     letter-spacing: var(--etiqueta-tracking);
   }
-  .relacion { font-size: var(--pie-tam); color: var(--negro-500); }
+  /* Sube de --negro-500 a tinta secundaria · ADR-0010. Sobre blanco daba 5.90:1,
+     pero el campo de acero lo tumba a 4.26:1 y no pasa AA. Tinta secundaria da
+     6.27:1 en el punto más oscuro de la rampa. */
+  .relacion { font-size: var(--pie-tam); color: var(--tinta-secundaria); }
 </style>

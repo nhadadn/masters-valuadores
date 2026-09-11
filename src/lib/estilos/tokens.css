@@ -35,9 +35,26 @@
      vivo que el edificio.
 
      Son los extremos de los degradados de superficie. Ratios calculados sobre el
-     PEOR extremo, que es lo único que importa en un degradado. */
-  --acero-050: #ECEEF0;   /* paso medio del degradado de página · negro-950 16.72:1 */
-  --acero-100: #DFE3E6;   /* fondo del degradado de página      · negro-950 15.06:1 */
+     PEOR extremo, que es lo único que importa en un degradado.
+
+     EL CAMPO ES DE ACERO, NO CASI BLANCO. La primera versión iba de #FFFFFF a
+     #DFE3E6 sobre 2 600 px, así que en la pantalla que la gente mira el fondo estaba
+     entre 255 y 244: blanco. Correcto de cálculo e invisible de verdad.
+
+     Ahora arranca YA en acero. Las superficies blancas —tarjetas, huecos— dejan de
+     confundirse con el fondo y se levantan encima, que es como funcionan sus piezas:
+     un panel claro con elementos ENCIMA, no elementos flotando en el vacío.
+
+     EL FONDO DE LA RAMPA LO FIJA EL ORO DEL TITULAR, no el gusto. `--oro-800` necesita
+     3:1 por ser texto grande:
+
+         #DFE3E6 → 3.60:1     #D6DCE1 → 3.36:1  ← el elegido
+         #CDD5DB → 3.13:1     #C4CDD4 → 2.88:1  ← ya NO pasa
+
+     Se para en #D6DCE1 para no quedarse pegado al mínimo. */
+  --acero-025: #F0F3F6;   /* arranque · tarjeta blanca encima 1.11:1, ya se distingue */
+  --acero-050: #E2E7EB;   /* paso medio                        · negro-950 15.6:1 */
+  --acero-100: #D6DCE1;   /* fondo de la rampa · negro-950 14.06:1 · negro-600 6.27:1 */
   --grafito:   #22262A;   /* extremo del degradado oscuro     · blanco    15.23:1 */
   --blanco:    #FFFFFF;
 
@@ -94,7 +111,7 @@
      página— y eso es justo lo que se veía como «no uniforme». El ritmo entre
      secciones ya lo llevan la etiqueta, la regla dorada y la cinta; no hacía falta
      una cuarta señal, y esa además peleaba con el fondo. */
-  --grad-pagina:  linear-gradient(180deg, var(--blanco) 0%, var(--acero-050) 55%, var(--acero-100) 100%);
+  --grad-pagina:  linear-gradient(180deg, var(--acero-025) 0%, var(--acero-050) 55%, var(--acero-100) 100%);
   /* ── El tramo oscuro · negro con luz de oro ──────────────────────────────
      «Se ve negro sin estilo ni ningún tipo de atractivo» — Nadir, y era cierto: era
      una rampa de gris a negro y nada más.

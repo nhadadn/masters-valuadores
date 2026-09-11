@@ -41,5 +41,8 @@
   }
   a { color: var(--tinta-secundaria); text-decoration: underline; text-underline-offset: 3px; }
   [aria-current] { color: var(--tinta); }
-  .sep { color: var(--negro-500); font-size: var(--pie-tam); }
+  /* --negro-500 daba 5.90:1 sobre blanco y CAE a 4.26:1 sobre el campo de acero del
+     ADR-0010: por debajo de AA. Sube a tinta secundaria, que da 6.27:1 en el punto
+     más oscuro de la rampa. Lo detectó `validar-a11y` al oscurecer el fondo. */
+  .sep { color: var(--tinta-secundaria); font-size: var(--pie-tam); }
 </style>

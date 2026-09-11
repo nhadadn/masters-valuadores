@@ -131,6 +131,55 @@ El encabezado, la sección oscura, la banda de contacto, el pie y la barra fija 
 **cuatro valores distintos** —grafito, negro-950, negro-900— pegados unos a otros. Ahora
 comparten el mismo fondo compuesto. Eso era la otra mitad de «no se ve uniforme».
 
+## Tercera pasada · el campo era casi blanco
+
+> *«Se sigue mostrando el blanco en las secciones principales.»* — Nadir
+
+Y era verdad. La rampa iba de `#FFFFFF` a `#DFE3E6` sobre **2 600 px**, así que en la
+pantalla que la gente mira el fondo estaba entre **255 y 244**. Correcto de cálculo e
+invisible de verdad: técnicamente un degradado, visualmente blanco.
+
+**El campo arranca ya en acero.** Medido después, bajando por la página:
+**237 · 235 · 232 · 230 · 227 · 224 · 222** antes de entrar al tramo oscuro.
+
+Y hay un efecto que importa más que el número: **las superficies blancas —tarjetas,
+huecos— dejan de confundirse con el fondo y se levantan encima.** Que es como funcionan
+sus piezas: un panel claro con elementos ENCIMA, no elementos flotando en el vacío.
+
+| Token | Valor | Papel |
+|---|---|---|
+| `--acero-025` | `#F0F3F6` | arranque · tarjeta blanca encima 1.11:1, ya se distingue |
+| `--acero-050` | `#E2E7EB` | paso medio |
+| `--acero-100` | `#D6DCE1` | fondo de la rampa |
+
+**El fondo de la rampa lo fija el oro del titular, no el gusto.** `--oro-800` necesita
+3:1 por ser texto grande:
+
+| | |
+|---|---|
+| `#DFE3E6` | 3.60:1 |
+| **`#D6DCE1`** | **3.36:1** ← el elegido |
+| `#CDD5DB` | 3.13:1 |
+| `#C4CDD4` | **2.88:1** ← ya no pasa |
+
+Se para en `#D6DCE1` para no quedarse pegado al mínimo.
+
+### Oscurecer el fondo tumbó cuatro textos, y el validador los cazó
+
+`--negro-500` daba **5.90:1 sobre blanco** y sobre el campo de acero cae a **4.26:1**:
+por debajo de AA. Le pasaba al separador de las migas, a la nota de `PorConfirmar`, a
+la relación de aspecto de `RanuraImagen` y al *placeholder* de `Campo`. Los cuatro
+suben a tinta secundaria, que da **6.27:1** en el punto más oscuro.
+
+Es el ejemplo exacto de por qué el fondo no se toca sin correr el validador: un cambio
+de superficie mueve **todo** lo que va encima.
+
+### Los paneles pendientes pasan de crema a blanco
+
+Sobre un campo de acero frío, el crema cálido se ve sucio. En blanco el hueco se
+levanta del fondo como las tarjetas, y de paso el oro del titular sube de 4.05:1 a
+**4.65:1**.
+
 ## Lo que NO cambia
 
 - La **identidad sigue plana**. El ADR-0004 decidió el tratamiento —sin bisel, sin

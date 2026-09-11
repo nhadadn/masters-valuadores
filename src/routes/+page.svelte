@@ -245,7 +245,7 @@
   .bloqueados {
     display: flex; flex-direction: column;
     min-height: 176px; padding: var(--e-4) var(--e-3);
-    border: 1px dashed var(--negro-400); background: var(--crema-050);
+    border: 1px dashed var(--negro-400); background: var(--superficie);
   }
   .cabeza {
     display: flex; align-items: center; gap: var(--e-2);
