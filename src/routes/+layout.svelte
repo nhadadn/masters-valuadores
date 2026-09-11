@@ -131,8 +131,8 @@
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; justify-content: space-between; gap: var(--e-4);
     min-height: 56px; padding: 0 var(--margen-lateral);
-    background-color: var(--oscuro-peor);
-    background-image: var(--grad-oscuro);
+    background-color: var(--campo-alto);
+    background-image: var(--resplandor-fijo);
     color: var(--tinta-sobre-oscuro);
   }
   .marca { display: flex; align-items: center; gap: var(--e-3); min-height: var(--tactil); }
@@ -179,8 +179,8 @@
     position: sticky; bottom: 0; z-index: 10;
     display: flex; align-items: center; gap: var(--e-3);
     padding: var(--e-2) var(--margen-lateral);
-    background-color: var(--oscuro-peor);
-    background-image: var(--grad-oscuro);
+    background-color: var(--campo-alto);
+    background-image: var(--resplandor-fijo);
     border-top: var(--regla-dorada) solid var(--oro-500);
     --oro-texto: var(--oro-500);   /* superficie oscura · 11.12:1 */
   }

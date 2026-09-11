@@ -39,10 +39,16 @@
     provisional?: boolean;
     /** Alto real del archivo, para reservar el hueco sin CLS. */
     alto?: number;
+    /**
+     * Rótulo corto. En una miniatura el aviso completo ocupaba 77 px sobre 179 de
+     * imagen —el 43 %— y competía con la foto. Dice lo mismo con menos: sigue
+     * diciendo que es de archivo, que es lo que no se puede omitir.
+     */
+    compacto?: boolean;
   }
   let {
     nombre, alt, relacion = '16 / 9', prioritaria = false,
-    provisional = true, alto = 1067
+    provisional = true, alto = 1067, compacto = false
   }: Props = $props();
 </script>
 
@@ -60,8 +66,12 @@
     style="aspect-ratio: {relacion}"
   />
   {#if provisional}
-    <figcaption>
-      FOTO DE ARCHIVO · PROVISIONAL — se sustituye por una foto real del negocio
+    <figcaption class:compacto>
+      {#if compacto}
+        FOTO DE ARCHIVO · PROVISIONAL
+      {:else}
+        FOTO DE ARCHIVO · PROVISIONAL — se sustituye por una foto real del negocio
+      {/if}
     </figcaption>
   {/if}
 </figure>
@@ -83,5 +93,10 @@
     line-height: var(--pie-alto);
     font-weight: var(--etiqueta-peso);
     letter-spacing: var(--etiqueta-tracking);
+  }
+  .compacto {
+    padding: var(--e-1) var(--e-2);
+    font-size: var(--etiqueta-tam);
+    line-height: var(--etiqueta-alto);
   }
 </style>

@@ -113,11 +113,33 @@
     background: var(--accion);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
   }
-  /* El relleno apagado se mantiene: es lo que dice «esto no se puede tocar». */
-  .wa.inerte:not(.barra)::before { background: var(--panel-borde); }
+  /* Sin relleno: el contorno punteado ya dice que esto no se puede tocar, y un
+     bloque relleno competía con los botones que sí funcionan. La arista se conserva
+     —es forma de marca, no promesa— pero ahora recorta un contorno, no una mancha. */
+  .wa.inerte:not(.barra)::before {
+    background: transparent;
+    border: 1px dashed var(--oro-700);
+  }
 
-  /* Inerte a propósito: sin número confirmado no hay a dónde mandar a nadie. */
-  .inerte { background: var(--panel-borde); color: var(--tinta-secundaria); cursor: not-allowed; flex-wrap: wrap; }
+  /* ── El estado inerte, rediseñado ────────────────────────────────────────
+     Sigue siendo inerte a propósito: sin número confirmado no hay a dónde mandar a
+     nadie. Lo que cambia es cómo se ve.
+
+     Antes era un BLOQUE GRIS RELLENO que imitaba al botón real y quedaba como una
+     mancha sucia —panel-borde sobre el campo— repetida seis veces en la portada.
+     Ahora es contorno PUNTEADO, que es el lenguaje que este repo ya usa para «esto
+     falta»: el mismo de `Hueco` y de las ranuras de imagen.
+
+     Ratios: el borde va en --oro-700, que da 4.39:1 sobre el campo y 3.33:1 sobre el
+     panel —por encima del 3:1 que pide un gráfico no textual—. La tinta va en
+     negro-300: 8.49:1 y 6.45:1. El oro-700 NO se usa de texto: ahí da 3.33 y no pasa. */
+  .inerte {
+    background: transparent;
+    color: var(--negro-300);
+    border: 1px dashed var(--oro-700);
+    cursor: not-allowed;
+    flex-wrap: wrap;
+  }
   .marca {
     font-family: ui-monospace, Menlo, monospace;
     font-size: var(--pie-tam);

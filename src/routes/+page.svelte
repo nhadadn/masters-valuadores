@@ -215,6 +215,14 @@
   <ul class="lineas">
     {#each girosConstruibles as g}
       <li>
+        <!-- La imagen entra porque la referencia que le gusta al cliente apoya cada
+             línea en una foto, y porque sin ella este bloque es solo texto. Sigue
+             siendo de archivo y rotulada: ADR-0009.
+             Se reusa la del giro a propósito — la misma imagen aquí y en su página
+             ayuda a reconocer, no a confundir. -->
+        {#if g.fotoProvisional}
+          <Foto nombre={g.fotoProvisional} alt={g.fotoAlt ?? ''} relacion="3 / 2" compacto />
+        {/if}
         <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
         <Hueco etiqueta="QUÉ ENTRA EN ESTA LÍNEA — LA LISTA DE BIENES, LA DA CRISTÓBAL" renglones={3} />
         <BotonWhatsApp
@@ -303,7 +311,7 @@
      igual que se desalinearon las tarjetas de giro. */
   .lineas li {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto;   /* foto · insignia · lista · botón */
     gap: var(--e-3);
   }
 

@@ -137,6 +137,13 @@
   --grad-campo:  linear-gradient(180deg, var(--campo-alto) 0%, var(--campo-bajo) 100%);
   --resplandor:  radial-gradient(closest-side, rgba(231, 192, 65, 0.20) 0%, rgba(231, 192, 65, 0) 100%);
 
+  /* Las superficies OPACAS y fijas —encabezado, banda de contacto, barra— no pueden
+     dejar pasar el resplandor de `body`, porque flotan encima del contenido. Llevan su
+     propia versión quieta del mismo gesto, así que se leen como la misma tierra sin
+     volverse transparentes.
+     16 % y no 20 %: estas franjas llevan encima tinta tenue del pie. */
+  --resplandor-fijo: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.16) 0%, rgba(231, 192, 65, 0) 70%);
+
   /* ── Tipografía ──────────────────────────────────────────────────────── */
   --fuente-base: 'Archivo', 'Archivo Respaldo', Arial, Helvetica, sans-serif;
 
