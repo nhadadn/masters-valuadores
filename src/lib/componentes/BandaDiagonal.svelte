@@ -49,8 +49,11 @@
   .banda {
     height: var(--e-12);
     /* Fondo propio: la banda entra a la sección oscura y empalma con ella, así el
-       oro cae sobre negro (11.12:1) y no sobre el blanco de la página. */
-    background-color: var(--superficie-oscura);
+       oro cae sobre negro y no sobre el blanco de la página.
+       GRAFITO, no negro-950: desde el ADR-0010 la sección oscura ARRANCA en grafito y
+       baja. Con negro-950 la banda quedaba más oscura que lo que tiene debajo y se
+       veía la costura. Oro sobre grafito da 8.71:1. */
+    background-color: var(--grafito);
     background-image: linear-gradient(
       var(--diagonal-degradado),
       transparent 0 calc(50% - var(--e-6)),

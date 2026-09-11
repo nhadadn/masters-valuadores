@@ -36,7 +36,8 @@
 
      Son los extremos de los degradados de superficie. Ratios calculados sobre el
      PEOR extremo, que es lo único que importa en un degradado. */
-  --acero-050: #ECEEF0;   /* extremo frío del degradado claro · negro-950 16.72:1 */
+  --acero-050: #ECEEF0;   /* paso medio del degradado de página · negro-950 16.72:1 */
+  --acero-100: #DFE3E6;   /* fondo del degradado de página      · negro-950 15.06:1 */
   --grafito:   #22262A;   /* extremo del degradado oscuro     · blanco    15.23:1 */
   --blanco:    #FFFFFF;
 
@@ -77,10 +78,23 @@
      luminancia: claro con claro, oscuro con oscuro. El amarillo entra como
      arista y como bloque, nunca como extremo de un degradado con texto encima.
      Es, además, lo que hace el edificio: contenedor amarillo ARRIBA de la
-     fachada negra, no fundido con ella. */
-  --grad-claro:   linear-gradient(160deg, var(--blanco) 0%, var(--acero-050) 100%);
-  --grad-alterno: linear-gradient(160deg, var(--crema-050) 0%, var(--acero-050) 100%);
-  --grad-oscuro:  linear-gradient(160deg, var(--negro-950) 0%, var(--grafito) 100%);
+     fachada negra, no fundido con ella.
+
+     UN SOLO DEGRADADO PARA TODA LA PÁGINA, NO UNO POR SECCIÓN. El primer intento le
+     puso su propio degradado a cada sección y el resultado fue bandeo: el fondo se
+     oscurecía 400 px y de golpe volvía a blanco al empezar la siguiente. Medido en el
+     render: blanco→acero, crema→acero, blanco→acero… cuatro reinicios en una pantalla.
+
+     Ahora el degradado vive en `body`, cubre el lienzo entero y baja de una vez de
+     arriba abajo, como el edificio: claro arriba, oscuro abajo. Las secciones claras
+     son TRANSPARENTES y dejan pasar ese fondo; la alterna solo añade un velo, así que
+     sigue alternando sin cortar la rampa. */
+  --grad-pagina:  linear-gradient(180deg, var(--blanco) 0%, var(--acero-050) 55%, var(--acero-100) 100%);
+  --velo-alterno: rgba(12, 13, 15, 0.045);   /* oscurece sin romper la rampa ni el contraste */
+  /* El tramo oscuro sigue BAJANDO, no sube: la página entera se oscurece de arriba
+     abajo y termina en el negro del pie. Al revés —grafito abajo— la rampa se rompía
+     a mitad de la página y el pie parecía otro sitio. */
+  --grad-oscuro:  linear-gradient(180deg, var(--grafito) 0%, var(--negro-950) 100%);
   --tinta:               var(--negro-950);
   --tinta-secundaria:    var(--negro-600);
   --tinta-sobre-oscuro:  var(--blanco);

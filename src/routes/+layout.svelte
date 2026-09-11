@@ -135,17 +135,19 @@
   }
   .inerte { border-color: var(--negro-500); color: var(--negro-400); }
 
-  /* El pie ya no pinta ni padding propio arriba: la banda de contacto lo hace, y
-     lleva su propio fondo negro-950. El resto del pie queda en negro-900 para que la
-     banda se lea como banda y no como más pie. */
+  /* El pie es el FONDO de la rampa de página, no un bloque aparte · ADR-0010.
+     Antes era negro-900 y se leía como un cuarto negro suelto, después de la banda
+     (negro-950), la sección oscura (grafito→negro-950) y la barra fija. Ahora el pie
+     es el punto más oscuro y la rampa termina donde tiene que terminar. */
   footer {
-    background: var(--negro-900); color: var(--tinta-sobre-oscuro);
+    background: var(--superficie-oscura); color: var(--tinta-sobre-oscuro);
     --oro-texto: var(--oro-500);   /* superficie oscura: 11.12:1 */
   }
   .regla-pie { background: var(--superficie-oscura); }
   .caja {
     max-width: var(--ancho-maximo); margin-inline: auto; display: grid; gap: var(--e-6);
     padding: var(--e-8) var(--margen-lateral) var(--e-12);
+    background: var(--negro-900);   /* un escalón, para que la banda se lea como banda */
   }
   .nombre-pie { font-weight: 700; letter-spacing: 0.03em; }
   .etiqueta {

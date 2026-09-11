@@ -37,27 +37,17 @@
 
   /* Degradados dentro de una banda de luminancia · ADR-0010. El peor extremo de
      cada uno está calculado en tokens.css; ninguno baja de 15:1 con su tinta. */
-  /* EL `background-color` NO ES DECORACIÓN, ES LA MEDICIÓN. Un `background` con solo
-     degradado deja `background-color` en transparente, y cualquier herramienta que
-     resuelva el fondo subiendo por los ancestros —la nuestra incluida— acaba
-     encontrando el blanco de la página y reporta un contraste que no existe. Pasó:
-     `validar-a11y` dio 1:1 en un botón blanco sobre sección oscura.
+  /* Las claras NO pintan fondo: dejan pasar el degradado continuo de `body`. Pintar
+     aquí era lo que producía el bandeo —cada sección reiniciaba su rampa—.
+     La alterna solo añade un velo del 4.5 %, que oscurece sin cortar la rampa y
+     empuja el contraste hacia arriba, nunca hacia abajo. */
+  .blanco { background: transparent; color: var(--tinta); }
+  .crema  { background: var(--velo-alterno); color: var(--tinta); }
 
-     Se declara el color del EXTREMO PEOR de cada degradado, no el mejor, para que
-     lo que se mida sea el piso: acero para los claros, grafito para el oscuro.
-     Sirve además de respaldo si el degradado no pinta. */
-  .blanco {
-    background-color: var(--acero-050);       /* peor extremo · negro-950 16.72:1 */
-    background-image: var(--grad-claro);
-    color: var(--tinta);
-  }
-  .crema {
-    background-color: var(--acero-050);       /* peor extremo · negro-950 16.72:1 */
-    background-image: var(--grad-alterno);
-    color: var(--tinta);
-  }
+  /* La oscura sí es opaca: es otro mundo, no una variación del claro.
+     `background-color` con el extremo PEOR, para que la medición sea pesimista. */
   .oscuro {
-    background-color: var(--grafito);         /* peor extremo · blanco    15.23:1 */
+    background-color: var(--grafito);         /* peor extremo · blanco 15.23:1 */
     background-image: var(--grad-oscuro);
     color: var(--tinta-sobre-oscuro);
   }

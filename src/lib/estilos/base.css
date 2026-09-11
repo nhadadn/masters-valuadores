@@ -9,7 +9,12 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--superficie);
+  /* El degradado de la página vive AQUÍ y en ningún otro sitio · ADR-0010.
+     `background-color` declara el extremo PEOR —el más oscuro— para que cualquier
+     medición de contraste caiga del lado pesimista, y para que haya respaldo si el
+     degradado no pinta. Las secciones claras son transparentes encima de esto. */
+  background-color: var(--acero-100);
+  background-image: var(--grad-pagina);
   color: var(--tinta);
   font-family: var(--fuente-base);
   font-size: var(--cuerpo-tam);
