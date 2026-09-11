@@ -101,7 +101,19 @@ for (const ancho of ANCHOS) {
         if (m < 44) tactil.push({ txt: (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 32), w: Math.round(b.width), h: Math.round(b.height) });
       }
 
-      const cuerpo = document.body.innerText;
+      // LAS CIFRAS QUE VIENEN DE LA FUENTE ÚNICA NO SON FUGA.
+      //
+      // Este guardia se escribió cuando NINGÚN dato de negocio estaba confirmado, así
+      // que cualquier teléfono en la página era un error. El 11 de septiembre se
+      // confirmó el de D-08 y empezó a aparecer legítimamente — y el guardia lo marcó.
+      //
+      // La solución no es bajar el listón: es que la página DECLARE la procedencia.
+      // Lo que va dentro de `[data-negocio]` sale de `negocio.ts` y se tolera; todo lo
+      // demás sigue siendo fuga. Si alguien escribe un teléfono a mano en una ruta,
+      // este guardia lo sigue cazando.
+      const cuerpoSinDatos = document.body.cloneNode(true);
+      for (const e of cuerpoSinDatos.querySelectorAll('[data-negocio]')) e.remove();
+      const cuerpo = cuerpoSinDatos.innerText;
       return {
         minR: +minR.toFixed(2), contraste,
         minT: Math.round(minT), tactil,

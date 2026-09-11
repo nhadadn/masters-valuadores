@@ -84,8 +84,20 @@ export const negocio: Negocio = {
       estado: 'Coahuila',            // documentado
       codigoPostal: POR_CONFIRMAR,
       pais: 'MX',
-      telefono: POR_CONFIRMAR,
-      whatsapp: POR_CONFIRMAR,
+      /**
+       * CONFIRMADO por Nadir el 11 de septiembre de 2026: «el teléfono es el mismo
+       * para todos, y ya lo tienes».
+       *
+       * Tres fuentes independientes coinciden y ninguna es nuestra:
+       *   · las cinco publicaciones del cliente, en cinco giros distintos
+       *   · el letrero de su fachada — `static/fotos/fachada-1600.jpg`
+       *   · el ícono de WhatsApp junto a ese mismo número en ese mismo letrero
+       *
+       * El formato lleva lada de país porque `wa.me` la exige: sin `+52` el enlace
+       * no abre. Lo que se MUESTRA lo formatea quien lo pinta; aquí vive el dato.
+       */
+      telefono: '+52 871 507 3005',
+      whatsapp: '+52 871 507 3005',
       latitud: POR_CONFIRMAR,        // D-11 · verificable en Maps al cerrar D-08
       longitud: POR_CONFIRMAR,
       horarios: POR_CONFIRMAR

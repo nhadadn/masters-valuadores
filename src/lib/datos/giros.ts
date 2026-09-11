@@ -46,6 +46,19 @@ export interface Giro {
    */
   subtitularPropuesto?: string;
   /**
+   * Qué reciben en esa línea · DEDUCIDO, no dictado por el cliente.
+   *
+   * Nadir lo autorizó el 11 de septiembre: «tú dedúcelo, después lo retrabajamos».
+   * Cada renglón lleva DE DÓNDE SALE, y esa es la parte importante: un bien sacado
+   * del letrero es casi un hecho, uno deducido es una apuesta que Cristóbal tiene
+   * que confirmar o tachar. Se muestran los dos, distinguidos, en la página.
+   *
+   *   letrero      está escrito en la fachada
+   *   publicacion  aparece en una de sus cinco piezas
+   *   deducido     NO hay fuente. Lo pusimos nosotros
+   */
+  bienesPropuestos?: { que: string; fuente: 'letrero' | 'publicacion' | 'deducido' }[];
+  /**
    * Los tres pasos del proceso · PROPUESTA SIN APROBAR.
    * NINGUNO dice cuánto ni cuándo: eso va en el bloque de cifras, que sigue
    * bloqueado. Cada uno asume algo y esos supuestos están listados en
@@ -61,9 +74,9 @@ export interface Giro {
 export const giros: Giro[] = [
   // CUATRO GIROS · ADR-0008. El orden es el que dijo el cliente, NO una prioridad
   // de búsqueda: esa sale de la Etapa 1 y sigue sin ejecutarse.
-  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'empeno', fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura', subtitularPropuesto: 'Traes un bien, lo valuamos y te decimos cuánto. Si te sirve, sales con tu efectivo y tu bien queda resguardado hasta que lo recuperes.', pasosPropuestos: ['Traes tu bien y una identificación oficial vigente.', 'Lo valuamos y te decimos cuánto te podemos prestar.', 'Si aceptas, firmas tu contrato y te llevas el efectivo.'], icono: 'empeno',  estado: 'construible' },
-  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'maquinaria', fotoAlt: 'Cargador frontal amarillo en un terreno de obra', subtitularPropuesto: 'Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.', pasosPropuestos: ['Nos dices qué máquina tienes, o qué estás buscando.', 'La revisamos y la valuamos.', 'Acordamos el precio y cerramos la operación.'], icono: 'renta', estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', subtitularPropuesto: 'Transportamos y movemos carga. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.', pasosPropuestos: ['Nos dices qué hay que mover, desde dónde y hasta dónde.', 'Revisamos si entra en nuestro equipo y te cotizamos.', 'Acordamos la fecha y hacemos el traslado.'], icono: 'fletes',  estado: 'construible' },
+  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'empeno', fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura', subtitularPropuesto: 'Traes un bien, lo valuamos y te decimos cuánto. Si te sirve, sales con tu efectivo y tu bien queda resguardado hasta que lo recuperes.', pasosPropuestos: ['Traes tu bien y una identificación oficial vigente.', 'Lo valuamos y te decimos cuánto te podemos prestar.', 'Si aceptas, firmas tu contrato y te llevas el efectivo.'], bienesPropuestos: [{ que: 'Oro y joyería', fuente: 'publicacion' }, { que: 'Relojes', fuente: 'publicacion' }, { que: 'Monedas', fuente: 'publicacion' }, { que: 'Herramienta', fuente: 'letrero' }, { que: 'Maquinaria', fuente: 'letrero' }, { que: 'Autos', fuente: 'letrero' }], icono: 'empeno',  estado: 'construible' },
+  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'maquinaria', fotoAlt: 'Cargador frontal amarillo en un terreno de obra', subtitularPropuesto: 'Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.', pasosPropuestos: ['Nos dices qué máquina tienes, o qué estás buscando.', 'La revisamos y la valuamos.', 'Acordamos el precio y cerramos la operación.'], bienesPropuestos: [{ que: 'Maquinaria pesada', fuente: 'letrero' }, { que: 'Equipo industrial', fuente: 'publicacion' }, { que: 'Equipo agrícola', fuente: 'publicacion' }, { que: 'Herramienta', fuente: 'letrero' }, { que: 'Maquinaria de importación', fuente: 'publicacion' }], icono: 'renta', estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', subtitularPropuesto: 'Transportamos y movemos carga. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.', pasosPropuestos: ['Nos dices qué hay que mover, desde dónde y hasta dónde.', 'Revisamos si entra en nuestro equipo y te cotizamos.', 'Acordamos la fecha y hacemos el traslado.'], bienesPropuestos: [{ que: 'Contenedores marítimos', fuente: 'letrero' }, { que: 'Maquinaria pesada', fuente: 'deducido' }, { que: 'Carga general', fuente: 'deducido' }], icono: 'fletes',  estado: 'construible' },
   { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', subtitularPropuesto: 'Servicio de taller y venta de refacciones. Lo traes, lo revisamos y te decimos qué necesita.', pasosPropuestos: ['Traes la unidad o nos dices qué refacción buscas.', 'La revisamos y te decimos qué necesita.', 'Autorizas el trabajo y lo hacemos.'], icono: 'taller',  estado: 'construible' },
 
   // SALIERON el 10 de septiembre por el ADR-0008: joyería, bazar y financiera.

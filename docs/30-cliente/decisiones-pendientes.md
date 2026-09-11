@@ -38,7 +38,31 @@ páginas cada dato equivocado se repite ocho veces.
 | D-10 | URLs exactas de Instagram y Facebook | `sameAs` | Cristóbal |
 | D-11 | Coordenadas del local (`geo`) | `latitude` / `longitude` | Verificable en Maps al cerrar D-08 |
 
-### El teléfono ya casi no está pendiente
+### El teléfono · CERRADO el 11 de septiembre
+
+**871 507 3005**, en `negocio.ts` desde el 11 de septiembre. Nadir lo confirmó —«el
+teléfono es el mismo para todos, y ya lo tienes»— aceptando la evidencia documental en
+lugar de un mensaje escrito de Cristóbal. Tres fuentes independientes coinciden:
+
+| Fuente | |
+|---|---|
+| Las cinco publicaciones | el mismo número en cinco giros distintos |
+| El letrero de la fachada | `static/fotos/fachada-1600.jpg` |
+| El ícono de WhatsApp | junto a ese número, en ese mismo letrero |
+
+Y confirma además que **teléfono y WhatsApp son el mismo número**.
+
+Se guarda como `+52 871 507 3005` porque `wa.me` exige lada de país. Efecto medido:
+**8 enlaces de WhatsApp pasaron de inertes a activos**, el teléfono del encabezado se
+volvió `tel:`, apareció la insignia dorada de la barra fija y las marcas pendientes de
+la portada bajaron de 18 a 13.
+
+**Lo que sigue abierto de D-08:** dirección exacta, colonia, código postal y horarios.
+Sin eso no se dibuja el mapa ni se arma la ficha de Google.
+
+### Lo que el teléfono NO cierra
+
+
 
 **871 507 3005**, idéntico en las cinco publicaciones, en cinco giros distintos. Es el
 dato más firme del proyecto sin que el cliente escriba nada. Se confirma por escrito

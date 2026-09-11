@@ -82,18 +82,43 @@
 
 <Seccion fondo="crema">
   <h2><span class="num">1</span> {PREGUNTAS[0]}</h2>
-  <ul class="bienes">
-    {#each Array(6) as _, i}
-      <li>
-        <span class="ranura-ico" aria-hidden="true"></span>
-        <span class="et">BIEN ACEPTADO {i + 1} — PENDIENTE</span>
-      </li>
-    {/each}
-  </ul>
-  <p class="nota">
-    La lista real la da el cliente. Aquí no se inventa ni un bien: si el sitio dice que
-    aceptan algo que no aceptan, el visitante llega, se va, y no vuelve.
-  </p>
+  <!-- DEDUCIDO, no dictado. Cada renglón dice de dónde sale, y esa es la parte que
+       hace esto corregible de un vistazo: lo del letrero es casi un hecho, lo
+       deducido es una apuesta nuestra. -->
+  {#if giro.bienesPropuestos?.length}
+    <ul class="bienes">
+      {#each giro.bienesPropuestos as bien}
+        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'}>
+          <span class="que">{bien.que}</span>
+          <span class="fuente">
+            {#if bien.fuente === 'letrero'}Está en su letrero
+            {:else if bien.fuente === 'publicacion'}Sale de una publicación suya
+            {:else}DEDUCIDO — sin fuente, confirmar{/if}
+          </span>
+        </li>
+      {/each}
+    </ul>
+    <p class="nota">
+      Esta lista la <strong>dedujimos</strong> de su letrero y de sus publicaciones; el
+      cliente no la ha dictado. Cada renglón dice de dónde sale. Si algo no es cierto,
+      se tacha: que el sitio diga que aceptan algo que no aceptan es el daño más caro
+      que puede hacer una página.
+    </p>
+  {:else}
+    <ul class="bienes">
+      {#each Array(4) as _, i}
+        <li data-pendiente="true">
+          <span class="ranura-ico" aria-hidden="true"></span>
+          <span class="et">BIEN ACEPTADO {i + 1} — PENDIENTE</span>
+        </li>
+      {/each}
+    </ul>
+    <p class="nota">
+      <strong>De este giro no hay ni una fuente.</strong> Ni el letrero ni las cinco
+      publicaciones dicen qué recibe el taller, así que aquí no se dedujo nada: habría
+      sido inventar. Lo tiene que dictar el cliente.
+    </p>
+  {/if}
 </Seccion>
 
 <Seccion>
@@ -191,7 +216,19 @@
   .et { font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }
 
   .bienes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); }
-  .bienes li { display: grid; gap: var(--e-2); min-height: 96px; padding: var(--e-3); background: var(--superficie); border: 1px solid var(--negro-400); align-content: start; }
+  .bienes li {
+    display: grid; gap: var(--e-2); min-height: 96px; padding: var(--e-3);
+    background: var(--superficie); border: 1px solid var(--panel-borde);
+    align-content: start;
+  }
+  /* Lo deducido se marca: borde punteado, el mismo lenguaje de «esto falta». */
+  .bienes li.apuesta { border-style: dashed; border-color: var(--oro-700); }
+  .que { font-size: var(--cuerpo-tam); font-weight: var(--cuerpo-fuerte-peso); line-height: 1.25; }
+  .fuente {
+    font-size: var(--etiqueta-tam); line-height: var(--etiqueta-alto);
+    letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria);
+  }
+  .apuesta .fuente { color: var(--oro-500); }
   .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
 
   .pasos { display: grid; gap: var(--e-4); }

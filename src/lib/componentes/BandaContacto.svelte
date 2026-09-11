@@ -27,7 +27,12 @@
       <Insignia icono="telefono" sobreOscuro>
         <p class="et">LLÁMANOS</p>
         {#if listo}
-          <p class="numero"><a href="tel:{String(tel).replace(/\s/g, '')}">{tel}</a></p>
+          <!-- `data-negocio` declara que esta cifra SALE DE `negocio.ts` y no de aquí.
+               El validador la tolera solo por eso; cualquier otra cifra en la página
+               sigue siendo una fuga. Ver la nota del guardia en validar-a11y.mjs. -->
+          <p class="numero" data-negocio="telefono">
+            <a href="tel:{String(tel).replace(/\s/g, '')}">{tel}</a>
+          </p>
         {:else}
           <p class="pendiente"><PorConfirmar que="teléfono" decision="D-08" sobreOscuro /></p>
         {/if}
