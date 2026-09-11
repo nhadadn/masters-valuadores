@@ -217,6 +217,25 @@ más confianza construyen: quien pregunta esto es quien está a punto de decidir
 
 ---
 
+## Segunda tanda · 11 de septiembre · los cuatro giros
+
+Se redactó lo que el `CLAUDE.md` permite redactar y **nada más**: subtitular y tres
+pasos por giro. Están en `src/lib/datos/giros.ts` como `subtitularPropuesto` y
+`pasosPropuestos`, marcados como propuesta y visibles bajo la banda de BORRADOR.
+
+**Ninguno dice cuánto, ni cuándo, ni qué bienes.** Pero cada uno **asume** algo, y el
+trabajo de Cristóbal es tachar lo que no sea cierto:
+
+| Giro | Qué asume el texto |
+|---|---|
+| **Empeño y préstamo** | Que basta una identificación oficial · que se firma un **contrato** · que el bien queda **resguardado** |
+| **Compra venta de maquinaria** | Que **valúan antes** de hablar de precio · que también **venden** lo que tienen, no solo compran |
+| **Fletes y logística** | Que **cotizan** antes de aceptar · que puede haber carga que **no entre** en su equipo |
+| **Taller y refaccionaria** | Que **revisan y diagnostican** antes de cobrar · que el cliente **autoriza** el trabajo antes de que lo hagan |
+
+Si alguno de esos supuestos es falso, la frase se cae entera. Son cuatro preguntas de
+sí o no.
+
 ## Lo que sigue faltando, y solo Cristóbal lo puede dar
 
 Ordenado por lo que más destraba:

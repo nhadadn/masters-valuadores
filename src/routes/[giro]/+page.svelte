@@ -17,6 +17,7 @@
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Titular from '$componentes/Titular.svelte';
   import Foto from '$componentes/Foto.svelte';
+  import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -46,6 +47,8 @@
   <meta name="description" content="__POR_CONFIRMAR__ · descripción de {giro.nombre}" />
 </svelte:head>
 
+<AvisoBorrador />
+
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>
 
 <Seccion etiqueta="LÍNEA DE NEGOCIO">
@@ -53,7 +56,14 @@
        los siete son una sola palabra— y partirlos para teñir la mitad sería inventar
        un énfasis que nadie autorizó. La segunda tinta espera copy. -->
   <div class="encabezado"><Titular primera={giro.nombre} /></div>
-  <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
+  <!-- PROPUESTA SIN APROBAR. Dice lo que el giro es POR DEFINICIÓN: ni una cifra, ni
+       un plazo, ni una lista de bienes. El CLAUDE.md lo permite con la condición de
+       que vaya marcado, y la banda de BORRADOR de arriba es esa marca. -->
+  {#if giro.subtitularPropuesto}
+    <p class="subtitular" data-propuesta="true">{giro.subtitularPropuesto}</p>
+  {:else}
+    <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
+  {/if}
   <!-- ADR-0009. Las páginas de giro NO tenían ranura de foto: el CLAUDE.md pedía
        «fachada y una por giro» y solo existía la de la portada. Aquí se abre, con
        foto de archivo provisional y rotulada. -->
@@ -88,10 +98,21 @@
 
 <Seccion>
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
+  <!-- NINGUNO dice cuánto ni cuándo: eso es cifra y va en el bloque de abajo, que
+       sigue bloqueado. Lo que cada paso ASUME está listado en los requerimientos. -->
   <ol class="pasos">
-    {#each Array(3) as _, i}
-      <li><Hueco etiqueta="PASO {i + 1} — QUÉ PASA Y CUÁNTO TARDA" renglones={2} /></li>
-    {/each}
+    {#if giro.pasosPropuestos}
+      {#each giro.pasosPropuestos as paso, i}
+        <li data-propuesta="true">
+          <span class="paso-num">{i + 1}</span>
+          <p>{paso}</p>
+        </li>
+      {/each}
+    {:else}
+      {#each Array(3) as _, i}
+        <li><Hueco etiqueta="PASO {i + 1} — QUÉ PASA Y CUÁNTO TARDA" renglones={2} /></li>
+      {/each}
+    {/if}
   </ol>
   <div class="cifras">
     <p class="et">PORCENTAJE, PLAZO Y TASA</p>
@@ -174,7 +195,17 @@
   .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
 
   .pasos { display: grid; gap: var(--e-4); }
-  .pasos li { border-left: 2px solid var(--oro-500); padding-left: var(--e-3); }
+  .pasos li {
+    display: grid; grid-template-columns: auto 1fr; gap: var(--e-3); align-items: start;
+    border-left: 2px solid var(--oro-500); padding-left: var(--e-3);
+  }
+  .paso-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: var(--radio-pastilla);
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--oro-500); color: var(--tinta-sobre-accion);
+    font-size: var(--pie-tam); font-weight: var(--etiqueta-peso); line-height: 1;
+  }
+  .subtitular { font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
   .cifras { border: 1px solid var(--negro-400); padding: var(--e-4); margin-top: var(--e-6); display: grid; gap: var(--e-3); }
 
   .requisitos { display: grid; }

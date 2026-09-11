@@ -39,6 +39,19 @@ export interface Giro {
   fotoProvisional?: string;
   /** Describe LA FOTO, nunca afirma que el local sea de Masters. */
   fotoAlt?: string;
+  /**
+   * Subtitular del giro · PROPUESTA SIN APROBAR.
+   * Dice lo que ese giro es POR DEFINICIÓN. Ni una cifra, ni un plazo, ni una lista
+   * de bienes, ni una promesa de calidad. Ver `AvisoBorrador.svelte`.
+   */
+  subtitularPropuesto?: string;
+  /**
+   * Los tres pasos del proceso · PROPUESTA SIN APROBAR.
+   * NINGUNO dice cuánto ni cuándo: eso va en el bloque de cifras, que sigue
+   * bloqueado. Cada uno asume algo y esos supuestos están listados en
+   * `docs/30-cliente/requerimientos-cristobal.md`.
+   */
+  pasosPropuestos?: [string, string, string];
   icono: string;
   estado: EstadoGiro;
   /** Qué decisión lo destraba, si está bloqueado. */
@@ -48,10 +61,10 @@ export interface Giro {
 export const giros: Giro[] = [
   // CUATRO GIROS · ADR-0008. El orden es el que dijo el cliente, NO una prioridad
   // de búsqueda: esa sale de la Etapa 1 y sigue sin ejecutarse.
-  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'empeno', fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura', icono: 'empeno',  estado: 'construible' },
-  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'maquinaria', fotoAlt: 'Cargador frontal amarillo en un terreno de obra', icono: 'renta', estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', icono: 'fletes',  estado: 'construible' },
-  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', icono: 'taller',  estado: 'construible' },
+  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'empeno', fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura', subtitularPropuesto: 'Traes un bien, lo valuamos y te decimos cuánto. Si te sirve, sales con tu efectivo y tu bien queda resguardado hasta que lo recuperes.', pasosPropuestos: ['Traes tu bien y una identificación oficial vigente.', 'Lo valuamos y te decimos cuánto te podemos prestar.', 'Si aceptas, firmas tu contrato y te llevas el efectivo.'], icono: 'empeno',  estado: 'construible' },
+  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'maquinaria', fotoAlt: 'Cargador frontal amarillo en un terreno de obra', subtitularPropuesto: 'Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.', pasosPropuestos: ['Nos dices qué máquina tienes, o qué estás buscando.', 'La revisamos y la valuamos.', 'Acordamos el precio y cerramos la operación.'], icono: 'renta', estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', subtitularPropuesto: 'Transportamos y movemos carga. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.', pasosPropuestos: ['Nos dices qué hay que mover, desde dónde y hasta dónde.', 'Revisamos si entra en nuestro equipo y te cotizamos.', 'Acordamos la fecha y hacemos el traslado.'], icono: 'fletes',  estado: 'construible' },
+  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', subtitularPropuesto: 'Servicio de taller y venta de refacciones. Lo traes, lo revisamos y te decimos qué necesita.', pasosPropuestos: ['Traes la unidad o nos dices qué refacción buscas.', 'La revisamos y te decimos qué necesita.', 'Autorizas el trabajo y lo hacemos.'], icono: 'taller',  estado: 'construible' },
 
   // SALIERON el 10 de septiembre por el ADR-0008: joyería, bazar y financiera.
   // No se borran de la historia: el ADR registra qué se soltó y qué costó.

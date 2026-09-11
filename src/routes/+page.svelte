@@ -151,7 +151,9 @@
 </Seccion>
 
 <Seccion etiqueta="POR QUÉ AQUÍ">
-  <Hueco etiqueta="TÍTULO DE SECCIÓN — UNA LÍNEA" renglones={1} como="h2" />
+  <!-- Etiqueta de sección: el CLAUDE.md la permite redactar. No afirma nada del
+       negocio, solo dice qué hace esa sección. -->
+  <h2 class="titulo-seccion" data-propuesta="true">Por qué venir aquí</h2>
   <!-- ADR-0007 §3: aquí la insignia SÍ entra, y sustituye la regla dorada que este
        bloque llevaba de borde. El texto sigue siendo hueco: la etiqueta en versalitas
        y la segunda línea en oro llegan con el copy, no antes. -->
