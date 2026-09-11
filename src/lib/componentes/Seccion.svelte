@@ -35,18 +35,48 @@
   .amplia { padding-block: var(--seccion-vertical-amplia); }
   .caja { max-width: var(--ancho-maximo); margin-inline: auto; }
 
-  .blanco { background: var(--superficie); color: var(--tinta); }
-  .crema  { background: var(--superficie-alterna); color: var(--tinta); }
-  .oscuro { background: var(--superficie-oscura); color: var(--tinta-sobre-oscuro); }
+  /* Degradados dentro de una banda de luminancia · ADR-0010. El peor extremo de
+     cada uno está calculado en tokens.css; ninguno baja de 15:1 con su tinta. */
+  /* EL `background-color` NO ES DECORACIÓN, ES LA MEDICIÓN. Un `background` con solo
+     degradado deja `background-color` en transparente, y cualquier herramienta que
+     resuelva el fondo subiendo por los ancestros —la nuestra incluida— acaba
+     encontrando el blanco de la página y reporta un contraste que no existe. Pasó:
+     `validar-a11y` dio 1:1 en un botón blanco sobre sección oscura.
+
+     Se declara el color del EXTREMO PEOR de cada degradado, no el mejor, para que
+     lo que se mida sea el piso: acero para los claros, grafito para el oscuro.
+     Sirve además de respaldo si el degradado no pinta. */
+  .blanco {
+    background-color: var(--acero-050);       /* peor extremo · negro-950 16.72:1 */
+    background-image: var(--grad-claro);
+    color: var(--tinta);
+  }
+  .crema {
+    background-color: var(--acero-050);       /* peor extremo · negro-950 16.72:1 */
+    background-image: var(--grad-alterno);
+    color: var(--tinta);
+  }
+  .oscuro {
+    background-color: var(--grafito);         /* peor extremo · blanco    15.23:1 */
+    background-image: var(--grad-oscuro);
+    color: var(--tinta-sobre-oscuro);
+  }
 
   /* Cada superficie resuelve qué es «oro como texto» sobre ella. Calculado:
-       blanco #FFFFFF → --oro-800  4.65:1  pasa AA          (el valor de tokens.css)
-       crema  #F0EFED → --oro-800  4.05:1  NO PASA          → baja a tinta secundaria
-       oscuro #0C0D0F → --oro-500 11.12:1  pasa de sobra
+       blanco  #FFFFFF → --oro-800  4.65:1  pasa AA
+       crema   #F0EFED → --oro-800  4.05:1  NO PASA
+       acero   #ECEEF0 → --oro-800  4.00:1  NO PASA  ← extremo de los dos degradados claros
+       oscuro  #0C0D0F → --oro-500 11.12:1  pasa de sobra
+
+     Desde el ADR-0010 las superficies claras son DEGRADADOS que terminan en acero,
+     así que el oro de texto no pasa en ninguna de las dos: las dos bajan a tinta
+     secundaria. El titular de portada conserva su oro porque es texto GRANDE en
+     peso 900, y ahí el piso de la WCAG baja a 3:1.
      Sobre crema el oro de texto simplemente no existe, y es preferible a un renglón
      que no se lee a plena luz. No se inventa un oro más oscuro para taparlo. */
+  .blanco,
   .crema  { --oro-texto: var(--tinta-secundaria); }
-  .oscuro { --oro-texto: var(--oro-500); }
+  .oscuro { --oro-texto: var(--oro-500); --oro-texto-grande: var(--oro-500); }
 
   .etiqueta {
     font-size: var(--etiqueta-tam);

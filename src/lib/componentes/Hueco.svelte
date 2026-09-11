@@ -109,8 +109,8 @@
   .grande .h1 { font-size: var(--display-tam); }
   .grande .h2 { font-size: var(--h2-tam); }
   .linea { display: block; }
-  /* 4.05:1 sobre el crema del hueco · piso 3:1 por ser texto grande en peso 900 */
-  .oro { color: var(--oro-800); }
+  /* Piso 3:1 por ser texto grande en peso 900. Sale del token, no a pelo. */
+  .oro { color: var(--oro-texto-grande); }
 
   .barra {
     display: block;

@@ -32,26 +32,38 @@
     relacion?: string;
     /** La de la entrada se carga de inmediato: es el LCP. El resto, diferida. */
     prioritaria?: boolean;
+    /**
+     * `true` = foto de archivo del ADR-0009: lleva rótulo y `data-provisional`.
+     * `false` = foto REAL del negocio. Sin rótulo, porque no hay nada que advertir.
+     */
+    provisional?: boolean;
+    /** Alto real del archivo, para reservar el hueco sin CLS. */
+    alto?: number;
   }
-  let { nombre, alt, relacion = '16 / 9', prioritaria = false }: Props = $props();
+  let {
+    nombre, alt, relacion = '16 / 9', prioritaria = false,
+    provisional = true, alto = 1067
+  }: Props = $props();
 </script>
 
-<figure class="foto" data-provisional="true">
+<figure class="foto" data-provisional={provisional ? 'true' : undefined}>
   <img
     src="/fotos/{nombre}-800.jpg"
     srcset="/fotos/{nombre}-800.jpg 800w, /fotos/{nombre}-1600.jpg 1600w"
     sizes="(min-width: 768px) 50vw, 100vw"
     {alt}
     width="1600"
-    height="1067"
+    height={alto}
     loading={prioritaria ? 'eager' : 'lazy'}
     fetchpriority={prioritaria ? 'high' : 'auto'}
     decoding="async"
     style="aspect-ratio: {relacion}"
   />
-  <figcaption>
-    FOTO DE ARCHIVO · PROVISIONAL — se sustituye por una foto real del negocio
-  </figcaption>
+  {#if provisional}
+    <figcaption>
+      FOTO DE ARCHIVO · PROVISIONAL — se sustituye por una foto real del negocio
+    </figcaption>
+  {/if}
 </figure>
 
 <style>

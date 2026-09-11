@@ -46,10 +46,17 @@ for (const ancho of ANCHOS) {
       //
       // Es una ceguera anterior a esa pieza: le pasaba a cualquier elemento con fondo
       // en pseudo-elemento. Se arregla aquí y no en el componente.
+      // SOLO cuenta el pseudo-elemento que REALMENTE TAPA al elemento. La primera
+      // versión de esto tomaba cualquier ::before o ::after con fondo, y un separador
+      // decorativo de 2 px —el de la cinta de palabras— se leía como si fuera el fondo
+      // del renglón: reportó 1:1 sobre un texto que en pantalla da 11.12:1.
+      // El criterio es geométrico: posicionado y pegado a los cuatro lados.
       const fondoPseudo = (el) => {
         for (const p of ['::before', '::after']) {
           const cs = getComputedStyle(el, p);
           if (!cs || cs.content === 'none') continue;
+          if (cs.position !== 'absolute' && cs.position !== 'fixed') continue;
+          if (!['top', 'right', 'bottom', 'left'].every((l) => cs[l] === '0px')) continue;
           const c = rgb(cs.backgroundColor);
           if (c && c[3] > 0.5) return c.slice(0, 3);
         }

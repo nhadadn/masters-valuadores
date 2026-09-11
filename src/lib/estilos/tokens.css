@@ -26,6 +26,18 @@
   --negro-200: #D3D7DA;   /* separador                                       ·  1.45:1 */
   --negro-100: #E9EBED;   /* relleno suave                                   ·  1.20:1 */
   --crema-050: #F0EFED;   /* superficie alterna. Cálida, no gris             ·  1.08:1 */
+
+  /* ── Acero · vuelve, y esta vez con fuente · ADR-0010 ────────────────────
+     El ADR-0004 retiró la rampa de acero porque salía de la insignia con textura,
+     que era mala fuente. El 10 de septiembre llegó la FOTO DE LA FACHADA y el
+     local entero es negro, amarillo y piedra gris grafito. Es la misma lección
+     del ADR-0006: el material vivo gana sobre el archivo, y no hay material más
+     vivo que el edificio.
+
+     Son los extremos de los degradados de superficie. Ratios calculados sobre el
+     PEOR extremo, que es lo único que importa en un degradado. */
+  --acero-050: #ECEEF0;   /* extremo frío del degradado claro · negro-950 16.72:1 */
+  --grafito:   #22262A;   /* extremo del degradado oscuro     · blanco    15.23:1 */
   --blanco:    #FFFFFF;
 
   /* ── Acento · el amarillo que la marca usa · ADR-0004, confirmado por ADR-0006 ──
@@ -54,6 +66,21 @@
   --superficie:          var(--blanco);
   --superficie-alterna:  var(--crema-050);
   --superficie-oscura:   var(--negro-950);
+
+  /* ── Degradados de superficie · ADR-0010 ─────────────────────────────────
+     «Un fondo blanco no transmite nada» — Nadir, 10 de septiembre, con la foto
+     de la fachada por delante.
+
+     EL LÍMITE QUE NO SE NEGOCIA: un degradado que fuera de amarillo a negro
+     detrás de texto no tiene tinta posible —ninguna funciona en los dos
+     extremos—. Por eso cada degradado se queda DENTRO de una banda de
+     luminancia: claro con claro, oscuro con oscuro. El amarillo entra como
+     arista y como bloque, nunca como extremo de un degradado con texto encima.
+     Es, además, lo que hace el edificio: contenedor amarillo ARRIBA de la
+     fachada negra, no fundido con ella. */
+  --grad-claro:   linear-gradient(160deg, var(--blanco) 0%, var(--acero-050) 100%);
+  --grad-alterno: linear-gradient(160deg, var(--crema-050) 0%, var(--acero-050) 100%);
+  --grad-oscuro:  linear-gradient(160deg, var(--negro-950) 0%, var(--grafito) 100%);
   --tinta:               var(--negro-950);
   --tinta-secundaria:    var(--negro-600);
   --tinta-sobre-oscuro:  var(--blanco);
@@ -64,6 +91,17 @@
      Cada superficie que no sea blanca lo redefine —Seccion.svelte y el pie— porque
      sobre crema el mismo color da 4.05:1 y NO pasa. Nadie escribe --oro-800 a pelo. */
   --oro-texto:           var(--oro-800);     /* 4.65:1 sobre blanco */
+
+  /* El oro de TEXTO GRANDE, que es otro caso y no se puede mezclar con el de arriba.
+     La WCAG baja el piso a 3:1 para texto de 24 px o de 18.66 en negrita, y --oro-800
+     lo pasa sobre TODAS las superficies claras del sistema:
+
+         blanco 4.65:1 · crema 4.05:1 · acero 4.00:1   ← todas por encima de 3:1
+
+     Por eso el titular a dos tintas conserva su oro donde el texto de cuerpo no puede.
+     Sin este token, el degradado del ADR-0010 habría apagado el gesto más reconocible
+     de la marca para salvar un caso que no era el suyo. */
+  --oro-texto-grande:    var(--oro-800);
   --borde-campo:         var(--negro-500);
   --borde-sutil:         var(--negro-200);
   --accion:              var(--negro-950);

@@ -51,6 +51,13 @@ Decidido por: Nadir, 10 de septiembre de 2026.
 
 - La rampa de acero derivada de la insignia **se retira**. El sistema pasa a neutros
   anclados en el negro de marca. Ver [[sistema-de-diseno]].
+
+  > **ENMENDADO el 10 de septiembre por [[ADR-0010-degradados-de-superficie|ADR-0010]].**
+  > El acero vuelve, pero con otra fuente: no la insignia con textura, sino la FOTO DE
+  > LA FACHADA. El local es contenedor amarillo sobre fachada negra con revestimiento
+  > de piedra gris grafito. Entra solo como final de los degradados de superficie —no
+  > como color de marca, no como tinta, no como relleno—. El tratamiento **sigue plano**:
+  > un degradado de superficie no es un bisel.
 - El acento deja de ser provisional: `#E7C041`, medido.
   **Enmendado el 10 de septiembre a `#B58000`** — ver ADR-0005. `#E7C041` no se
   descarta: queda reservado como posible acento de sección para las líneas pesadas.

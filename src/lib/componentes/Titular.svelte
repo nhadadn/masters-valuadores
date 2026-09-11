@@ -49,5 +49,7 @@
   .display { font-size: var(--display-tam); }
 
   .linea { display: block; }
-  .oro { color: var(--oro-texto); }
+  /* Texto grande en peso 900: usa el oro de texto grande, que pasa 3:1 sobre
+     las tres superficies claras. Ver la nota del token. */
+  .oro { color: var(--oro-texto-grande); }
 </style>
