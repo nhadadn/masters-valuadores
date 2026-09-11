@@ -220,19 +220,21 @@
            orden, cambia sola cuál se agranda. Es lo correcto — el destaque sigue a
            la prioridad, no a un giro escrito a mano aquí. -->
       <li class:principal={i === 0}>
-        <!-- La imagen entra porque la referencia que le gusta al cliente apoya cada
-             línea en una foto, y porque sin ella este bloque es solo texto. Sigue
-             siendo de archivo y rotulada: ADR-0009.
-             Se reusa la del giro a propósito — la misma imagen aquí y en su página
-             ayuda a reconocer, no a confundir. -->
-        {#if g.fotoProvisional}
-          <Foto
-            nombre={g.fotoProvisional}
-            alt={g.fotoAlt ?? ''}
-            relacion={i === 0 ? '16 / 9' : '3 / 2'}
-            compacto={i !== 0}
-          />
-        {/if}
+        <!-- AQUÍ HABÍA UNA FOTO Y SE QUITÓ · 11 de septiembre, decisión de Nadir.
+             Entró porque la referencia del cliente apoya cada línea en una imagen.
+             Pero al ilustrar también las tarjetas de «Elige la línea que buscas»,
+             las mismas cuatro fotos salían DOS VECES en la portada: los relojes
+             arriba y otra vez aquí, el cargador arriba y otra vez aquí.
+
+             Cada bloque hace un trabajo distinto y solo uno necesita la imagen:
+             arriba es NAVEGACIÓN —reconocer la línea antes de entrar— y aquí es
+             CONTACTO, donde mandan la lista de bienes y el botón.
+
+             LA RAZÓN ES VISUAL Y SOLO VISUAL. Se escribió aquí que esto ahorraba
+             ~85 KB y era falso: medido antes y después, la portada pesa 225.4 KB en
+             los dos casos. Son los mismos cuatro archivos y un archivo se descarga
+             UNA vez, lo pidan uno o dos bloques. Lo que sí baja son las peticiones,
+             de 29 a 18. -->
         <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
         <Hueco etiqueta="QUÉ ENTRA EN ESTA LÍNEA — LA LISTA DE BIENES, LA DA CRISTÓBAL" renglones={3} />
         <BotonWhatsApp
@@ -321,7 +323,7 @@
      igual que se desalinearon las tarjetas de giro. */
   .lineas li {
     display: grid;
-    grid-template-rows: auto auto 1fr auto;   /* foto · insignia · lista · botón */
+    grid-template-rows: auto 1fr auto;        /* insignia · lista · botón */
     gap: var(--e-3);
   }
 
@@ -345,18 +347,29 @@
        entero y por dentro se parte en foto + contenido, y las otras tres se reparten
        tres columnas cómodas debajo. */
     .lineas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--e-6) var(--e-4); }
+    /* LA JERARQUÍA SOBREVIVE SIN LA FOTO.
+       La principal se destacaba con una imagen grande a la izquierda. Al quitarse
+       la foto, el destaque pasa al ANCHO y a la composición: ocupa la fila entera y
+       por dentro se parte en dos — la insignia manda a la izquierda, la lista y el
+       botón a la derecha. Sigue diciendo cuál línea pesa más, sin una imagen que
+       ya vive arriba en su tarjeta. */
     .lineas .principal {
       grid-column: 1 / -1;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      grid-template-rows: auto auto 1fr auto;
-      column-gap: var(--e-8);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+      grid-template-rows: auto 1fr auto;
+      column-gap: var(--e-12);
       align-items: start;
+      padding-bottom: var(--e-6);
+      border-bottom: 1px solid var(--panel-borde);
     }
-    /* La foto de la principal toma la columna izquierda entera; el resto se apila
-       a su derecha. `:global` porque el `<figure>` lo pinta `Foto.svelte`, y va
-       anclado a `.principal` para que no se escape de esta sección. */
-    .lineas .principal :global(.foto) { grid-column: 1; grid-row: 1 / -1; align-self: stretch; }
-    .lineas .principal > :not(:global(.foto)) { grid-column: 2; }
+    /* Colocación EXPLÍCITA, no heredada de la colocación automática: la izquierda es
+       la columna de identidad y acción —quién es la línea y el botón para escribir—
+       y la derecha es la lista de lo que entra. Dejarlo al flujo automático daba el
+       mismo dibujo por casualidad, y una casualidad se rompe en cuanto alguien añada
+       un elemento en medio. El orden del marcado es: insignia · hueco · botón. */
+    .lineas .principal > :nth-child(1) { grid-column: 1; grid-row: 1; }
+    .lineas .principal > :nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
+    .lineas .principal > :nth-child(3) { grid-column: 1; grid-row: 2; align-self: end; }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>

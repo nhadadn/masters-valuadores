@@ -24,9 +24,34 @@ const RED = {
 const kb = (n) => +(n / 1024).toFixed(1);
 
 const navegador = await abrirChromium();
+
 /**
- * `deviceScaleFactor: 2` no es un detalle. Sin él Playwright mide con densidad 1, el
- * navegador elige el archivo más chico de cada `srcset` y el informe sale optimista:
+ * ── SE CALIENTA EL SERVIDOR, NO EL NAVEGADOR ────────────────────────────────
+ *
+ * Contra un despliegue recién hecho, la primera carga pega con la CDN de Vercel
+ * dormida y el TTFB se dispara: así salió un LCP de 4464 ms que no medía el sitio
+ * sino el primer golpe a un servidor frío, y con ese número se sacó una conclusión
+ * equivocada sobre el mapa.
+ *
+ * El primer arreglo fue peor: cargar dos veces en la MISMA pestaña. Eso calentaba el
+ * servidor, sí, pero también dejaba el detector de respuestas contando las dos
+ * vueltas, y el peso oscilaba entre 225 y 266 KB según lo que quedara en caché. Un
+ * medidor que da dos respuestas distintas para la misma página no mide nada.
+ *
+ * Lo correcto son dos contextos: uno de usar y tirar para despertar al servidor, y
+ * otro LIMPIO —sin caché— donde se mide. Eso es lo que vive de verdad alguien que
+ * llega por primera vez a un sitio que ya está en uso.
+ */
+const calentar = await navegador.newContext();
+try {
+  const q = await calentar.newPage();
+  await q.goto(BASE + RUTA, { waitUntil: 'load', timeout: 60000 });
+} catch { /* si no calienta, se mide igual y se nota en el TTFB */ }
+await calentar.close();
+
+/**
+ * `deviceScaleFactor: 2` tampoco es un detalle. Sin él Playwright mide con densidad 1,
+ * el navegador elige el archivo más chico de cada `srcset` y el informe sale optimista:
  * daba el LCP sobre `fachada-400.jpg`, que en un teléfono de verdad no se usa nunca.
  * Un teléfono de gama baja de hoy sigue teniendo pantalla de densidad 2 o 3.
  */
@@ -55,23 +80,7 @@ p.on('response', async (r) => {
   });
 });
 
-/**
- * ── SE CALIENTA ANTES DE MEDIR, Y ESTO COSTÓ UN DIAGNÓSTICO EQUIVOCADO ──────
- *
- * La primera versión medía a la primera carga. Contra un despliegue recién hecho en
- * Vercel eso pega con la CDN fría, y el TTFB se dispara: dio **4464 ms de LCP** y con
- * ese número se concluyó que el mapa incrustado estaba costando el LCP.
- *
- * Era falso. Con la CDN caliente la misma página da 1588–1932 ms, que es BUENO, y lo
- * daba también antes de quitar el mapa. El número no medía el sitio: medía el primer
- * golpe a un servidor dormido.
- *
- * Una carga de descarte antes de medir. Cuesta unos segundos y evita confundir la
- * infraestructura con el producto.
- */
-await p.goto(BASE + RUTA, { waitUntil: 'load' });
-await p.waitForTimeout(500);
-await p.goto('about:blank');
+// Una sola carga, en contexto limpio. El servidor ya viene despierto de arriba.
 await p.goto(BASE + RUTA, { waitUntil: 'load' });
 
 /**
