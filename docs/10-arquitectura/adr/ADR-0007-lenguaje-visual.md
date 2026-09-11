@@ -1,7 +1,7 @@
 ---
 tipo: adr
 id: ADR-0007
-estado: ACEPTADA — §3 y §4 enmendados por SPEC-0002
+estado: ACEPTADA — §3 y §4 enmendados por SPEC-0002 · §1 retirada del sitio
 fecha: 2026-09-10
 enmendada: 2026-09-10 por [[SPEC-0002-lenguaje-visual]] · §3 alcance de la insignia · §4 el oro sobre crema
 decide: Nadir
@@ -59,6 +59,17 @@ directa sobre `docs/99-assets/post-*.jpg`.
 Se adopta ese lenguaje. Seis piezas, cada una con su regla.
 
 ### 1 · La diagonal
+
+> **RETIRADA DEL SITIO el 10 de septiembre, por decisión de Nadir.** Se implementó y se
+> probó en dos alojamientos —remate de la ranura de foto y banda entrando a la sección
+> oscura— y en los dos se leyó como un parche amarillo flotando. No fue un fallo
+> técnico: el ángulo era exacto y no desbordaba.
+>
+> **La causa es que faltaba lo que la diagonal corta.** En estas cinco piezas la
+> diagonal es el borde de una FOTOGRAFÍA, y cuando se intentó no había fotografía. Con
+> la fachada ya en el repo, el gesto tiene por fin dónde vivir, y volverá ahí con su
+> propia medición. Números y razonamiento en [[SPEC-0002-lenguaje-visual|SPEC-0002]],
+> CA-01.
 
 Una sección puede llevar arista inclinada en su borde superior o inferior, o una banda
 de acento inclinada. **Máximo una diagonal visible a la vez en la pantalla** — en sus

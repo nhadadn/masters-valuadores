@@ -176,6 +176,10 @@
      vertical, el doble del error. Por eso existe --diagonal-degradado. */
   --diagonal: 30deg;
   --diagonal-tan: 0.57735;
+  /* SIN USO HOY, y se conserva a propósito. Era el de la banda diagonal, que se
+     retiró el 10 de septiembre por leerse como parche. La conversión de 30° a 120deg
+     no es evidente y equivocarla no rompe nada —solo deja el gesto torcido—, así que
+     el valor correcto se queda escrito para cuando la diagonal vuelva sobre la foto. */
   --diagonal-degradado: calc(90deg + var(--diagonal));           /* 120deg · borde a 30° */
   --diagonal-corte: calc(var(--tactil) * var(--diagonal-tan));   /* 27.7px sobre 48 de alto */
 

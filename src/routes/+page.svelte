@@ -15,7 +15,6 @@
   import Tarjeta from '$componentes/Tarjeta.svelte';
   import Icono from '$componentes/Icono.svelte';
   import Insignia from '$componentes/Insignia.svelte';
-  import BandaDiagonal from '$componentes/BandaDiagonal.svelte';
   import Foto from '$componentes/Foto.svelte';
   import CintaPalabras from '$componentes/CintaPalabras.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
@@ -105,10 +104,11 @@
 
          La geometría lo explica y es la misma de la enmienda 5: una recta inclinada
          desde la vertical necesita ALTO, y una banda de remate no lo tiene. Los
-         números están en `BandaDiagonal.svelte` y en la SPEC-0002.
+         números están en la SPEC-0002.
 
-         Vuelve aquí el día que exista la foto de la fachada, que es cuando habrá algo
-         que cortar. Ver D-06 y el hueco de la fachada. -->
+         La foto ya existe, así que el gesto ya tiene dónde vivir: cortando esta foto
+         contra el panel del titular, como en sus cinco piezas. Es trabajo aparte y
+         con su propia medición, no un remate. -->
     <!-- LA FACHADA REAL. Entregada por el cliente el 10 de septiembre y con ella se
          cierra el hueco más caro del proyecto. Va de héroe y no de ilustración: es
          la única respuesta que ninguna cadena puede dar, y por eso es lo primero.
@@ -183,11 +183,16 @@
   </div>
 </Seccion>
 
-<!-- ADR-0007 §1. LA ÚNICA diagonal del sitio. Entra a la sección oscura, que es la
-     única masa oscura y alta que hay hoy en la portada: 30° de la vertical necesitan
-     alto, y el oro sobre negro da 11.12:1. Si alguien la repite en otra pantalla, deja
-     de ser un gesto y pasa a ser ruido. -->
-<BandaDiagonal />
+<!-- AQUÍ IBA LA DIAGONAL Y SE RETIRÓ · 10 de septiembre, decisión de Nadir.
+     Se intentó dos veces —como remate de la ranura de foto y como banda entrando a
+     esta sección— y las dos se leyó como un parche amarillo flotando, sin cortar ni
+     enmarcar nada. La razón es la misma que descartó la arista de sección: una recta
+     a 30° de la vertical necesita ALTO, y en una banda de 48 px recorre 27.7 px.
+
+     La pieza no está mal pensada: está mal alojada. En sus cinco publicaciones la
+     diagonal es el BORDE DE UNA FOTOGRAFÍA. Ahora que la fachada existe, ese gesto ya
+     tiene dónde vivir de verdad. Hasta entonces, no hay diagonal: es mejor que no
+     esté a que esté de adorno. Ver CA-01 en la SPEC-0002. -->
 
 <Seccion fondo="oscuro" etiqueta="CONTACTO">
   <h2 class="titulo-seccion oscuro" data-propuesta="true">

@@ -1,7 +1,7 @@
 ---
 tipo: spec
 id: SPEC-0002
-estado: IMPLEMENTADA — CA-02 y CA-04 PARCIALES
+estado: IMPLEMENTADA — CA-01 retirada · CA-02 y CA-04 PARCIALES
 aprobada: 2026-09-10 por Nadir · con siete enmiendas de revisión
 c4: [C4-L3-componentes-web]
 depende_de: [ADR-0007-lenguaje-visual, ADR-0006-el-amarillo-vive, ADR-0004-identidad-plana, ADR-0002-tipografia]
@@ -297,7 +297,7 @@ IMPLEMENTADO exige cita `ruta/archivo:línea` de un test (A) o de código de pro
 
 | # | Criterio verificable | Estado | Evidencia |
 |---|---|---|---|
-| CA-01 | **Diagonal.** Banda de acento inclinada al ángulo de `--diagonal`, con `linear-gradient`, en **una sola** zona. Cero desbordamiento horizontal | **IMPLEMENTADO** | `src/lib/componentes/BandaDiagonal.svelte:56` · único uso en `src/routes/+page.svelte:105`, entrando a la sección oscura, confirmado por `grep` · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
+| CA-01 | **Diagonal.** | **RETIRADA** · 10 de septiembre | Se implementó, se probó en dos sitios y **se quitó**. No por un fallo técnico —el ángulo era exacto y no desbordaba— sino porque en los dos alojamientos se leía como un parche. El componente se borró; la razón y los números están abajo. Es la única de las seis piezas del ADR-0007 que el sitio NO tiene | · `herramientas/medir-piezas.mjs`: desborde **0** en 12 combinaciones, 360 incluido |
 | CA-02 | **Banda de contacto.** El ADR §2 pide **dos** colocaciones: el pie y la barra fija. El pie está; la barra queda **cableada y latente** hasta que entre el teléfono (D-08) | **PARCIAL** | `src/lib/componentes/BandaContacto.svelte:52` · montada en `src/routes/+layout.svelte:68` · el teléfono sale de `negocio.ts`, nunca del componente |
 | CA-03 | **Insignias circulares · alcance enmendado.** Círculo de 48 en `--negro-950` con glifo de 24 en `--oro-500`, `aria-hidden`. **NO en la tarjeta de giro** | **IMPLEMENTADO** | `src/lib/componentes/Insignia.svelte:64` · anillo sobre oscuro en `:73` · usada en `src/routes/+page.svelte:70` y en la banda · medido en el sitio: 48×48, radio 999px, fondo `rgb(12,13,15)`, glifo `rgb(231,192,65)` · alto de tarjeta **sin cambio**: 199.6 y 159.3 |
 | CA-04 | **Titular a dos tintas.** Peso 900, caja alta, interlínea 1.05, tracking −0.01em. Primer renglón en tinta, **segundo en oro** | **PARCIAL** | Tipografía: `src/lib/componentes/Titular.svelte:39` · cableado en `src/routes/[giro]/+page.svelte:54` · medido: peso 900, 28px, interlínea 29.4, tracking −0.28px, Archivo 900 cargada. **La segunda tinta no está en ninguna pantalla**: no hay copy de dos renglones y partir un nombre de giro sería inventar énfasis. Ver abajo |
@@ -392,6 +392,40 @@ como `devDependency` —herramienta, **0 bytes al visitante**— y los tres scri
 importar por ruta absoluta. Nadir lo calificó, correctamente, como **corregir un defecto,
 no meter una dependencia**: tal como estaban, los tres scripts solo corrían en una
 máquina concreta y en ninguna otra.
+
+## CA-01 · la diagonal se retiró, y conviene decir por qué
+
+Se intentó **dos veces** y las dos se leyó como un parche amarillo flotando, sin cortar
+ni enmarcar nada:
+
+| Intento | Dónde | Resultado |
+|---|---|---|
+| 1 | Remate sobre la ranura de foto de la entrada | Barra negra con mancha amarilla encima de una caja gris |
+| 2 | Banda entrando a la sección oscura | Paralelogramo flotando sobre el negro |
+
+**La causa es geométrica y es la misma que descartó la arista de sección.** Una recta a
+30° de la vertical necesita **ALTO**:
+
+| Alto de la caja | Recorrido horizontal |
+|---|---|
+| 48 px · la banda | **27.7 px** |
+| 197 px · foto a 390 | 113.7 px |
+| 371 px · foto a 1280 | 214.2 px |
+| 2 217 px | los 1280 px de ancho de una pantalla |
+
+27.7 px de recorrido sobre 660 px de columna no se leen como corte **porque no lo son**.
+
+**La pieza no está mal pensada: estaba mal alojada.** En sus cinco publicaciones la
+diagonal es el **borde de una fotografía** — nace de que hay una masa oscura que cortar.
+Las dos veces se intentó sin tener esa masa.
+
+**Ahora la fachada existe.** El gesto ya tiene dónde vivir de verdad: cortando esa foto
+contra el panel del titular, que es exactamente lo que hacen sus piezas. Eso es trabajo
+aparte, con su propia medición, y no un remate pegado encima.
+
+Mientras tanto **no hay diagonal**, y es mejor así: es preferible que no esté a que esté
+de adorno. El token `--diagonal-degradado` se conserva sin uso, con su nota, porque la
+conversión de 30° a 120deg no es evidente y no conviene volver a deducirla.
 
 ## Lo que quedó a medias, dicho con su nombre
 
