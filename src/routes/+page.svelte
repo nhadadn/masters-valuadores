@@ -9,7 +9,6 @@
    */
   import Seccion from '$componentes/Seccion.svelte';
   import Hueco from '$componentes/Hueco.svelte';
-  import RanuraImagen from '$componentes/RanuraImagen.svelte';
   import Boton from '$componentes/Boton.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Tarjeta from '$componentes/Tarjeta.svelte';
@@ -20,6 +19,7 @@
   import Titular from '$componentes/Titular.svelte';
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
+  import Mapa from '$componentes/Mapa.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
 
@@ -174,7 +174,7 @@
   <div class="ubicacion">
     <!-- El hueco de la fachada se cerró: la foto real está arriba, de héroe. Lo que
          sigue abierto aquí es el mapa, y depende de D-08. -->
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
+    <Mapa />
     <div class="datos">
       <DatosDelLocal />
     </div>

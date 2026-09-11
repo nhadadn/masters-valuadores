@@ -87,7 +87,19 @@ export const giros: Giro[] = [
   // No se construyen hasta que se cierren sus decisiones. Aparecen en la portada
   // como bloqueados a propósito: lo que falta decidir se ve, no se esconde.
   { slug: 'importaciones',       nombre: 'Importaciones',               nombreCorto: 'Importaciones', icono: 'bloq', estado: 'bloqueado', bloqueadoPor: 'D-04' },
-  { slug: 'valuacion',           nombre: 'Avalúos periciales',          nombreCorto: 'Avalúos',       icono: 'bloq', estado: 'bloqueado', bloqueadoPor: 'D-03' }
+  { slug: 'valuacion',           nombre: 'Avalúos periciales',          nombreCorto: 'Avalúos',       icono: 'bloq', estado: 'bloqueado', bloqueadoPor: 'D-03' },
+  // BAZAR VUELVE, pero como PREGUNTA, no como página · ADR-0014.
+  //
+  // El ADR-0008 lo sacó el 10 de septiembre y dejó escrita su propia advertencia:
+  // Cristóbal había pedido «salir en el mapa de Google al buscar giros como bazar y
+  // joyería», y sacarlo soltaba justo eso. El 11 de septiembre llegó su ficha de
+  // Google y resultó que **Google ya los clasifica como Bazar**, y que la única
+  // reseña que tienen llegó por ahí.
+  //
+  // Entra como BLOQUEADO: aparece en el tablero y en la portada como decisión
+  // visible, y NO genera ruta. Reabrir la pregunta no es lo mismo que publicar una
+  // página sobre un giro del que no sabemos qué vende.
+  { slug: 'bazar',               nombre: 'Bazar',                       nombreCorto: 'Bazar',         icono: 'bloq', estado: 'bloqueado', bloqueadoPor: 'D-18' }
 ];
 
 /** Los que sí se prerenderizan. Los bloqueados no generan ruta. */

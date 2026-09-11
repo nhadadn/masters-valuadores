@@ -233,6 +233,7 @@ lleguen las reales.
 | **D-04** | ¿**Importaciones** es otra empresa, con otra razón social? Con compra-venta ya en el sitio, las dos se encima y hay que saber si son una página o dos |
 | **D-03** | ¿Existe el servicio de **avalúos periciales**? ¿Con perito certificado? |
 | **D-13** | El formulario de contacto: **¿a dónde quieres que lleguen los mensajes?** Correo, hoja de cálculo, o directo a WhatsApp. Un sitio como este no procesa envíos solo, así que hasta saberlo el formulario no se construye |
+| **D-18** | **¿Qué vende tu bazar?** Google te tiene clasificado como bazar y de ahí salió tu única reseña. Lo habíamos sacado del sitio cuando pediste enfocar en cuatro giros, y volvió al tablero como pregunta. Si quieres que tenga página, necesitamos saber qué se vende ahí |
 | **D-10** | Las **URLs exactas** de tu Instagram y tu Facebook |
 | **D-07** | El **dominio**: ¿ya tienes uno? ¿Quién lo paga y a nombre de quién queda? **Mientras no exista, el sitio sale bloqueado para Google a propósito** — sin dominio no hay forma de decirle a Google cuál es la dirección buena, y un sitio de pruebas indexado después le compite a la dirección real |
 
@@ -252,6 +253,19 @@ que pediste enfocar. No es un reclamo, es que conviene aclararlo antes de public
 > **¿La renta de herramienta sigue viva?** Tienes una publicación anunciándola.
 > **¿Por qué fletes y taller no están en el letrero, si son dos de los cuatro que
 > quieres enfocar?**
+
+---
+
+## BLOQUE 10.5 · Una cosa para tu abogado
+
+El sitio ahora muestra **el mapa de Google incrustado** en tres pantallas, para que
+cualquiera vea dónde estás sin salir de la página.
+
+> **Eso significa que Google carga contenido dentro de tu sitio.** Cuando alguien entra,
+> su navegador se conecta a servidores de Google, que pueden registrar la visita.
+>
+> **Tu aviso de privacidad tiene que decirlo.** Es un párrafo, y lo escribe quien
+> redacte ese aviso — nosotros no inventamos texto legal.
 
 ---
 

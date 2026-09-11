@@ -72,7 +72,19 @@ export const negocio: Negocio = {
   nombreComercial: 'MASTERS',
   nombreLegal: POR_CONFIRMAR,        // D-01 · ¿Master o Masters?
   dominio: POR_CONFIRMAR,            // D-07
-  tipoLocalBusiness: POR_CONFIRMAR,  // D-02 · sale de la Etapa 1
+  /**
+   * D-02 · ALINEADO A SU FICHA DE GOOGLE el 11 de septiembre · ADR-0014.
+   *
+   * Google los clasifica como **Bazar**. schema.org no tiene un tipo «Bazaar»; el
+   * equivalente honesto y más cercano es `Store`. Poner `PawnShop` habría sido más
+   * específico y habría dicho lo contrario de lo que Google dice hoy — y el punto de
+   * esta decisión es dejar de contarle dos negocios distintos.
+   *
+   * Sigue siendo PROVISIONAL en un sentido: la categoría definitiva se fija cuando
+   * Cristóbal reclame la ficha (D-17) y con lo que diga la Etapa 1. Lo que cambió es
+   * que ya no es un hueco: es un dato alineado con la realidad observable.
+   */
+  tipoLocalBusiness: 'Store',
   descripcion: POR_CONFIRMAR,        // copy, no se inventa
   redes: POR_CONFIRMAR,              // D-10
   destinoFormulario: POR_CONFIRMAR,  // D-13
@@ -181,6 +193,22 @@ export function direccionCompleta(s: Sucursal = sucursalPrincipal): Dato<string>
   const piezas = [s.calle, s.colonia, s.codigoPostal, s.ciudad, s.estado];
   if (!piezas.every(estaConfirmado)) return POR_CONFIRMAR;
   return `${s.calle}, ${s.colonia}, ${s.codigoPostal} ${s.ciudad}, ${s.estado}`;
+}
+
+/**
+ * La URL del mapa INCRUSTABLE · ADR-0015.
+ *
+ * Se arma con las coordenadas, no con la dirección en texto: un geocodificado a
+ * partir de texto puede caer en la calle equivocada, y las coordenadas salen de la
+ * propia ficha del negocio.
+ *
+ * `output=embed` es la forma que no pide clave de API. La alternativa oficial
+ * —Maps Embed API— sí la pide, y una clave es una cuenta, una tarjeta y una cuota
+ * que alguien tiene que vigilar. Para dibujar un alfiler no lo vale.
+ */
+export function mapaEmbed(s: Sucursal = sucursalPrincipal): Dato<string> {
+  if (!estaConfirmado(s.latitud) || !estaConfirmado(s.longitud)) return POR_CONFIRMAR;
+  return `https://maps.google.com/maps?q=${s.latitud},${s.longitud}&z=17&hl=es&output=embed`;
 }
 
 const DIAS_ES: Record<string, string> = {

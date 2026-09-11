@@ -15,11 +15,25 @@ describe('el @graph tiene la forma que pide la §4', () => {
     expect(sitio['@type']).toBe('WebSite');
   });
 
-  it('el @type del LocalBusiness es un ARRAY, con hueco para la categoría de Google', () => {
+  it('el @type del LocalBusiness es un ARRAY, con la categoría de Google en el segundo lugar', () => {
     expect(Array.isArray(local['@type'])).toBe(true);
     expect(local['@type']).toHaveLength(2);
-    // El segundo tipo es la categoría primaria: factor de mayor peso, sale de D-02.
-    expect(local['@type'][1]).toBe(POR_CONFIRMAR);
+    expect(local['@type'][0]).toBe('LocalBusiness');
+    /**
+     * Este test decía `toBe(POR_CONFIRMAR)`, es decir, afirmaba que la categoría
+     * SIGUIERA sin decidir. Eso no es un criterio: es una foto del estado del
+     * proyecto, y convierte cerrar una decisión en un test roto.
+     *
+     * Lo que sí hay que sostener es la FORMA: el segundo tipo existe y es un tipo de
+     * schema.org, no una cadena cualquiera. Si algún día alguien escribe «Bazar» ahí
+     * —que es la categoría de Google, no un tipo de schema.org— este test lo caza.
+     */
+    const segundo = local['@type'][1];
+    expect(typeof segundo).toBe('string');
+    expect(segundo.length).toBeGreaterThan(0);
+    if (segundo !== POR_CONFIRMAR) {
+      expect(segundo, 'un @type de schema.org va en PascalCase y sin acentos').toMatch(/^[A-Z][A-Za-z]+$/);
+    }
   });
 
   it('el LocalBusiness cuelga de la Organization y el WebSite la declara editora', () => {
@@ -41,7 +55,11 @@ describe('los department salen de los giros y solo de los construibles', () => {
     for (const g of girosBloqueados) {
       expect(slugs.some((u: string) => u.includes(g.slug))).toBe(false);
     }
-    expect(girosBloqueados.length).toBe(2);
+    // Tres desde el ADR-0014: importaciones (D-04), avalúos (D-03) y bazar (D-18).
+    // Bazar volvió como pregunta abierta, no como página: Google los clasifica así
+    // y el ADR-0008 lo había sacado. Sigue sin generar ruta, que es lo que este
+    // test protege.
+    expect(girosBloqueados.length).toBe(3);
   });
 
   it('cada department cuelga de la misma Organization', () => {

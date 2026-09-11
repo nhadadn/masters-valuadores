@@ -11,9 +11,9 @@
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
-  import RanuraImagen from '$componentes/RanuraImagen.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
+  import Mapa from '$componentes/Mapa.svelte';
   import { negocio, estaConfirmado } from '$lib/config/negocio';
 
   const formularioListo = estaConfirmado(negocio.destinoFormulario);
@@ -32,7 +32,7 @@
 
 <Seccion fondo="crema" etiqueta="DÓNDE ESTAMOS">
   <div class="ubicacion">
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
+    <Mapa />
     <div class="datos">
       <DatosDelLocal conTelefono />
     </div>

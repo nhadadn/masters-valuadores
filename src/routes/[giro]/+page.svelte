@@ -9,7 +9,6 @@
    */
   import Seccion from '$componentes/Seccion.svelte';
   import Hueco from '$componentes/Hueco.svelte';
-  import RanuraImagen from '$componentes/RanuraImagen.svelte';
   import Boton from '$componentes/Boton.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
@@ -19,6 +18,7 @@
   import Foto from '$componentes/Foto.svelte';
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
+  import Mapa from '$componentes/Mapa.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -156,7 +156,7 @@
 <Seccion>
   <h2><span class="num">4</span> {PREGUNTAS[3]}</h2>
   <div class="ubicacion">
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
+    <Mapa />
     <div class="datos">
       <DatosDelLocal />
     </div>
