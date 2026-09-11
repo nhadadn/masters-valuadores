@@ -143,7 +143,14 @@
       </div>
     </li>
   </ul>
-  <p class="aviso">El orden es provisional. La prioridad la decide el estudio de búsqueda, no la intuición.</p>
+  <!-- AQUÍ HABÍA UNA NOTA Y SE QUITÓ: «El orden es provisional. La prioridad la
+       decide el estudio de búsqueda, no la intuición.»
+
+       Era una nota escrita para NOSOTROS que acabó impresa para el visitante.
+       Alguien que llega buscando dinero hoy no sabe qué es un estudio de búsqueda
+       ni por qué debería importarle nuestro método. Que el orden sea provisional es
+       cierto y sigue dicho donde toca: en giros.ts, en el mapa de páginas y en el
+       ADR-0008. En la pantalla solo ocupaba sitio. -->
 </Seccion>
 
 <Seccion etiqueta="POR QUÉ AQUÍ">

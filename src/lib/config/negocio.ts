@@ -46,6 +46,11 @@ export interface Sucursal {
   horarios: Dato<Horario[]>;
   /** La ficha de Google de esta sucursal. Va al `hasMap` del grafo. */
   mapaUrl: Dato<string>;
+  /**
+   * Líneas que atienden en OTRO número. No es lo normal y por eso es una lista y
+   * no un campo: la mayoría comparte el teléfono del local.
+   */
+  telefonosDeLinea: { linea: string; telefono: Dato<string>; nota?: string }[];
 }
 
 export interface Negocio {
@@ -196,7 +201,33 @@ export const negocio: Negocio = {
        * lugar y no depende de quién comparta. Sale del `ftid` de la redirección:
        * `0xcc458bbd76b92b47` → 14719324602987260743.
        */
-      mapaUrl: 'https://maps.google.com/?cid=14719324602987260743'
+      mapaUrl: 'https://maps.google.com/?cid=14719324602987260743',
+      /**
+       * SEGUNDO NÚMERO · confirmado por Nadir el 11 de septiembre: «sí, está el
+       * teléfono, agrégalo a joyería».
+       *
+       * Sale de siete piezas de la tanda del 11 de septiembre —las de MÁSTER
+       * JOYERÍA, con relojes Rolex— y todas lo acompañan de «AGENDA TU CITA», que
+       * es lo que lo distingue: joyería no atiende de paso, atiende con cita.
+       *
+       * ESTO CORRIGE LO QUE DECÍA ARRIBA. El 11 de septiembre se anotó, citando a
+       * Nadir, que «el teléfono es el mismo para todos». Con veinticuatro piezas
+       * nuevas delante resultó que no: hay uno general y uno de joyería. La nota
+       * anterior no se borra —explica por qué se creyó lo que se creyó— pero deja
+       * de ser cierta y así queda dicho.
+       *
+       * `linea` NO es un slug del sitio: joyería no tiene página. El ADR-0008 la
+       * sacó y la tanda del 11 de septiembre reabre la pregunta con siete piezas y
+       * un número propio. Hasta que eso se decida, el dato vive aquí y se enseña
+       * en contacto, que es donde alguien lo va a buscar.
+       */
+      telefonosDeLinea: [
+        {
+          linea: 'Joyería',
+          telefono: '+52 871 343 0354',
+          nota: 'con cita'
+        }
+      ]
     }
   ]
 };

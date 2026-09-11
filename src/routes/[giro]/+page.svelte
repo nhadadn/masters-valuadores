@@ -188,7 +188,10 @@
 </Seccion>
 
 <Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO">
-  <p class="nota">Sin estos enlaces cada página queda aislada y el multigiro no reparte autoridad.</p>
+  <!-- AQUÍ HABÍA OTRA: «Sin estos enlaces cada página queda aislada y el multigiro
+       no reparte autoridad.» Es la justificación SEO del bloque, escrita para el
+       equipo y publicada por accidente. El visitante no necesita que le expliquen
+       por qué hay enlaces: necesita los enlaces. La razón vive en el ADR-0003. -->
   <ul class="cruzados">
     {#each otras as g}
       <li><a href="/{g.slug}/"><Icono nombre={g.icono} tam={20} /> {g.nombre}</a></li>

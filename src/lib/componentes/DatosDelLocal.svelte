@@ -31,6 +31,7 @@
   const horarios = $derived(horariosLegibles());
   const mapa = $derived(sucursalPrincipal.mapaUrl);
   const tel = $derived(sucursalPrincipal.telefono);
+  const otrasLineas = $derived(sucursalPrincipal.telefonosDeLinea ?? []);
 </script>
 
 <div class="datos">
@@ -68,6 +69,22 @@
         <PorConfirmar que="teléfono y WhatsApp" decision="D-08" />
       {/if}
     </p>
+
+    <!-- LA JOYERÍA ATIENDE EN OTRO NÚMERO Y CON CITA.
+         Sale de la tanda del 11 de septiembre: siete piezas de MÁSTER JOYERÍA con
+         un número propio. Va aquí y no en la banda de contacto porque la banda es
+         la acción rápida —llamar ya— y esto es lo contrario: pedir una cita. -->
+    {#each otrasLineas as l}
+      {#if estaConfirmado(l.telefono)}
+        <p class="linea">
+          <Icono nombre="joyeria" tam={20} />
+          <span>
+            <a href="tel:{String(l.telefono).replace(/\s/g, '')}" data-negocio="telefono">{l.telefono}</a>
+            <span class="cual">{l.linea}{l.nota ? ` · ${l.nota}` : ''}</span>
+          </span>
+        </p>
+      {/if}
+    {/each}
   {/if}
 
   {#if estaConfirmado(mapa)}
@@ -100,6 +117,7 @@
     display: inline-flex;
     align-items: center;
   }
+  .cual { display: block; font-size: var(--etiqueta-tam); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }
   .comollegar {
     color: var(--oro-texto);
     font-weight: var(--etiqueta-peso);
