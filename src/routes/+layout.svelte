@@ -2,7 +2,7 @@
   import '../app.css';
   import { dev } from '$app/environment';
   import { grafoSerializado } from '$lib/seo/jsonld';
-  import { negocio, sucursalPrincipal, estaConfirmado } from '$lib/config/negocio';
+  import { negocio, sucursalPrincipal, estaConfirmado, horariosLegibles } from '$lib/config/negocio';
   import { girosConstruibles } from '$lib/datos/giros';
   import Icono from '$componentes/Icono.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
@@ -19,6 +19,7 @@
   const permisivo = import.meta.env.VITE_PENDIENTES_OK === '1';
   const grafo = grafoSerializado(!dev, permisivo);
   const tel = sucursalPrincipal.telefono;
+  const horarios = horariosLegibles();
 </script>
 
 <svelte:head>
@@ -80,9 +81,17 @@
     </div>
     <div class="bloque">
       <p class="etiqueta">HORARIOS Y REDES</p>
-      <!-- Dirección y teléfono ya no se repiten aquí: viven en la banda de arriba. -->
-      <p class="dato"><PorConfirmar que="horarios de cada día" decision="D-08" sobreOscuro /></p>
-      <p class="dato"><PorConfirmar que="WhatsApp" decision="D-08" sobreOscuro /></p>
+      <!-- Dirección y teléfono ya no se repiten aquí: viven en la banda de arriba.
+           El WhatsApp tampoco: es el mismo número y el botón está siempre en pantalla. -->
+      {#if estaConfirmado(horarios)}
+        <ul class="horarios" data-negocio="horarios">
+          {#each horarios as h}
+            <li><span class="dias">{h.dias}</span> <span>{h.horas}</span></li>
+          {/each}
+        </ul>
+      {:else}
+        <p class="dato"><PorConfirmar que="horarios de cada día" decision="D-08" sobreOscuro /></p>
+      {/if}
       <p class="dato"><PorConfirmar que="Instagram y Facebook" decision="D-10" sobreOscuro /></p>
     </div>
     <div class="bloque">
@@ -174,6 +183,9 @@
     margin-bottom: var(--e-3);
   }
   .dato { margin-top: var(--e-2); }
+  .horarios { margin-top: var(--e-2); display: grid; gap: var(--e-1); font-size: var(--pie-tam); }
+  .horarios li { display: flex; flex-wrap: wrap; gap: var(--e-1) var(--e-3); }
+  .dias { min-width: 10ch; color: var(--tinta-secundaria); }
   footer li a {
     display: block; min-height: var(--tactil-piso);
     display: flex; align-items: center;

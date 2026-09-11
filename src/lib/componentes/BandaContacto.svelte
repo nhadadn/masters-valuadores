@@ -13,12 +13,14 @@
    * que Cristóbal lo dé por escrito. Un número mal puesto es tráfico que se pierde
    * sin que nadie se entere.
    */
-  import { sucursalPrincipal, estaConfirmado } from '$lib/config/negocio';
+  import { sucursalPrincipal, estaConfirmado, direccionCompleta } from '$lib/config/negocio';
   import Insignia from './Insignia.svelte';
   import PorConfirmar from './PorConfirmar.svelte';
 
   const tel = $derived(sucursalPrincipal.telefono);
   const listo = $derived(estaConfirmado(tel));
+  const direccion = $derived(direccionCompleta());
+  const mapa = $derived(sucursalPrincipal.mapaUrl);
 </script>
 
 <div class="banda">
@@ -44,9 +46,22 @@
     <div class="dato">
       <Insignia icono="mapa" sobreOscuro>
         <p class="et">DÓNDE ESTAMOS</p>
-        <p class="pendiente">
-          <PorConfirmar que="calle, número, colonia y CP" decision="D-08" sobreOscuro />
-        </p>
+        {#if estaConfirmado(direccion)}
+          <!-- `data-negocio`: la dirección SALE de `negocio.ts`. Ver la nota de arriba. -->
+          <p class="direccion" data-negocio="direccion">{direccion}</p>
+          {#if estaConfirmado(mapa)}
+            <!-- Enlace, no iframe. Un mapa incrustado carga un tercero, pone cookies
+                 y mueve la maqueta al montarse; este abre la app de mapas del
+                 teléfono y cuesta cero bytes. -->
+            <p class="comollegar">
+              <a href={mapa} target="_blank" rel="noopener">Cómo llegar</a>
+            </p>
+          {/if}
+        {:else}
+          <p class="pendiente">
+            <PorConfirmar que="calle, número, colonia y CP" decision="D-08" sobreOscuro />
+          </p>
+        {/if}
       </Insignia>
     </div>
   </div>
@@ -85,6 +100,14 @@
   }
   .numero a { display: inline-flex; align-items: center; min-height: var(--tactil); }
   .pendiente { margin-top: var(--e-1); }
+  .direccion { margin-top: var(--e-1); color: var(--tinta-sobre-oscuro); }
+  .comollegar a {
+    display: inline-flex; align-items: center; min-height: var(--tactil-piso);
+    font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso);
+    letter-spacing: var(--etiqueta-tracking);
+    color: var(--oro-texto);
+    text-decoration: underline;
+  }
 
   /* El separador vertical de sus piezas. Solo cuando los dos datos van en fila. */
   .separador { display: none; }

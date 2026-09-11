@@ -32,11 +32,46 @@ páginas cada dato equivocado se repite ocho veces.
 
 | # | Decisión | Qué destraba | Quién decide |
 |---|---|---|---|
-| D-02 | Categoría primaria de Google | La ficha completa y el `@type` del `LocalBusiness` | Sale de Etapa 1 |
-| D-08 | NAP exacto: **la dirección tiene conflicto, ver abajo** | `address`, `telephone`, `openingHours` | Cristóbal |
+| D-02 | Categoría primaria de Google · **ya no está en blanco: Google dice `Bazar`** | La ficha completa y el `@type` del `LocalBusiness` | Nadir, y luego Cristóbal |
+| ~~D-08~~ | ~~NAP exacto~~ · **CERRADA el 11 de septiembre** | — | — |
 | D-09 | ¿Hay más de una sucursal? **Ahora es urgente**, ver abajo | Si el grafo lleva una o varias `LocalBusiness` | Cristóbal |
 | D-10 | URLs exactas de Instagram y Facebook | `sameAs` | Cristóbal |
-| D-11 | Coordenadas del local (`geo`) | `latitude` / `longitude` | Verificable en Maps al cerrar D-08 |
+| ~~D-11~~ | ~~Coordenadas del local~~ · **CERRADA el 11 de septiembre** | — | — |
+| **D-17** | **Reclamar la ficha de Google.** Existe y está sin reclamar | Quién controla el nombre, la categoría, el horario y las fotos que ve todo el que busca | Cristóbal · **es lo más urgente del proyecto** |
+
+### D-08 y D-11 · CERRADAS el 11 de septiembre
+
+Nadir mandó la ficha de Google del negocio: *«Aquí viene el mapa y su dirección»*.
+Lo que dice, literal, y la evidencia completa: [[ficha-de-google]].
+
+| Dato | Valor | Entró en |
+|---|---|---|
+| Dirección | Lerdo 97, Laguna Sur, 27110 Torreón, Coahuila | `negocio.ts` |
+| Horarios | L-V 9 a.m.–6 p.m. · Sáb 9 a.m.–3 p.m. · Dom cerrado | `negocio.ts` |
+| Coordenadas | 25.5818511, -103.4188845 | `negocio.ts` |
+| Ficha (`hasMap`) | CID 14719324602987260743 | `negocio.ts` |
+
+**Resuelve el conflicto de las dos direcciones**: Google conoce **una**, la de Lerdo 97,
+que es la misma que aparece en sus publicaciones. La forma «Libramiento Periférico Raúl
+López Sánchez casi esquina con El Tajito» no está en la ficha; queda sin saberse si es
+referencia cruzada o un segundo domicilio.
+
+**Los horarios son el dato más débil de los tres.** Fuente única, y la ficha está **sin
+reclamar**: pudo escribirlos Google o un usuario cualquiera, no necesariamente
+Cristóbal. Se entraron porque Google ya se los enseña hoy a quien busque el negocio —
+que el sitio diga otra cosa sería peor—, pero es el primer renglón a confirmar.
+
+Efecto medido: el grafo pasó de **14 marcas sin confirmar a 7**, y los huecos visibles
+bajaron de 11 a 5 en contacto y de 17 a 12 en cada página de giro.
+
+### D-02 · la categoría dejó de estar en blanco, y trae un problema
+
+Google los tiene clasificados como **`Bazar`**, que es **uno de los giros que el
+[[ADR-0008-alcance-de-cuatro-giros]] sacó del sitio**. El sitio le cuenta a Google un
+negocio de empeño, maquinaria, fletes y taller; la ficha le cuenta un bazar.
+
+No se resuelve por cuenta nuestra. Sigue abierta, pero ya no por falta de dato: por
+contradicción entre el dato y una decisión tomada.
 
 ### El teléfono · CERRADO el 11 de septiembre
 
@@ -57,8 +92,11 @@ Se guarda como `+52 871 507 3005` porque `wa.me` exige lada de país. Efecto med
 volvió `tel:`, apareció la insignia dorada de la barra fija y las marcas pendientes de
 la portada bajaron de 18 a 13.
 
-**Lo que sigue abierto de D-08:** dirección exacta, colonia, código postal y horarios.
-Sin eso no se dibuja el mapa ni se arma la ficha de Google.
+**D-08 quedó cerrada del todo el 11 de septiembre**, con la ficha de Google. Este bloque
+se conserva porque explica de dónde salió el teléfono; el resto está arriba.
+
+Y hay una **cuarta** fuente para el número, posterior a esta nota: la propia ficha de
+Google dice `871 507 3005`.
 
 ### Lo que el teléfono NO cierra
 

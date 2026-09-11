@@ -17,9 +17,9 @@
   import Insignia from '$componentes/Insignia.svelte';
   import Foto from '$componentes/Foto.svelte';
   import CintaPalabras from '$componentes/CintaPalabras.svelte';
-  import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Titular from '$componentes/Titular.svelte';
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
+  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
 
@@ -174,11 +174,9 @@
   <div class="ubicacion">
     <!-- El hueco de la fachada se cerró: la foto real está arriba, de héroe. Lo que
          sigue abierto aquí es el mapa, y depende de D-08. -->
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — NO SE DIBUJA HASTA CERRAR D-08" />
+    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
     <div class="datos">
-      <p><Icono nombre="mapa" tam={20} /> <PorConfirmar que="calle, número, colonia y CP" decision="D-08" /></p>
-      <p><Icono nombre="reloj" tam={20} /> <PorConfirmar que="horarios de cada día" decision="D-08" /></p>
-      <Boton variante="secundario" href="/contacto/" anchoCompleto={false}>Cómo llegar</Boton>
+      <DatosDelLocal />
     </div>
   </div>
 </Seccion>

@@ -76,7 +76,7 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Fase 0 · armazón | **IMPLEMENTADA** · 10/10 criterios, 31 tests |
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
-| Publicación | Bloqueada por el NAP, a propósito |
+| Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -146,7 +146,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 103 tests ·
+8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 105 tests ·
 contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px · 16/16 combinaciones
 página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
@@ -159,7 +159,7 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens vivos y SEO · 103 tests
+npm test                              # grafo, giros, fugas, tokens vivos y SEO · 105 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10, tras un build
@@ -176,7 +176,9 @@ resultado real**, no el esperado.
 
 ## Lo que falta, y nada de esto es técnico
 
-1. **NAP por escrito** (D-08) — cierra 12 de las 16 marcas del grafo de un golpe.
+1. **~~NAP~~ · CERRADO el 11 de septiembre** con la ficha de Google que mandó Nadir.
+   Dirección, horarios y coordenadas están en `negocio.ts`; el grafo bajó de 14 marcas
+   a 7. Lo que queda del bloque: [[ficha-de-google]] y la decisión D-17, abajo.
 2. **Copy** — hoy son 27 huecos etiquetados. Se redacta como propuesta, ver arriba.
 3. **Fotos** — fachada y una por giro. Lo que Nadir extrajo del Instagram son gráficos
    de redes con maquinaria de banco, no fotos del local. **El hueco de la fachada sigue
@@ -190,8 +192,17 @@ resultado real**, no el esperado.
 ## Contexto que cambia las prioridades
 
 El sitio pesa **~15 %** del posicionamiento local. La ficha de Google pesa 32 %, las
-reseñas 20 % y los directorios 6 %. Masters está en **cero** en esos 58 puntos.
-Recomendación en firme y por escrito: **la ficha de Google va antes que el sitio.**
+reseñas 20 % y los directorios 6 %.
+
+**Corregido el 11 de septiembre.** Aquí decía que Masters estaba en cero en esos 58
+puntos. **No lo está, y el matiz cambia la acción.** La ficha de Google **existe**:
+categoría `Bazar`, una reseña de 4,0, sin sitio web — y **SIN RECLAMAR**. Evidencia
+completa en [[ficha-de-google]].
+
+Así que la recomendación no es «abre tu ficha»: es **reclamarla**, que es más corto y
+más urgente. Una ficha sin reclamar la puede reclamar un tercero, y cualquiera puede
+sugerirle cambios de dirección u horario que Google aplica. Sigue yendo **antes que el
+sitio**.
 
 La audiencia: alguien que necesita liquidez hoy, buscando desde un teléfono de gama
 baja, a plena luz del día, con prisa. Cada decisión técnica de este repo sale de ahí.

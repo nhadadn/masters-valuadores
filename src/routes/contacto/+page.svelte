@@ -13,6 +13,7 @@
   import Icono from '$componentes/Icono.svelte';
   import RanuraImagen from '$componentes/RanuraImagen.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
+  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import { negocio, estaConfirmado } from '$lib/config/negocio';
 
   const formularioListo = estaConfirmado(negocio.destinoFormulario);
@@ -31,11 +32,9 @@
 
 <Seccion fondo="crema" etiqueta="DÓNDE ESTAMOS">
   <div class="ubicacion">
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — SE DIBUJA AL CERRAR D-08" />
+    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
     <div class="datos">
-      <p><Icono nombre="mapa" tam={20} /> <PorConfirmar que="calle, número, colonia y CP" decision="D-08" /></p>
-      <p><Icono nombre="reloj" tam={20} /> <PorConfirmar que="horarios de cada día" decision="D-08" /></p>
-      <p><Icono nombre="telefono" tam={20} /> <PorConfirmar que="teléfono y WhatsApp" decision="D-08" /></p>
+      <DatosDelLocal conTelefono />
     </div>
   </div>
 </Seccion>

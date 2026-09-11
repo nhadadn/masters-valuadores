@@ -118,6 +118,10 @@ export function construirGrafo(opciones: OpcionesGrafo = {}) {
     telephone: s.telefono,
     openingHoursSpecification: horarios(s),
     geo: { '@type': 'GeoCoordinates', latitude: s.latitud, longitude: s.longitud },
+    // Su ficha de Google, que EXISTE y está sin reclamar. Declararla aquí le dice a
+    // Google que el sitio y esa ficha son el mismo negocio, en vez de dejar que lo
+    // adivine por coincidencia de dirección.
+    hasMap: s.mapaUrl,
     department: departamentos(base)
   };
 

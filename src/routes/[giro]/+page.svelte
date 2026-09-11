@@ -18,6 +18,7 @@
   import Titular from '$componentes/Titular.svelte';
   import Foto from '$componentes/Foto.svelte';
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
+  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -155,11 +156,9 @@
 <Seccion>
   <h2><span class="num">4</span> {PREGUNTAS[3]}</h2>
   <div class="ubicacion">
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — SE DIBUJA AL CERRAR D-08" />
+    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — D-08 YA CERRÓ; INCRUSTARLO ES OTRA DECISIÓN" />
     <div class="datos">
-      <p><Icono nombre="mapa" tam={20} /> <PorConfirmar que="dirección exacta" decision="D-08" /></p>
-      <p><Icono nombre="reloj" tam={20} /> <PorConfirmar que="horarios de cada día" decision="D-08" /></p>
-      <Boton variante="secundario" href="/contacto/" anchoCompleto={false}>Cómo llegar</Boton>
+      <DatosDelLocal />
     </div>
   </div>
 </Seccion>

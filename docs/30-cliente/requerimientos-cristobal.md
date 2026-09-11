@@ -23,51 +23,95 @@ más caro que puede hacer un sitio.
 
 ---
 
-## BLOQUE 1 · Los datos del negocio
+## BLOQUE 0 · LO MÁS URGENTE · reclama tu ficha de Google
 
-> **Esto solo es un mensaje y destraba más que todo lo demás junto.** Cierra 6 de 8
-> marcas pendientes en la portada, 6 de 9 en cada página de giro, 7 de 10 en contacto,
-> los 4 mapas, y es lo único que impide publicar.
+**Actualizado el 11 de septiembre.** Aquí abajo decía que tenías que *abrir* tu ficha de
+Google. Nos equivocamos: **ya existe**. La encontramos con el mapa que nos mandaste.
 
-### 1.1 · La dirección · ¿una o dos?
+Y dice esto:
 
-En tus publicaciones aparecen **dos formas distintas**:
+| | |
+|---|---|
+| Nombre | **Master valuadores** (sin S, y en minúsculas) |
+| Categoría | **Bazar** |
+| Reseñas | 4,0 · **una** reseña, de hace cuatro meses: «Exelente atencion» |
+| Sitio web | **ninguno** |
+| Estado | **SIN RECLAMAR** |
 
-- «Lerdo 97, Col. Laguna Sur, 27110 Torreón»
-- «Libramiento Periférico Raúl López Sánchez casi esquina con El Tajito»
+> **«Sin reclamar» quiere decir que nadie del negocio la controla.**
+>
+> Eso importa por dos razones concretas:
+>
+> 1. **Cualquiera puede sugerirle cambios** —dirección, teléfono, horario— y Google los
+>    aplica. Hoy no hay nadie del lado de Masters para aprobarlos o rechazarlos.
+> 2. **Cualquiera puede reclamarla.** Un tercero puede quedarse con el control de la
+>    ficha de tu negocio.
 
-La pieza de joyería las junta en un renglón, lo que **sugiere** un solo domicilio
-descrito de dos maneras. Sugerir no es saber, y una ficha de Google mal armada por esto
-cuesta posicionamiento real.
+**Es gratis, se hace desde el mismo mapa —botón «Reclamar esta empresa»— y toma unos
+días de verificación.** Vale el 32 % de que te encuentren; el sitio entero vale el 15 %.
+Es la cosa de mayor rendimiento de todo el proyecto y no depende de nosotros.
 
-> **¿Es un solo domicilio o son dos?**
-> Si es uno: ¿cuál es la forma completa y correcta?
-> Si son dos: ¿cuál atiende cada giro?
-
-**La dirección completa, como debe aparecer:**
-calle · número · colonia · código postal · ciudad · estado
-
-### 1.2 · Teléfono y WhatsApp
-
-Tenemos **871 507 3005** con **tres fuentes que coinciden**: tus cinco publicaciones, el
-letrero de tu fachada, y el ícono de WhatsApp junto al número en ese mismo letrero.
-
-> **Solo necesitamos que lo confirmes por escrito.** Y una cosa más:
-> **¿el WhatsApp es ese mismo número, o es otro?**
-
-### 1.3 · Horarios
-
-> **Por día, incluyendo sábado y domingo.** Y si cierran a mediodía, dilo.
-
-Sin esto no se dibuja el mapa ni se puede armar la ficha de Google.
+Una vez reclamada, ahí mismo se corrigen el nombre, la categoría y las fotos.
 
 ---
 
-## BLOQUE 2 · El nombre
+## BLOQUE 1 · Los datos del negocio · CASI CERRADO
+
+> **Con la ficha que mandaste ya entraron la dirección, los horarios y la ubicación en
+> el mapa.** Los huecos de la portada bajaron de 11 a 5 y los de cada página de giro de
+> 17 a 12.
+
+### 1.1 · La dirección · RESUELTA, con una pregunta suelta
+
+Tu ficha dice **Lerdo 97, Laguna Sur, 27110 Torreón, Coah.**, que es la misma que
+aparece en tus publicaciones. Esa quedó puesta en el sitio.
+
+La otra forma que usabas —«Libramiento Periférico Raúl López Sánchez casi esquina con
+El Tajito»— **no aparece en la ficha**.
+
+> **¿Es la misma esquina descrita de otra manera, o es otro domicilio?**
+> Si es referencia del mismo local, perfecto y no hay nada que hacer.
+
+### 1.2 · Teléfono y WhatsApp · CERRADO
+
+**871 507 3005**, ahora con **cuatro** fuentes que coinciden: tus cinco publicaciones,
+el letrero de tu fachada, el ícono de WhatsApp junto al número en ese letrero, y tu
+propia ficha de Google.
+
+### 1.3 · Horarios · PUESTOS, pero confírmalos
+
+Tomamos los de tu ficha:
+
+| | |
+|---|---|
+| Lunes a viernes | 9 a.m. a 6 p.m. |
+| Sábado | 9 a.m. a 3 p.m. |
+| Domingo | Cerrado |
+
+> **Este es el renglón que más nos urge que revises.** Es el único dato del bloque con
+> una sola fuente, y esa fuente es una ficha que nadie del negocio controla todavía: los
+> pudo escribir Google o cualquier usuario. **¿Son correctos? ¿Cierran a mediodía?**
+
+---
+
+## BLOQUE 2 · El nombre · ahora son CUATRO lugares y tres van sin S
 
 > **En tu propio letrero están las dos grafías, a dos metros una de otra.** El logotipo
 > dice **MASTERS** VALUADORES; la línea de Facebook dice **MASTER** VALUADORES, sin S.
 > Y tu correo publicado es `mastervaluadores@outlook.com`, también sin S.
+>
+> **Y tu ficha de Google dice `Master valuadores`**, también sin S.
+
+| Dónde | Cómo aparece |
+|---|---|
+| Tu logotipo | **MASTERS** VALUADORES |
+| Tu ficha de Google | Master valuadores |
+| Tu correo | mastervaluadores@outlook.com |
+| Tu Facebook, en el letrero | MASTER VALUADORES |
+
+Tres de cuatro van sin S. El sitio hoy va **con** S, siguiendo tu logotipo.
+
+Google premia que el nombre sea **idéntico** en todas partes. Hoy no lo es.
 
 No es un detalle: es el nombre con el que Google te va a conocer, y es lo que traba el
 dominio.
@@ -255,5 +299,17 @@ Revisamos a tu competencia el 10 de septiembre —First Cash, Empeño Fácil, Mo
 Piedad y Patrón Oro, que está en Avenida Juárez— y **ninguno enseña su local**. Las
 cadenas no pueden. Tú sí, y ya tienes la foto.
 
-> **Antes que terminar el sitio, abre y llena tu ficha de Google.** Con los mismos datos
+> **Antes que terminar el sitio, reclama y llena tu ficha de Google.** Ver el BLOQUE 0,
+> arriba: ya existe, está sin reclamar, y dice que eres un bazar. Con los mismos datos
 > de este documento y las mismas fotos. Es gratis y rinde el doble.
+
+### Una cosa más, que sale de tu propia ficha
+
+Google te tiene clasificado como **Bazar**. Bazar es justamente uno de los giros que
+sacamos del sitio cuando pediste enfocar en cuatro (empeño, maquinaria, fletes y
+taller).
+
+> **O sea que el sitio y tu ficha le están contando a Google dos negocios distintos.**
+> Cuando reclames la ficha hay que decidir con qué categoría se queda, y esa decisión
+> vale más que casi cualquier cosa que hagamos en el sitio: la categoría principal es el
+> factor individual con más peso en las búsquedas locales.

@@ -44,6 +44,8 @@ export interface Sucursal {
   latitud: Dato<number>;
   longitud: Dato<number>;
   horarios: Dato<Horario[]>;
+  /** La ficha de Google de esta sucursal. Va al `hasMap` del grafo. */
+  mapaUrl: Dato<string>;
 }
 
 export interface Negocio {
@@ -78,11 +80,30 @@ export const negocio: Negocio = {
     {
       id: 'torreon',
       nombre: POR_CONFIRMAR,
-      calle: POR_CONFIRMAR,          // D-08 · todo este bloque se cierra con un solo dato escrito
-      colonia: POR_CONFIRMAR,
+      /**
+       * D-08 · CERRADA el 11 de septiembre de 2026. Nadir mandó la ficha de Google
+       * del negocio: «Aquí viene el mapa y su dirección».
+       *
+       *   https://maps.app.goo.gl/djEokVRJBvrUFGoh7   →   CID 14719324602987260743
+       *
+       * La ficha dice, literal: «Lerdo 97, Laguna Sur, 27110 Torreón, Coah.»
+       *
+       * Coincide con una de las dos formas que aparecían en sus publicaciones y que
+       * el documento de requerimientos preguntaba (BLOQUE 1.1). La otra —«Libramiento
+       * Periférico Raúl López Sánchez casi esquina con El Tajito»— NO está en la
+       * ficha; queda por saber si es referencia cruzada del mismo local o un segundo
+       * domicilio. Google conoce UNO.
+       *
+       * SALVEDAD QUE HAY QUE TENER PRESENTE: la ficha está SIN RECLAMAR —muestra
+       * «Reclamar esta empresa»—, así que estos campos pudo escribirlos Google o un
+       * usuario, no necesariamente Cristóbal. La dirección está corroborada por sus
+       * propias publicaciones; los horarios de abajo NO lo están. Ver la nota ahí.
+       */
+      calle: 'Lerdo 97',
+      colonia: 'Laguna Sur',
       ciudad: 'Torreón',             // documentado por el cliente en su propio material
       estado: 'Coahuila',            // documentado
-      codigoPostal: POR_CONFIRMAR,
+      codigoPostal: '27110',
       pais: 'MX',
       /**
        * CONFIRMADO por Nadir el 11 de septiembre de 2026: «el teléfono es el mismo
@@ -98,12 +119,110 @@ export const negocio: Negocio = {
        */
       telefono: '+52 871 507 3005',
       whatsapp: '+52 871 507 3005',
-      latitud: POR_CONFIRMAR,        // D-11 · verificable en Maps al cerrar D-08
-      longitud: POR_CONFIRMAR,
-      horarios: POR_CONFIRMAR
+      /**
+       * D-11 · CERRADA. Coordenadas que Google usa para esta ficha, leídas de la URL
+       * del lugar: `/@25.5818511,-103.4188845,17z`. Plus code «HHJJ+PC Torreón».
+       */
+      latitud: 25.5818511,
+      longitud: -103.4188845,
+      /**
+       * HORARIOS · el dato MÁS DÉBIL de este bloque, y hay que decirlo.
+       *
+       * Tiene UNA sola fuente —la ficha de Google— y esa ficha está **sin reclamar**.
+       * El teléfono lo respaldan cuatro fuentes y la dirección dos; estos horarios,
+       * ninguna más. Nadie de Masters los ha puesto por escrito.
+       *
+       * Se entran igual, por una razón concreta: Google ya se los está enseñando hoy
+       * a cualquiera que busque el negocio. Que el sitio diga lo mismo no añade daño;
+       * decir algo distinto sí lo añadiría. Pero es el primer renglón que Cristóbal
+       * tiene que confirmar o corregir, y así está puesto en el documento de
+       * requerimientos.
+       *
+       * Literal de la ficha: lunes a viernes 9 a.m.–6 p.m. · sábado 9 a.m.–3 p.m. ·
+       * domingo cerrado.
+       *
+       * El domingo se declara con `00:00`–`00:00`, que es la forma documentada de
+       * schema.org para un día cerrado. Omitirlo diría «no sabemos», y sí sabemos.
+       */
+      horarios: [
+        { dias: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], abre: '09:00', cierra: '18:00' },
+        { dias: ['Saturday'], abre: '09:00', cierra: '15:00' },
+        { dias: ['Sunday'], abre: '00:00', cierra: '00:00' }
+      ],
+      /**
+       * Forma por CID, no el enlace corto que llegó por WhatsApp: un `maps.app.goo.gl`
+       * es un acortador y puede caducar o cambiar de destino. El CID identifica el
+       * lugar y no depende de quién comparta. Sale del `ftid` de la redirección:
+       * `0xcc458bbd76b92b47` → 14719324602987260743.
+       */
+      mapaUrl: 'https://maps.google.com/?cid=14719324602987260743'
     }
   ]
 };
 
 /** La sucursal principal. Hoy hay una; D-09 dirá si hay más. */
 export const sucursalPrincipal = negocio.sucursales[0];
+
+/**
+ * ── CÓMO SE LEEN ESTOS DATOS EN PANTALLA ──────────────────────────────────
+ *
+ * Las dos funciones de abajo existen para que NINGÚN componente arme una dirección
+ * ni un horario por su cuenta. Si cada pantalla lo formatea a su manera, el sitio
+ * enseña la misma dirección de tres formas distintas — y la consistencia exacta del
+ * NAP (nombre, dirección, teléfono, idénticos en todas partes) es justamente uno de
+ * los factores de posicionamiento local que se están cuidando.
+ *
+ * Devuelven `__POR_CONFIRMAR__` si falta cualquier pieza. No devuelven media
+ * dirección: media dirección lleva a alguien a la esquina equivocada.
+ */
+
+/** «Lerdo 97, Laguna Sur, 27110 Torreón, Coahuila» */
+export function direccionCompleta(s: Sucursal = sucursalPrincipal): Dato<string> {
+  const piezas = [s.calle, s.colonia, s.codigoPostal, s.ciudad, s.estado];
+  if (!piezas.every(estaConfirmado)) return POR_CONFIRMAR;
+  return `${s.calle}, ${s.colonia}, ${s.codigoPostal} ${s.ciudad}, ${s.estado}`;
+}
+
+const DIAS_ES: Record<string, string> = {
+  Monday: 'Lunes', Tuesday: 'Martes', Wednesday: 'Miércoles', Thursday: 'Jueves',
+  Friday: 'Viernes', Saturday: 'Sábado', Sunday: 'Domingo'
+};
+
+/**
+ * «9 a.m.» y no «9:00». Dos razones y las dos importan:
+ *   · Es como lo lee el visitante, y como lo muestra su propia ficha de Google.
+ *   · El guardia de fugas caza el patrón `H:MM` en la página. Este formato no lo
+ *     dispara por accidente — aunque el elemento lleva `data-negocio` igual, que es
+ *     lo que de verdad declara la procedencia.
+ */
+function reloj(hhmm: string): string {
+  const [h, m] = hhmm.split(':');
+  const hora = Number(h);
+  const sufijo = hora < 12 ? 'a.m.' : 'p.m.';
+  const h12 = hora % 12 === 0 ? 12 : hora % 12;
+  return m === '00' ? `${h12} ${sufijo}` : `${h12}:${m} ${sufijo}`;
+}
+
+export interface HorarioLegible {
+  /** «Lunes a viernes», «Sábado», «Domingo» */
+  dias: string;
+  /** «9 a.m. a 6 p.m.» o «Cerrado» */
+  horas: string;
+  cerrado: boolean;
+}
+
+export function horariosLegibles(s: Sucursal = sucursalPrincipal): Dato<HorarioLegible[]> {
+  if (!estaConfirmado(s.horarios)) return POR_CONFIRMAR;
+  const filas: HorarioLegible[] = [];
+  for (const h of s.horarios) {
+    if (!estaConfirmado(h.dias) || !estaConfirmado(h.abre) || !estaConfirmado(h.cierra)) {
+      return POR_CONFIRMAR;
+    }
+    const dias = h.dias.length > 2
+      ? `${DIAS_ES[h.dias[0]]} a ${DIAS_ES[h.dias[h.dias.length - 1]].toLowerCase()}`
+      : h.dias.map((d) => DIAS_ES[d]).join(' y ');
+    const cerrado = h.abre === h.cierra;
+    filas.push({ dias, horas: cerrado ? 'Cerrado' : `${reloj(h.abre)} a ${reloj(h.cierra)}`, cerrado });
+  }
+  return filas;
+}
