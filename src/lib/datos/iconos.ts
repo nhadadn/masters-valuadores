@@ -16,7 +16,31 @@ export const iconos: Record<string, string> = {
   reloj:   '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
   telefono:'<path d="M5 3h3l2 5-2.5 1.5a12 12 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2.2 2A16 16 0 0 1 3 5.2 2 2 0 0 1 5 3z"/>',
   mas:     '<path d="M12 5v14M5 12h14"/>',
-  menos:   '<path d="M5 12h14"/>'
+  menos:   '<path d="M5 12h14"/>',
+
+  /**
+   * ── LOS BIENES ──────────────────────────────────────────────────────────
+   * Ocho trazos más, para la marca de agua de las tarjetas de «¿Aceptan lo que
+   * traigo?». Se dibujan aquí y no se descargan: son parte del HTML.
+   *
+   * POR QUÉ UN ÍCONO Y NO UNA FOTO. Esa lista es una AFIRMACIÓN sobre qué recibe el
+   * negocio, y está deducida de su letrero y sus publicaciones — el propio bloque lo
+   * dice. Una fotografía de monedas de oro detrás de «Monedas» convierte una
+   * deducción nuestra en algo que parece documentado. Un símbolo no: un símbolo
+   * ilustra, no atestigua.
+   *
+   * Cada bien lleva el suyo en `giros.ts`, escrito a mano. No se adivina por el
+   * texto: adivinar por texto funciona hasta que alguien escribe «Oro y plata» y le
+   * sale el ícono de un camión.
+   */
+  moneda:      '<circle cx="9.5" cy="9.5" r="6"/><circle cx="15" cy="15" r="6"/>',
+  herramienta: '<path d="M13.5 3.5l7 7-2.5 2.5-7-7z"/><path d="M11 6L3.5 13.5V21H11l7.5-7.5"/>',
+  maquinaria:  '<path d="M2 20h20"/><path d="M4.5 20v-4h7v4"/><path d="M7 16l2.5-8 5.5 2.5"/><path d="M15 10.5L20 6"/>',
+  auto:        '<path d="M4 16.5v-3.5l2-5h12l2 5v3.5"/><path d="M2 16.5h20"/><circle cx="7" cy="17.5" r="1.7"/><circle cx="17" cy="17.5" r="1.7"/>',
+  industrial:  '<circle cx="12" cy="12" r="3.4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>',
+  agricola:    '<path d="M12 21V9.5"/><path d="M12 9.5c0-3 2-5.2 4.2-5.2 0 3-2 5.2-4.2 5.2z"/><path d="M12 9.5C12 6.5 10 4.3 7.8 4.3c0 3 2 5.2 4.2 5.2z"/><path d="M12 15c0-3 2-5.2 4.2-5.2 0 3-2 5.2-4.2 5.2z"/><path d="M12 15c0-3-2-5.2-4.2-5.2 0 3 2 5.2 4.2 5.2z"/>',
+  contenedor:  '<rect x="2.5" y="7" width="19" height="10" rx="1"/><path d="M7 7v10M11 7v10M15 7v10"/>',
+  carga:       '<rect x="2.5" y="12" width="8" height="8"/><rect x="13.5" y="12" width="8" height="8"/><rect x="8" y="3.5" width="8" height="8"/>'
 };
 
 /** WhatsApp va relleno, no trazado: es un logotipo, no un ícono de interfaz. */

@@ -85,6 +85,12 @@
     <ul class="bienes">
       {#each giro.bienesPropuestos as bien}
         <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'}>
+          <!-- MARCA DE AGUA · el ícono del bien, grande y tenue al fondo.
+               `aria-hidden`: no aporta nada a quien no ve la pantalla — el nombre
+               del bien ya está escrito al lado, y anunciar «imagen de una moneda»
+               antes de «Monedas» solo estorba. -->
+          <span class="agua" aria-hidden="true"><Icono nombre={bien.icono} tam={96} grosor={1.1} /></span>
+          <span class="destello" aria-hidden="true"></span>
           <span class="que">{bien.que}</span>
           <span class="fuente">
             {#if bien.fuente === 'letrero'}Está en su letrero
@@ -211,9 +217,80 @@
 
   .bienes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); }
   .bienes li {
+    position: relative; isolation: isolate; overflow: hidden;
     display: grid; gap: var(--e-2); min-height: 96px; padding: var(--e-3);
     background: var(--superficie); border: 1px solid var(--panel-borde);
     align-content: start;
+  }
+
+  /* ── LA MARCA DE AGUA ────────────────────────────────────────────────────
+     Sale por la esquina inferior derecha, recortada por el `overflow`. Va detrás
+     del texto con `z-index: -1` y no toca el contraste: el texto sigue midiéndose
+     contra `--superficie`, que es opaca. */
+  .agua {
+    position: absolute; right: -18px; bottom: -22px; z-index: -1;
+    color: var(--oro-500); opacity: 0.13;
+    pointer-events: none; line-height: 0;
+  }
+  .apuesta .agua { opacity: 0.09; }   /* lo deducido pesa menos, también de fondo */
+
+  /* ── EL DESTELLO ─────────────────────────────────────────────────────────
+     Una banda de luz que cruza la tarjeta UNA vez, cuando entra en pantalla.
+
+     «Al entrar en pantalla» pide normalmente un IntersectionObserver, y este sitio
+     tiene CERO JavaScript (`csr = false`). Se resuelve con `animation-timeline:
+     view()`, que es CSS puro: el navegador liga el avance de la animación a la
+     posición del elemento en la ventana.
+
+     Va dentro de `@supports` A PROPÓSITO. Sin esa guarda, un navegador que no
+     entienda `view()` aplicaría la animación con la línea de tiempo del documento y
+     las seis tarjetas destellarían a la vez al cargar, casi siempre fuera de
+     pantalla. Donde no hay soporte no hay animación, que es la degradación correcta.
+
+     `transform` y nada más: se resuelve en el compositor y no repinta. En el
+     teléfono de gama baja del contrato eso es la diferencia entre un gesto y una
+     factura de batería. */
+  .destello { display: none; }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      /* LA LÍNEA DE TIEMPO SE DECLARA EN LA TARJETA, NO EN EL DESTELLO.
+         Con «animation-timeline: view()» puesto en el destello, el navegador busca
+         el contenedor de scroll más cercano — y el «overflow: hidden» de la tarjeta
+         la convierte a ELLA en contenedor. El destello medía su avance contra una
+         caja que nunca se desplaza, así que salía terminado desde el primer cuadro.
+         Medido: a 40 px de scroll ya estaba en el final.
+         Nombrando la línea de tiempo en la tarjeta, lo que se mide es la tarjeta
+         dentro de la página, que es lo que se quería. */
+      .bienes li { view-timeline-name: --bien; }
+      .destello {
+        display: block;
+        position: absolute; inset: 0; z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(
+          105deg,
+          transparent 38%,
+          rgba(231, 192, 65, 0.16) 50%,
+          transparent 62%
+        );
+        transform: translateX(-140%);
+        animation: cruzar linear both;
+        animation-timeline: --bien;
+        /* EL RANGO SE MIDIÓ, y el primero estaba mal.
+           Se puso `entry 10% cover 38%` a ojo. Medido con el scroll paso a paso: a
+           40 px de desplazamiento la tarjeta apenas asomaba por el borde inferior y
+           el destello YA HABÍA TERMINADO. Una animación que se acaba antes de que
+           el elemento se vea no es sutil: es invisible.
+           Mezclar `entry` con `cover` fue el error — `cover` empieza a contar mucho
+           antes. Ahora el recorrido va de cuando la tarjeta está entrando a cuando
+           ya subió un cuarto de pantalla, que es donde el ojo está. */
+        animation-range: entry 20% contain 25%;
+      }
+    }
+  }
+
+  @keyframes cruzar {
+    to { transform: translateX(140%); }
   }
   /* Lo deducido se marca: borde punteado, el mismo lenguaje de «esto falta». */
   .bienes li.apuesta { border-style: dashed; border-color: var(--oro-700); }
