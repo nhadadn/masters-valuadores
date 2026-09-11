@@ -50,10 +50,20 @@
      * el gesto se gasta si se repite cinco veces en una pantalla.
      */
     diagonal?: boolean;
+    /**
+     * Qué ancho ocupa esta foto en la maqueta, para que el navegador elija el archivo
+     * que corresponde. SIN ESTO el valor por omisión —pensado para una foto a media
+     * pantalla— hace que una miniatura de 175 px descargue el archivo de 800.
+     *
+     * Con cuatro tarjetas eso eran ~275 KB en vez de ~85 KB, en la misma página que
+     * acababa de bajar de 590 a 140. Un `sizes` mal puesto no da error: solo cuesta.
+     */
+    tamanos?: string;
   }
   let {
     nombre, alt, relacion = '16 / 9', prioritaria = false,
-    provisional = true, alto = 1067, compacto = false, diagonal = false
+    provisional = true, alto = 1067, compacto = false, diagonal = false,
+    tamanos = '(min-width: 768px) 50vw, 100vw'
   }: Props = $props();
 </script>
 
@@ -77,8 +87,8 @@
   <div class="lienzo" class:tenida={provisional} class:cortada={diagonal}>
     <img
       src="/fotos/{nombre}-800.jpg"
-      srcset="/fotos/{nombre}-800.jpg 800w, /fotos/{nombre}-1600.jpg 1600w"
-      sizes="(min-width: 768px) 50vw, 100vw"
+      srcset="/fotos/{nombre}-400.jpg 400w, /fotos/{nombre}-600.jpg 600w, /fotos/{nombre}-800.jpg 800w, /fotos/{nombre}-1600.jpg 1600w"
+      sizes={tamanos}
       {alt}
       width="1600"
       height={alto}

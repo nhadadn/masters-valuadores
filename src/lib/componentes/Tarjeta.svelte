@@ -9,12 +9,44 @@
    * todo lo de abajo cuando carga la fuente, que es CLS en cada visita.
    */
   import Icono from './Icono.svelte';
+  import Foto from './Foto.svelte';
 
-  interface Props { href: string; titulo: string; icono: string; nota?: string; }
-  let { href, titulo, icono, nota }: Props = $props();
+  interface Props {
+    href: string;
+    titulo: string;
+    icono: string;
+    nota?: string;
+    /**
+     * Nombre base de la foto de la línea, en `static/fotos/`. Opcional a propósito:
+     * una tarjeta sin foto sigue siendo una tarjeta completa, y el día que un giro
+     * nuevo no tenga imagen no se rompe nada ni se inventa una.
+     */
+    foto?: string;
+    /** Describe LA FOTO. Nunca afirma que el local sea de Masters. */
+    fotoAlt?: string;
+  }
+  let { href, titulo, icono, nota, foto, fotoAlt }: Props = $props();
 </script>
 
-<a {href} class="tarjeta">
+<a {href} class="tarjeta" class:conFoto={foto}>
+  {#if foto}
+    <!-- La foto va ARRIBA y el ícono sigue abajo con el título. Son dos cosas
+         distintas: la foto dice de qué va la línea de un vistazo, el ícono la
+         identifica en la retícula y se repite en la banda de la página del giro.
+         Quitar el ícono habría roto ese hilo.
+
+         `tamanos` sale de medir la ranura: dos columnas en teléfono, cuatro en
+         escritorio. Sin eso cada miniatura de 175 px se bajaba el archivo de 800. -->
+    <span class="banda">
+      <Foto
+        nombre={foto}
+        alt={fotoAlt ?? ''}
+        relacion="16 / 9"
+        tamanos="(min-width: 768px) 25vw, 50vw"
+        compacto
+      />
+    </span>
+  {/if}
   <span class="filo" aria-hidden="true"></span>
   <Icono nombre={icono} tam={26} />
   <span class="titulo">{titulo}</span>
@@ -33,6 +65,7 @@
     background: var(--superficie);
     border: 1px solid var(--negro-400);
     color: var(--tinta);
+    overflow: hidden;                  /* la banda llega hasta el borde, sin asomarse */
     /* Solo `transform` y `border-color`: ninguno de los dos reflowea, así que la
        retícula no se mueve y no hay CLS. El alto fijo sigue intacto. */
     transition:
@@ -47,6 +80,21 @@
   /* El dedo espera que lo presionado baje. Sin esto, en táctil la tarjeta se queda
      levantada después del toque y parece trabada. */
   .tarjeta:active { transform: translateY(0); }
+
+  /* ── LA BANDA DE FOTO ───────────────────────────────────────────────────
+     La tarjeta tiene relleno; la foto no debe tenerlo. Los márgenes negativos la
+     llevan hasta los tres bordes de arriba, que es lo que la hace leerse como una
+     tarjeta y no como una foto metida en una caja.
+
+     El alto lo reserva `Foto.svelte` con `aspect-ratio`, así que la retícula no se
+     mueve cuando la imagen llega: el alto fijo de la tarjeta sigue valiendo. */
+  .banda {
+    display: block;
+    margin: calc(var(--e-4) * -1) calc(var(--e-3) * -1) var(--e-4);
+  }
+  /* Con foto, el filo dorado va DEBAJO de ella y no arriba del todo: arriba
+     competía con la imagen por el mismo renglón. */
+  .conFoto .filo { margin-top: 0; }
 
   .filo {
     width: 26px; height: 3px; background: var(--oro-500); margin-bottom: var(--e-3);

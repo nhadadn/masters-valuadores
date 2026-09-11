@@ -24,7 +24,13 @@ const RED = {
 const kb = (n) => +(n / 1024).toFixed(1);
 
 const navegador = await abrirChromium();
-const ctx = await navegador.newContext({ viewport: { width: 390, height: 844 } });
+/**
+ * `deviceScaleFactor: 2` no es un detalle. Sin él Playwright mide con densidad 1, el
+ * navegador elige el archivo más chico de cada `srcset` y el informe sale optimista:
+ * daba el LCP sobre `fachada-400.jpg`, que en un teléfono de verdad no se usa nunca.
+ * Un teléfono de gama baja de hoy sigue teniendo pantalla de densidad 2 o 3.
+ */
+const ctx = await navegador.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 const p = await ctx.newPage();
 
 const cdp = await ctx.newCDPSession(p);

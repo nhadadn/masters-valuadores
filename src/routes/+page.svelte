@@ -131,7 +131,7 @@
   <h2 class="titulo-seccion" data-propuesta="true">Elige la línea que buscas</h2>
   <ul class="reticula">
     {#each girosConstruibles as g}
-      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} /></li>
+      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} foto={g.fotoProvisional} fotoAlt={g.fotoAlt} /></li>
     {/each}
     <li>
       <div class="bloqueados">
@@ -297,7 +297,7 @@
 
   .bloqueados {
     display: flex; flex-direction: column;
-    min-height: 176px; padding: var(--e-4) var(--e-3);
+    min-height: 176px; height: 100%; padding: var(--e-4) var(--e-3);
     border: 1px dashed var(--negro-400); background: var(--superficie);
   }
   .cabeza {
