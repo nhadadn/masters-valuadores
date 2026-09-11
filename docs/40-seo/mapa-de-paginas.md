@@ -52,3 +52,32 @@ con los datos de la Etapa 1 y no antes.
 Un giro sin contenido real arrastra a los demás hacia abajo. Se publica por fases:
 una página entra al sitio cuando tiene sus fotos, sus requisitos y su texto
 aprobados — no antes.
+
+## Indexación · añadido el 11 de septiembre · SPEC-0003
+
+Las ocho rutas tienen ahora título, descripción y tarjeta de enlace propios, y el sitio
+emite `sitemap.xml` y `robots.txt`. Cuál entra al índice y cuál no:
+
+| Ruta | ¿Al índice? | ¿Al sitemap? | Por qué |
+|---|---|---|---|
+| `/` | Sí | Sí | |
+| `/empeno-y-prestamo/` | Sí | Sí | |
+| `/compra-venta-de-maquinaria/` | Sí | Sí | |
+| `/fletes-y-logistica/` | Sí | Sí | |
+| `/taller-y-refaccionaria/` | Sí | Sí | |
+| `/contacto/` | Sí | Sí | |
+| `/aviso-de-privacidad/` | **No** · `noindex, follow` | No | No responde a ninguna búsqueda y diluye el poco peso que un sitio nuevo reparte |
+| `/terminos/` | **No** · `noindex, follow` | No | Lo mismo |
+
+**Pero hoy no se indexa ninguna.** Mientras D-07 —el dominio— siga abierta, las ocho
+salen `noindex, nofollow`, `robots.txt` responde `Disallow: /` y el sitemap sale vacío.
+No hay canónica que proteja una URL provisional, y un borrador indexado compite después
+contra el dominio bueno. Se abre solo al escribir el dominio en `negocio.ts`. Ver
+[[ADR-0013-sin-dominio-no-se-indexa]].
+
+### La lista de rutas ya no se escribe a mano
+
+Vive en `src/lib/seo/enlaces.ts` y la consumen el `<head>`, el sitemap y el validador de
+accesibilidad. Un test la compara contra el disco: si aparece una ruta que no está
+registrada, o se registra una que no existe, `npm test` falla. Esta tabla es
+documentación de esa fuente, no una segunda copia de ella.

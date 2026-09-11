@@ -7,13 +7,7 @@
   import Seccion from '$componentes/Seccion.svelte';
   import Hueco from '$componentes/Hueco.svelte';
   import Migas from '$componentes/Migas.svelte';
-  import { negocio } from '$lib/config/negocio';
 </script>
-
-<svelte:head>
-  <title>Aviso de privacidad · {negocio.nombreComercial} VALUADORES</title>
-  <meta name="robots" content="noindex" />
-</svelte:head>
 
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: 'Aviso de privacidad' }]} /></div>
 

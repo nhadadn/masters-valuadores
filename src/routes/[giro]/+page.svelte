@@ -42,11 +42,6 @@
   ];
 </script>
 
-<svelte:head>
-  <title>{giro.nombre} · {negocio.nombreComercial} VALUADORES</title>
-  <meta name="description" content="__POR_CONFIRMAR__ · descripción de {giro.nombre}" />
-</svelte:head>
-
 <AvisoBorrador />
 
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>

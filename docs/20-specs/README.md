@@ -60,3 +60,4 @@ Cada spec enlaza el nivel C4 que toca y los ADR de los que depende.
 |---|---|---|
 | 0001 | [[SPEC-0001-armazon-fase-0]] | APROBADA E IMPLEMENTADA |
 | 0002 | [[SPEC-0002-lenguaje-visual]] | IMPLEMENTADA — 10 de 12 · CA-02 espera D-08, CA-04 espera copy |
+| 0003 | [[SPEC-0003-descubribilidad]] | IMPLEMENTADA — 10 de 10 |

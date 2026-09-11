@@ -75,7 +75,9 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Sistema de diseño | Cerrado y verificado |
 | Fase 0 · armazón | **IMPLEMENTADA** · 10/10 criterios, 31 tests |
 | Contenido | **CERO**. Es el trabajo que sigue |
+| Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el NAP, a propósito |
+| Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
 
@@ -87,6 +89,7 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | **Lenguaje visual derivado de sus publicaciones** | `ADR-0007` | Nadir · **falta implementarlo** |
 | Tipografía Archivo, autoalojada | `ADR-0002` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
+| **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
 Tablero de lo abierto: `docs/30-cliente/decisiones-pendientes.md`.
 
@@ -100,6 +103,8 @@ src/lib/datos/              giros e íconos
 src/lib/estilos/            tokens.css · fuentes.css · base.css. Ningún componente escribe un color
 src/lib/componentes/        los primitivos. CERO librería de UI
 src/lib/seo/jsonld.ts       el @graph. Lanza excepción si falta un dato
+src/lib/seo/enlaces.ts      origen del sitio, inventario de páginas, sitemap y robots
+src/lib/seo/meta.ts         título y descripción de cada ruta. TODAS son propuesta
 src/routes/                 8 páginas, todas prerenderizadas · ADR-0008
 herramientas/               presupuesto de JS y validación de accesibilidad
 ```
@@ -141,9 +146,9 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS** en todas · HTML de 2.8 a 4.5 KB gzip · 37 tests ·
-contraste mínimo 4.94:1 · objetivo táctil mínimo 44 px · 22/22 combinaciones
-página × ancho cumplen.
+8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 103 tests ·
+contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px · 16/16 combinaciones
+página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 Titular más largo: «Renta de maquinaria y equipo» mide 392 px a h1 28/700 contra 350
 disponibles. **No cabe en un renglón en ninguna tipografía.** Por eso la tarjeta de giro
@@ -154,7 +159,7 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros y fugas de datos · 31 tests
+npm test                              # grafo, giros, fugas, tokens vivos y SEO · 103 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10, tras un build

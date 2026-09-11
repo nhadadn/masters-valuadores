@@ -60,11 +60,6 @@
   ]);
 </script>
 
-<svelte:head>
-  <title>{negocio.nombreComercial} VALUADORES · __POR_CONFIRMAR__</title>
-  <meta name="description" content="__POR_CONFIRMAR__ · descripción de la portada, no se inventa" />
-</svelte:head>
-
 <AvisoBorrador />
 
 <!-- ENTRADA OSCURA · ADR-0011. Se aparta de sus cinco piezas, donde el panel del

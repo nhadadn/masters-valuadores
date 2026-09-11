@@ -190,7 +190,7 @@ lleguen las reales.
 | **D-03** | ¿Existe el servicio de **avalúos periciales**? ¿Con perito certificado? |
 | **D-13** | El formulario de contacto: **¿a dónde quieres que lleguen los mensajes?** Correo, hoja de cálculo, o directo a WhatsApp. Un sitio como este no procesa envíos solo, así que hasta saberlo el formulario no se construye |
 | **D-10** | Las **URLs exactas** de tu Instagram y tu Facebook |
-| **D-07** | El **dominio**: ¿ya tienes uno? ¿Quién lo paga y a nombre de quién queda? |
+| **D-07** | El **dominio**: ¿ya tienes uno? ¿Quién lo paga y a nombre de quién queda? **Mientras no exista, el sitio sale bloqueado para Google a propósito** — sin dominio no hay forma de decirle a Google cuál es la dirección buena, y un sitio de pruebas indexado después le compite a la dirección real |
 
 ---
 
@@ -208,6 +208,38 @@ que pediste enfocar. No es un reclamo, es que conviene aclararlo antes de public
 > **¿La renta de herramienta sigue viva?** Tienes una publicación anunciándola.
 > **¿Por qué fletes y taller no están en el letrero, si son dos de los cuatro que
 > quieres enfocar?**
+
+---
+
+## BLOQUE 11 · Los ocho renglones con los que Google te va a nombrar
+
+Esto **no es una pregunta**: es un borrador que escribimos nosotros para que lo
+corrijas. Son el título y el resumen que aparecen en Google y en la vista previa cuando
+alguien pega tu enlace en WhatsApp. Antes decían `__POR_CONFIRMAR__`, que es lo que se
+habría publicado.
+
+**Palomea, tacha o reescribe.** Ninguno trae cifras, plazos ni promesas: solo dicen qué
+es cada línea. Si algo no es como trabajas, dilo y se cambia.
+
+| Página | Título | Resumen |
+|---|---|---|
+| Portada | Empeño, maquinaria, fletes y taller en Torreón · MASTERS | Cuatro líneas de negocio bajo una marca en Torreón, Coahuila: empeño y préstamo, compra venta de maquinaria, fletes y logística, y taller y refaccionaria. |
+| Empeño | Empeño y préstamo en Torreón · MASTERS VALUADORES | Dejas un bien en garantía y sales con efectivo. Lo valuamos y te decimos cuánto te podemos prestar. Empeño en Torreón, Coahuila. |
+| Maquinaria | Compra venta de maquinaria en Torreón · MASTERS | Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio. Torreón, Coahuila. |
+| Fletes | Fletes y logística en Torreón · MASTERS VALUADORES | Transporte y movimiento de carga en Torreón, Coahuila. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo. |
+| Taller | Taller y refaccionaria en Torreón · MASTERS | Servicio de taller y venta de refacciones en Torreón, Coahuila. Lo traes, lo revisamos y te decimos qué necesita antes de que autorices. |
+| Contacto | Contacto · MASTERS VALUADORES en Torreón | Cómo localizar a MASTERS VALUADORES en Torreón, Coahuila. Escríbenos y te decimos si lo que traes entra en alguna de nuestras cuatro líneas. |
+
+Las dos páginas legales también tienen los suyos, pero esas no salen en Google a
+propósito, así que no hace falta que las revises.
+
+> **Una advertencia sobre el título de la portada.** Dice «MASTERS», con S, porque es lo
+> que dice tu logotipo. Si en el BLOQUE 2 decides que va sin S, estos ocho renglones
+> cambian con ella.
+
+**La imagen de la vista previa es tu fachada.** Cuando alguien pegue el enlace en
+WhatsApp va a ver tu local, tu letrero y tu teléfono. Es la única foto tuya que tenemos
+y es justo lo que ninguna cadena puede enseñar.
 
 ---
 

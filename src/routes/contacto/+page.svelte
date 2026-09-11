@@ -18,11 +18,6 @@
   const formularioListo = estaConfirmado(negocio.destinoFormulario);
 </script>
 
-<svelte:head>
-  <title>Contacto · {negocio.nombreComercial} VALUADORES</title>
-  <meta name="description" content="__POR_CONFIRMAR__ · descripción de contacto" />
-</svelte:head>
-
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: 'Contacto' }]} /></div>
 
 <Seccion etiqueta="CONTACTO">

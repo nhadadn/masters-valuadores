@@ -7,17 +7,45 @@
  *
  * Uso:  npx serve build -l 8123   y luego   node herramientas/validar-a11y.mjs
  */
+import { readdirSync, statSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { abrirChromium } from './navegador.mjs';
 
 const BASE = process.env.BASE ?? 'http://127.0.0.1:8123';
-// Cuatro giros desde el ADR-0008. Esta lista está a mano y es una trampa: si alguien
-// cambia `giros.ts` y olvida esto, el validador pide páginas que ya no existen y
-// reporta menos cobertura de la que cree tener. Se actualiza junto con los datos.
-const RUTAS = [
-  '/', '/empeno-y-prestamo/', '/compra-venta-de-maquinaria/',
-  '/fletes-y-logistica/', '/taller-y-refaccionaria/',
-  '/contacto/', '/aviso-de-privacidad/', '/terminos/'
-];
+
+/**
+ * LAS RUTAS SE LEEN DEL BUILD, no de una lista a mano.
+ *
+ * Aquí había un arreglo escrito a mano con su propia advertencia:
+ *
+ *   «Esta lista está a mano y es una trampa: si alguien cambia giros.ts y olvida
+ *    esto, el validador pide páginas que ya no existen y reporta menos cobertura
+ *    de la que cree tener.»
+ *
+ * Escribir la advertencia no desarma la trampa. Al añadir el sitemap (SPEC-0003)
+ * la lista habría sido la TERCERA copia del inventario, así que se quitó: el
+ * validador recorre 'build/' y valida lo que de verdad se construyó. Una página
+ * nueva entra sola, y una que desaparece deja de pedirse sola.
+ *
+ * Que el inventario de 'src/lib/seo/enlaces.ts' coincida con el disco lo vigila
+ * 'tests/seo.test.ts' · CA-S10.
+ */
+const BUILD = 'build';
+const RUTAS = (function rutas(dir = BUILD, ruta = '/') {
+  const salida = existsSync(join(dir, 'index.html')) ? [ruta] : [];
+  for (const n of readdirSync(dir)) {
+    const p = join(dir, n);
+    if (n === '_app' || !statSync(p).isDirectory()) continue;
+    salida.push(...rutas(p, `${ruta}${n}/`));
+  }
+  return salida;
+})();
+
+if (RUTAS.length === 0) {
+  console.error('✗ No hay páginas en build/. Corre primero «npm run build:revision».');
+  process.exit(1);
+}
+
 const ANCHOS = [390, 1280];
 
 const navegador = await abrirChromium();

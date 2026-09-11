@@ -87,7 +87,7 @@ armada por esto cuesta posicionamiento real. Pregunta exacta:
 | # | Decisión | Qué destraba | Quién decide |
 |---|---|---|---|
 | D-06 | **Archivo del logo** (vectorial de preferencia) | La paleta acero + ámbar y la elección de tipografía | Cristóbal |
-| D-07 | Dominio y hospedaje | Canónicas, `WebSite.url`, despliegue | Cristóbal (la propuesta lo deja a su cargo) |
+| D-07 | Dominio y hospedaje | Canónicas, `WebSite.url`, despliegue — y desde el 11 de septiembre, **que el sitio se pueda indexar**: sin dominio va `noindex` completo, `robots.txt` en `Disallow: /` y sitemap vacío. Ver [[ADR-0013-sin-dominio-no-se-indexa]] | Cristóbal (la propuesta lo deja a su cargo) |
 | D-12 | Herramienta de medición de contactos | Presupuesto de 40 KB de JS inicial | Nadir |
 | D-13 | ¿A dónde llegan los envíos del formulario de valuación? | Si el formulario existe. Un sitio estático no procesa envíos solo | Nadir + Cristóbal |
 | D-14 | **El acento**: el ADR-0006 propone revertir a `#E7C041` porque las cinco publicaciones vivas lo desmintieron | Cierra la paleta. Ver [[ADR-0006-el-amarillo-vive]] | Nadir, y luego Cristóbal |

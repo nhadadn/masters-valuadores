@@ -7,6 +7,7 @@
   import Icono from '$componentes/Icono.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
+  import Meta from '$componentes/Meta.svelte';
   import ReglaDorada from '$componentes/ReglaDorada.svelte';
   import BandaContacto from '$componentes/BandaContacto.svelte';
   import type { Snippet } from 'svelte';
@@ -23,6 +24,11 @@
 <svelte:head>
   {@html `<script type="application/ld+json">${grafo}</` + `script>`}
 </svelte:head>
+
+<!-- Titulo, descripcion, canonica y tarjeta de enlace de TODA pagina · SPEC-0003.
+     Va aqui y no en cada ruta: centralizado, una pagina nueva no puede nacer sin
+     <head>. Si no esta en el inventario de enlaces.ts, meta.ts truena el build. -->
+<Meta />
 
 <a class="salto-contenido" href="#contenido">Saltar al contenido</a>
 
