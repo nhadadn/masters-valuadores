@@ -16,6 +16,7 @@
   import Icono from '$componentes/Icono.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Titular from '$componentes/Titular.svelte';
+  import Foto from '$componentes/Foto.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -53,6 +54,14 @@
        un énfasis que nadie autorizó. La segunda tinta espera copy. -->
   <div class="encabezado"><Titular primera={giro.nombre} /></div>
   <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
+  <!-- ADR-0009. Las páginas de giro NO tenían ranura de foto: el CLAUDE.md pedía
+       «fachada y una por giro» y solo existía la de la portada. Aquí se abre, con
+       foto de archivo provisional y rotulada. -->
+  {#if giro.fotoProvisional}
+    <div class="foto-giro">
+      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} />
+    </div>
+  {/if}
   <div class="acciones">
     <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
     <Boton variante="secundario" href="/contacto/">
@@ -155,6 +164,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     background: var(--oro-500); color: var(--negro-950); font-size: 15px; line-height: 1;
   }
+  .foto-giro { margin-top: var(--e-4); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
   .nota { font-size: var(--pie-tam); color: var(--tinta-secundaria); margin-top: var(--e-4); }
   .et { font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }

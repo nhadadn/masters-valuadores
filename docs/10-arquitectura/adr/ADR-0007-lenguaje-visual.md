@@ -154,6 +154,12 @@ Ninguna de las seis piezas necesita romperlas, y todas son CSS:
   grande**. En un cartel a un metro se perdona; en un teléfono a plena luz, no.
 - **La maquinaria de banco.** Sus piezas usan imágenes de archivo o generadas. En el
   sitio van fotos suyas o va hueco.
+
+  > **REVERTIDO EN PARTE el 10 de septiembre por [[ADR-0009-fotografia-de-banco|ADR-0009]].**
+  > Nadir decidió que entren fotografías de archivo como **provisionales**, rotuladas
+  > en pantalla y reversibles en un commit. La objeción de este párrafo se mantiene
+  > escrita y el ADR-0009 la recoge entera. Lo que **no** se revierte: el hueco de la
+  > fachada sigue vacío — ninguna foto ajena ocupa esa ranura.
 - **La errata.** Su pieza de renta dice «herramienta lijera». Va con G.
 
 ## Cómo se verifica

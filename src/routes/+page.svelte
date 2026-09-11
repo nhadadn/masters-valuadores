@@ -16,6 +16,7 @@
   import Icono from '$componentes/Icono.svelte';
   import Insignia from '$componentes/Insignia.svelte';
   import BandaDiagonal from '$componentes/BandaDiagonal.svelte';
+  import Foto from '$componentes/Foto.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Titular from '$componentes/Titular.svelte';
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
@@ -107,7 +108,15 @@
 
          Vuelve aquí el día que exista la foto de la fachada, que es cuando habrá algo
          que cortar. Ver D-06 y el hueco de la fachada. -->
-    <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
+    <!-- ADR-0009. Foto de archivo, provisional y rotulada como tal. NO es la fachada:
+         ese hueco sigue abierto más abajo, en «dónde estamos», porque rellenarlo con
+         el escaparate de otro negocio sería enseñar el local de un tercero como si
+         fuera el de Cristóbal. -->
+    <Foto
+      nombre="portada-maquinaria"
+      alt="Cargador frontal amarillo sobre terreno de tierra, bajo un cielo nublado"
+      prioritaria
+    />
   </div>
 </Seccion>
 
@@ -157,7 +166,13 @@
 
 <Seccion fondo="crema" etiqueta="DÓNDE ESTAMOS">
   <div class="ubicacion">
-    <RanuraImagen relacion="4 / 3" etiqueta="MAPA — NO SE DIBUJA HASTA CERRAR D-08" />
+    <div class="lugar">
+      <!-- El hueco más caro del proyecto, y sigue abierto a propósito. Aquí es donde
+           corresponde: «dónde estamos» se contesta enseñando el local. Ninguna foto de
+           archivo entra en esta ranura. Ver `docs/60-diseno/brief-de-fotos.md`. -->
+      <RanuraImagen relacion="16 / 9" etiqueta="FOTO — FACHADA DEL LOCAL, DE DÍA, CON EL LETRERO LEGIBLE" />
+      <RanuraImagen relacion="4 / 3" etiqueta="MAPA — NO SE DIBUJA HASTA CERRAR D-08" />
+    </div>
     <div class="datos">
       <p><Icono nombre="mapa" tam={20} /> <PorConfirmar que="calle, número, colonia y CP" decision="D-08" /></p>
       <p><Icono nombre="reloj" tam={20} /> <PorConfirmar que="horarios de cada día" decision="D-08" /></p>
@@ -239,6 +254,7 @@
   .diferenciadores { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
 
   .ubicacion { display: grid; gap: var(--e-6); }
+  .lugar { display: grid; gap: var(--e-3); min-width: 0; }
   .datos { display: grid; gap: var(--e-3); justify-items: start; }
   .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
 

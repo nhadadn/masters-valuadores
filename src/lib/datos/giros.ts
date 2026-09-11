@@ -31,6 +31,14 @@ export interface Giro {
    * por el cliente, esto es borrador nuestro. Ver `AvisoBorrador.svelte`.
    */
   frasePropuesta?: string;
+  /**
+   * Foto de archivo PROVISIONAL · ADR-0009. Nombre base en `static/fotos/`.
+   * NO es una foto del negocio. Sale entera cuando lleguen las de Cristóbal:
+   * ver `docs/60-diseno/brief-de-fotos.md`.
+   */
+  fotoProvisional?: string;
+  /** Describe LA FOTO, nunca afirma que el local sea de Masters. */
+  fotoAlt?: string;
   icono: string;
   estado: EstadoGiro;
   /** Qué decisión lo destraba, si está bloqueado. */
@@ -40,10 +48,10 @@ export interface Giro {
 export const giros: Giro[] = [
   // CUATRO GIROS · ADR-0008. El orden es el que dijo el cliente, NO una prioridad
   // de búsqueda: esa sale de la Etapa 1 y sigue sin ejecutarse.
-  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', icono: 'empeno',  estado: 'construible' },
-  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', icono: 'renta', estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', icono: 'fletes',  estado: 'construible' },
-  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', icono: 'taller',  estado: 'construible' },
+  { slug: 'empeno-y-prestamo',   nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'empeno', fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura', icono: 'empeno',  estado: 'construible' },
+  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'maquinaria', fotoAlt: 'Cargador frontal amarillo en un terreno de obra', icono: 'renta', estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', icono: 'fletes',  estado: 'construible' },
+  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', icono: 'taller',  estado: 'construible' },
 
   // SALIERON el 10 de septiembre por el ADR-0008: joyería, bazar y financiera.
   // No se borran de la historia: el ADR registra qué se soltó y qué costó.
