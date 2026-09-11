@@ -69,8 +69,37 @@ export interface Negocio {
 }
 
 export const negocio: Negocio = {
-  nombreComercial: 'MASTERS',
-  nombreLegal: POR_CONFIRMAR,        // D-01 · ¿Master o Masters?
+  /**
+   * D-01 · CERRADA el 11 de septiembre de 2026 por Cristóbal, vía Nadir: «Es MASTER».
+   *
+   * REVIERTE la grafía del ADR-0004, que había cerrado `MASTERS` siguiendo el
+   * logotipo. La evidencia acumulada le daba la razón al cliente: de los cuatro
+   * lugares donde la marca está escrita, **tres van sin S**.
+   *
+   *   su ficha de Google      Master valuadores
+   *   su correo publicado     mastervaluadores@outlook.com
+   *   su Facebook, en el letrero   MASTER VALUADORES
+   *   su logotipo             MASTERS VALUADORES   ← el único con S
+   *
+   * Gana la consistencia del NAP, que es factor de posicionamiento local: el nombre
+   * tiene que ser IDÉNTICO en todas partes, y ahora lo es en cuatro de cinco.
+   *
+   * LO QUE QUEDA DESALINEADO, y hay que decirlo: **el logotipo de su propia fachada
+   * dice MASTERS**, y esa foto es el héroe de la portada y la tarjeta de WhatsApp.
+   * El sitio dirá MASTER junto a una imagen que dice MASTERS. No se retoca la foto:
+   * es la única real que hay y alterarla sería falsificar su local. Se resuelve el
+   * día que cambien el letrero, o no se resuelve.
+   *
+   * Por eso los `alt` de esas dos fotos SIGUEN diciendo MASTERS: describen lo que se
+   * ve en la imagen, no cómo se llama la empresa. Ver ADR-0018.
+   */
+  nombreComercial: 'MASTER',
+  /**
+   * SIGUE ABIERTA. D-01 eran dos preguntas y solo se contestó una: cuál se lee en el
+   * sitio. La razón social es la del acta constitutiva —algo como «… S.A. de C.V.»—
+   * y esa no la decide el gusto, la dice un documento. Sin ella no se puede publicar.
+   */
+  nombreLegal: POR_CONFIRMAR,        // D-01b · la del acta, no la comercial
   dominio: POR_CONFIRMAR,            // D-07
   /**
    * D-02 · ALINEADO A SU FICHA DE GOOGLE el 11 de septiembre · ADR-0014.

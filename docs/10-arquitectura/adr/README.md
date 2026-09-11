@@ -26,6 +26,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0015 | [[ADR-0015-mapa-incrustado\|Entra el mapa de Google incrustado]] | **ACEPTADA** · **primer tercero del sitio · 643.8 KB medidos** | 2026-09-11 |
 | 0016 | [[ADR-0016-despliegue-de-vista-previa\|El borrador se cuelga en Vercel, sin dejar de ser borrador]] | **ACEPTADA** · enmienda el 0013 | 2026-09-11 |
 | 0017 | [[ADR-0017-indexacion-separada-del-dominio\|Tener dominio y estar indexable dejan de ser lo mismo]] | **ACEPTADA** · enmienda el 0013 · **D-07 ya no enciende la indexación** | 2026-09-11 |
+| 0018 | [[ADR-0018-la-marca-es-master-sin-s\|La marca se escribe MASTER, sin S]] | **ACEPTADA** · revierte la grafía del 0004 · cierra D-01a | 2026-09-11 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

@@ -30,9 +30,9 @@
    * encima, y para eso tiene que leer lo que se le propuso, no mi versión.
    *
    * LA GRAFÍA DE LA MARCA NO SE ESCRIBE AQUÍ. El borrador dice «Todo MÁSTER» y el
-   * ADR-0004 decidió que la grafía del sitio es `MASTERS`. Ese choque no lo resuelvo
-   * yo: sale de `negocio.nombreComercial`, que es la fuente única, y cambia solo
-   * cuando cierre D-01.
+   * El ADR-0004 había cerrado `MASTERS` y el ADR-0018 lo revirtió a `MASTER` al
+   * cerrarse D-01. Ese choque nunca lo resolvió esta página: sale de
+   * `negocio.nombreComercial`, que es la fuente única, y cambió con una sola línea.
    *
    * EL NÚMERO DE LÍNEAS SE DERIVA, NO SE ESCRIBE. El borrador decía «Siete líneas»
    * y el ADR-0008 lo dejó en cuatro el mismo día. Escribir el número a mano ya se

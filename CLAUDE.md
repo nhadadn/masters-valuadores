@@ -84,7 +84,8 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Qué | Dónde | Quién |
 |---|---|---|
 | Multigiro bajo la marca MÁSTER | `ADR-0003` | Cristóbal |
-| Identidad plana, grafía `MASTERS` | `ADR-0004` | Nadir |
+| Identidad plana | `ADR-0004` | Nadir |
+| **La marca se escribe `MASTER`, sin S** — revierte la grafía del 0004 | `ADR-0018` | Cristóbal |
 | Acento `#E7C041` — el que la marca sí publica | `ADR-0006` | Nadir · revierte el `ADR-0005` |
 | **Lenguaje visual derivado de sus publicaciones** | `ADR-0007` | Nadir · **falta implementarlo** |
 | Tipografía Archivo, autoalojada | `ADR-0002` | Nadir |
@@ -146,7 +147,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 110 tests ·
+8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 115 tests ·
 contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px · 16/16 combinaciones
 página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
@@ -159,7 +160,7 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens vivos y SEO · 110 tests
+npm test                              # grafo, giros, fugas, tokens vivos y SEO · 115 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · JS propio y terceros sin declarar

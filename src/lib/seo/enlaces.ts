@@ -134,7 +134,10 @@ export const IMAGEN_TARJETA = {
   ruta: '/marca/tarjeta-fachada.jpg',
   ancho: 1200,
   alto: 630,
-  alt: 'Fachada del local de MASTERS VALUADORES en Torreón, con el letrero a la vista'
+  // Dice MASTERS y NO es un descuido: el alt describe LA FOTO, y el letrero de esa
+  // foto dice MASTERS. La marca del sitio pasó a MASTER en D-01 (ADR-0018); el
+  // letrero de su fachada no cambió. Corregirlo aquí sería describir mal la imagen.
+  alt: 'Fachada del local en Torreón, con el letrero MASTERS VALUADORES a la vista'
 } as const;
 
 /**

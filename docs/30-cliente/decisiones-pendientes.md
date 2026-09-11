@@ -13,7 +13,8 @@ Cuando una se cierra: nace un [[10-arquitectura/adr/README|ADR]] y se marca aqu�
 
 | # | Decisión | Qué destraba | Quién decide |
 |---|---|---|---|
-| D-01 | Nombre legal: `Master` vs `Masters` | `Organization.legalName`, `name`, títulos, dominio | Cristóbal |
+| ~~D-01a~~ | ~~Qué grafía se lee en el sitio~~ · **CERRADA el 11 de septiembre: MASTER**, sin S. Ver [[ADR-0018-la-marca-es-master-sin-s]] | — | — |
+| **D-01b** | La **razón social del acta** — sigue abierta y sigue bloqueando la publicación | `Organization.legalName` | Cristóbal |
 
 **D-01 se agravó el 10 de septiembre.** Su correo publicado es
 `mastervaluadores@outlook.com` — **sin S** — mientras el lockup dice `MASTERS` y piezas
