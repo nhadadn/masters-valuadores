@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { anchosDe, srcset } from '$lib/datos/fotos';
   /**
    * Fotografía de archivo · ADR-0009, PROVISIONAL.
    *
@@ -77,10 +78,10 @@
     tamanos = '(min-width: 768px) 50vw, 100vw', maxAncho = 1600
   }: Props = $props();
 
-  const ANCHOS = [400, 600, 800, 1600];
-  const disponibles = $derived(ANCHOS.filter((a) => a <= maxAncho));
-  const juego = (ext: string) =>
-    disponibles.map((a) => `/fotos/${nombre}-${a}.${ext} ${a}w`).join(', ');
+  /* Los anchos y el srcset viven en `$lib/datos/fotos`, porque la galeria del
+     ADR-0022 necesita exactamente lo mismo y dos copias divergen. */
+  const disponibles = $derived(anchosDe(maxAncho));
+  const juego = (ext: string) => srcset(nombre, ext, maxAncho);
   const mayor = $derived(disponibles[disponibles.length - 1]);
 </script>
 

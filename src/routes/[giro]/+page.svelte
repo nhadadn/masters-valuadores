@@ -21,6 +21,8 @@
   import Mapa from '$componentes/Mapa.svelte';
   import Destello from '$componentes/Destello.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
+  import Galeria from '$componentes/Galeria.svelte';
+  import { galeriaInventario } from '$lib/datos/galeria';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -134,6 +136,21 @@
     </p>
   {/if}
 </Seccion>
+
+<!-- ADR-0022 · LA RETÍCULA DE FOTOS REALES.
+     Va DESPUÉS de la lista de bienes, que es la respuesta a la pregunta; esto la
+     ilustra. Y va en el campo oscuro, no en el mármol: el mármol es el registro de
+     lujo del ADR-0020 y estas son fotos de maquinaria en un patio de grava. Vestir
+     una retroexcavadora de boutique contradice su propia marca. -->
+{#if giro.muestraInventario}
+  <Seccion etiqueta="SU PATIO Y SU EQUIPO">
+    <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
+    <Galeria
+      fotos={galeriaInventario}
+      nota="Son fotografías de su patio, sacadas de sus propias publicaciones: por eso no llevan rótulo de archivo. NO son una lista de existencias — no sabemos de qué fecha son ni qué sigue ahí, así que lo que haya hoy se pregunta. Los pies de foto los escribimos nosotros mirando la imagen."
+    />
+  </Seccion>
+{/if}
 
 <Seccion>
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>

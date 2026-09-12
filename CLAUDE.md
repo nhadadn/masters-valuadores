@@ -78,7 +78,8 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
-| JavaScript | **Solo en `/empeno-y-prestamo/`** · 6.98 KB propios, sin marco ni librería · `ADR-0021`. Las otras siete en 0 KB |
+| JavaScript | **Solo en `/empeno-y-prestamo/`** · 7.43 KB propios, sin marco ni librería · `ADR-0021`. Las otras siete en 0 KB |
+| Fotografías reales | **SEIS** · cinco recortadas de las piezas 22 y 23, más la del patio · `ADR-0022`. Quedan tres de banco rotuladas |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -120,7 +121,7 @@ presupuesto de 40. No se subió el presupuesto: se quitó el runtime. El acorde�
 `<details>` nativo.
 
 **Enmendado el 11 de septiembre · `ADR-0021`.** Aquí decía «cero JavaScript» y ya no
-es literal: `/empeno-y-prestamo/` sirve **6.98 KB** de script propio para la banda de
+es literal: `/empeno-y-prestamo/` sirve **7.43 KB** de script propio para la banda de
 monedas. Las otras siete páginas siguen en 0 KB y el presupuesto sigue en 40.
 
 La regla que queda es más estrecha, no más laxa: **nada de marco, nada de librería, y
@@ -158,7 +159,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS en siete**, 6.98 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
+8 páginas · **0 KB de JS en siete**, 7.43 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
 6.5 KB gzip · 125 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
@@ -179,7 +180,7 @@ npm test                              # grafo, giros, fugas, tokens, SEO y CA-10
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
-node herramientas/medir-portada.mjs   # peso real y LCP en 4G de gama baja
+node herramientas/medir-portada.mjs   # peso real y LCP en 4G · RUTA=/empeno-y-prestamo/ para otra
 npx serve build -l 5180               # en una terminal…
 node herramientas/validar-a11y.mjs    # …y esto en otra (BASE=http://127.0.0.1:5180)
 node herramientas/medir-monedas.mjs   # ADR-0021 · lo que cuesta la banda de empeño
@@ -198,7 +199,11 @@ resultado real**, no el esperado.
    Dirección, horarios y coordenadas están en `negocio.ts`; el grafo bajó de 14 marcas
    a 7. Lo que queda del bloque: [[ficha-de-google]] y la decisión D-17, abajo.
 2. **Copy** — hoy son 27 huecos etiquetados. Se redacta como propuesta, ver arriba.
-3. **Fotos** — fachada y una por giro. Lo que Nadir extrajo del Instagram son gráficos
+3. **Fotos** — **parcialmente resuelto el 11 de septiembre** por el `ADR-0022`: entraron
+   seis fotografías reales de su patio, recortadas de sus propias piezas, y viven en la
+   retícula de empeño. Siguen pendientes: **los ORIGINALES** —las que hay vienen dentro
+   de arte comprimido por WhatsApp y miden entre 440 y 985 px— y sobre todo **joyería,
+   que no tiene ni una**. Lo que Nadir extrajo del Instagram son gráficos
    de redes con maquinaria de banco, no fotos del local. **El hueco de la fachada sigue
    abierto y es el activo más caro del proyecto**: es la única ventaja real frente a
    First Cash, y el ADR-0007 estima que las fotos son la mitad de lo que falta para que

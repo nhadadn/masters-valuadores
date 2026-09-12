@@ -162,5 +162,5 @@ Monedas cayendo encima de una foto de banco rotulada se ve **más** genérico, n
 | Del dato, no del slug | `src/routes/[giro]/+page.svelte` · `giro.registro === 'lujo'` |
 | El guardia, ya sin el hueco | `herramientas/presupuesto.mjs` · `tests/presupuesto.test.ts` |
 | Las cinco mediciones | `herramientas/medir-monedas.mjs` |
-| Peso | CA-10 · 6.98 KB en `/empeno-y-prestamo/`, 0 KB en las otras siete |
+| Peso | CA-10 · 7.43 KB en `/empeno-y-prestamo/`, 0 KB en las otras siete |
 | Accesibilidad y contraste | `validar-a11y.mjs` 16/16 · `verificar-contraste.py` 0 hallazgos |

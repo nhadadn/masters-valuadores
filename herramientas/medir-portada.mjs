@@ -11,7 +11,10 @@
 import { abrirChromium } from './navegador.mjs';
 
 const BASE = process.argv[2] ?? process.env.BASE ?? 'http://127.0.0.1:8124';
-const RUTA = '/';
+/* La ruta era fija en '/'. Se abrió al llegar la galería del ADR-0022: empeño es hoy
+   la página más pesada del sitio y no había forma de pesarla con esta herramienta.
+   Por omisión sigue midiendo la portada, así que nada de lo escrito cambia. */
+const RUTA = process.env.RUTA ?? '/';
 
 // 4G flojo, que es lo que hay en la calle y no en una oficina.
 const RED = {
@@ -65,8 +68,25 @@ await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 
 const pedidos = [];
 p.on('response', async (r) => {
+  /**
+   * EL PESO SALE DE LO TRANSFERIDO, NO DE UNA CABECERA.
+   *
+   * Aquí se leía `content-length` y se daba 0 cuando faltaba. `npx serve` no la manda
+   * en todas las respuestas: comprobado el 11 de septiembre, `monedas.js` viajaba con
+   * 21018 bytes de cuerpo y esta herramienta informaba **js 0 KB** en la única página
+   * del sitio que sirve JavaScript. Un cero no se distingue de «no hay».
+   *
+   * Es el mismo defecto que tenía el guardia de CA-10, en otra herramienta y el mismo
+   * día: medir por donde es cómodo y callar lo que no cabe por ahí.
+   *
+   * `sizes().responseBodySize` es lo que de verdad viajó por el cable. La cabecera se
+   * queda de respaldo por si la petición ya no está disponible.
+   */
   let bytes = 0;
-  try { bytes = Number((await r.allHeaders())['content-length'] ?? 0); } catch { /* sin cabecera */ }
+  try { bytes = (await r.request().sizes()).responseBodySize || 0; } catch { /* ya no está */ }
+  if (!bytes) {
+    try { bytes = Number((await r.allHeaders())['content-length'] ?? 0); } catch { /* sin cabecera */ }
+  }
   const u = r.url();
   pedidos.push({
     url: u,

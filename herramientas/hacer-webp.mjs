@@ -14,10 +14,22 @@
  *
  *   node herramientas/hacer-webp.mjs
  */
-import { readFileSync, writeFileSync, statSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, statSync, existsSync, readdirSync } from 'node:fs';
 import { abrirChromium } from './navegador.mjs';
 
-const FOTOS = ['fachada', 'empeno', 'maquinaria', 'fletes', 'taller', 'patio'];
+/**
+ * Las fotos salen del DIRECTORIO, no de una lista a mano.
+ *
+ * Habia una lista literal aqui, otra en el otro generador y una TERCERA distinta en
+ * `hacer-miniaturas.mjs`: ya habian divergido. Anadir una foto y olvidar una lista
+ * significa publicar un <picture> cuyo AVIF o WebP no existe; el navegador cae al
+ * JPEG sin decir nada y se sirve el formato mas pesado sin que nadie se entere.
+ */
+const FOTOS = [...new Set(
+  readdirSync('static/fotos')
+    .map((f) => /^(.+)-\d+\.jpg$/.exec(f)?.[1])
+    .filter(Boolean)
+)].sort();
 const ANCHOS = [400, 600, 800, 1600];
 const CALIDAD = 0.80;
 
