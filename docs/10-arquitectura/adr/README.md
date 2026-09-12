@@ -28,6 +28,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0017 | [[ADR-0017-indexacion-separada-del-dominio\|Tener dominio y estar indexable dejan de ser lo mismo]] | **ACEPTADA** · enmienda el 0013 · **D-07 ya no enciende la indexación** | 2026-09-11 |
 | 0018 | [[ADR-0018-la-marca-es-master-sin-s\|La marca se escribe MASTER, sin S]] | **ACEPTADA** · revierte la grafía del 0004 · cierra D-01a | 2026-09-11 |
 | 0019 | [[ADR-0019-dos-registros-y-metal\|Dos registros, como su marca · y el oro vuelve a ser metal]] | **ACEPTADA** · enmienda el 0012 · recupera la rampa del 0010 | 2026-09-11 |
+| 0020 | [[ADR-0020-crema-calida-y-marmol\|El registro claro se vuelve cálido, y empeño se viste de mármol]] | **ACEPTADA** · extiende el 0019 | 2026-09-11 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

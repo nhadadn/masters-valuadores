@@ -27,6 +27,9 @@
   let { data }: { data: PageData } = $props();
   const giro = $derived(data.giro);
   const otras = $derived(girosConstruibles.filter((g) => g.slug !== giro.slug));
+  /* El registro de este giro. Ver ADR-0020: mármol para lo que su marca trata como
+     lujo, crema industrial para el resto. Por omisión, industrial. */
+  const claro = $derived(giro.registro === 'lujo' ? 'marmol' : 'crema');
 
   const PREGUNTAS = [
     '¿Aceptan lo que traigo?',
@@ -77,7 +80,7 @@
   </div>
 </Seccion>
 
-<Seccion fondo="crema">
+<Seccion fondo={claro}>
   <h2><span class="num">1</span> {PREGUNTAS[0]}</h2>
   <!-- DEDUCIDO, no dictado. Cada renglón dice de dónde sale, y esa es la parte que
        hace esto corregible de un vistazo: lo del letrero es casi un hecho, lo
@@ -148,7 +151,7 @@
   </div>
 </Seccion>
 
-<Seccion fondo="crema">
+<Seccion fondo={claro}>
   <h2><span class="num">3</span> {PREGUNTAS[2]}</h2>
   <ul class="requisitos">
     {#each Array(4) as _, i}
@@ -170,7 +173,7 @@
   </div>
 </Seccion>
 
-<Seccion fondo="crema">
+<Seccion fondo={claro}>
   <h2><span class="num">5</span> {PREGUNTAS[4]}</h2>
   <ul class="acordeon">
     {#each PREGUNTAS_FRECUENTES as p, i}

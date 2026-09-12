@@ -8,7 +8,7 @@
   import ReglaDorada from './ReglaDorada.svelte';
 
   interface Props {
-    fondo?: 'blanco' | 'crema' | 'oscuro';
+    fondo?: 'blanco' | 'crema' | 'marmol' | 'oscuro';
     amplia?: boolean;
     etiqueta?: string;
     id?: string;
@@ -54,16 +54,17 @@
   .blanco,
   .oscuro { background: transparent; color: var(--tinta-sobre-oscuro); }
 
-  .crema {
+  .crema,
+  .marmol {
     /* EL COLOR PLANO VA ADEMÁS DEL DEGRADADO, y con el PEOR extremo.
        Un `background-image` deja el `background-color` en transparente, así que
        cualquiera que resuelva el fondo —el validador de contraste, y también un
        navegador que falle al pintar el degradado— acaba leyendo el campo oscuro de
        `body` que hay detrás. Ya pasó una vez con los botones y se midió 1:1 sobre
        texto que en pantalla daba 9.29:1.
-       Se declara `--acero-100`, el extremo MÁS OSCURO de la rampa, para que la
+       Se declara `--crema-100`, el extremo MÁS OSCURO de la rampa, para que la
        medición salga pesimista y nunca optimista. */
-    background-color: var(--acero-100);
+    background-color: var(--crema-100);
     background-image: var(--grad-claro);
     color: var(--tinta);
 
@@ -72,7 +73,7 @@
     --panel: var(--blanco);
     --panel-borde: var(--negro-400);      /* 3.49:1 · piso de borde no-texto */
     --superficie: var(--blanco);
-    --superficie-alterna: var(--acero-025);
+    --superficie-alterna: var(--crema-025);
     --superficie-oscura: var(--negro-950);
 
     /* Tintas invertidas. Los ratios son los de tokens.css sobre blanco. */
@@ -92,7 +93,7 @@
        tokens.css: «el oro como texto va sobre --superficie o sobre oscuro, NUNCA
        sobre --superficie-alterna». El campo de acero es esa superficie alterna.
 
-       Medido: `--oro-800` sobre `--acero-100` da 3.36:1. Pasa el piso de 3 del texto
+       Medido: `--oro-800` sobre `--crema-100` da 3.47:1. Pasa el piso de 3 del texto
        grande y NO pasa el 4.5 del texto normal — el validador lo cazó en «Cómo
        llegar», 17 px en negrita.
 
@@ -108,6 +109,12 @@
     --oro-texto: var(--negro-950);
     --oro-texto-grande: var(--oro-800);
   }
+
+  /* El mármol es el MISMO registro claro —hereda todos los roles de arriba— con otra
+     superficie debajo. Nada de tintas cambia, así que nada de contraste cambia: la
+     base de la pila de degradados es la misma rampa cálida y el color plano sigue
+     siendo su peor extremo. Solo se le pone piedra encima. */
+  .marmol { background-image: var(--marmol); }
 
   .etiqueta {
     font-size: var(--etiqueta-tam);
