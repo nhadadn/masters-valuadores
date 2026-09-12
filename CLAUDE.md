@@ -77,7 +77,8 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **DOS** · claro de acero y oscuro, como su material · `ADR-0019` |
+| Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
+| JavaScript | **Solo en `/empeno-y-prestamo/`** · 6.98 KB propios, sin marco ni librería · `ADR-0021`. Las otras siete en 0 KB |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -113,11 +114,20 @@ herramientas/               presupuesto de JS, accesibilidad, peso y generadores
 
 ### Tres decisiones que hay que respetar
 
-**1 · Cero JavaScript en el cliente.** `csr = false` en `src/routes/+layout.ts:28`.
+**1 · Cero marco en el cliente.** `csr = false` en `src/routes/+layout.ts:28`.
 Medido: el runtime de Svelte 5 más el enrutador pesan 46 KB gzip por página contra un
 presupuesto de 40. No se subió el presupuesto: se quitó el runtime. El acordeón usa
-`<details>` nativo. Si una pantalla necesita interacción real, se le pone `csr = true`
-a **esa** ruta y solo esa paga.
+`<details>` nativo.
+
+**Enmendado el 11 de septiembre · `ADR-0021`.** Aquí decía «cero JavaScript» y ya no
+es literal: `/empeno-y-prestamo/` sirve **6.98 KB** de script propio para la banda de
+monedas. Las otras siete páginas siguen en 0 KB y el presupuesto sigue en 40.
+
+La regla que queda es más estrecha, no más laxa: **nada de marco, nada de librería, y
+lo que entre lo paga su ruta**. `csr` sigue en `false`; el script es un archivo de
+`static/` que no arrastra bundle. Si una pantalla necesitara interacción de verdad,
+`csr = true` en ESA ruta — pero eso son 46 KB antes de escribir nada, así que la
+respuesta por defecto es no.
 
 **2 · CA-08 no es un test, es el build.** `src/lib/seo/jsonld.ts:135`. El grafo se arma
 durante el prerender, así que la excepción revienta la publicación. `npm run build`
@@ -148,9 +158,13 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS** en todas · HTML de 3.1 a 5.7 KB gzip · 115 tests ·
-contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px · 16/16 combinaciones
-página × ancho cumplen · 12/12 de las piezas del ADR-0007.
+8 páginas · **0 KB de JS en siete**, 6.98 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
+6.5 KB gzip · 125 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
+16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
+
+La banda de monedas, medida contra la misma página sin ella y en la misma fase:
+**+509 ms de hilo mientras caen**, **+66 ms ya asentadas**, cero tareas largas, y 49
+fps con el reloj a 1/4. `node herramientas/medir-monedas.mjs`.
 
 Titular más largo: «Renta de maquinaria y equipo» mide 392 px a h1 28/700 contra 350
 disponibles. **No cabe en un renglón en ninguna tipografía.** Por eso la tarjeta de giro
@@ -161,15 +175,16 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens vivos y SEO · 115 tests
+npm test                              # grafo, giros, fugas, tokens, SEO y CA-10 · 125 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
-node herramientas/presupuesto.mjs     # CA-10 · JS propio y terceros sin declarar
+node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
 node herramientas/medir-portada.mjs   # peso real y LCP en 4G de gama baja
-npx serve build                       # en una terminal…
-node herramientas/validar-a11y.mjs    # …y esto en otra
-python diseno/sistema/verificar-contraste.py
-node diseno/pantallas/validar.mjs
+npx serve build -l 5180               # en una terminal…
+node herramientas/validar-a11y.mjs    # …y esto en otra (BASE=http://127.0.0.1:5180)
+node herramientas/medir-monedas.mjs   # ADR-0021 · lo que cuesta la banda de empeño
+cd diseno/sistema  && python verificar-contraste.py   # usan rutas relativas:
+cd diseno/pantallas && node validar.mjs               # hay que entrar a su carpeta
 ```
 
 Antes de declarar cualquier cosa terminada: corre lo que aplique y **reporta el

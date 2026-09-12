@@ -29,6 +29,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0018 | [[ADR-0018-la-marca-es-master-sin-s\|La marca se escribe MASTER, sin S]] | **ACEPTADA** · revierte la grafía del 0004 · cierra D-01a | 2026-09-11 |
 | 0019 | [[ADR-0019-dos-registros-y-metal\|Dos registros, como su marca · y el oro vuelve a ser metal]] | **ACEPTADA** · enmienda el 0012 · recupera la rampa del 0010 | 2026-09-11 |
 | 0020 | [[ADR-0020-crema-calida-y-marmol\|El registro claro se vuelve cálido, y empeño se viste de mármol]] | **ACEPTADA** · extiende el 0019 | 2026-09-11 |
+| 0021 | [[ADR-0021-javascript-en-una-sola-ruta\|Entra JavaScript, en una sola ruta y sin marco]] | **ACEPTADA** · **rompe el «cero JS» en 1 de 8 páginas, a propósito** | 2026-09-11 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

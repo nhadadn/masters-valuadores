@@ -20,6 +20,7 @@
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
   import Destello from '$componentes/Destello.svelte';
+  import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -78,6 +79,13 @@
       <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
     </Boton>
   </div>
+  <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
+       encontrar alguien con prisa es el botón, no el adorno.
+       Del DATO y no del slug, igual que el mármol del ADR-0020: `lujo` es lo que su
+       marca trata como valor. Si joyería vuelve, la banda ya la está esperando. -->
+  {#if giro.registro === 'lujo'}
+    <MonedasQueCaen />
+  {/if}
 </Seccion>
 
 <Seccion fondo={claro}>
