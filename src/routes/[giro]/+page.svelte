@@ -21,7 +21,7 @@
   import Mapa from '$componentes/Mapa.svelte';
   import Destello from '$componentes/Destello.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
-  import Galeria from '$componentes/Galeria.svelte';
+  import Carrusel from '$componentes/Carrusel.svelte';
   import { galeriaInventario } from '$lib/datos/galeria';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
@@ -72,7 +72,13 @@
        foto de archivo provisional y rotulada. -->
   {#if giro.fotoProvisional}
     <div class="foto-giro">
-      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} />
+      <!-- `prioritaria` · ESTA FOTO ES EL LCP DE LA PAGINA, y llevaba `loading="lazy"`
+           desde que se abrio la ranura. La prop existia y su propio comentario lo
+           decia —«la de la entrada se carga de inmediato: es el LCP»— pero solo la
+           usaba la portada. Medido en las cuatro paginas de giro: el navegador no
+           pedia la imagen hasta ~2000 ms porque nadie le habia dicho que corria
+           prisa. -->
+      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} prioritaria />
     </div>
   {/if}
   <div class="acciones">
@@ -145,8 +151,9 @@
 {#if giro.muestraInventario}
   <Seccion etiqueta="SU PATIO Y SU EQUIPO">
     <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
-    <Galeria
+    <Carrusel
       fotos={galeriaInventario}
+      etiqueta="Su patio y su equipo"
       nota="Son fotografías de su patio, sacadas de sus propias publicaciones: por eso no llevan rótulo de archivo. NO son una lista de existencias — no sabemos de qué fecha son ni qué sigue ahí, así que lo que haya hoy se pregunta. Los pies de foto los escribimos nosotros mirando la imagen."
     />
   </Seccion>

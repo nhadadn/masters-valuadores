@@ -78,8 +78,8 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
-| JavaScript | **Solo en `/empeno-y-prestamo/`** · 7.43 KB propios, sin marco ni librería · `ADR-0021`. Las otras siete en 0 KB |
-| Fotografías reales | **SEIS** · cinco recortadas de las piezas 22 y 23, más la del patio · `ADR-0022`. Quedan tres de banco rotuladas |
+| JavaScript | **Solo en `/empeno-y-prestamo/`** · 9.14 KB propios, sin marco ni librería · `ADR-0021` y `ADR-0023`. Las otras siete en 0 KB |
+| Fotografías reales | **SEIS** · cinco recortadas de las piezas 22 y 23, más la del patio · `ADR-0022`. Van en un carrusel curvo en 3D · `ADR-0023`. Quedan tres de banco rotuladas |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -121,8 +121,9 @@ presupuesto de 40. No se subió el presupuesto: se quitó el runtime. El acorde�
 `<details>` nativo.
 
 **Enmendado el 11 de septiembre · `ADR-0021`.** Aquí decía «cero JavaScript» y ya no
-es literal: `/empeno-y-prestamo/` sirve **7.43 KB** de script propio para la banda de
-monedas. Las otras siete páginas siguen en 0 KB y el presupuesto sigue en 40.
+es literal: `/empeno-y-prestamo/` sirve **9.14 KB** de script propio —la banda de
+monedas del `ADR-0021` y los puntos del carrusel del `ADR-0023`—. Las otras siete
+páginas siguen en 0 KB y el presupuesto sigue en 40.
 
 La regla que queda es más estrecha, no más laxa: **nada de marco, nada de librería, y
 lo que entre lo paga su ruta**. `csr` sigue en `false`; el script es un archivo de
@@ -159,9 +160,13 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS en siete**, 7.43 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
+8 páginas · **0 KB de JS en siete**, 9.14 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
 6.5 KB gzip · 125 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
+
+**LCP de las páginas de giro: 1888–1904 ms** desde el `ADR-0023`. La foto de entrada
+llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
+Vale cerca de un segundo y se destapó midiendo otra cosa.
 
 La banda de monedas, medida contra la misma página sin ella y en la misma fase:
 **+509 ms de hilo mientras caen**, **+66 ms ya asentadas**, cero tareas largas, y 49
