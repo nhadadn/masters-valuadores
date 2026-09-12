@@ -1,32 +1,43 @@
 <script lang="ts">
   /**
-   * Los bienes que se pueden empeñar, como CATÁLOGO VISUAL · ADR-0024.
+   * Galería de activos · ADR-0025.
    *
-   * ── QUÉ PROBLEMA RESUELVE ─────────────────────────────────────────────────
-   * Antes eran seis cajas iguales con un ícono gris de marca de agua y dos renglones
-   * de texto. Para saber qué se puede llevar había que LEER, y el criterio de
-   * aceptación de esta página es justo el contrario: alguien que solo mira las
-   * tarjetas tiene que entender «puedo llevar oro, relojes, monedas, herramienta,
-   * maquinaria y autos» sin leer un párrafo.
+   * ── UN SOLO SISTEMA PARA LAS SEIS ─────────────────────────────────────────
+   * Cada tarjeta es la misma pieza: fotografía a sangre, velo que baja a negro
+   * sólido, filo dorado, nombre, microdescripción y flecha. Siempre en ese orden y
+   * siempre en el mismo sitio. **Eso** es lo que las hace parecer una colección, y
+   * funciona aunque las fotos vengan de sesiones distintas.
    *
-   * ── EL TÍTULO VA SOBRE BANDA SÓLIDA, NO SOBRE UN DEGRADADO ────────────────
-   * Texto encima de una fotografía es exactamente donde este repo ya se quemó: el
-   * validador de contraste resuelve colores de CSS, no píxeles de una imagen, así que
-   * un título sobre un degradado semitransparente es contraste que NADIE puede medir
-   * y que cambia con cada foto.
+   * ── LO QUE NO UNIFICA, Y SE COMPROBÓ ──────────────────────────────────────
+   * El plan era un grado de color único para las seis. Se probaron cuatro grados
+   * sobre la joya de estudio y el patio a mediodía, y en los cuatro **el cielo seguía
+   * azul con nubes blancas**. El grado fuerte pagaba el precio —apagaba el oro, que
+   * es la marca— sin conseguir el beneficio.
    *
-   * La banda del título es OPACA —`--superficie-oscura`— y el degradado solo la funde
-   * con la foto por arriba, donde no hay texto. Así el ratio es el del token, sale en
-   * el validador, y no depende de si la foto de mañana es clara u oscura.
+   * Lo que separa esas fotos no es el color: es que hay cielo. Ningún filtro lo quita.
+   * Así que el grado quedó SUAVE —solo iguala contraste— y el trabajo de cohesión lo
+   * hacen el encuadre (la de maquinaria se recortó sin cielo) y esta composición.
    *
-   * ── LAS QUE NO TIENEN FOTO ────────────────────────────────────────────────
-   * No se deja un hueco roto ni se mete una foto cualquiera: campo oscuro con un
-   * rescoldo de oro y el ícono grande en oro, misma proporción y mismo tratamiento
-   * que las demás. Se lee como decisión, no como imagen que falta. Y lleva su marca
-   * de pendiente, que además es la petición a Cristóbal.
+   * ── EL TEXTO SE APOYA EN NEGRO SÓLIDO ─────────────────────────────────────
+   * El velo termina en `--superficie-oscura` OPACO en la franja donde va el texto. El
+   * validador resuelve colores de CSS, no píxeles: un título sobre degradado
+   * semitransparente es contraste que nadie puede medir y que cambia con cada foto.
+   *
+   * ── CADA TARJETA LLEVA A WHATSAPP, CON SU CATEGORÍA ESCRITA ───────────────
+   * La flecha no es decoración. Quien reconoce su objeto en una tarjeta tiene ya la
+   * pregunta hecha —«¿cuánto me dan por esto?»— y el mensaje sale redactado con la
+   * categoría dentro. El enlace lo arma `BotonWhatsApp`, que lee el número de
+   * `negocio.ts`: aquí no se escribe ni un dígito.
+   *
+   * ── LOS RÓTULOS DE REVISIÓN NO ESTÁN AQUÍ ─────────────────────────────────
+   * «EN SU LETRERO», «FOTO DE ARCHIVO» y demás salieron de las tarjetas por decisión
+   * de Nadir. NO se borraron: viven en un bloque de revisión al pie de la sección,
+   * con el mismo estatus que la banda BORRADOR. Cuando el sitio deje de ser borrador,
+   * se van los dos juntos.
    */
-  import { srcset, anchosDe } from '$lib/datos/fotos';
+  import { srcset } from '$lib/datos/fotos';
   import Icono from './Icono.svelte';
+  import { enlaceWhatsApp } from '$lib/datos/whatsapp';
 
   interface Bien {
     que: string;
@@ -37,123 +48,110 @@
     fotoMaxAncho?: number;
     fotoEsSuya?: boolean;
     fotoAlt?: string;
+    /** Ocupa el ancho completo: es una banda. Ver la composición, abajo. */
+    banda?: boolean;
   }
 
   interface Props {
     bienes: Bien[];
-    /** Se marca la primera a doble ancho: rompe la retícula de cajas iguales. */
-    destacarPrimera?: boolean;
+    /** Para el mensaje de WhatsApp: de qué línea pregunta. */
+    giro: string;
   }
-  let { bienes, destacarPrimera = true }: Props = $props();
+  let { bienes, giro }: Props = $props();
 
-  const CHIP = {
-    letrero: 'EN SU LETRERO',
-    publicacion: 'EN SU PUBLICACIÓN',
-    deducido: 'DEDUCIDO — CONFIRMAR'
-  } as const;
-
-  const mayorDe = (b: Bien) => {
-    const a = anchosDe(b.fotoMaxAncho ?? 1600);
-    return a[a.length - 1];
-  };
-  /* La primera ocupa dos columnas, así que pide una imagen del doble de ancho. */
-  const TAMANOS_ANCHA = '(min-width: 768px) 700px, 92vw';
-  const TAMANOS = '(min-width: 768px) 340px, 46vw';
+  const TAMANOS_BANDA = '(min-width: 768px) 1120px, 92vw';
+  const TAMANOS = '(min-width: 768px) 550px, 92vw';
 </script>
 
-<ul class="bienes" class:destacada={destacarPrimera}>
-  {#each bienes as bien, i}
-    {@const ancha = destacarPrimera && i === 0}
-    <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'} class:ancha>
-      <div class="lienzo">
+<ul class="bienes">
+  {#each bienes as bien}
+    <!-- `{@const}` tiene que colgar directamente del `{#each}`: dentro del <article>
+         el compilador lo rechaza. -->
+    {@const enlace = enlaceWhatsApp(
+      `Hola, quiero saber cuánto me pueden prestar. Es de la categoría: ${bien.que}.`
+    )}
+    <li class:banda={bien.banda}>
+      <article class="tarjeta">
         {#if bien.foto}
           <picture>
-            <source type="image/avif" srcset={srcset(bien.foto, 'avif', bien.fotoMaxAncho ?? 1600)} sizes={ancha ? TAMANOS_ANCHA : TAMANOS} />
-            <source type="image/webp" srcset={srcset(bien.foto, 'webp', bien.fotoMaxAncho ?? 1600)} sizes={ancha ? TAMANOS_ANCHA : TAMANOS} />
+            <source type="image/avif" srcset={srcset(bien.foto, 'avif', bien.fotoMaxAncho ?? 1600)} sizes={bien.banda ? TAMANOS_BANDA : TAMANOS} />
+            <source type="image/webp" srcset={srcset(bien.foto, 'webp', bien.fotoMaxAncho ?? 1600)} sizes={bien.banda ? TAMANOS_BANDA : TAMANOS} />
             <img
-              src="/fotos/{bien.foto}-{mayorDe(bien)}.jpg"
+              src="/fotos/{bien.foto}-400.jpg"
               srcset={srcset(bien.foto, 'jpg', bien.fotoMaxAncho ?? 1600)}
-              sizes={ancha ? TAMANOS_ANCHA : TAMANOS}
+              sizes={bien.banda ? TAMANOS_BANDA : TAMANOS}
               alt={bien.fotoAlt ?? ''}
               width="400"
               height="267"
               loading="lazy"
               decoding="async"
-              class:tenida={!bien.fotoEsSuya}
             />
           </picture>
         {:else}
-          <!-- Campo de metal. `aria-hidden`: el nombre del bien va escrito al lado y
-               anunciar «imagen de una moneda» antes de «Monedas» solo estorba. -->
+          <!-- Sin fotografía todavía. Campo oscuro con el ícono en oro: misma caja,
+               mismo velo, mismo texto. Se lee como parte del sistema, no como error.
+               `aria-hidden`: el nombre va escrito justo debajo. -->
           <div class="metal" aria-hidden="true">
-            <Icono nombre={bien.icono} tam={88} grosor={1.2} />
+            <Icono nombre={bien.icono} tam={104} grosor={1.1} />
           </div>
         {/if}
 
-        <!-- La procedencia sigue a la vista mientras esto sea borrador: un bien del
-             letrero es casi un hecho y uno deducido es una apuesta que Cristóbal tiene
-             que confirmar o tachar. Pasa de renglón de texto a distintivo.
-             APILADOS, no uno en cada esquina: en la tarjeta estrecha de teléfono el de
-             la izquierda parte en dos renglones y se metía por debajo del otro
-             —«EN U[FOTO DE ARCHIVO]SUYA»—. Se vio en la captura de 390. -->
-        <div class="chips">
-          <p class="fuente {bien.fuente}">{CHIP[bien.fuente]}</p>
-          {#if !bien.foto}
-            <p class="pendiente">FOTO PENDIENTE</p>
-          {:else if !bien.fotoEsSuya}
-            <p class="archivo">FOTO DE ARCHIVO</p>
-          {/if}
+        <span class="velo" aria-hidden="true"></span>
+
+        <div class="txt">
+          <span class="filo" aria-hidden="true"></span>
+          <h3>{bien.que}</h3>
+          {#if bien.micro}<p data-propuesta="true">{bien.micro}</p>{/if}
         </div>
 
-        <div class="banda">
-          <h3>{bien.que}</h3>
-          {#if bien.micro}<p class="micro">{bien.micro}</p>{/if}
-        </div>
-      </div>
+        <!-- El enlace cubre la tarjeta entera: objetivo táctil enorme, muy por encima
+             de los 44 px del sistema. Su texto dice a dónde va y de qué, para quien
+             no ve la pantalla. Si el número no está confirmado no se arma nada: la
+             tarjeta se queda sin enlace antes que mandar a alguien a un número
+             inventado. -->
+        {#if enlace}
+          <a class="tocar" href={enlace} rel="noopener" data-origen="bien-{giro}-{bien.icono}">
+            <span class="solo-lectores">Preguntar por {bien.que.toLowerCase()} por WhatsApp</span>
+          </a>
+        {/if}
+      </article>
     </li>
   {/each}
 </ul>
 
 <style>
-  /* ── LA FILA MANDA, NO LA PROPORCIÓN ──────────────────────────────────────
-     El primer intento dio a cada imagen `aspect-ratio: 3/2` y dejó que ella fijara
-     el alto. El resultado, en la captura de 1280: la tarjeta destacada medía el
-     doble de ancho, luego el doble de alto, y salía un rectángulo enorme medio
-     vacío; y su vecina de la misma fila se estiraba hasta él dejando un boquete
-     negro entre su foto y su título.
-     Ahora el alto de fila es fijo y la imagen CUBRE. Todas las tarjetas casan, y la
-     destacada ocupa dos filas en escritorio en vez de deformarse. */
+  /* ── LA COMPOSICIÓN ────────────────────────────────────────────────────────
+     Dos columnas en escritorio y dos bandas a ancho completo: 4 + 4 = 8 huecos,
+     cuatro filas exactas, sin un boquete. En teléfono, una sola columna.
+     Autos va en la retícula y NO de banda, por decisión de Nadir: sin fotografía,
+     una banda son cuatrocientos píxeles de rectángulo vacío. */
   .bienes {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 194px;
-    grid-auto-flow: dense;
+    grid-template-columns: 1fr;
     gap: var(--e-2);
   }
   li { margin: 0; }
-  .destacada .ancha { grid-column: 1 / -1; }
 
-  /* Sin esto la última queda huérfana en una fila para ella sola —se vio con
-     «Autos»—. Con la destacada ocupando dos huecos, el reparto se cierra cuando la
-     última es par. Si son impares ya cuadra sola y esta regla no se activa. */
-  li:last-child:nth-child(even) { grid-column: 1 / -1; }
-
-  .lienzo {
+  .tarjeta {
     position: relative;
     overflow: hidden;
-    /* EL COLOR PLANO VA ADEMÁS de lo que se pinte encima, y con el peor extremo: si
-       una foto no carga, debajo hay campo oscuro y no el fondo de la sección. */
+    /* Color plano además de la foto, y con el peor extremo: si una imagen no carga,
+       debajo hay campo oscuro y no el fondo claro de la sección. */
     background: var(--superficie-oscura);
     border: 1px solid var(--panel-borde);
-    height: 100%;
+    /* 16:9 en teléfono, no 3:2. Con seis tarjetas a ancho completo, 3:2 llevaba la
+       página a 8 pantallas y el brief pide justo evitar tarjetas demasiado altas.
+       Medido: 16:9 le quita unos 320 px al recorrido sin que la foto deje de contar
+       lo que tiene que contar. */
+    aspect-ratio: 16 / 9;
+    transition: border-color 300ms ease;
   }
 
-  /* Cubren la tarjeta entera. `inset: 0` en vez de proporción propia: el alto ya lo
-     decide la fila, arriba. */
-  picture,
+  picture { display: contents; }
+
   img,
   .metal {
     position: absolute;
@@ -162,101 +160,125 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  /* La de archivo va teñida, como las demás del ADR-0009: que se distinga de las
-     suyas sin tener que leer el rótulo. */
-  .tenida {
-    filter: grayscale(1) sepia(0.55) saturate(1.7) hue-rotate(-8deg) contrast(1.05) brightness(0.82);
+    /* GRADO SUAVE. Solo iguala contraste y baja un punto la luz; NO tiñe. La prueba
+       de los cuatro grados está en la nota de arriba. */
+    filter: brightness(0.9) contrast(1.1) saturate(0.94);
+    transition: transform 350ms ease;
   }
 
   .metal {
     display: grid;
     place-items: center;
     color: var(--oro-500);
-    /* Rescoldo de oro descentrado sobre campo oscuro. Cero bytes, como el mármol. */
+    filter: none;
+    /* El rescoldo entra por detrás del ícono, no por una esquina: con el ícono
+       pequeño y la luz lejos, el campo se leía vacío en escritorio. */
     background:
-      radial-gradient(120% 90% at 30% 15%, rgba(231, 192, 65, 0.22) 0%, rgba(231, 192, 65, 0) 60%),
-      linear-gradient(160deg, var(--negro-800, #1a1c1f) 0%, var(--negro-950, #0c0d0f) 100%);
+      radial-gradient(70% 70% at 50% 42%, rgba(231, 192, 65, 0.26) 0%, rgba(231, 192, 65, 0) 68%),
+      linear-gradient(160deg, var(--negro-800) 0%, var(--negro-950) 100%);
+    /* El ícono se sube un poco: abajo va el velo y el texto. */
+    align-content: center;
+    padding-bottom: var(--e-12);
   }
 
-  /* ── LA BANDA DEL TÍTULO ───────────────────────────────────────────────────
-     Opaca. El degradado de encima solo la funde con la foto, y ahí no hay texto. */
-  .banda {
+  /* De transparente arriba a OPACO abajo. El texto vive en la parte opaca. */
+  .velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      var(--superficie-oscura) 0%,
+      var(--superficie-oscura) 22%,
+      rgba(12, 13, 15, 0.55) 48%,
+      rgba(12, 13, 15, 0) 76%
+    );
+  }
+
+  .txt {
     position: absolute;
     inset-inline: 0;
     bottom: 0;
-    padding: var(--e-2) var(--e-3) var(--e-3);
-    background: var(--superficie-oscura);
+    padding: var(--e-3) var(--e-4) var(--e-4);
     color: var(--tinta-sobre-oscuro);
   }
-  .banda::before {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    bottom: 100%;
-    height: var(--e-8);
-    background: linear-gradient(to top, var(--superficie-oscura), transparent);
-    pointer-events: none;
+  .filo {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--oro-500);
+    margin-bottom: var(--e-2);
   }
-
   h3 {
     margin: 0;
-    font-size: var(--bien-tam, 1rem);
-    line-height: 1.2;
-    font-weight: 700;
+    font-size: 1.1875rem;
+    line-height: 1.15;
+    font-weight: 800;
     letter-spacing: -0.01em;
   }
-  .ancha h3 { font-size: var(--bien-tam-ancha, 1.25rem); }
-
-  .micro {
+  .txt p {
     margin: var(--e-1) 0 0;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     line-height: 1.35;
     color: var(--tinta-tenue-oscuro);
+    padding-right: var(--e-8);
   }
 
-  /* ── LOS DISTINTIVOS ──────────────────────────────────────────────────────
-     Pastilla oscura propia, así que su tinta es la de sobre-oscuro pase lo que pase
-     debajo. Es la lección del rótulo de archivo que quedó negro sobre negro. */
-  .chips {
+  /* El enlace, estirado sobre la tarjeta. La flecha la pinta este CSS.
+     `color` NO es decorativo: su texto para lector de pantalla heredaba `--tinta`
+     —negro, en el registro claro— sobre la tarjeta negra, y el validador lo midió a
+     1:1 en las tres páginas con bienes. Está sobre campo oscuro, así que le toca la
+     tinta de campo oscuro. Esconderlo mejor habría sido tapar el termómetro. */
+  .tocar {
     position: absolute;
-    top: var(--e-2);
-    left: var(--e-2);
-    right: var(--e-2);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-  }
-  .fuente,
-  .pendiente,
-  .archivo {
-    margin: 0;
-    padding: 3px var(--e-2);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    /* Pastilla propia y opaca: su tinta es la de sobre-oscuro pase lo que pase
-       debajo. Es la lección del rótulo que quedó negro sobre negro. */
-    background: var(--superficie-oscura);
+    inset: 0;
+    display: block;
     color: var(--tinta-sobre-oscuro);
   }
-  .pendiente,
-  .archivo,
-  .fuente.deducido { color: var(--oro-500); }
+  .tocar::after {
+    content: '';
+    position: absolute;
+    right: var(--e-4);
+    bottom: calc(var(--e-4) + 2px);
+    width: 22px;
+    height: 22px;
+    /* Flecha del color de marca, recortada de un cuadro. Cero íconos nuevos. */
+    background: var(--oro-500);
+    clip-path: polygon(0 44%, 62% 44%, 44% 20%, 58% 8%, 96% 50%, 58% 92%, 44% 80%, 62% 56%, 0 56%);
+    transition: transform 300ms ease;
+  }
+  .tocar:focus-visible {
+    outline: 3px solid var(--oro-500);
+    outline-offset: -4px;
+  }
+
+  .solo-lectores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ── ESTADOS ──────────────────────────────────────────────────────────────
+     Zoom muy ligero, filo dorado y la flecha que avanza. Nada más. */
+  .tarjeta:hover { border-color: var(--oro-500); }
+  .tarjeta:hover img { transform: scale(1.045); }
+  .tarjeta:hover .tocar::after { transform: translateX(5px); }
+
+  /* Quien pidió menos movimiento no recibe ni zoom ni desplazamiento. */
+  @media (prefers-reduced-motion: reduce) {
+    img,
+    .tocar::after { transition: none; }
+    .tarjeta:hover img { transform: none; }
+    .tarjeta:hover .tocar::after { transform: none; }
+  }
 
   @media (min-width: 768px) {
-    .bienes {
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 208px;
-      gap: var(--e-3);
-      --bien-tam: 1.0625rem;
-      --bien-tam-ancha: 1.5rem;
-    }
-    /* Dos columnas Y dos filas: con seis bienes eso son 4 + 5 = 9 huecos, que es
-       justo una retícula de 3×3 sin un solo boquete. */
-    .destacada .ancha { grid-column: span 2; grid-row: span 2; }
-    li:last-child:nth-child(even) { grid-column: auto; }
+    .bienes { grid-template-columns: 1fr 1fr; gap: var(--e-3); }
+    .tarjeta { aspect-ratio: 4 / 3; }
+    li.banda { grid-column: 1 / -1; }
+    li.banda .tarjeta { aspect-ratio: 21 / 8; }
+    li.banda h3 { font-size: 1.625rem; }
   }
 </style>

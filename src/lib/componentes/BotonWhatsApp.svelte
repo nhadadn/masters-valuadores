@@ -6,7 +6,7 @@
    * el enlace no se arma y el botón queda inerte y marcado — es preferible a
    * mandar a la gente a un número inventado.
    */
-  import { sucursalPrincipal, estaConfirmado } from '$lib/config/negocio';
+  import { enlaceWhatsApp, hayWhatsApp } from '$lib/datos/whatsapp';
   import { iconoWhatsApp } from '$lib/datos/iconos';
 
   interface Props {
@@ -26,14 +26,10 @@
     variante = 'bloque', sobreOscuro = false, origen, texto = 'WhatsApp', mensaje
   }: Props = $props();
 
-  const numero = $derived(sucursalPrincipal.whatsapp);
-  const listo = $derived(estaConfirmado(numero));
-  const enlace = $derived(
-    listo
-      ? `https://wa.me/${String(numero).replace(/\D/g, '')}` +
-        (mensaje ? `?text=${encodeURIComponent(mensaje)}` : '')
-      : undefined
-  );
+  /* El armado vive en `$lib/datos/whatsapp`: lo comparte con la galeria de bienes,
+     que necesita el enlace sin el boton alrededor. Ver la nota de ese archivo. */
+  const listo = $derived(hayWhatsApp());
+  const enlace = $derived(enlaceWhatsApp(mensaje));
 </script>
 
 {#if listo}

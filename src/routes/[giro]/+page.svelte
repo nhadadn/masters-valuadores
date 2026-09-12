@@ -114,13 +114,32 @@
        letrero es casi un hecho, lo deducido es una apuesta que Cristóbal confirma
        o tacha. Eso no se toca mientras esto sea borrador. -->
   {#if giro.bienesPropuestos?.length}
-    <GaleriaBienes bienes={giro.bienesPropuestos} />
-    <p class="nota">
-      Esta lista la <strong>dedujimos</strong> de su letrero y de sus publicaciones; el
-      cliente no la ha dictado. Cada renglón dice de dónde sale. Si algo no es cierto,
-      se tacha: que el sitio diga que aceptan algo que no aceptan es el daño más caro
-      que puede hacer una página.
-    </p>
+    <GaleriaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
+
+    <!-- ADR-0025 · EL BLOQUE DE REVISIÓN.
+         Los rótulos «EN SU LETRERO», «FOTO DE ARCHIVO» y demás salían en cada tarjeta.
+         Son notas para Cristóbal, no interfaz pública, y por decisión de Nadir bajan
+         aquí — pero NO se borran: el ADR-0009 obliga a que una foto de banco se sepa,
+         y la procedencia de cada bien es lo que permite tachar lo que no sea cierto.
+         Tiene el mismo estatus que la banda BORRADOR de arriba: cuando el sitio deje
+         de ser borrador, se van los dos juntos. -->
+    <aside class="revision">
+      <p class="rev-et">SOLO PARA LA REVISIÓN — no va en el sitio publicado</p>
+      <p class="nota">
+        Esta lista la <strong>dedujimos</strong> de su letrero y de sus publicaciones; el
+        cliente no la ha dictado. Si algo no es cierto, se tacha: que el sitio diga que
+        aceptan algo que no aceptan es el daño más caro que puede hacer una página.
+      </p>
+      <ul class="rev-lista">
+        {#each giro.bienesPropuestos as bien}
+          <li>
+            <b>{bien.que}</b>
+            · {#if bien.fuente === 'letrero'}está en su letrero{:else if bien.fuente === 'publicacion'}sale de una publicación suya{:else}<strong>DEDUCIDO — sin fuente, confirmar</strong>{/if}
+            · {#if !bien.foto}<strong>falta fotografía</strong>{:else if bien.fotoEsSuya}foto suya{:else}foto de archivo, se sustituye{/if}
+          </li>
+        {/each}
+      </ul>
+    </aside>
   {:else}
     <ul class="bienes">
       {#each Array(4) as _, i}
@@ -306,6 +325,29 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--tinta);
+  }
+
+  /* El bloque de revisión · ADR-0025. Deliberadamente sobrio y sin gracia: no es
+     producto, es un recado para Cristóbal. Se va con la banda BORRADOR. */
+  .revision {
+    margin-top: var(--e-6);
+    padding: var(--e-3) var(--e-4);
+    border: 1px dashed var(--panel-borde);
+    background: var(--superficie-alterna);
+  }
+  .rev-et {
+    margin: 0 0 var(--e-2);
+    font-size: var(--etiqueta-tam);
+    font-weight: var(--etiqueta-peso);
+    letter-spacing: var(--etiqueta-tracking);
+    color: var(--tinta-secundaria);
+  }
+  .rev-lista {
+    margin: var(--e-3) 0 0;
+    padding-left: var(--e-4);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--tinta-secundaria);
   }
 
   /* El bloque de consulta por WhatsApp · ADR-0024. */
