@@ -32,6 +32,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0021 | [[ADR-0021-javascript-en-una-sola-ruta\|Entra JavaScript, en una sola ruta y sin marco]] | **ACEPTADA** · **rompe el «cero JS» en 1 de 8 páginas, a propósito** | 2026-09-11 |
 | 0022 | [[ADR-0022-reticula-de-fotos-reales\|Retícula de fotos reales en empeño, y por qué no es un carrusel]] | **ACEPTADA** · extiende el 0009 · **§1 revertido por el 0023** · **entran 5 fotos SUYAS** | 2026-09-11 |
 | 0023 | [[ADR-0023-carrusel-curvo\|El carrusel curvo en 3D, y el LCP que estaba roto detrás]] | **ACEPTADA** · revierte el §1 del 0022 · **LCP −1 s: la foto de entrada era perezosa** | 2026-09-12 |
+| 0024 | [[ADR-0024-catalogo-visual-y-jerarquia\|La landing de empeño se reordena: promesa arriba y catálogo visual]] | **ACEPTADA** · extiende el 0022 · **entra la primera foto suya de joyería** | 2026-09-12 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

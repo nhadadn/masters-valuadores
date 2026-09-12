@@ -79,7 +79,7 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · 9.14 KB propios, sin marco ni librería · `ADR-0021` y `ADR-0023`. Las otras siete en 0 KB |
-| Fotografías reales | **SEIS** · cinco recortadas de las piezas 22 y 23, más la del patio · `ADR-0022`. Van en un carrusel curvo en 3D · `ADR-0023`. Quedan tres de banco rotuladas |
+| Fotografías reales | **OCHO** · seis del patio · `ADR-0022`, más dos de su joyería · `ADR-0024`. El hero de empeño ya es suyo. Faltan monedas y autos |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -161,10 +161,10 @@ cableado**. Es parte del trabajo.
 ### Números medidos, no estimados
 
 8 páginas · **0 KB de JS en siete**, 9.14 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
-6.5 KB gzip · 125 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
+6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de las páginas de giro: 1888–1904 ms** desde el `ADR-0023`. La foto de entrada
+**LCP de empeño: 1324 ms** · `ADR-0024`. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 

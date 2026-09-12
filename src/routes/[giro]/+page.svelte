@@ -19,7 +19,8 @@
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
-  import Destello from '$componentes/Destello.svelte';
+  import GaleriaBienes from '$componentes/GaleriaBienes.svelte';
+  import TiraPasos from '$componentes/TiraPasos.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
   import { galeriaInventario } from '$lib/datos/galeria';
@@ -62,11 +63,23 @@
   <!-- PROPUESTA SIN APROBAR. Dice lo que el giro es POR DEFINICIÓN: ni una cifra, ni
        un plazo, ni una lista de bienes. El CLAUDE.md lo permite con la condición de
        que vaya marcado, y la banda de BORRADOR de arriba es esa marca. -->
-  {#if giro.subtitularPropuesto}
-    <p class="subtitular" data-propuesta="true">{giro.subtitularPropuesto}</p>
-  {:else}
-    <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
+  <!-- ADR-0024 · LA PROMESA Y LA MECÁNICA, EN LA PRIMERA PANTALLA.
+       El h1 dice una categoría —«Empeño y préstamo»—, que no contesta «¿qué gano
+       yo?». Debajo van la promesa y los tres pasos, y las acciones suben por delante
+       de la foto: así el nombre, la promesa, la mecánica y el botón caben antes del
+       primer scroll en un teléfono. -->
+  {#if giro.promesaPropuesta}
+    <p class="promesa" data-propuesta="true">{giro.promesaPropuesta}</p>
   {/if}
+  {#if giro.pasosCortos}
+    <TiraPasos pasos={giro.pasosCortos} />
+  {/if}
+  <div class="acciones">
+    <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
+    <Boton variante="secundario" href="/contacto/">
+      <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
+    </Boton>
+  </div>
   <!-- ADR-0009. Las páginas de giro NO tenían ranura de foto: el CLAUDE.md pedía
        «fachada y una por giro» y solo existía la de la portada. Aquí se abre, con
        foto de archivo provisional y rotulada. -->
@@ -81,12 +94,6 @@
       <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} prioritaria />
     </div>
   {/if}
-  <div class="acciones">
-    <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
-    <Boton variante="secundario" href="/contacto/">
-      <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
-    </Boton>
-  </div>
   <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
        encontrar alguien con prisa es el botón, no el adorno.
        Del DATO y no del slug, igual que el mármol del ADR-0020: `lujo` es lo que su
@@ -97,29 +104,17 @@
 </Seccion>
 
 <Seccion fondo={claro}>
-  <h2><span class="num">1</span> {PREGUNTAS[0]}</h2>
-  <!-- DEDUCIDO, no dictado. Cada renglón dice de dónde sale, y esa es la parte que
-       hace esto corregible de un vistazo: lo del letrero es casi un hecho, lo
-       deducido es una apuesta nuestra. -->
+  <h2><span class="num">1</span> {giro.tituloBienes ?? PREGUNTAS[0]}</h2>
+  {#if giro.subtituloBienes}
+    <p class="entradilla" data-propuesta="true">{giro.subtituloBienes}</p>
+  {/if}
+  <!-- ADR-0024 · CATÁLOGO VISUAL, no lista de texto. El criterio de aceptación es que
+       alguien que solo MIRA las tarjetas entienda qué puede llevar, sin leer.
+       La procedencia de cada bien sigue a la vista, ahora en distintivo: lo del
+       letrero es casi un hecho, lo deducido es una apuesta que Cristóbal confirma
+       o tacha. Eso no se toca mientras esto sea borrador. -->
   {#if giro.bienesPropuestos?.length}
-    <ul class="bienes">
-      {#each giro.bienesPropuestos as bien, i}
-        <li data-propuesta="true" class:apuesta={bien.fuente === 'deducido'}>
-          <!-- MARCA DE AGUA · el ícono del bien, grande y tenue al fondo.
-               `aria-hidden`: no aporta nada a quien no ve la pantalla — el nombre
-               del bien ya está escrito al lado, y anunciar «imagen de una moneda»
-               antes de «Monedas» solo estorba. -->
-          <span class="agua" aria-hidden="true"><Icono nombre={bien.icono} tam={96} grosor={1.1} /></span>
-          <Destello indice={i} />
-          <span class="que">{bien.que}</span>
-          <span class="fuente">
-            {#if bien.fuente === 'letrero'}Está en su letrero
-            {:else if bien.fuente === 'publicacion'}Sale de una publicación suya
-            {:else}DEDUCIDO — sin fuente, confirmar{/if}
-          </span>
-        </li>
-      {/each}
-    </ul>
+    <GaleriaBienes bienes={giro.bienesPropuestos} />
     <p class="nota">
       Esta lista la <strong>dedujimos</strong> de su letrero y de sus publicaciones; el
       cliente no la ha dictado. Cada renglón dice de dónde sale. Si algo no es cierto,
@@ -141,6 +136,20 @@
       sido inventar. Lo tiene que dictar el cliente.
     </p>
   {/if}
+
+  <!-- ADR-0024 · EL CTA QUE CONTESTA LA PREGUNTA QUE TRAE LA GENTE.
+       Los tres enlaces a WhatsApp que ya había eran genéricos. Quien llega a esta
+       página trae UNA pregunta concreta —«¿cuánto me dan por esto?»— y aquí acaba de
+       ver la lista de lo que se acepta, que es justo donde le nace la duda. -->
+  <aside class="consulta">
+    <p class="titulo" data-propuesta="true">¿No sabes si aceptamos lo que traes?</p>
+    <p class="dice" data-propuesta="true">Mándanos una foto por WhatsApp y lo vemos.</p>
+    <BotonWhatsApp
+      origen="giro-{giro.slug}-consulta-foto"
+      texto="Enviar foto por WhatsApp"
+      mensaje="Hola, quiero saber si aceptan este artículo. Les mando una foto."
+    />
+  </aside>
 </Seccion>
 
 <!-- ADR-0022 · LA RETÍCULA DE FOTOS REALES.
@@ -161,13 +170,21 @@
 
 <Seccion>
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
+  <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
+       diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
+       algo: es la entradilla del proceso. -->
+  {#if giro.subtitularPropuesto}
+    <p class="subtitular" data-propuesta="true">{giro.subtitularPropuesto}</p>
+  {:else}
+    <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
+  {/if}
   <!-- NINGUNO dice cuánto ni cuándo: eso es cifra y va en el bloque de abajo, que
        sigue bloqueado. Lo que cada paso ASUME está listado en los requerimientos. -->
   <ol class="pasos">
     {#if giro.pasosPropuestos}
       {#each giro.pasosPropuestos as paso, i}
         <li data-propuesta="true">
-          <span class="paso-num">{i + 1}</span>
+          <span class="paso-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <p>{paso}</p>
         </li>
       {/each}
@@ -185,14 +202,15 @@
 
 <Seccion fondo={claro}>
   <h2><span class="num">3</span> {PREGUNTAS[2]}</h2>
-  <ul class="requisitos">
-    {#each Array(4) as _, i}
-      <li>
-        <span class="casilla" aria-hidden="true"></span>
-        <Hueco etiqueta="REQUISITO {i + 1}" renglones={1} />
-      </li>
-    {/each}
-  </ul>
+  <!-- ADR-0024 · UN bloque y no CUATRO cajas vacías. Medído: ocupaban 591 px en un
+       teléfono —una novena parte de la página— para decir cuatro veces lo mismo, y el
+       guardia de fugas cazó la cifra con signo que había aquí: hace bien, así atraparía
+       una tasa. Sigue siendo
+       visible que falta —eso lo exige el contrato— pero cuesta un décimo. -->
+  <div class="requisitos">
+    <span class="casilla" aria-hidden="true"></span>
+    <Hueco etiqueta="QUÉ HAY QUE LLEVAR — LO DICTA EL CLIENTE" renglones={2} />
+  </div>
 </Seccion>
 
 <Seccion>
@@ -262,51 +280,87 @@
     align-content: start;
   }
 
-  /* ── LA MARCA DE AGUA ────────────────────────────────────────────────────
-     Sale por la esquina inferior derecha, recortada por el `overflow`. Va detrás
-     del texto con `z-index: -1` y no toca el contraste: el texto sigue midiéndose
-     contra `--superficie`, que es opaca. */
-  .agua {
-    position: absolute; right: -18px; bottom: -22px; z-index: -1;
-    color: var(--oro-texto); opacity: 0.13;
-    pointer-events: none; line-height: 0;
-  }
-  .apuesta .agua { opacity: 0.09; }   /* lo deducido pesa menos, también de fondo */
-
-  /* El destello vive en «Destello.svelte» desde que se pidió también para las
-     tarjetas de la portada. Aquí quedaban veinte líneas de CSS que habrían sido la
-     segunda copia, y dos copias se separan en cuanto alguien ajusta una.
-     Lo que esta tarjeta SÍ tiene que aportar es el contenedor —«position»,
-     «overflow» e «isolation»—, arriba en «.bienes li». */
-  /* Lo deducido se marca: borde punteado, el mismo lenguaje de «esto falta». */
-  .bienes li.apuesta { border-style: dashed; border-color: var(--oro-700); }
-  .que { font-size: var(--cuerpo-tam); font-weight: var(--cuerpo-fuerte-peso); line-height: 1.25; }
-  .fuente {
-    font-size: var(--etiqueta-tam); line-height: var(--etiqueta-alto);
-    letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria);
-  }
-  /* `--oro-texto` y no `--oro-500`: el 500 sobre un panel claro da 1.87:1 y deja de
-     ser texto. Es la misma bomba de relojería de siempre —un color literal escrito en
-     un componente— y esta vez la destapó el registro claro del ADR-0019. */
-  .apuesta .fuente { color: var(--oro-texto); }
+  /* Aquí vivían la marca de agua, el destello y las tintas de las tarjetas de bien.
+     Todo eso se fue con el ADR-0024: esas tarjetas ahora son fotografía y su CSS vive
+     en `GaleriaBienes.svelte`. El destello sigue en la portada, vía `Tarjeta.svelte`;
+     sobre una fotografía se leía a efecto y el brief pide justo evitar eso.
+     Lo que queda abajo lo usa el hueco de «pendiente», que sí sigue en pie. */
   .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
+
+  /* Entradilla de la sección de bienes · ADR-0024. Una sola frase que lleva la
+     promesa —«te decimos cuánto»— antes de la retícula. */
+  .entradilla {
+    max-width: 46ch;
+    margin: calc(var(--e-2) * -1) 0 var(--e-4);
+    font-size: var(--cuerpo-tam);
+    line-height: 1.5;
+    color: var(--tinta-secundaria);
+  }
+
+  /* La promesa del hero · ADR-0024. Grande, pero por debajo del h1. */
+  .promesa {
+    max-width: 20ch;
+    margin: var(--e-3) 0 0;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--tinta);
+  }
+
+  /* El bloque de consulta por WhatsApp · ADR-0024. */
+  .consulta {
+    margin-top: var(--e-6);
+    padding: var(--e-4);
+    background: var(--panel);
+    border: 1px solid var(--panel-borde);
+    /* La arista del ADR-0007 §5, la misma del botón primario. */
+    border-left: 3px solid var(--oro-500);
+  }
+  .consulta .titulo {
+    margin: 0;
+    font-size: var(--cuerpo-tam);
+    font-weight: var(--cuerpo-fuerte-peso);
+    line-height: 1.3;
+    color: var(--tinta);
+  }
+  .consulta .dice {
+    margin: var(--e-1) 0 var(--e-3);
+    font-size: var(--cuerpo-tam);
+    line-height: 1.45;
+    color: var(--tinta-secundaria);
+  }
+
+  .requisitos {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--e-3);
+    align-items: start;
+  }
 
   .pasos { display: grid; gap: var(--e-4); }
   .pasos li {
-    display: grid; grid-template-columns: auto 1fr; gap: var(--e-3); align-items: start;
+    display: grid; grid-template-columns: auto 1fr; gap: var(--e-3); align-items: center;
     border-left: 2px solid var(--oro-500); padding-left: var(--e-3);
   }
+  /* EL NUMERAL, EN GRANDE · ADR-0024. Era una pastilla de 26 px con el número dentro
+     y se leía como una viñeta cualquiera. El proceso es lo que hay que entender de un
+     vistazo, así que el número pesa lo que pesa el paso. */
   .paso-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: var(--radio-pastilla);
-    display: inline-flex; align-items: center; justify-content: center;
-    background: var(--oro-500); color: var(--tinta-sobre-accion);
-    font-size: var(--pie-tam); font-weight: var(--etiqueta-peso); line-height: 1;
+    flex-shrink: 0;
+    min-width: 2ch;
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1;
+    /* Token y no `--oro-500`: en el registro claro ese oro no es texto. */
+    color: var(--oro-texto-grande);
+    font-variant-numeric: tabular-nums;
   }
-  .subtitular { font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
+  .subtitular { max-width: 56ch; margin: calc(var(--e-2) * -1) 0 var(--e-6); font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
   .cifras { border: 1px solid var(--negro-400); padding: var(--e-4); margin-top: var(--e-6); display: grid; gap: var(--e-3); }
 
-  .requisitos { display: grid; }
-  .requisitos li { display: grid; grid-template-columns: auto 1fr; gap: var(--e-3); align-items: start; padding: var(--e-4) 0; border-top: 1px solid var(--borde-sutil); }
+  /* La regla de `li` se fue con las cuatro cajas: ahora es UN bloque. La de arriba,
+     junto a `.consulta`, es la que manda. */
   .casilla { width: 22px; height: 22px; border: 2px solid var(--borde-campo); border-radius: var(--radio-campo); }
 
   .ubicacion { display: grid; gap: var(--e-6); }
