@@ -37,7 +37,13 @@ import { join, relative } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
 const LIMITE_KB = 40;
-const BUILD = 'build';
+
+/**
+ * Por omisión mide `build/`, que es lo que corre `npm run build`. Se puede apuntar a
+ * otro directorio para PROBAR EL GUARDIA CONTRA PÁGINAS FALSAS — ver
+ * `tests/presupuesto.test.ts`. Un verificador que nadie verifica es una creencia.
+ */
+const BUILD = process.argv[2] ?? 'build';
 
 /**
  * TERCEROS DECLARADOS. Uno por línea, con quién lo autorizó.
@@ -74,18 +80,79 @@ const paginas = [];
 })(BUILD);
 
 const gz = (p) => gzipSync(readFileSync(p)).length;
+const gzTexto = (s) => gzipSync(Buffer.from(s, 'utf8')).length;
 
+/**
+ * ¿Ese <script> ejecuta código, o solo transporta datos?
+ *
+ * El grafo se sirve en <script type="application/ld+json">: son datos, el navegador
+ * no ejecuta nada, y su peso ya está contado en la columna HTML. Hay 8, uno por
+ * página, y contarlos como JavaScript sería mentir en la otra dirección.
+ *
+ * La regla va al revés de como se escribiría por comodidad: solo se descarta lo que
+ * se RECONOCE como datos, y un `type` desconocido cuenta como JavaScript. Si mañana
+ * aparece uno nuevo, el guardia se pasa de pesimista —que se nota y se arregla— en
+ * vez de callarse, que es exactamente como se le fue el mapa por al lado.
+ */
+const TIPOS_DE_DATOS = /^(application\/(ld\+)?json|text\/(template|plain)|importmap|speculationrules)$/i;
+const ejecuta = (tipo) => !tipo || !TIPOS_DE_DATOS.test(tipo.trim());
+
+/**
+ * ── EL HUECO QUE ESTO TAPA · 11 de septiembre, segunda vez ───────────────────
+ *
+ * Hasta hoy aquí solo se leía `_app/immutable/…*.js`, el bundle del marco. Medido
+ * contra cinco formas de meter JavaScript en la página, tres pasaban invisibles:
+ *
+ *     bundle de SvelteKit                       SÍ · contaba bytes
+ *     librería propia servida desde static/     NO — INVISIBLE
+ *     librería de node_modules copiada a static NO — INVISIBLE
+ *     <script> en línea                         NO — INVISIBLE
+ *     librería desde un CDN                     SÍ · exigía declararla
+ *
+ * O sea: el camino más barato para animar —un script propio, sin marco— era también
+ * el único que el guardia no sabía ver. Habría impreso «✓ CA-10 cumplido · margen de
+ * 40 KB» mientras mandaba la librería entera al teléfono de gama baja del contrato.
+ *
+ * Es la MISMA falla del encabezado, cometida dos veces en el mismo archivo: medir la
+ * parte que existía cuando se escribió el verificador. Ahora se cuenta todo lo que el
+ * navegador va a ejecutar, venga de donde venga.
+ */
 const medidas = paginas.map((pagina) => {
   const html = readFileSync(pagina, 'utf8');
-  const refs = new Set(html.match(/_app\/immutable\/[A-Za-z0-9/_.-]+\.js/g) ?? []);
-  let bytes = 0; const faltantes = [];
-  for (const r of refs) {
+  const ruta = '/' + relative(BUILD, pagina).replace(/index\.html$/, '').replace(/\\/g, '/');
+
+  // Archivos que ESTA página descarga. Es un Set: un archivo referenciado dos veces
+  // se descarga una vez, y el visitante lo paga una vez.
+  const archivos = new Set(html.match(/_app\/immutable\/[A-Za-z0-9/_.-]+\.js/g) ?? []);
+  let bytesEnLinea = 0;
+  let bloquesEnLinea = 0;
+
+  for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    const [, atributos, cuerpo] = m;
+    if (!ejecuta(/\btype\s*=\s*["']?([^"'\s>]+)/i.exec(atributos)?.[1])) continue;
+
+    const src = /\bsrc\s*=\s*["']([^"']+)["']/i.exec(atributos)?.[1];
+    if (src === undefined) {
+      // En línea: pesa lo que pese su cuerpo, comprimido como llega.
+      if (cuerpo.trim()) { bytesEnLinea += gzTexto(cuerpo); bloquesEnLinea++; }
+    } else if (!/^(https?:)?\/\//i.test(src)) {
+      // Del mismo dominio. Se normaliza a ruta dentro de build/ para que el Set
+      // reconozca «/x.js» y «x.js» como el mismo archivo.
+      archivos.add(src.split(/[?#]/)[0].replace(/^\//, ''));
+    }
+    // Los de otro dominio no se pesan aquí: no se pueden leer del disco. Los caza
+    // el bloque de TERCEROS, que exige declararlos con ADR.
+  }
+
+  let bytes = bytesEnLinea;
+  const faltantes = [];
+  for (const r of archivos) {
     const f = join(BUILD, r);
     if (existsSync(f)) bytes += gz(f); else faltantes.push(r);
   }
   return {
-    ruta: '/' + relative(BUILD, pagina).replace(/index\.html$/, '').replace(/\\/g, '/'),
-    archivos: refs.size,
+    ruta,
+    archivos: archivos.size + bloquesEnLinea,
     kb: +(bytes / 1024).toFixed(2),
     htmlKb: +(gz(pagina) / 1024).toFixed(2),
     faltantes
@@ -143,6 +210,20 @@ if (sinDeclarar.length) {
     `  nombre y ADR en TERCEROS_DECLARADOS de este archivo, o no entra.\n\n` +
     `  Para saber cuánto pesa de verdad: node herramientas/medir-portada.mjs\n`
   );
+  process.exit(1);
+}
+
+/**
+ * `faltantes` se venía calculando desde siempre y no se imprimía en ningún lado.
+ * Un <script src> que apunta a un archivo que no está en build/ pesaba CERO y no
+ * decía nada: el peor resultado posible, porque el número sale bajo y parece bueno.
+ * O el archivo existe y se pesa, o el guardia lo dice.
+ */
+const rotos = medidas.filter((m) => m.faltantes.length);
+if (rotos.length) {
+  console.error(`\n✗ CA-10 INCUMPLIDO · ${rotos.length} página(s) piden JS que no está en ${BUILD}/\n`);
+  for (const m of rotos) console.error(`  ${m.ruta}  →  ${m.faltantes.join(', ')}`);
+  console.error(`\n  No se puede pesar lo que no existe. Mientras esté roto, el número de\n  arriba sale más bajo de lo que el visitante va a pagar.\n`);
   process.exit(1);
 }
 
