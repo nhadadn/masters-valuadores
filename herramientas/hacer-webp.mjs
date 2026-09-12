@@ -17,7 +17,7 @@
 import { readFileSync, writeFileSync, statSync, existsSync } from 'node:fs';
 import { abrirChromium } from './navegador.mjs';
 
-const FOTOS = ['fachada', 'empeno', 'maquinaria', 'fletes', 'taller'];
+const FOTOS = ['fachada', 'empeno', 'maquinaria', 'fletes', 'taller', 'patio'];
 const ANCHOS = [400, 600, 800, 1600];
 const CALIDAD = 0.80;
 

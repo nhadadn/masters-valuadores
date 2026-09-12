@@ -23,12 +23,16 @@
      * nuevo no tenga imagen no se rompe nada ni se inventa una.
      */
     foto?: string;
+    /** La foto es del negocio: sin tinte ni rotulo de archivo. */
+    fotoEsSuya?: boolean;
+    /** Hasta que ancho existe el archivo. */
+    fotoMaxAncho?: number;
     /** Describe LA FOTO. Nunca afirma que el local sea de Masters. */
     fotoAlt?: string;
     /** Posición en la retícula: escalona el destello. Ver `Destello.svelte`. */
     indice?: number;
   }
-  let { href, titulo, icono, nota, foto, fotoAlt, indice = 0 }: Props = $props();
+  let { href, titulo, icono, nota, foto, fotoAlt, fotoEsSuya = false, fotoMaxAncho = 1600, indice = 0 }: Props = $props();
 </script>
 
 <a {href} class="tarjeta" class:conFoto={foto}>
@@ -47,6 +51,8 @@
         alt={fotoAlt ?? ''}
         relacion="16 / 9"
         tamanos="(min-width: 768px) 25vw, 50vw"
+        provisional={!fotoEsSuya}
+        maxAncho={fotoMaxAncho}
         compacto
       />
     </span>

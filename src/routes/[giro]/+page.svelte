@@ -66,7 +66,7 @@
        foto de archivo provisional y rotulada. -->
   {#if giro.fotoProvisional}
     <div class="foto-giro">
-      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} />
+      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} />
     </div>
   {/if}
   <div class="acciones">

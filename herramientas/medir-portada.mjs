@@ -80,6 +80,32 @@ p.on('response', async (r) => {
   });
 });
 
+/**
+ * ── HUELLA DE LA MÁQUINA · y por qué hace falta ───────────────────────────
+ *
+ * Este script frena la CPU 4× ENCIMA de lo que la máquina ya esté haciendo. Si hay
+ * un navegador abierto con treinta pestañas, el freno se aplica sobre una máquina ya
+ * cargada y el resultado no es el del sitio: es el del momento.
+ *
+ * Pasó el 11 de septiembre. La portada midió 1372 ms de FCP por la mañana y 4048 ms
+ * por la tarde CON EL MISMO COMMIT — comprobado recorriendo cuatro commits hacia
+ * atrás y viendo la cifra plana en todos. No había regresión: la máquina tenía 2 GB
+ * libres y Chrome ocupando 2.9.
+ *
+ * Se midió una regresión que no existía y casi se culpa a un cambio de diseño.
+ *
+ * Esto ejecuta un bucle fijo y reporta cuánto tarda. No corrige nada — no se puede—
+ * pero deja la cifra al lado del resultado, así que dos mediciones solo se comparan
+ * si su huella se parece. Lo que SÍ es comparable siempre es un A/B dentro de una
+ * misma corrida, que es como mide `medir-animacion.mjs`.
+ */
+const huella = await p.evaluate(() => {
+  const t = performance.now();
+  let x = 0;
+  for (let i = 0; i < 4_000_000; i++) x += Math.sqrt(i);
+  return Math.round(performance.now() - t);
+});
+
 // Una sola carga, en contexto limpio. El servidor ya viene despierto de arriba.
 await p.goto(BASE + RUTA, { waitUntil: 'load' });
 
@@ -144,6 +170,8 @@ for (const r of pedidos) porTipo[r.tipo] = (porTipo[r.tipo] ?? 0) + r.bytes;
 const terceros = pedidos.filter((r) => r.tercero);
 
 console.log(`\nPortada · 390 px · 4G a 1.6 Mbps con 150 ms · CPU a 1/4\n`);
+console.log(`  Huella de la máquina   ${huella} ms  · dos corridas solo se comparan si esta cifra se parece`);
+console.log('');
 
 const veredicto = lcp.ms < 2500 ? '✓ bueno' : lcp.ms < 4000 ? '△ mejorable' : '✗ malo';
 console.log(`  LCP                    ${lcp.ms} ms      ${veredicto}  (umbral 2500)`);

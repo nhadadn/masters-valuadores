@@ -59,12 +59,29 @@
      * acababa de bajar de 590 a 140. Un `sizes` mal puesto no da error: solo cuesta.
      */
     tamanos?: string;
+    /**
+     * Hasta qué ancho existe esta foto. NO todas llegan a 1600.
+     *
+     * Las que manda el cliente llegan por WhatsApp, que recomprime y encoge: la del
+     * patio viene recortada de una pieza de redes y su ancho nativo es 952 px.
+     * Generar un `-1600` a partir de eso sería inventar detalle que la fotografía no
+     * tiene, y dejar el `srcset` pidiéndolo sería un 404 en cada pantalla de alta
+     * densidad — que además no falla a la vista: el navegador cae al siguiente
+     * candidato y nadie se entera de que hay peticiones rotas.
+     */
+    maxAncho?: number;
   }
   let {
     nombre, alt, relacion = '16 / 9', prioritaria = false,
     provisional = true, alto = 1067, compacto = false, diagonal = false,
-    tamanos = '(min-width: 768px) 50vw, 100vw'
+    tamanos = '(min-width: 768px) 50vw, 100vw', maxAncho = 1600
   }: Props = $props();
+
+  const ANCHOS = [400, 600, 800, 1600];
+  const disponibles = $derived(ANCHOS.filter((a) => a <= maxAncho));
+  const juego = (ext: string) =>
+    disponibles.map((a) => `/fotos/${nombre}-${a}.${ext} ${a}w`).join(', ');
+  const mayor = $derived(disponibles[disponibles.length - 1]);
 </script>
 
 <figure class="foto" data-provisional={provisional ? 'true' : undefined}>
@@ -106,17 +123,17 @@
     -->
     <source
       type="image/avif"
-      srcset="/fotos/{nombre}-400.avif 400w, /fotos/{nombre}-600.avif 600w, /fotos/{nombre}-800.avif 800w, /fotos/{nombre}-1600.avif 1600w"
+      srcset={juego("avif")}
       sizes={tamanos}
     />
     <source
       type="image/webp"
-      srcset="/fotos/{nombre}-400.webp 400w, /fotos/{nombre}-600.webp 600w, /fotos/{nombre}-800.webp 800w, /fotos/{nombre}-1600.webp 1600w"
+      srcset={juego("webp")}
       sizes={tamanos}
     />
     <img
-      src="/fotos/{nombre}-800.jpg"
-      srcset="/fotos/{nombre}-400.jpg 400w, /fotos/{nombre}-600.jpg 600w, /fotos/{nombre}-800.jpg 800w, /fotos/{nombre}-1600.jpg 1600w"
+      src="/fotos/{nombre}-{Math.min(800, mayor)}.jpg"
+      srcset={juego("jpg")}
       sizes={tamanos}
       {alt}
       width="1600"

@@ -45,7 +45,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { statSync, existsSync } from 'node:fs';
 
-const FOTOS = ['fachada', 'empeno', 'maquinaria', 'fletes', 'taller'];
+const FOTOS = ['fachada', 'empeno', 'maquinaria', 'fletes', 'taller', 'patio'];
 const ANCHOS = [400, 600, 800, 1600];
 const CRF = 30;
 const PIX = 'yuv444p';
