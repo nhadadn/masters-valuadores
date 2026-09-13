@@ -19,7 +19,7 @@
   import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
-  import GaleriaBienes from '$componentes/GaleriaBienes.svelte';
+  import PlanetaBienes from '$componentes/PlanetaBienes.svelte';
   import TiraPasos from '$componentes/TiraPasos.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
@@ -114,7 +114,7 @@
        letrero es casi un hecho, lo deducido es una apuesta que Cristóbal confirma
        o tacha. Eso no se toca mientras esto sea borrador. -->
   {#if giro.bienesPropuestos?.length}
-    <GaleriaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
+    <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
 
     <!-- ADR-0025 · EL BLOQUE DE REVISIÓN.
          Los rótulos «EN SU LETRERO», «FOTO DE ARCHIVO» y demás salían en cada tarjeta.
@@ -301,7 +301,7 @@
 
   /* Aquí vivían la marca de agua, el destello y las tintas de las tarjetas de bien.
      Todo eso se fue con el ADR-0024: esas tarjetas ahora son fotografía y su CSS vive
-     en `GaleriaBienes.svelte`. El destello sigue en la portada, vía `Tarjeta.svelte`;
+     en `PlanetaBienes.svelte`. El destello sigue en la portada, vía `Tarjeta.svelte`;
      sobre una fotografía se leía a efecto y el brief pide justo evitar eso.
      Lo que queda abajo lo usa el hueco de «pendiente», que sí sigue en pie. */
   .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }

@@ -78,7 +78,7 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
-| JavaScript | **Solo en `/empeno-y-prestamo/`** · 9.14 KB propios, sin marco ni librería · `ADR-0021` y `ADR-0023`. Las otras siete en 0 KB |
+| JavaScript | **Solo en `/empeno-y-prestamo/`** · 11.2 KB propios, sin marco ni librería · `ADR-0021`, `ADR-0023` y `ADR-0026`. Las otras siete en 0 KB |
 | Fotografías reales | **OCHO** · seis del patio · `ADR-0022`, más dos de su joyería · `ADR-0024`. El hero de empeño ya es suyo. **Falta autos**; monedas entró de banco · `ADR-0025` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
@@ -121,8 +121,9 @@ presupuesto de 40. No se subió el presupuesto: se quitó el runtime. El acorde�
 `<details>` nativo.
 
 **Enmendado el 11 de septiembre · `ADR-0021`.** Aquí decía «cero JavaScript» y ya no
-es literal: `/empeno-y-prestamo/` sirve **9.14 KB** de script propio —la banda de
-monedas del `ADR-0021` y los puntos del carrusel del `ADR-0023`—. Las otras siete
+es literal: `/empeno-y-prestamo/` sirve **11.2 KB** de script propio —la banda de
+monedas del `ADR-0021`, los puntos del carrusel del `ADR-0023` y la pausa del planeta
+del `ADR-0026`—. Las otras siete
 páginas siguen en 0 KB y el presupuesto sigue en 40.
 
 La regla que queda es más estrecha, no más laxa: **nada de marco, nada de librería, y
@@ -160,11 +161,11 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS en siete**, 9.14 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
+8 páginas · **0 KB de JS en siete**, 11.2 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
 6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de empeño: 1396 ms** · `ADR-0025` · 221 KB, 0 de terceros. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+**LCP de empeño: ~2350 ms medido intercalado** · `ADR-0026` · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 
