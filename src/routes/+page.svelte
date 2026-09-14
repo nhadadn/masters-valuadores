@@ -8,7 +8,6 @@
    * hueco etiquetado, y lo que es dato de negocio sigue en `__POR_CONFIRMAR__`.
    */
   import Seccion from '$componentes/Seccion.svelte';
-  import Hueco from '$componentes/Hueco.svelte';
   import Boton from '$componentes/Boton.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Tarjeta from '$componentes/Tarjeta.svelte';
@@ -17,7 +16,6 @@
   import Foto from '$componentes/Foto.svelte';
   import CintaPalabras from '$componentes/CintaPalabras.svelte';
   import Titular from '$componentes/Titular.svelte';
-  import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
   import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
@@ -60,7 +58,6 @@
   ]);
 </script>
 
-<AvisoBorrador />
 
 <!-- ENTRADA OSCURA · ADR-0011. Se aparta de sus cinco piezas, donde el panel del
      titular es claro y lo oscuro es la fotografía. Decidido por Nadir el 10 de
@@ -161,17 +158,16 @@
        bloque llevaba de borde. El texto sigue siendo hueco: la etiqueta en versalitas
        y la segunda línea en oro llegan con el copy, no antes. -->
   <ul class="diferenciadores">
-    {#each DIFERENCIADORES as d, i}
+    <!-- ADR-0027 · solo los que TIENEN texto. El tercero está vacío a propósito —le
+         falta un dato de Cristóbal— y pintaba un hueco rotulado; eso era una marca de
+         borrador y salió con las demás. Cuando llegue el dato, vuelve solo. -->
+    {#each DIFERENCIADORES.filter((d) => d.titulo) as d}
       <li>
         <Insignia icono={d.icono} sobreOscuro={false}>
-          {#if d.titulo}
-            <div data-propuesta="true">
-              <p class="dif-titulo">{d.titulo}</p>
-              <p class="dif-linea">{d.linea}</p>
-            </div>
-          {:else}
-            <Hueco etiqueta="DIFERENCIADOR {i + 1} — NECESITA UN DATO DE CRISTÓBAL" renglones={2} />
-          {/if}
+          <div data-propuesta="true">
+            <p class="dif-titulo">{d.titulo}</p>
+            <p class="dif-linea">{d.linea}</p>
+          </div>
         </Insignia>
       </li>
     {/each}
@@ -243,7 +239,6 @@
              UNA vez, lo pidan uno o dos bloques. Lo que sí baja son las peticiones,
              de 29 a 18. -->
         <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
-        <Hueco etiqueta="QUÉ ENTRA EN ESTA LÍNEA — LA LISTA DE BIENES, LA DA CRISTÓBAL" renglones={3} />
         <BotonWhatsApp
           origen="linea-{g.slug}"
           texto="Escribir por {g.nombreCorto.toLowerCase()}"

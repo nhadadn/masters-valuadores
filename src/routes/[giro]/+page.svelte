@@ -8,15 +8,15 @@
    * este le sirve a quien busca.
    */
   import Seccion from '$componentes/Seccion.svelte';
-  import Hueco from '$componentes/Hueco.svelte';
   import Boton from '$componentes/Boton.svelte';
+  /* `Hueco` solo vive en ramas de reserva que hoy no pinta ningún giro: los cuatro
+     tienen subtitular y pasos. Se queda por si entra un giro sin copy. */
+  import Hueco from '$componentes/Hueco.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
-  import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Titular from '$componentes/Titular.svelte';
   import Foto from '$componentes/Foto.svelte';
-  import AvisoBorrador from '$componentes/AvisoBorrador.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
   import PlanetaBienes from '$componentes/PlanetaBienes.svelte';
@@ -51,7 +51,6 @@
   ];
 </script>
 
-<AvisoBorrador />
 
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>
 
@@ -74,6 +73,46 @@
   {#if giro.pasosCortos}
     <TiraPasos pasos={giro.pasosCortos} />
   {/if}
+</Seccion>
+
+<!-- ADR-0027 · La sección de bienes sube entre la tira de pasos y los botones, y
+     solo existe si el giro tiene bienes. Antes, un giro sin ellos —taller— pintaba
+     cuatro huecos «BIEN ACEPTADO — PENDIENTE»; eso era una marca de borrador y salió
+     con las demás. Una sección vacía no informa: informa su ausencia. -->
+{#if giro.bienesPropuestos?.length}
+  <Seccion fondo={claro}>
+    <h2><span class="num">1</span> {giro.tituloBienes ?? PREGUNTAS[0]}</h2>
+    {#if giro.subtituloBienes}
+      <p class="entradilla" data-propuesta="true">{giro.subtituloBienes}</p>
+    {/if}
+    <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
+
+    <!-- El CTA que contesta la pregunta que trae la gente · ADR-0024. Va justo
+         después del planeta, donde acaba de nacerle la duda. -->
+    <aside class="consulta">
+      <p class="titulo" data-propuesta="true">¿No sabes si aceptamos lo que traes?</p>
+      <p class="dice" data-propuesta="true">Mándanos una foto por WhatsApp y lo vemos.</p>
+      <BotonWhatsApp
+        origen="giro-{giro.slug}-consulta-foto"
+        texto="Enviar foto por WhatsApp"
+        mensaje="Hola, quiero saber si aceptan este artículo. Les mando una foto."
+      />
+    </aside>
+  </Seccion>
+{/if}
+<!-- ADR-0022 · LA RETÍCULA DE FOTOS REALES.
+     Va DESPUÉS de la lista de bienes, que es la respuesta a la pregunta; esto la
+     ilustra. Y va en el campo oscuro, no en el mármol: el mármol es el registro de
+     lujo del ADR-0020 y estas son fotos de maquinaria en un patio de grava. Vestir
+     una retroexcavadora de boutique contradice su propia marca. -->
+<!-- ADR-0027 · LA SEGUNDA MITAD DE LA ENTRADA.
+     Los botones, la foto y la banda de monedas bajan por debajo de los bienes: la
+     sección 14 entera sube entre la tira de pasos y estos botones, por petición de
+     Nadir sobre el mapa de pantalla.
+     La foto YA NO es `prioritaria`: lo era por ser el elemento LCP cuando abría la
+     página, y ahora vive muy por debajo del pliegue. Dejarla eager habría sido pedir
+     con prisa algo que nadie ve al entrar. -->
+<Seccion>
   <div class="acciones">
     <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
     <Boton variante="secundario" href="/contacto/">
@@ -91,7 +130,7 @@
            usaba la portada. Medido en las cuatro paginas de giro: el navegador no
            pedia la imagen hasta ~2000 ms porque nadie le habia dicho que corria
            prisa. -->
-      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} prioritaria />
+      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} />
     </div>
   {/if}
   <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
@@ -103,79 +142,6 @@
   {/if}
 </Seccion>
 
-<Seccion fondo={claro}>
-  <h2><span class="num">1</span> {giro.tituloBienes ?? PREGUNTAS[0]}</h2>
-  {#if giro.subtituloBienes}
-    <p class="entradilla" data-propuesta="true">{giro.subtituloBienes}</p>
-  {/if}
-  <!-- ADR-0024 · CATÁLOGO VISUAL, no lista de texto. El criterio de aceptación es que
-       alguien que solo MIRA las tarjetas entienda qué puede llevar, sin leer.
-       La procedencia de cada bien sigue a la vista, ahora en distintivo: lo del
-       letrero es casi un hecho, lo deducido es una apuesta que Cristóbal confirma
-       o tacha. Eso no se toca mientras esto sea borrador. -->
-  {#if giro.bienesPropuestos?.length}
-    <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
-
-    <!-- ADR-0025 · EL BLOQUE DE REVISIÓN.
-         Los rótulos «EN SU LETRERO», «FOTO DE ARCHIVO» y demás salían en cada tarjeta.
-         Son notas para Cristóbal, no interfaz pública, y por decisión de Nadir bajan
-         aquí — pero NO se borran: el ADR-0009 obliga a que una foto de banco se sepa,
-         y la procedencia de cada bien es lo que permite tachar lo que no sea cierto.
-         Tiene el mismo estatus que la banda BORRADOR de arriba: cuando el sitio deje
-         de ser borrador, se van los dos juntos. -->
-    <aside class="revision">
-      <p class="rev-et">SOLO PARA LA REVISIÓN — no va en el sitio publicado</p>
-      <p class="nota">
-        Esta lista la <strong>dedujimos</strong> de su letrero y de sus publicaciones; el
-        cliente no la ha dictado. Si algo no es cierto, se tacha: que el sitio diga que
-        aceptan algo que no aceptan es el daño más caro que puede hacer una página.
-      </p>
-      <ul class="rev-lista">
-        {#each giro.bienesPropuestos as bien}
-          <li>
-            <b>{bien.que}</b>
-            · {#if bien.fuente === 'letrero'}está en su letrero{:else if bien.fuente === 'publicacion'}sale de una publicación suya{:else}<strong>DEDUCIDO — sin fuente, confirmar</strong>{/if}
-            · {#if !bien.foto}<strong>falta fotografía</strong>{:else if bien.fotoEsSuya}foto suya{:else}foto de archivo, se sustituye{/if}
-          </li>
-        {/each}
-      </ul>
-    </aside>
-  {:else}
-    <ul class="bienes">
-      {#each Array(4) as _, i}
-        <li data-pendiente="true">
-          <span class="ranura-ico" aria-hidden="true"></span>
-          <span class="et">BIEN ACEPTADO {i + 1} — PENDIENTE</span>
-        </li>
-      {/each}
-    </ul>
-    <p class="nota">
-      <strong>De este giro no hay ni una fuente.</strong> Ni el letrero ni las cinco
-      publicaciones dicen qué recibe el taller, así que aquí no se dedujo nada: habría
-      sido inventar. Lo tiene que dictar el cliente.
-    </p>
-  {/if}
-
-  <!-- ADR-0024 · EL CTA QUE CONTESTA LA PREGUNTA QUE TRAE LA GENTE.
-       Los tres enlaces a WhatsApp que ya había eran genéricos. Quien llega a esta
-       página trae UNA pregunta concreta —«¿cuánto me dan por esto?»— y aquí acaba de
-       ver la lista de lo que se acepta, que es justo donde le nace la duda. -->
-  <aside class="consulta">
-    <p class="titulo" data-propuesta="true">¿No sabes si aceptamos lo que traes?</p>
-    <p class="dice" data-propuesta="true">Mándanos una foto por WhatsApp y lo vemos.</p>
-    <BotonWhatsApp
-      origen="giro-{giro.slug}-consulta-foto"
-      texto="Enviar foto por WhatsApp"
-      mensaje="Hola, quiero saber si aceptan este artículo. Les mando una foto."
-    />
-  </aside>
-</Seccion>
-
-<!-- ADR-0022 · LA RETÍCULA DE FOTOS REALES.
-     Va DESPUÉS de la lista de bienes, que es la respuesta a la pregunta; esto la
-     ilustra. Y va en el campo oscuro, no en el mármol: el mármol es el registro de
-     lujo del ADR-0020 y estas son fotos de maquinaria en un patio de grava. Vestir
-     una retroexcavadora de boutique contradice su propia marca. -->
 {#if giro.muestraInventario}
   <Seccion etiqueta="SU PATIO Y SU EQUIPO">
     <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
@@ -213,50 +179,16 @@
       {/each}
     {/if}
   </ol>
-  <div class="cifras">
-    <p class="et">PORCENTAJE, PLAZO Y TASA</p>
-    <PorConfirmar que="ninguna cifra se dibuja sin autorización escrita" />
-  </div>
-</Seccion>
-
-<Seccion fondo={claro}>
-  <h2><span class="num">3</span> {PREGUNTAS[2]}</h2>
-  <!-- ADR-0024 · UN bloque y no CUATRO cajas vacías. Medído: ocupaban 591 px en un
-       teléfono —una novena parte de la página— para decir cuatro veces lo mismo, y el
-       guardia de fugas cazó la cifra con signo que había aquí: hace bien, así atraparía
-       una tasa. Sigue siendo
-       visible que falta —eso lo exige el contrato— pero cuesta un décimo. -->
-  <div class="requisitos">
-    <span class="casilla" aria-hidden="true"></span>
-    <Hueco etiqueta="QUÉ HAY QUE LLEVAR — LO DICTA EL CLIENTE" renglones={2} />
-  </div>
 </Seccion>
 
 <Seccion>
-  <h2><span class="num">4</span> {PREGUNTAS[3]}</h2>
+  <h2><span class="num">3</span> {PREGUNTAS[3]}</h2>
   <div class="ubicacion">
     <Mapa />
     <div class="datos">
       <DatosDelLocal />
     </div>
   </div>
-</Seccion>
-
-<Seccion fondo={claro}>
-  <h2><span class="num">5</span> {PREGUNTAS[4]}</h2>
-  <ul class="acordeon">
-    {#each PREGUNTAS_FRECUENTES as p, i}
-      <li>
-        <details open={i === 0}>
-          <summary>
-            <span>{p}</span>
-            <span class="signo" aria-hidden="true"></span>
-          </summary>
-          <div class="respuesta"><Hueco etiqueta="RESPUESTA" renglones={2} /></div>
-        </details>
-      </li>
-    {/each}
-  </ul>
 </Seccion>
 
 <Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO">
@@ -288,23 +220,11 @@
   }
   .foto-giro { margin-top: var(--e-4); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
-  .nota { font-size: var(--pie-tam); color: var(--tinta-secundaria); margin-top: var(--e-4); }
-  .et { font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }
+  /* Aquí vivían `.nota`, `.et`, `.bienes` y `.ranura-ico`: el CSS de la rama que
+     pintaba «BIEN ACEPTADO — PENDIENTE» cuando un giro no tenía bienes, y el de la
+     nota de «esta lista la dedujimos». Las dos eran marcas de borrador y salieron
+     con el ADR-0027. Su CSS se va con ellas; el historial lo guarda. */
 
-  .bienes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); }
-  .bienes li {
-    position: relative; isolation: isolate; overflow: hidden;
-    display: grid; gap: var(--e-2); min-height: 96px; padding: var(--e-3);
-    background: var(--superficie); border: 1px solid var(--panel-borde);
-    align-content: start;
-  }
-
-  /* Aquí vivían la marca de agua, el destello y las tintas de las tarjetas de bien.
-     Todo eso se fue con el ADR-0024: esas tarjetas ahora son fotografía y su CSS vive
-     en `PlanetaBienes.svelte`. El destello sigue en la portada, vía `Tarjeta.svelte`;
-     sobre una fotografía se leía a efecto y el brief pide justo evitar eso.
-     Lo que queda abajo lo usa el hueco de «pendiente», que sí sigue en pie. */
-  .ranura-ico { width: 26px; height: 26px; border: 1px dashed var(--panel-borde); background: var(--negro-900); }
 
   /* Entradilla de la sección de bienes · ADR-0024. Una sola frase que lleva la
      promesa —«te decimos cuánto»— antes de la retícula. */

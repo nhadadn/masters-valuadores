@@ -77,7 +77,6 @@
   <div class="caja">
     <div class="bloque">
       <p class="nombre-pie">{negocio.nombreComercial} VALUADORES</p>
-      <p class="dato">Razón social <PorConfirmar que="nombre legal" decision="D-01" sobreOscuro /></p>
     </div>
     <div class="bloque">
       <p class="etiqueta">HORARIOS Y REDES</p>
@@ -92,7 +91,6 @@
       {:else}
         <p class="dato"><PorConfirmar que="horarios de cada día" decision="D-08" sobreOscuro /></p>
       {/if}
-      <p class="dato"><PorConfirmar que="Instagram y Facebook" decision="D-10" sobreOscuro /></p>
     </div>
     <div class="bloque">
       <p class="etiqueta">LÍNEAS</p>

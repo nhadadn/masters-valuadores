@@ -65,6 +65,18 @@ Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
   como hecho, y sin una sola afirmación que no se pueda respaldar.
 - La regla operativa: un formulario en blanco no regresa; un borrador regresa marcado.
 
+**ENMENDADO el 14 de septiembre · `ADR-0027`.** Nadir decidió quitar **todas las marcas
+visibles** de borrador de la portada y las cuatro páginas de giro: la banda amarilla, el
+bloque de revisión, los huecos «PENDIENTE» y los `__POR_CONFIRMAR__` en pantalla.
+
+Lo que **no** cambió, y conviene tenerlo claro: el centinela sigue en `negocio.ts`, el
+grafo sigue lanzando excepción y **`npm run build` sigue saliendo con código 1**. La red
+está puesta; lo que se quitó es que se vea.
+
+El efecto secundario hay que decirlo: **el sitio parece terminado y no lo está.** Faltan
+la tasa, el plazo, la razón social y 27 huecos de copy, y ya no se ven en pantalla.
+`/contacto/` y las legales conservan sus marcas a propósito.
+
 ---
 
 ## Estado
@@ -165,7 +177,7 @@ cableado**. Es parte del trabajo.
 6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de empeño: ~2350 ms medido intercalado** · `ADR-0026` · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+**LCP de empeño: ~2907 ms medido intercalado** · `ADR-0027` · baja 1.6 s respecto al 0026 · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 
