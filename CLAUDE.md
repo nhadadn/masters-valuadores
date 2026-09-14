@@ -75,7 +75,11 @@ está puesta; lo que se quitó es que se vea.
 
 El efecto secundario hay que decirlo: **el sitio parece terminado y no lo está.** Faltan
 la tasa, el plazo, la razón social y 27 huecos de copy, y ya no se ven en pantalla.
-`/contacto/` y las legales conservan sus marcas a propósito.
+La ampliación a `/contacto/` y las legales se hizo el mismo día: **las ocho páginas
+están a cero marcas visibles**. En contacto no había formulario que proteger —solo el
+bloque que explicaba por qué no lo hay— y se queda con WhatsApp, teléfono y mapa.
+**Las dos legales quedan en blanco con título** — 54 y 32 caracteres— y siguen
+enlazadas desde el pie.
 
 ---
 

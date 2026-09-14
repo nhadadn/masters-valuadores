@@ -109,12 +109,41 @@ HEAD:` y se recolocó.
 
 - **El mapa de la pantalla cambió** y se regeneró: quedan 25 piezas de 30. Los números
   **no se renumeran** —ya son vocabulario— y los cinco vacantes no se reutilizan.
-- `/contacto/` y las páginas legales **conservan sus marcas**. Ahí quitarlas publicaría
-  un formulario que no va a ninguna parte (D-13) y páginas legales vacías que parecen
-  terminadas. Si Nadir quiere también esas, es otra decisión.
+- **AMPLIADO el mismo día a `/contacto/` y las legales**, por decisión de Nadir. Ver
+  abajo: una de mis dos objeciones resultó falsa y la otra se cumplió.
 - El sitio **parece terminado y no lo está**: faltan la tasa, el plazo, la razón social
   y 27 huecos de copy. Eso ya no se ve en pantalla; sigue en `decisiones-pendientes.md`
   y en el build que falla.
+
+## Ampliación · contacto y legales
+
+Se había objetado que quitarlas publicaría *«un formulario que no va a ninguna parte y
+páginas legales vacías»*. Con el código delante, **una de las dos objeciones era falsa**:
+
+**No había formulario.** `formularioListo` es falso mientras D-13 siga abierta, así que
+lo único que se pintaba en esa sección era el bloque «BLOQUEADO POR D-13» explicando por
+qué no lo hay. Era marca de borrador de principio a fin. Salió la sección entera, y
+contacto se queda con lo que siempre fue real: WhatsApp, teléfono, mapa, dirección y
+horarios — 277 caracteres de contenido de verdad.
+
+**La otra objeción sí se cumplió.** Medido en el HTML construido:
+
+| | Texto en `<main>` |
+|---|---|
+| `/contacto/` | **277 caracteres** |
+| `/aviso-de-privacidad/` | **54** · migas, la etiqueta LEGAL y el título |
+| `/terminos/` | **32** |
+
+Las dos legales son ahora **páginas en blanco con título**, enlazadas desde el pie de
+las ocho. No se tocó nada más porque no se pidió: quitar el enlace del pie, o quitar
+las páginas del inventario, son decisiones aparte.
+
+### Estado final, las ocho páginas
+
+```
+banda 0 · pendiente 0 · bloqueado 0 · centinela visible 0     en las OCHO
+npm run build → código 1                                     la red sigue puesta
+```
 
 ## Evidencia
 

@@ -5,7 +5,6 @@
    * disfrazado de contenido.
    */
   import Seccion from '$componentes/Seccion.svelte';
-  import Hueco from '$componentes/Hueco.svelte';
   import Migas from '$componentes/Migas.svelte';
 </script>
 
@@ -13,7 +12,6 @@
 
 <Seccion etiqueta="LEGAL">
   <h1>Aviso de privacidad</h1>
-  <Hueco etiqueta="TEXTO LEGAL — LO REDACTA EL CLIENTE O SU ABOGADO" renglones={4} />
 </Seccion>
 
 <style>

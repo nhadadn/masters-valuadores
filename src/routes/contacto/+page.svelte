@@ -5,13 +5,10 @@
    * dibujar un buzón sin fondo. Se deja el armazón visible y bloqueado.
    */
   import Seccion from '$componentes/Seccion.svelte';
-  import Hueco from '$componentes/Hueco.svelte';
-  import Campo from '$componentes/Campo.svelte';
   import Boton from '$componentes/Boton.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
-  import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
   import { negocio, estaConfirmado } from '$lib/config/negocio';
@@ -23,7 +20,6 @@
 
 <Seccion etiqueta="CONTACTO">
   <h1>Contacto</h1>
-  <Hueco etiqueta="SUBTITULAR — CÓMO PREFIEREN QUE LES ESCRIBAN" renglones={2} />
   <div class="acciones">
     <BotonWhatsApp origen="contacto-entrada" />
     <Boton variante="secundario" href="/"><Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar</Boton>
@@ -39,30 +35,13 @@
   </div>
 </Seccion>
 
-<Seccion etiqueta="FORMULARIO">
-  {#if formularioListo}
-    <form class="form">
-      <Campo id="nombre" etiqueta="Nombre" ayuda="Cómo te llamas" />
-      <Campo id="telefono" etiqueta="Teléfono o WhatsApp" tipo="tel" ayuda="Para responderte" />
-      <Boton tipo="submit">Enviar</Boton>
-    </form>
-  {:else}
-    <div class="bloqueado">
-      <p class="et">BLOQUEADO POR D-13</p>
-      <p>
-        Un sitio estático no procesa envíos por sí solo. Hasta saber a dónde llegan
-        —correo, hoja de cálculo, CRM— el formulario no se construye: dibujarlo sería
-        prometer un buzón sin fondo.
-      </p>
-      <p><PorConfirmar que="destino de los envíos" decision="D-13" /></p>
-      <div class="muestra">
-        <p class="et">ASÍ SE VERÍA, CUANDO SE DESTRABE</p>
-        <Campo id="muestra-nombre" etiqueta="Nombre" ayuda="Cómo te llamas" inactivo />
-        <Campo id="muestra-tel" etiqueta="Teléfono o WhatsApp" tipo="tel" ayuda="Para responderte" inactivo />
-      </div>
-    </div>
-  {/if}
-</Seccion>
+<!-- ADR-0027 · AQUÍ VIVÍA LA SECCIÓN «FORMULARIO».
+     No contenía un formulario: `formularioListo` es falso mientras D-13 siga abierta,
+     así que lo único que se pintaba era el bloque «BLOQUEADO POR D-13» explicando por
+     qué no lo hay, con su centinela y una muestra inactiva. Era marca de borrador de
+     principio a fin y salió con las demás.
+     El día que se cierre D-13, el formulario se construye aquí. Los canales reales
+     —WhatsApp y teléfono— están arriba y no dependían de esto. -->
 
 <style>
   .migas { padding: 0 var(--margen-lateral); }
@@ -71,10 +50,9 @@
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); }
   .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
-  .form, .muestra { display: grid; gap: var(--e-4); max-width: 520px; }
-  .bloqueado { display: grid; gap: var(--e-3); border: 1px dashed var(--negro-400); padding: var(--e-4); }
-  .et { font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }
-  .muestra { margin-top: var(--e-4); }
+  /* Aquí vivía el CSS de `.form`, `.bloqueado` y `.muestra`: la sección de formulario
+     que salió con el ADR-0027. Cuando se cierre D-13 y el formulario se construya,
+     vuelve; el historial lo guarda. */
   @media (min-width: 768px) {
     .acciones { grid-auto-flow: column; justify-content: start; }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
