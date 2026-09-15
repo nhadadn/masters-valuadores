@@ -93,7 +93,7 @@ enlazadas desde el pie.
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Cinco grados de mármol, uno por sección. Los roles oscuros viven enteros en `.registro-oscuro` |
+| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · 11.2 KB propios, sin marco ni librería · `ADR-0021`, `ADR-0023` y `ADR-0026`. Las otras siete en 0 KB |
 | Fotografías reales | **OCHO** · seis del patio · `ADR-0022`, más dos de su joyería · `ADR-0024`. El hero de empeño ya es suyo. **Falta autos**; monedas entró de banco · `ADR-0025` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
@@ -179,10 +179,16 @@ cableado**. Es parte del trabajo.
 ### Números medidos, no estimados
 
 8 páginas · **0 KB de JS en siete**, 11.2 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
-6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
+6.5 KB gzip · 131 tests · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+Contraste mínimo por página, medido tras el `ADR-0030`: **7.97:1** en portada, contacto
+y las dos legales; **4.27:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
+es el peor extremo pesimista de su velo de mármol y no lo que se ve en pantalla.
+
+**LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
+
+**NINGUNA cifra absoluta de LCP de este repo es comparable entre sesiones.** La máquina dio 4356, 8948 y 7636 ms para el mismo código; el 14 de septiembre por la noche ese mismo 1244 se midió en **3804 ms**, tres veces peor, sin tocar nada. Solo valen las parejas intercaladas en la misma fase — y **en los dos órdenes**: el `ADR-0030` vio una «regresión» de 700 ms que cambió de bando al invertir el orden. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 

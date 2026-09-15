@@ -60,16 +60,25 @@
 
      Los cinco claros terminan en la MISMA rampa, así que el peor extremo es el
      mismo y el contraste no cambia entre ellos. Lo único que cambia es la veta. */
-  .marmol,
+  /* ENMENDADO · ADR-0030. Ya no terminan todos en la misma rampa, porque cuatro de
+     ellos ya no tienen rampa: son color plano. Así que el «peor extremo» se separa.
+
+     La entrada conserva `--crema-100` porque su velo sí es un degradado y ese sigue
+     siendo su extremo malo. Los demás valen `--crema-025`, que es la superficie real
+     y no una hipótesis: más clara, luego el contraste solo sube. */
+  .marmol { background-color: var(--crema-100); }
   .medio,
   .tenue,
   .marfil,
   .crema,
-  .blanco { background-color: var(--crema-100); }
+  .blanco { background-color: var(--crema-025); }
 
-  /* `cover` hace falta para la capa de textura; los degradados la ignoran sin daño. */
+  /* `cover` hace falta para la capa de textura. Desde el ADR-0030 solo LA ENTRADA
+     lleva piedra; los otros cuatro grados valen `none` y se quedan en su color plano.
+     Los tokens siguen existiendo con su nombre: la escala de cinco grados es la API
+     de este componente y no se toca, pero hoy solo dos de los cinco pintan algo. */
   .marmol { background-image: var(--marmol-fuerte); background-size: cover; }
-  .medio  { background-image: var(--marmol-medio); background-size: cover; }
+  .medio  { background-image: var(--marmol-medio); }
   .tenue  { background-image: var(--marmol-tenue); }
   .marfil,
   .crema,

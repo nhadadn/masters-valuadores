@@ -254,29 +254,43 @@
   /* 1 · MÁRMOL FUERTE — la entrada. Es el `--marmol` del ADR-0020 tal cual, con la
         luz cenital y el rescoldo de oro corridos a un extremo para que la veta NO
         caiga detrás del titular, como pide el brief. */
-  /* EL VELO ES LO QUE GRADUA. Blanco casi opaco a la izquierda —donde va el texto— y
-     abierto a la derecha, para que la veta se vea por un extremo y no detrás del
-     titular, como pide el brief. */
+  /* ── LA PIEDRA COMO SUJETO, NO COMO PAPEL PINTADO · ADR-0030 ───────────────
+     El velo iba de 0.93 a 0.50: fuerte donde el texto y **medio fuerte en todas
+     partes**. Resultado: la piedra no se leía ni como textura ni como material.
+
+     Medido en tres referencias reales —Suttons, Cosentino, Antolini—: ninguna usa
+     piedra de fondo tenue. La fotografían grande, a sangre, con el texto encima
+     sobre un velo LOCAL. Eso es lo que hace esto ahora.
+
+     El velo se queda casi opaco en la columna del texto —donde el contraste tiene
+     que estar garantizado— y cae a 0.06 en la mitad derecha, donde la piedra por fin
+     es piedra. El color plano de debajo sigue siendo `--crema-100`, el peor extremo,
+     así que la medición de contraste no se mueve un punto. */
   --marmol-fuerte:
-    linear-gradient(100deg, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.82) 38%, rgba(255, 255, 255, 0.58) 72%, rgba(255, 255, 255, 0.5) 100%),
+    linear-gradient(100deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.90) 42%,
+      rgba(255, 255, 255, 0.52) 58%,
+      rgba(255, 255, 255, 0.14) 78%,
+      rgba(255, 255, 255, 0.06) 100%),
     var(--textura-marmol),
     linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
 
-  /* 2 · MÁRMOL MEDIO — el bloque de consulta. Las vetas a un tercio. */
-  --marmol-medio:
-    linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.8)),
-    var(--textura-marmol),
-    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+  /* 2 · MEDIO — ADR-0030: pierde la textura. Llevaba la piedra bajo un velo del 86 %,
+        o sea un 14 % de veta: ni se leía como material ni dejaba de ensuciar. Eso es
+        literalmente «repartirla al 20 % por la página», que es lo que este ADR quita. */
+  --marmol-medio: none;
 
-  /* 3 · MÁRMOL TENUE — donde manda la fotografía: bienes y patio. Se intuye. */
-  --marmol-tenue:
-    radial-gradient(120% 78% at 82% -16%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 60%),
-    linear-gradient(107deg, transparent 63.4%, rgba(138, 114, 39, 0.028) 64.4%, transparent 65.3%),
-    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+  /* 3 y 4 · TENUE y MARFIL — ADR-0030: PLANOS, sin imagen ninguna.
+        Tenían la rampa `crema-025 → crema-100`, y como cada sección la reinicia, el
+        borde entre dos secciones era un escalón de 20 niveles. Medido en la página
+        construida: `rgb(227,222,212) → rgb(247,245,241)` en y=1352, 2762 y 3058.
+        Eran tres costuras visibles, y ninguna decía nada.
 
-  /* 4 · MARFIL — proceso y ubicación. Sin veta: claridad y nada más. */
-  --marfil:
-    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+        La superficie plana la pone ahora `background-color` en `Seccion.svelte`, que
+        es además el valor que resuelve el validador de contraste. */
+  --marmol-tenue: none;
+  --marfil: none;
 
   /* 5 · PIEDRA — «otras líneas». Sólida y un punto más oscura: hace de escalón
         entre la página clara y el pie de carbón. */
@@ -316,7 +330,7 @@
   /* Resplandor de oro sobre claro: mucho más tenue. Al 0.20 que usa el oscuro, sobre
      acero se lee como una mancha sucia en vez de como luz. */
   --resplandor-claro: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.22) 0%, rgba(231, 192, 65, 0) 70%);
-  --resplandor:  radial-gradient(closest-side, rgba(231, 192, 65, 0.20) 0%, rgba(231, 192, 65, 0) 100%);
+  /* `--resplandor` (la mancha que vagaba) se retiró con su regla · ADR-0030. */
 
   /* Las superficies OPACAS y fijas —encabezado, banda de contacto, barra— no pueden
      dejar pasar el resplandor de `body`, porque flotan encima del contenido. Llevan su

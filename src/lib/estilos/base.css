@@ -9,15 +9,24 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  /* EL CAMPO · ADR-0012, INVERTIDO POR EL ADR-0028. Vive aquí y en ningún otro
-     sitio; las secciones son transparentes encima y solo cambian cuánta veta dejan
-     ver. Pasó de carbón a piedra clara.
-     `background-color` declara el extremo MÁS OSCURO de la rampa clara —no el más
-     claro— para que cualquier medición de contraste caiga del lado pesimista. Es la
-     misma precaución de siempre: un `background-image` deja el color en transparente
-     y el validador acaba leyendo lo que haya detrás. */
-  background-color: var(--crema-100);
-  background-image: var(--marmol-tenue);
+  /* EL CAMPO · ADR-0012, invertido por el ADR-0028 y aplanado por el ADR-0030.
+     Vive aquí y en ningún otro sitio.
+
+     Era `--crema-100`, el extremo oscuro de la rampa, elegido para que cualquier
+     medición cayera del lado pesimista. Esa precaución valía cuando el cuerpo
+     llevaba un degradado encima. Ya no lo lleva, así que este color no es una
+     hipótesis pesimista: **es el píxel**, y el único sitio donde se ve es la franja
+     de migas, entre una cabecera de `--crema-025` y una entrada casi blanca.
+     Dejándolo en `--crema-100` se leía como un galón más oscuro atravesado.
+
+     Sube a `--crema-025`, el mismo marfil de la cabecera y de las secciones: la
+     franja desaparece y el contraste sube, no baja. */
+  background-color: var(--crema-025);
+  /* ADR-0030: el cuerpo ya NO lleva veta NI degradado. La piedra vive en la entrada
+     y en ningún otro sitio.
+     Plano y no rampa: la rampa se estiraba sobre los 4000 px del documento, así que
+     no se leía como degradado sino como tinte desigual entre secciones. */
+  background-image: none;
   color: var(--tinta);
   font-family: var(--fuente-base);
   font-size: var(--cuerpo-tam);
@@ -41,33 +50,23 @@ a { color: inherit; text-decoration: none; }
 }
 :focus:not(:focus-visible) { outline: none; }
 
-/* ── El resplandor que se mueve · ADR-0012 ──────────────────────────────────
-   Una mancha de oro grande y difusa, fija a la ventana, que se desplaza despacio
-   por detrás de todo. Es lo que hace que el fondo no se vea muerto.
+/* ── EL RESPLANDOR QUE SE MOVÍA, FUERA · ADR-0030 ──────────────────────
+   Aquí vivía una mancha de oro al 20 %, fija a la ventana y vagando 28 s en bucle
+   por detrás de todo. Era del `ADR-0012`, escrita para campo NEGRO, donde una
+   mancha tenue de oro efectivamente evita que el fondo se vea muerto.
 
-   SE ANIMA `transform` Y NADA MÁS. Animar `background-position` repinta el área
-   entera en cada cuadro; `transform` lo resuelve el compositor y no repinta. En un
-   teléfono de gama baja esa diferencia es batería y fluidez, no elegancia.
+   El `ADR-0028` invirtió el sitio a piedra clara y **dice que revierte el 0012**,
+   pero esta regla sobrevivió a la inversión. Sobre claro no da vida: tiñe.
 
-   Va detrás de todo con z-index -1 y `pointer-events: none`: no intercepta un solo
-   toque. Los paneles son opacos, así que pasa por detrás de ellos y nunca cruza su
-   texto — el contraste garantizado es el del campo, en el peor fotograma. */
-body::before {
-  content: '';
-  position: fixed;
-  z-index: -1;
-  pointer-events: none;
-  top: -30vmax;
-  left: -30vmax;
-  width: 90vmax;
-  height: 90vmax;
-  background: var(--resplandor);
-  animation: vagar 28s ease-in-out infinite alternate;
-}
-@keyframes vagar {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(60vw, 40vh, 0); }
-}
+   No se vio hasta hoy porque el cuerpo llevaba textura encima. Al dejarlo plano
+   quedó a la vista, y se midió: la franja de migas entre la cabecera y la entrada
+   pintaba `rgb(227, 218, 193)` —amarillo sucio— contra `rgb(247, 245, 241)` de la
+   cabecera. Leía como un galón suelto. No es un token mal elegido: es un elemento
+   de campo oscuro que siguió corriendo en una página clara.
+
+   Se va entera, con su animación. El fondo claro no necesita que nada se mueva
+   detrás, y un `transform` en bucle infinito en las ocho páginas cuesta batería en
+   el teléfono de gama baja del contrato. */
 
 /* Salto al contenido: primer tabulador de la página. */
 .salto-contenido {
@@ -97,7 +96,4 @@ body::before {
     --mov-elevacion: 0px;
     --mov-crecer: 1;
   }
-  /* El resplandor se queda quieto, no desaparece: el fondo sigue teniendo color,
-     solo deja de moverse. */
-  body::before { animation: none; }
 }

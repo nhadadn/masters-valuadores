@@ -38,6 +38,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0027 | [[ADR-0027-fuera-las-marcas-de-borrador\|Fuera las marcas de borrador, y los bienes suben a la entrada]] | **ACEPTADA** · **enmienda el CLAUDE.md** · el sitio parece terminado y no lo está | 2026-09-14 |
 | 0028 | [[ADR-0028-la-piedra-clara\|El sitio se invierte: piedra clara, carbón de ancla]] | **ACEPTADA** · **revierte el 0011 y el 0012** · entra textura fotográfica de 10.7 KB | 2026-09-14 |
 | 0029 | [[ADR-0029-una-serif-para-el-titular\|Entra una serif, y solo para el titular]] | **ACEPTADA** · **enmienda el 0002: dos familias** · sale de medir tres referencias reales | 2026-09-14 |
+| 0030 | [[ADR-0030-la-piedra-como-sujeto\|La piedra como sujeto, no como papel pintado]] | **ACEPTADA** · **enmienda el 0028** · completa la reversión del 0012 · siete páginas ganan contraste | 2026-09-14 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el
