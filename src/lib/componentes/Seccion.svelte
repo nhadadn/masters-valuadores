@@ -64,14 +64,17 @@
      ellos ya no tienen rampa: son color plano. Así que el «peor extremo» se separa.
 
      La entrada conserva `--crema-100` porque su velo sí es un degradado y ese sigue
-     siendo su extremo malo. Los demás valen `--crema-025`, que es la superficie real
-     y no una hipótesis: más clara, luego el contraste solo sube. */
+     siendo su extremo malo. Los demás valen el color plano real, no una hipótesis.
+
+     BLANCO PURO desde el ADR-0031. Los nombres de los grados se quedan —son la API
+     de este componente— pero cinco de ellos pintan hoy el mismo `--blanco`. Que
+     `.crema` no pinte crema es deuda de nombre, y está anotada en el ADR. */
   .marmol { background-color: var(--crema-100); }
   .medio,
   .tenue,
   .marfil,
   .crema,
-  .blanco { background-color: var(--crema-025); }
+  .blanco { background-color: var(--blanco); }
 
   /* `cover` hace falta para la capa de textura. Desde el ADR-0030 solo LA ENTRADA
      lleva piedra; los otros cuatro grados valen `none` y se quedan en su color plano.

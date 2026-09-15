@@ -75,8 +75,16 @@ está puesta; lo que se quitó es que se vea.
 
 El efecto secundario hay que decirlo: **el sitio parece terminado y no lo está.** Faltan
 la tasa, el plazo, la razón social y 27 huecos de copy, y ya no se ven en pantalla.
-La ampliación a `/contacto/` y las legales se hizo el mismo día: **las ocho páginas
-están a cero marcas visibles**. En contacto no había formulario que proteger —solo el
+La ampliación a `/contacto/` y las legales se hizo el mismo día.
+
+**CORREGIDO el 14 de septiembre por la noche · `ADR-0031`.** Aquí decía que «las ocho
+páginas están a cero marcas visibles». **Es falso para la portada**, verificado en el
+HTML construido y no en una captura: sigue publicada una tarjeta **«BLOQUEADOS»** con
+`Importaciones D-04`, `Avalúos periciales D-03` y `Bazar D-18` —identificadores de
+decisiones internas— y **dos rótulos «FOTO DE ARCHIVO»**. Lo que el `ADR-0027` sí dejó
+en cero son las cuatro categorías que midió: banda, hueco «PENDIENTE», bloque de
+revisión y centinela visible. Estas dos son de otra familia y **siguen ahí, sin
+decidir**. En contacto no había formulario que proteger —solo el
 bloque que explicaba por qué no lo hay— y se queda con WhatsApp, teléfono y mapa.
 **Las dos legales quedan en blanco con título** — 54 y 32 caracteres— y siguen
 enlazadas desde el pie.
@@ -93,7 +101,7 @@ enlazadas desde el pie.
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo |
+| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · 11.2 KB propios, sin marco ni librería · `ADR-0021`, `ADR-0023` y `ADR-0026`. Las otras siete en 0 KB |
 | Fotografías reales | **OCHO** · seis del patio · `ADR-0022`, más dos de su joyería · `ADR-0024`. El hero de empeño ya es suyo. **Falta autos**; monedas entró de banco · `ADR-0025` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
@@ -182,9 +190,13 @@ cableado**. Es parte del trabajo.
 6.5 KB gzip · 131 tests · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-Contraste mínimo por página, medido tras el `ADR-0030`: **7.97:1** en portada, contacto
-y las dos legales; **4.27:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
+Contraste mínimo por página, medido tras el `ADR-0031`: **8.56:1** en portada, contacto
+y las dos legales; **4.65:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
 es el peor extremo pesimista de su velo de mármol y no lo que se ve en pantalla.
+
+El 4.65 **cruza el 4.5 de AA para texto normal**, que el oro no había alcanzado nunca
+sobre claro — pero lo cruza **sobre la superficie base, no sobre la losa de mármol**.
+La regla sigue siendo la del `tokens.css`: en texto chico va tinta; en display, oro.
 
 **LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
 

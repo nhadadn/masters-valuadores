@@ -20,8 +20,12 @@ body {
      Dejándolo en `--crema-100` se leía como un galón más oscuro atravesado.
 
      Sube a `--crema-025`, el mismo marfil de la cabecera y de las secciones: la
-     franja desaparece y el contraste sube, no baja. */
-  background-color: var(--crema-025);
+     franja desaparece y el contraste sube, no baja.
+
+     BLANCO PURO desde el ADR-0031. Las tres referencias del ADR-0029 arrancan de
+     `#FFFFFF`; esto arrancaba de crema. La crema no era un color de su marca: era
+     el residuo de una rampa que ya no existe. El color lo ponen las fotografías. */
+  background-color: var(--blanco);
   /* ADR-0030: el cuerpo ya NO lleva veta NI degradado. La piedra vive en la entrada
      y en ningún otro sitio.
      Plano y no rampa: la rampa se estiraba sobre los 4000 px del documento, así que

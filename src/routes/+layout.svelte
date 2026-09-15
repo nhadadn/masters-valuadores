@@ -150,8 +150,10 @@
     /* PLANA, sin resplandor · ADR-0030. Llevaba `--marmol-tenue`, que desde el 0030
        ya no tiene veta pero sí un resplandor radial: aclaraba la cabecera por la
        derecha y dejaba un escalón visible contra la franja de migas de debajo.
-       Con la piedra concentrada en la entrada, la cabecera no necesita textura. */
-    background-color: var(--crema-025);
+       Con la piedra concentrada en la entrada, la cabecera no necesita textura.
+       BLANCA desde el ADR-0031, como el cuerpo: lo único que la separa de la página
+       es su filete inferior, que es lo que hacen las tres referencias. */
+    background-color: var(--blanco);
     background-image: none;
     color: var(--tinta);
     border-bottom: 1px solid var(--negro-200);
