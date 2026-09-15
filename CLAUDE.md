@@ -245,10 +245,19 @@ resultado real**, no el esperado.
    retícula de empeño. Siguen pendientes: **los ORIGINALES** —las que hay vienen dentro
    de arte comprimido por WhatsApp y miden entre 440 y 985 px— y sobre todo **joyería,
    que no tiene ni una**. Lo que Nadir extrajo del Instagram son gráficos
-   de redes con maquinaria de banco, no fotos del local. **El hueco de la fachada sigue
-   abierto y es el activo más caro del proyecto**: es la única ventaja real frente a
-   First Cash, y el ADR-0007 estima que las fotos son la mitad de lo que falta para que
-   el sitio deje de verse plano. Ningún CSS las sustituye.
+   de redes con maquinaria de banco, no fotos del local.
+
+   **CORREGIDO el 15 de septiembre · `ADR-0032`.** Aquí decía que «el hueco de la
+   fachada sigue abierto y es el activo más caro del proyecto». **Está obsoleto**: la
+   fachada existe a 1600×900 y se publica como héroe de la portada — lo dice el propio
+   código en `src/routes/+page.svelte:179`, «el hueco de la fachada se cerró». Lo que
+   sigue siendo cierto es el resto: el ADR-0007 estima que las fotos son la mitad de lo
+   que falta para que el sitio deje de verse plano, y ningún CSS las sustituye.
+
+   **Joyería tiene DOS fotos de producto suyas, y ninguna del local.** El 15 de
+   septiembre entró el original vertical de una de ellas —1206×1518 contra el recorte
+   de 800×534— y con eso se rehizo la sección del reloj. De las siete imágenes que se
+   aportaron ese día, **seis eran generadas y se rechazaron**: ver el `ADR-0032`.
 4. **Nombre legal** (D-01) · **dominio** (D-07) · **categoría de Google** (D-02).
 5. **Destino del formulario** (D-13) — un sitio estático no procesa envíos solo.
 6. **Confirmar el acento** (D-14) y conseguir el **vectorial** del logo (D-06).

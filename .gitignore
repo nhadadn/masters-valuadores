@@ -7,3 +7,7 @@ build/
 .DS_Store
 Thumbs.db
 capturas/
+
+# Las seis imagenes generadas del ADR-0032: se conservan en disco para que quede
+# constancia de lo que se rechazo, pero NO entran al repositorio.
+fotos-origen/generadas-rechazadas/

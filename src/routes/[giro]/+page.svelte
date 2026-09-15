@@ -115,6 +115,7 @@
      página, y ahora vive muy por debajo del pliegue. Dejarla eager habría sido pedir
      con prisa algo que nadie ve al entrar. -->
 <Seccion fondo="marmol">
+  <div class="entrada-b">
   <div class="acciones">
     <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
     <Boton variante="secundario" href="/contacto/">
@@ -132,9 +133,10 @@
            usaba la portada. Medido en las cuatro paginas de giro: el navegador no
            pedia la imagen hasta ~2000 ms porque nadie le habia dicho que corria
            prisa. -->
-      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} />
+      <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} relacion={giro.fotoRelacion ?? '16 / 9'} tamanos="(min-width: 768px) 60vw, 100vw" />
     </div>
   {/if}
+  </div>
   <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
        encontrar alguien con prisa es el botón, no el adorno.
        Del DATO y no del slug, igual que el mármol del ADR-0020: `lujo` es lo que su
@@ -224,14 +226,50 @@
   /* CAMBIO 05 · la fotografía contrasta CONTRA la piedra, no dentro de una tarjeta
      blanca. Radio moderado, sombra muy suave y contraste algo subido: el objeto de
      valor tiene que separarse del mármol sin que haga falta enmarcarlo. */
-  .foto-giro {
-    margin-top: var(--e-6);
-    border-radius: var(--radio-campo, 6px);
-    overflow: hidden;
-    box-shadow: 0 18px 44px rgba(23, 23, 23, 0.16);
-  }
+  /* ── LA FOTO SALE DEL MARCO · ADR-0032 ───────────────────────────────
+     Estaba puesta como un rectángulo con esquinas redondeadas, sombra grande y aire
+     simétrico a los cuatro lados, flotando en el centro del mármol. Eso es composición
+     de formulario, y es exactamente lo que se llamó «plano y básico».
+
+     Ninguna de las tres referencias del ADR-0029 enmarca una fotografía: la dejan
+     cortarse contra el borde. Aquí hace lo mismo, y la piedra queda de zócalo.
+
+     NO SE FUERZA A VERTICAL. Esta plantilla pinta las CUATRO páginas de giro y las
+     otras tres llevan foto apaisada; cada giro declara la suya en `fotoRelacion`.
+     Lo que cambia es el encuadre de la PÁGINA, no el de la foto. */
+  .entrada-b { display: grid; gap: var(--e-6); }
+
+  /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
+     bordes de la pantalla. */
+  .foto-giro { margin-inline: calc(var(--margen-lateral) * -1); }
   .foto-giro :global(img) { filter: contrast(1.08) saturate(1.04); }
-  .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
+  .acciones { display: grid; gap: var(--e-3); }
+
+  @media (min-width: 768px) {
+    .entrada-b {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      align-items: end;
+      gap: var(--e-12);
+    }
+    /* Los botones se apoyan en el pie de la foto, no flotan a media altura. */
+    .acciones { align-self: end; padding-bottom: var(--e-8); }
+
+    /* SANGRA HASTA EL BORDE DE LA VENTANA, no hasta el filo del acolchado.
+       Cancelar solo el acolchado NO basta: `.caja` está limitada a `--ancho-maximo`
+       y centrada, así que sobra un hueco que crece con la pantalla. Medido: 32 px a
+       1280, 112 a 1440 y 352 a 1920. Un filo de 32 px de piedra no se lee como
+       composición, se lee como un error de cálculo.
+
+       VA EN LA REJILLA, NO EN LA FOTO, y esto costó una medición: en un ítem de
+       rejilla el `50%` de un margen resuelve contra SU COLUMNA, no contra `.caja`.
+       Puesto en `.foto-giro` daba -347 px y la imagen se salía 268 px de la ventana.
+       En `.entrada-b` el porcentaje sí resuelve contra `.caja`, que es lo que la
+       fórmula supone. */
+    .entrada-b { margin-right: calc(50% - 50vw); }
+    /* Y se anula el sangrado de teléfono: si se queda, la foto se pasa 20 px por
+       cada lado de su columna. Medido —terminaba en 1300 sobre una ventana de 1280. */
+    .foto-giro { margin-inline: 0; }
+  }
   /* Aquí vivían `.nota`, `.et`, `.bienes` y `.ranura-ico`: el CSS de la rama que
      pintaba «BIEN ACEPTADO — PENDIENTE» cuando un giro no tenía bienes, y el de la
      nota de «esta lista la dedujimos». Las dos eran marcas de borrador y salieron

@@ -58,7 +58,10 @@ const FOTOS = [...new Set(
     .map((f) => /^(.+)-\d+\.jpg$/.exec(f)?.[1])
     .filter(Boolean)
 )].sort();
-const ANCHOS = [400, 600, 800, 1600];
+// 1200 entra con el original vertical de joyería · ADR-0032: ese archivo mide 1206 px
+// y 1200 es su ancho REAL. No se añade 1600 porque no existe, y estas herramientas solo
+// convierten lo que ya hay en JPG — nunca escalan hacia arriba.
+const ANCHOS = [400, 600, 800, 1200, 1600];
 const CRF = 30;
 const PIX = 'yuv444p';
 

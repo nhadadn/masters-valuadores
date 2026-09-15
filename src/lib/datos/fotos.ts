@@ -13,7 +13,14 @@
  * Los anchos que generan `hacer-miniaturas.mjs`, `hacer-webp.mjs` y `hacer-avif.mjs`.
  * Si aquí se añade uno, hay que generarlo; si allá se genera uno, hay que añadirlo.
  */
-export const ANCHOS = [400, 600, 800, 1600] as const;
+/* 1200 entra con el original vertical de joyería · ADR-0032. Ese archivo mide 1206 px
+   reales, así que 1200 es su tope honesto y 1600 no existe para él.
+
+   OJO, y lo digo porque aquí escribí lo contrario y el build me corrigió: añadir un
+   peldaño **SÍ** cambia el `srcset` de TODAS las fotos con `fotoMaxAncho` >= 1200.
+   El prerender falló con `404 /fotos/fachada-1200.avif`. Por eso el 1200 existe ahora
+   para las cinco que tenían 1600. Un ancho en esta lista es una promesa de archivo. */
+export const ANCHOS = [400, 600, 800, 1200, 1600] as const;
 
 /**
  * Hasta qué ancho existe ese archivo.
