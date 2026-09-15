@@ -36,10 +36,14 @@
 <style>
   .titular {
     margin: 0;
+    font-family: var(--fuente-display);
+    font-size: var(--titular-tam);
     font-weight: var(--titular-peso);
     line-height: var(--titular-alto);
     letter-spacing: var(--titular-tracking);
-    text-transform: uppercase;
+    /* SIN MAYÚSCULAS. En un palo seco de peso 900 la caja alta daba autoridad; en
+       una serif de peso 400 aplasta el ritmo de la palabra y pierde justo lo que se
+       viene a buscar. Se vio en la comparación de las seis. */
     /* HEREDA de la superficie, no escribe --tinta a pelo. Al poner la entrada en
        oscuro (ADR-0011) el titular se quedó en negro-950 sobre negro: 1.92:1, y el
        validador lo cazó. La sección ya declara la tinta que le toca. */
@@ -48,8 +52,16 @@
        un teléfono angosto, y el validador revienta por desbordamiento horizontal. */
     overflow-wrap: break-word;
   }
-  .h1 { font-size: var(--h1-tam); }
+  /* El tamaño lo manda `--titular-tam`, arriba: el titular ya no sigue la escala
+     de los h2, que es de palo seco y otra cosa. */
   .display { font-size: var(--display-tam); }
+
+  /* La escala de tokens no tenía punto de ruptura —era 28 px a todos los anchos—.
+     Con 68 px hace falta: en un teléfono de 390 no cabe y en escritorio 44 se queda
+     corto al lado de los 64 y 107 de las referencias. */
+  @media (min-width: 768px) {
+    .titular { font-size: var(--titular-tam-ancho); }
+  }
 
   .linea { display: block; }
   /* Texto grande en peso 900: usa el oro de texto grande, que pasa 3:1 sobre

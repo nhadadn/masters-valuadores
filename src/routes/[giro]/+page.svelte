@@ -249,14 +249,22 @@
   }
 
   /* La promesa del hero · ADR-0024. Grande, pero por debajo del h1. */
+  /* LA PROMESA ES PARTE DEL TITULAR, no un párrafo suelto · ADR-0029. Se quedó en
+     palo seco peso 800 y justo debajo de una serif de 400 chocaba: dos voces en dos
+     renglones seguidos. En el panel que se eligió, el subtítulo iba en la misma
+     familia que el titular. Aquí hace lo mismo, un cuerpo más abajo. */
   .promesa {
-    max-width: 20ch;
+    max-width: 24ch;
     margin: var(--e-3) 0 0;
+    font-family: var(--fuente-display);
     font-size: 1.5rem;
-    line-height: 1.15;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--tinta);
+    line-height: 1.3;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--tinta-secundaria);
+  }
+  @media (min-width: 768px) {
+    .promesa { font-size: 1.75rem; }
   }
 
   /* El bloque de revisión · ADR-0025. Deliberadamente sobrio y sin gracia: no es

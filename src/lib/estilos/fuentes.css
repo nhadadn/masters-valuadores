@@ -61,6 +61,24 @@
 
 /* Respaldo calibrado: mismas medidas de avance que Archivo, para que el cambio
    al cargar no mueva ni un renglón. */
+/* ── LA DISPLAY · EB GARAMOND · ADR-0029 ───────────────────────────────────
+   SIL OFL, la misma licencia que Archivo, y autoalojada por la misma razón que dice
+   el ADR-0002: Google Fonts como CDN está prohibido aquí. Licencia archivada en
+   `docs/60-diseno/LICENCIA-eb-garamond.txt`.
+
+   UN SOLO PESO, el 400. Es el que se probó y el que usa Suttons; añadir un 500 o un
+   600 «por si acaso» son 23 KB más por algo que nadie pidió.
+
+   `swap`: mientras llega, se ve Georgia. La página nunca se queda sin titular. */
+@font-face {
+  font-family: 'Garamond Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fuentes/eb-garamond-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+
 @font-face {
   font-family: 'Archivo Respaldo';
   font-style: normal;

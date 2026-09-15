@@ -345,9 +345,19 @@
      El 900 de Archivo pesa 13.2 KB —MENOS que el 700 que ya se carga— y llega mucho
      más cerca de su lockup que el 700. No es display suelto: solo portada y
      encabezado de giro. Interlínea y tracking salen del ADR, no de gusto. */
-  --titular-peso: 900;
-  --titular-alto: 1.05;
-  --titular-tracking: -0.01em;
+  /* ── EL TITULAR CAMBIA DE FAMILIA, PESO Y TAMAÑO · ADR-0029 ────────────────
+     Medído contra tres referencias reales —Suttons & Robertsons, Cosentino y
+     Antolini—: las tres ponen el titular entre 64 y 107 px con peso 300 o 400.
+     Este estaba en 28 px con peso 900, que es justo lo contrario, y por eso la
+     página leía a industrial por mucho mármol que se le pusiera.
+
+     El palo seco se queda para TODO lo demás. La serif solo en el titular. */
+  --fuente-display: 'Garamond Display', Georgia, 'Times New Roman', serif;
+  --titular-tam: 44px;          /* teléfono */
+  --titular-tam-ancho: 68px;    /* 768 y más */
+  --titular-peso: 400;
+  --titular-alto: 1.06;
+  --titular-tracking: -0.006em;
 
   /* ── Espacio · base 4 ────────────────────────────────────────────────── */
   --e-1: 4px;   --e-2: 8px;   --e-3: 12px;  --e-4: 16px;

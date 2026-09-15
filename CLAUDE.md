@@ -108,6 +108,7 @@ enlazadas desde el pie.
 | Acento `#E7C041` — el que la marca sí publica | `ADR-0006` | Nadir · revierte el `ADR-0005` |
 | **Lenguaje visual derivado de sus publicaciones** | `ADR-0007` | Nadir · **falta implementarlo** |
 | Tipografía Archivo, autoalojada | `ADR-0002` | Nadir |
+| **DOS familias desde el 14 de septiembre** · EB Garamond solo en el titular y su promesa · enmienda el 0002 | `ADR-0029` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -181,7 +182,7 @@ cableado**. Es parte del trabajo.
 6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de empeño: 2212 ms** · `ADR-0028` · el elemento es la textura de mármol, 10.7 KB en AVIF · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+**LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 
