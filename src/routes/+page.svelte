@@ -85,8 +85,8 @@
         encontrarnos. Si tienes una duda, escríbenos por WhatsApp.
       </p>
       <div class="acciones">
-        <BotonWhatsApp origen="portada-entrada" sobreOscuro />
-        <Boton variante="secundario" href="/contacto/" sobreOscuro>
+        <BotonWhatsApp origen="portada-entrada" />
+        <Boton variante="secundario" href="/contacto/">
           <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
         </Boton>
       </div>
@@ -238,7 +238,7 @@
              los dos casos. Son los mismos cuatro archivos y un archivo se descarga
              UNA vez, lo pidan uno o dos bloques. Lo que sí baja son las peticiones,
              de 29 a 18. -->
-        <Insignia icono={g.icono} sobreOscuro etiqueta={g.nombre} segunda={g.frasePropuesta} />
+        <Insignia icono={g.icono} etiqueta={g.nombre} segunda={g.frasePropuesta} />
         <BotonWhatsApp
           origen="linea-{g.slug}"
           texto="Escribir por {g.nombreCorto.toLowerCase()}"
@@ -254,8 +254,8 @@
     ¿Tienes una duda? Escríbenos y te contestamos.
   </h2>
   <div class="acciones">
-    <BotonWhatsApp origen="portada-contacto" sobreOscuro />
-    <Boton variante="secundario" href="/contacto/" sobreOscuro>
+    <BotonWhatsApp origen="portada-contacto" />
+    <Boton variante="secundario" href="/contacto/">
       <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
     </Boton>
   </div>

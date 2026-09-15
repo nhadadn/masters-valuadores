@@ -53,8 +53,11 @@
     var v = estilo.getPropertyValue(nombre);
     return (v && v.trim()) || respaldo;
   }
-  var ORO = token('--oro-500', '#E7C041');
-  var ORO_HONDO = token('--metal-oro-peor', '#C9A438');
+  /* `--oro-moneda` y no `--oro-500`: el oro de marca sobre piedra clara da 1.87:1 y
+     la moneda se vuelve invisible. El token nuevo cambia con el registro y en oscuro
+     devuelve exactamente el oro de siempre. Ver ADR-0028. */
+  var ORO = token('--oro-moneda', '#B08A1E');
+  var ORO_HONDO = token('--oro-moneda-honda', '#8A6C15');
 
   // ── CUÁNTAS ───────────────────────────────────────────────────────────────
   var nucleos = navigator.hardwareConcurrency || 2;

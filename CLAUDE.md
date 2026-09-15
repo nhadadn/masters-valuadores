@@ -93,7 +93,7 @@ enlazadas desde el pie.
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **DOS** · crema cálido y oscuro, como su material · `ADR-0019` · el claro pasó de acero a crema y empeño lleva mármol · `ADR-0020` |
+| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Cinco grados de mármol, uno por sección. Los roles oscuros viven enteros en `.registro-oscuro` |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · 11.2 KB propios, sin marco ni librería · `ADR-0021`, `ADR-0023` y `ADR-0026`. Las otras siete en 0 KB |
 | Fotografías reales | **OCHO** · seis del patio · `ADR-0022`, más dos de su joyería · `ADR-0024`. El hero de empeño ya es suyo. **Falta autos**; monedas entró de banco · `ADR-0025` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
@@ -181,7 +181,7 @@ cableado**. Es parte del trabajo.
 6.5 KB gzip · 131 tests · contraste mínimo 7.73:1 · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-**LCP de empeño: ~2907 ms medido intercalado** · `ADR-0027` · baja 1.6 s respecto al 0026 · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+**LCP de empeño: 2212 ms** · `ADR-0028` · el elemento es la textura de mármol, 10.7 KB en AVIF · 173.5 KB, 0 de terceros. Las cifras sueltas de esta página NO valen: la máquina dio 4356, 8948 y 7636 ms para el mismo código. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 

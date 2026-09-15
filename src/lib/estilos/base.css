@@ -9,11 +9,15 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  /* EL CAMPO · ADR-0012. Vive aquí y en ningún otro sitio; las secciones son
-     transparentes encima. `background-color` declara el extremo MÁS CLARO —no el más
-     oscuro— para que cualquier medición de contraste caiga del lado pesimista. */
-  background-color: var(--campo-alto);
-  background-image: var(--grad-campo);
+  /* EL CAMPO · ADR-0012, INVERTIDO POR EL ADR-0028. Vive aquí y en ningún otro
+     sitio; las secciones son transparentes encima y solo cambian cuánta veta dejan
+     ver. Pasó de carbón a piedra clara.
+     `background-color` declara el extremo MÁS OSCURO de la rampa clara —no el más
+     claro— para que cualquier medición de contraste caiga del lado pesimista. Es la
+     misma precaución de siempre: un `background-image` deja el color en transparente
+     y el validador acaba leyendo lo que haya detrás. */
+  background-color: var(--crema-100);
+  background-image: var(--marmol-tenue);
   color: var(--tinta);
   font-family: var(--fuente-base);
   font-size: var(--cuerpo-tam);

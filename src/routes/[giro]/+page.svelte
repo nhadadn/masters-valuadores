@@ -31,9 +31,11 @@
   let { data }: { data: PageData } = $props();
   const giro = $derived(data.giro);
   const otras = $derived(girosConstruibles.filter((g) => g.slug !== giro.slug));
-  /* El registro de este giro. Ver ADR-0020: mármol para lo que su marca trata como
-     lujo, crema industrial para el resto. Por omisión, industrial. */
-  const claro = $derived(giro.registro === 'lujo' ? 'marmol' : 'crema');
+  /* Cuánta veta lleva la ENTRADA de este giro · ADR-0020, adaptado por el 0028.
+     Ya no decide si la sección es clara —ahora lo es toda la página— sino cuánto
+     habla la piedra: lo que su marca trata como lujo la enseña, el resto la calla.
+     Sigue saliendo del DATO y no del slug. */
+  const veta = $derived(giro.registro === 'lujo' ? 'marmol' : 'tenue');
 
   const PREGUNTAS = [
     '¿Aceptan lo que traigo?',
@@ -54,7 +56,7 @@
 
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>
 
-<Seccion etiqueta="LÍNEA DE NEGOCIO">
+<Seccion etiqueta="LÍNEA DE NEGOCIO" fondo={veta}>
   <!-- ADR-0007 §4. Sin `segunda`: los nombres de giro son de un renglón —cuatro de
        los siete son una sola palabra— y partirlos para teñir la mitad sería inventar
        un énfasis que nadie autorizó. La segunda tinta espera copy. -->
@@ -80,7 +82,7 @@
      cuatro huecos «BIEN ACEPTADO — PENDIENTE»; eso era una marca de borrador y salió
      con las demás. Una sección vacía no informa: informa su ausencia. -->
 {#if giro.bienesPropuestos?.length}
-  <Seccion fondo={claro}>
+  <Seccion fondo="tenue">
     <h2><span class="num">1</span> {giro.tituloBienes ?? PREGUNTAS[0]}</h2>
     {#if giro.subtituloBienes}
       <p class="entradilla" data-propuesta="true">{giro.subtituloBienes}</p>
@@ -89,7 +91,7 @@
 
     <!-- El CTA que contesta la pregunta que trae la gente · ADR-0024. Va justo
          después del planeta, donde acaba de nacerle la duda. -->
-    <aside class="consulta">
+    <aside class="consulta registro-oscuro">
       <p class="titulo" data-propuesta="true">¿No sabes si aceptamos lo que traes?</p>
       <p class="dice" data-propuesta="true">Mándanos una foto por WhatsApp y lo vemos.</p>
       <BotonWhatsApp
@@ -112,7 +114,7 @@
      La foto YA NO es `prioritaria`: lo era por ser el elemento LCP cuando abría la
      página, y ahora vive muy por debajo del pliegue. Dejarla eager habría sido pedir
      con prisa algo que nadie ve al entrar. -->
-<Seccion>
+<Seccion fondo="marmol">
   <div class="acciones">
     <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
     <Boton variante="secundario" href="/contacto/">
@@ -143,17 +145,16 @@
 </Seccion>
 
 {#if giro.muestraInventario}
-  <Seccion etiqueta="SU PATIO Y SU EQUIPO">
+  <Seccion etiqueta="SU PATIO Y SU EQUIPO" fondo="tenue">
     <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
     <Carrusel
       fotos={galeriaInventario}
       etiqueta="Su patio y su equipo"
-      nota="Son fotografías de su patio, sacadas de sus propias publicaciones: por eso no llevan rótulo de archivo. NO son una lista de existencias — no sabemos de qué fecha son ni qué sigue ahí, así que lo que haya hoy se pregunta. Los pies de foto los escribimos nosotros mirando la imagen."
     />
   </Seccion>
 {/if}
 
-<Seccion>
+<Seccion fondo="marfil">
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
   <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
        diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
@@ -181,7 +182,7 @@
   </ol>
 </Seccion>
 
-<Seccion>
+<Seccion fondo="marfil">
   <h2><span class="num">3</span> {PREGUNTAS[3]}</h2>
   <div class="ubicacion">
     <Mapa />
@@ -191,7 +192,7 @@
   </div>
 </Seccion>
 
-<Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO">
+<Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO" fondo="piedra">
   <!-- AQUÍ HABÍA OTRA: «Sin estos enlaces cada página queda aislada y el multigiro
        no reparte autoridad.» Es la justificación SEO del bloque, escrita para el
        equipo y publicada por accidente. El visitante no necesita que le expliquen
@@ -204,7 +205,9 @@
 </Seccion>
 
 <style>
-  .migas { padding: 0 var(--margen-lateral); background: var(--superficie); }
+  /* CAMBIO 03 · navegación editorial: sin recuadro y con aire. Tenía `--superficie`
+     de fondo y sobre la piedra se leía como una banda blanca aparte. */
+  .migas { padding: var(--e-4) var(--margen-lateral) var(--e-2); background: transparent; }
   /* El titular vive en su propio componente desde el ADR-0007 §4. Aquí solo el
      espacio de abajo, que es composición de esta página y no del primitivo. */
   .encabezado { margin-bottom: var(--e-4); }
@@ -218,7 +221,16 @@
     display: inline-flex; align-items: center; justify-content: center;
     background: var(--oro-500); color: var(--negro-950); font-size: 15px; line-height: 1;
   }
-  .foto-giro { margin-top: var(--e-4); }
+  /* CAMBIO 05 · la fotografía contrasta CONTRA la piedra, no dentro de una tarjeta
+     blanca. Radio moderado, sombra muy suave y contraste algo subido: el objeto de
+     valor tiene que separarse del mármol sin que haga falta enmarcarlo. */
+  .foto-giro {
+    margin-top: var(--e-6);
+    border-radius: var(--radio-campo, 6px);
+    overflow: hidden;
+    box-shadow: 0 18px 44px rgba(23, 23, 23, 0.16);
+  }
+  .foto-giro :global(img) { filter: contrast(1.08) saturate(1.04); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
   /* Aquí vivían `.nota`, `.et`, `.bienes` y `.ranura-ico`: el CSS de la rama que
      pintaba «BIEN ACEPTADO — PENDIENTE» cuando un giro no tenía bienes, y el de la
@@ -271,12 +283,16 @@
   }
 
   /* El bloque de consulta por WhatsApp · ADR-0024. */
+  /* PANEL DE CARBÓN SOBRE LA PIEDRA · ADR-0028. Era un panel blanco sobre campo
+     oscuro; invertido el sitio, un panel blanco sobre piedra clara desaparece.
+     Ahora es al revés: carbón rodeado de mármol, con el oro solo en la arista.
+     La clase `registro-oscuro` va en el marcado y le da los roles; por eso el botón
+     de dentro vuelve a oro sin que nadie se lo diga. */
   .consulta {
     margin-top: var(--e-6);
-    padding: var(--e-4);
-    background: var(--panel);
-    border: 1px solid var(--panel-borde);
-    /* La arista del ADR-0007 §5, la misma del botón primario. */
+    padding: var(--e-6) var(--e-4);
+    background: var(--carbon);
+    border: 0;
     border-left: 3px solid var(--oro-500);
   }
   .consulta .titulo {

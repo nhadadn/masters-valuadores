@@ -88,18 +88,27 @@
      La jerarquía se invierte: el CAMPO es lo más oscuro y los PANELES se levantan
      encima, que es justo al revés de lo que había —campo de acero, paneles blancos—
      pero la misma idea. */
-  --campo-alto:          #16181B;   /* arranque del campo · blanco 17.79:1 */
+  --campo-alto:          #16181B;   /* del registro OSCURO · blanco 17.79:1 */
   --campo-bajo:          var(--negro-950);
-  --panel:               #2A2F34;   /* tarjetas y huecos · se levanta 1.32:1 del campo */
-  --panel-borde:         #3C4248;
 
-  --superficie:          var(--panel);
-  --superficie-alterna:  var(--panel);
+  /* ═══ LOS ROLES POR OMISIÓN SON LOS CLAROS · ADR-0028 ══════════════════════
+     Estaban aquí los del registro oscuro y el claro vivía como excepción dentro de
+     `Seccion.svelte`. Se invierte, porque se invirtió el sitio: casi todo es piedra
+     clara y lo oscuro es la excepción — el pie y algún panel de autoridad.
+
+     Los valores NO son nuevos: son exactamente los que el ADR-0019 midió y el
+     validador viene aprobando desde entonces. Lo único que cambia es dónde viven.
+     El registro oscuro se conserva entero abajo, en `.registro-oscuro`. */
+  --panel:               var(--blanco);
+  --panel-borde:         var(--negro-400);         /*  3.49:1 · piso de borde no-texto */
+
+  --superficie:          var(--blanco);
+  --superficie-alterna:  var(--crema-025);
   --superficie-oscura:   var(--negro-950);
 
-  --tinta:               var(--blanco);            /* 13.51:1 sobre panel */
-  --tinta-secundaria:    var(--negro-200);         /*  9.33:1 sobre panel */
-  --tinta-suave:         var(--negro-200);
+  --tinta:               var(--grafito);           /* 11.60:1 sobre crema-100 */
+  --tinta-secundaria:    var(--negro-600);         /*  8.68:1 sobre blanco */
+  --tinta-suave:         var(--negro-600);
   --tinta-sobre-oscuro:  var(--blanco);
   --tinta-tenue-oscuro:  var(--negro-300);
   --acento-sobre-oscuro: var(--oro-500);
@@ -108,19 +117,25 @@
      en --oro-500 y da 11.12:1 sobre el campo y 7.73:1 sobre el panel. El --oro-800,
      que existía para poder escribir oro sobre claro, se queda sin trabajo: no hay
      claro. No se borra —el ADR-0006 lo justificó y puede volver— pero no se usa. */
-  --oro-texto:           var(--oro-500);
-  --oro-texto-grande:    var(--oro-500);
+  /* EL ORO SOBRE CLARO SOLO ES TEXTO GRANDE. Medido: `--oro-800` da 3.47:1 sobre
+     `--crema-100`, que pasa el piso de 3 del display y NO el 4.5 del texto normal.
+     En texto chico va tinta; en display, oro. Es lo que hacen sus piezas claras. */
+  --oro-texto:           var(--grafito);
+  --oro-texto-grande:    var(--oro-800);
 
-  --borde-campo:         var(--panel-borde);
-  --borde-sutil:         #33383E;
+  --borde-campo:         var(--negro-500);         /*  5.90:1 */
+  --borde-sutil:         var(--negro-200);
 
-  /* LA ACCIÓN PRIMARIA PASA A ORO, y no es capricho: sobre un sitio oscuro un botón
-     negro desaparece. El oro como relleno con etiqueta oscura encima da 11.12:1 y es
-     exactamente el uso que el ADR-0007 autoriza para el acento. */
-  --accion:              var(--oro-500);
-  --accion-hover:        #F0CE63;
-  --accion-presionada:   var(--oro-700);
-  --tinta-sobre-accion:  var(--negro-950);         /* 11.12:1 sobre el oro */
+  /* LA ACCIÓN PRIMARIA VUELVE A CARBÓN · ADR-0028. Sobre un sitio oscuro un botón
+     negro desaparecía y por eso el ADR-0019 lo puso en oro. Sobre piedra clara pasa
+     lo contrario: el oro pierde autoridad y el carbón la gana.
+
+     «El dorado debe reservarse para indicar valor» — así que el botón es carbón con
+     etiqueta blanca (15.3:1) y el oro se queda en el filo, de detalle. */
+  --accion:              var(--carbon);
+  --accion-hover:        #2A2A2A;
+  --accion-presionada:   #0D0D0D;
+  --tinta-sobre-accion:  var(--blanco);            /* 15.30:1 sobre carbón */
 
   /* ── El campo · degradado y resplandor que se mueve · ADR-0012 ───────────
      El campo baja de --campo-alto a negro. Encima, un resplandor de oro que NO está
@@ -188,6 +203,86 @@
 
      NO es mármol fotográfico y no pretende serlo: es mármol ESTILIZADO, que es lo
      que se pidió y lo que aguanta al lado de una tipografía de palo seco. */
+  /* ═══ EL REGISTRO CLARO PASA A SER EL DE LA CASA · ADR-0028 ═══════════════
+     Hasta aquí el sitio era oscuro con dos secciones claras. Se invierte: piedra
+     clara en casi todo, carbón solo donde hace de ancla.
+
+     LA REGLA QUE ORDENA TODO: el mármol NO va igual de fuerte en todas partes. Es
+     identidad de marca, no papel pintado. Cuatro grados, del más marcado al más
+     callado, y cada sección elige el suyo.
+
+     Todos terminan en la MISMA rampa cálida, así que el color plano de referencia
+     —y por tanto el contraste— es idéntico en los cuatro. Lo único que cambia es
+     cuánto se ven las vetas. */
+
+  /* EL ORO DE LA MONEDA, que NO es el oro de marca · ADR-0028.
+     La banda del ADR-0021 pregunta su color al sistema. Sobre el campo oscuro el
+     `--oro-500` daba 11.12:1 y se veía; sobre piedra clara da 1.87:1 y las monedas
+     desaparecen — comprobado: seguían pintándose 145 píxeles que nadie veía.
+     El oro de marca NO se cambia por esto: se le da a la moneda su propio par, más
+     hondo, que es además como se ve el oro viejo contra mármol blanco. */
+  --oro-moneda:       #B08A1E;
+  --oro-moneda-honda: #8A6C15;
+
+  --grafito:  #252525;   /* titular en claro · 11.6:1 sobre crema-100 */
+  --plata:    #8C9196;   /* separadores y filetes · no es color de texto */
+  --carbon:   #171717;   /* el ancla oscura: pie y paneles de autoridad */
+
+  /* Piedra sólida, un punto más oscura que la rampa: para la transición al pie. */
+  --piedra-050: #E9E5DD;
+  --piedra-200: #D8D2C6;
+
+  /* ── LA TEXTURA DE VERDAD · ADR-0028 ──────────────────────────────────────
+     Hasta aquí el mármol era dibujado: seis degradados, cero bytes, del ADR-0020. La
+     referencia que mandó Nadir es un Calacatta con veta gris Y veta dorada ramificada,
+     y eso un degradado NO lo imita: las vetas de CSS son rectas y las de la piedra se
+     bifurcan.
+
+     Así que entra la fotografía de la piedra, tratada: rebajada de contraste, subida
+     de luz y desaturada antes de comprimir. **10.7 KB en AVIF** — el aplanado es lo
+     que la hace comprimir así, y el aplanado es justo lo que pedía el brief.
+
+     `image-set` negocia el formato como haría un `<picture>`, que con `url()` a secas
+     no se puede. El JPEG queda de respaldo al final. */
+  --textura-marmol:
+    image-set(
+      url('/marca/marmol-900.avif') type('image/avif'),
+      url('/marca/marmol-900.webp') type('image/webp'),
+      url('/marca/marmol-900.jpg')  type('image/jpeg')
+    );
+
+  /* 1 · MÁRMOL FUERTE — la entrada. Es el `--marmol` del ADR-0020 tal cual, con la
+        luz cenital y el rescoldo de oro corridos a un extremo para que la veta NO
+        caiga detrás del titular, como pide el brief. */
+  /* EL VELO ES LO QUE GRADUA. Blanco casi opaco a la izquierda —donde va el texto— y
+     abierto a la derecha, para que la veta se vea por un extremo y no detrás del
+     titular, como pide el brief. */
+  --marmol-fuerte:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.82) 38%, rgba(255, 255, 255, 0.58) 72%, rgba(255, 255, 255, 0.5) 100%),
+    var(--textura-marmol),
+    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+
+  /* 2 · MÁRMOL MEDIO — el bloque de consulta. Las vetas a un tercio. */
+  --marmol-medio:
+    linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.8)),
+    var(--textura-marmol),
+    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+
+  /* 3 · MÁRMOL TENUE — donde manda la fotografía: bienes y patio. Se intuye. */
+  --marmol-tenue:
+    radial-gradient(120% 78% at 82% -16%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(107deg, transparent 63.4%, rgba(138, 114, 39, 0.028) 64.4%, transparent 65.3%),
+    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+
+  /* 4 · MARFIL — proceso y ubicación. Sin veta: claridad y nada más. */
+  --marfil:
+    linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+
+  /* 5 · PIEDRA — «otras líneas». Sólida y un punto más oscura: hace de escalón
+        entre la página clara y el pie de carbón. */
+  --piedra:
+    linear-gradient(180deg, var(--piedra-050) 0%, var(--piedra-200) 100%);
+
   --marmol:
     radial-gradient(125% 85% at 50% -15%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 58%),
     radial-gradient(55% 38% at 79% 10%, rgba(231, 192, 65, 0.14) 0%, rgba(231, 192, 65, 0) 72%),
@@ -328,4 +423,44 @@
   --mov-curva: ease-out;
   --mov-elevacion: -2px;
   --mov-crecer: 1.6;
+}
+
+/* ═══ EL REGISTRO OSCURO, ENTERO Y VIVO · ADR-0028 ═══════════════════════════
+   Estos valores estuvieron en `:root` desde el ADR-0019 hasta el 0028. No se
+   borran ni se reescriben: se mudan. Cualquier trozo del sitio que necesite campo
+   oscuro —el pie, un panel de autoridad— se pone esta clase y recupera el juego
+   completo, ya medido.
+
+   Es el mismo mecanismo que el registro claro usaba antes dentro de `Seccion`:
+   cambiar el VALOR de los roles, nunca el CSS de los componentes. Ningún
+   componente sabe en qué registro está, y por eso todos se dan la vuelta solos. */
+.registro-oscuro {
+  --panel: #2A2F34;                    /* se levanta 1.32:1 del campo */
+  --panel-borde: #3C4248;
+
+  --superficie: var(--panel);
+  --superficie-alterna: var(--panel);
+  --superficie-oscura: var(--negro-950);
+
+  --tinta: var(--blanco);              /* 13.51:1 sobre panel */
+  --tinta-secundaria: var(--negro-200);/*  9.33:1 sobre panel */
+  --tinta-suave: var(--negro-200);
+
+  /* Aquí el oro SÍ es texto: 11.12:1 sobre el campo, 7.73:1 sobre el panel. */
+  --oro-texto: var(--oro-500);
+  --oro-texto-grande: var(--oro-500);
+
+  --borde-campo: var(--panel-borde);
+  --borde-sutil: #33383E;
+
+  /* Y la acción vuelve a oro, porque sobre oscuro un botón carbón desaparece. */
+  --oro-moneda: var(--oro-500);
+  --oro-moneda-honda: var(--metal-oro-peor);
+
+  --accion: var(--oro-500);
+  --accion-hover: #F0CE63;
+  --accion-presionada: var(--oro-700);
+  --tinta-sobre-accion: var(--negro-950);
+
+  color: var(--tinta);
 }

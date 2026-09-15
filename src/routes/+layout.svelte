@@ -69,7 +69,7 @@
 
 <main id="contenido">{@render children()}</main>
 
-<footer>
+<footer class="registro-oscuro">
   <!-- ADR-0007 §2. La banda va arriba del pie, no dentro: es lo que alguien busca
        cuando ya decidió llamar, y en sus piezas cierra la composición. -->
   <BandaContacto />
@@ -140,24 +140,34 @@
   /* Fija a la ventana, fuera del flujo: no empuja nada y no cambia ningún alto. */
   .flotante { display: none; }
 
+  /* CABECERA · ADR-0028. Deja de ser una barra oscura independiente y se integra con
+     la piedra. Superficie CASI sólida y veta muy tenue a propósito: detrás de un menú
+     una textura fuerte compite con lo único que ahí importa, que es el logotipo. */
   header {
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; justify-content: space-between; gap: var(--e-4);
     min-height: 56px; padding: 0 var(--margen-lateral);
-    background-color: var(--campo-alto);
-    background-image: var(--resplandor-fijo);
-    color: var(--tinta-sobre-oscuro);
+    background-color: var(--crema-025);
+    background-image: var(--marmol-tenue);
+    color: var(--tinta);
+    border-bottom: 1px solid var(--negro-200);
   }
   .marca { display: flex; align-items: center; gap: var(--e-3); min-height: var(--tactil); }
   .lockup { display: flex; flex-direction: column; gap: 3px; }
   .nombre { font-size: 19px; font-weight: 700; letter-spacing: 0.03em; line-height: 1; }
-  .bajada { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; line-height: 1; color: var(--oro-500); }
+  /* `--oro-texto` y NO `--oro-500`: a 9 px esto es texto chico, y el oro de marca
+     sobre marfil da 1.61:1 — lo cazó el validador en las ocho páginas al invertir el
+     campo. El token ya resuelve los dos registros: grafito en claro, oro en oscuro.
+     Es la cuarta vez que un color literal en un componente explota al cambiar de
+     superficie, y la cuarta vez que el token era la respuesta. */
+  .bajada { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; line-height: 1; color: var(--oro-texto); }
 
   .nav-escritorio { display: none; }
   .llamar {
     display: inline-flex; align-items: center; justify-content: center;
     width: var(--tactil); height: var(--tactil);
-    border: 2px solid var(--blanco); border-radius: var(--radio-boton);
+    /* Borde de tinta, no blanco: sobre marfil el blanco desaparece. */
+    border: 2px solid var(--tinta); border-radius: var(--radio-boton);
   }
   .inerte { border-color: var(--negro-500); color: var(--negro-400); }
 
@@ -165,9 +175,12 @@
      Antes era negro-900 y se leía como un cuarto negro suelto, después de la banda
      (negro-950), la sección oscura (grafito→negro-950) y la barra fija. Ahora el pie
      es el punto más oscuro y la rampa termina donde tiene que terminar. */
+  /* PIE · ADR-0028. EL ANCLA OSCURA. Si toda la página es clara pierde contraste y
+     no termina en ninguna parte; el pie es lo que la cierra.
+     Los roles se los da `.registro-oscuro`, puesto en el marcado. */
   footer {
-    background-color: var(--negro-950); color: var(--tinta-sobre-oscuro);
-    --oro-texto: var(--oro-500);   /* superficie oscura: 11.12:1 */
+    background-color: var(--carbon);
+    color: var(--tinta-sobre-oscuro);
   }
   .regla-pie { background: var(--negro-950); }
   .caja {
@@ -189,7 +202,8 @@
     display: flex; align-items: center;
     font-size: var(--pie-tam); color: var(--tinta-secundaria);
   }
-  footer li a:hover { color: var(--blanco); }
+  /* En el pie sí cabe el oro de marca: sobre carbón da 11.12:1. */
+  footer li a:hover { color: var(--oro-500); }
 
   .barra-fija {
     position: sticky; bottom: 0; z-index: 10;
@@ -215,11 +229,18 @@
   @media (min-width: 768px) {
     header { min-height: 76px; padding-inline: var(--e-12); }
     .nav-escritorio { display: flex; align-items: center; }
+    /* Grafito, y oro SOLO al pasar por encima. Nada de botones dorados en el menú:
+       el dorado se reserva para indicar valor, no para señalar cada enlace. */
     .nav-escritorio a {
       display: inline-flex; align-items: center;
       min-height: var(--tactil-piso); padding: 0 var(--e-3);
       font-size: var(--cuerpo-tam);
+      color: var(--tinta);
+      transition: color var(--mov-aparicion) var(--mov-curva);
     }
+    /* `--oro-800` y no `--oro-500`: sobre marfil el oro de marca da 1.87:1 y deja de
+       ser texto. El 800 existe justo para esto — 4.65:1 sobre blanco. */
+    .nav-escritorio a:hover { color: var(--oro-800); }
     .caja { padding-inline: var(--e-12); }
     .flotante {
       display: block;

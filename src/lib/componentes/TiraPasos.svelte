@@ -42,16 +42,20 @@
     gap: var(--e-2);
   }
 
+  /* SECUENCIA, NO TARJETAS · ADR-0028. Tenían panel y borde, y sobre piedra clara
+     eso las convertía en tres cajas blancas — justo lo que el brief pide evitar.
+     Ahora solo hay un filete de plata entre paso y paso: se leen como una secuencia
+     que avanza, que es lo que son. */
   li {
     position: relative;
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: var(--e-3);
-    padding: var(--e-2) var(--e-3);
-    background: var(--panel, var(--superficie-oscura));
-    border: 1px solid var(--panel-borde);
+    padding: var(--e-3) 0;
+    border-top: 1px solid var(--plata);
   }
+  li:first-child { border-top: 0; }
 
   .num {
     font-size: 1.375rem;
@@ -75,8 +79,8 @@
      ícono nuevo. */
   .flecha {
     position: absolute;
-    left: 50%;
-    bottom: calc(var(--e-2) * -1);
+    left: var(--e-2);
+    bottom: calc(var(--e-1) * -1);
     width: 0;
     height: 0;
     transform: translate(-50%, 50%);
@@ -91,9 +95,11 @@
       grid-auto-columns: 1fr;
       gap: var(--e-4);
     }
+    li { padding: 0 var(--e-4) 0 0; border-top: 0; border-left: 1px solid var(--plata); }
+    li:first-child { border-left: 0; padding-left: 0; }
     .flecha {
       left: auto;
-      right: calc(var(--e-4) * -1);
+      right: calc(var(--e-2) * -1);
       bottom: auto;
       top: 50%;
       transform: translate(50%, -50%);
