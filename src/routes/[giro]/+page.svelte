@@ -23,7 +23,7 @@
   import TiraPasos from '$componentes/TiraPasos.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
-  import { galeriaInventario } from '$lib/datos/galeria';
+  import { galeriaInventario, galeriaJoyeria } from '$lib/datos/galeria';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -116,8 +116,14 @@
      con prisa algo que nadie ve al entrar. -->
 <Seccion fondo="marmol">
   <div class="entrada-b">
+  <!-- AQUÍ VIVÍA UN TERCER BOTÓN DE WHATSAPP · ADR-0033.
+       Medido en vivo a 390 px, en esta misma pantalla cabían TRES llamadas a
+       WhatsApp a la vez: «Enviar foto por WhatsApp» del panel de consulta (y=-44),
+       este (y=92) y el de la barra fija (y=788) — dos con etiqueta idéntica.
+       Sale este, no los otros dos: el del panel lleva su propio mensaje y la barra
+       fija es la que garantiza que la página nunca se queda sin CTA (ADR-0027).
+       Queda «Llamar», que es otro canal y no se repite en ningún sitio. -->
   <div class="acciones">
-    <BotonWhatsApp origen="giro-{giro.slug}-entrada" />
     <Boton variante="secundario" href="/contacto/">
       <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
     </Boton>
@@ -136,7 +142,17 @@
       <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} relacion={giro.fotoRelacion ?? '16 / 9'} tamanos="(min-width: 768px) 60vw, 100vw" />
     </div>
   {/if}
+  {#if giro.muestraJoyeria}
+    <div class="joyeria">
+      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería y joyería" clave="joya" />
+    </div>
+  {/if}
+
   </div>
+  <!-- LA SECUENCIA DE JOYERÍA · ADR-0033. Rellena los 152 px de mármol vacío que
+       quedaban bajo la foto, medidos en vivo. Va DESPUÉS de la foto grande: primero
+       la pieza entera, luego los detalles.
+       Son tres vistas de UNA sola fotografía y eso está dicho en `galeria.ts`. -->
   <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
        encontrar alguien con prisa es el botón, no el adorno.
        Del DATO y no del slug, igual que el mármol del ADR-0020: `lujo` es lo que su
@@ -238,6 +254,8 @@
      otras tres llevan foto apaisada; cada giro declara la suya en `fotoRelacion`.
      Lo que cambia es el encuadre de la PÁGINA, no el de la foto. */
   .entrada-b { display: grid; gap: var(--e-6); }
+  /* La secuencia respira por debajo de la foto, no se pega a ella. */
+  .joyeria { margin-top: var(--e-6); }
 
   /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
      bordes de la pantalla. */
@@ -246,13 +264,21 @@
   .acciones { display: grid; gap: var(--e-3); }
 
   @media (min-width: 768px) {
+    /* POR ÁREAS, NO POR ORDEN · ADR-0033. El teléfono quiere botón → foto grande →
+       detalles, y ese es el orden del DOM. En escritorio la foto ocupa la columna
+       derecha ENTERA y la izquierda se reparte entre el botón y la secuencia, sin
+       tocar el marcado — que es justo para lo que existen las áreas.
+       Antes la izquierda era mármol vacío con un botón flotando en medio. */
     .entrada-b {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      align-items: end;
-      gap: var(--e-12);
+      grid-template-areas: 'acciones foto' 'joyeria foto';
+      grid-template-rows: auto 1fr;
+      align-items: start;
+      gap: var(--e-6) var(--e-12);
     }
-    /* Los botones se apoyan en el pie de la foto, no flotan a media altura. */
-    .acciones { align-self: end; padding-bottom: var(--e-8); }
+    .acciones { grid-area: acciones; }
+    .foto-giro { grid-area: foto; }
+    .joyeria { grid-area: joyeria; align-self: end; }
 
     /* SANGRA HASTA EL BORDE DE LA VENTANA, no hasta el filo del acolchado.
        Cancelar solo el acolchado NO basta: `.caja` está limitada a `--ancho-maximo`

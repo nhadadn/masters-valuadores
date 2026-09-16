@@ -82,3 +82,60 @@ export const galeriaInventario: FotoDeGaleria[] = [
     pie: 'Máquinas de soldar'
   }
 ];
+
+
+/**
+ * Joyería · TRES VISTAS DE UNA MISMA FOTOGRAFÍA · ADR-0033.
+ *
+ * Y hay que decirlo así, sin adornos: **no son tres fotos, son tres recortes del
+ * mismo original** —`fotos-origen/bien-joyeria-original-1206.jpg`, 1206×1518—, que
+ * es la ÚNICA fotografía de joyería suya que existe. `bien-joyeria` y `bien-oro`,
+ * que el ADR-0024 contó como dos, también son recortes de esta misma toma: se
+ * comprobó mirándolas.
+ *
+ * ── POR QUÉ ES LEGÍTIMO, Y DÓNDE ESTÁ EL LÍMITE ───────────────────────
+ * La técnica es la del ADR-0022: recortar sus propias piezas. Todo lo que se ve
+ * aquí es una pieza real que pasó por su mostrador, fotografiada por ellos.
+ *
+ * El límite, dicho antes de que lo diga nadie: detalle, detalle y plano de conjunto
+ * es una secuencia editorial normal, pero **no es lo mismo que las seis del patio**,
+ * donde un rodillo y un montacargas son objetos distintos. Con una cámara y cuatro
+ * piezas más esto se vuelve una galería de verdad. Hoy es una sola toma, bien vista.
+ *
+ * ── TRES RECORTES QUE SE TIRARON, Y POR QUÉ ────────────────────────────
+ * Se intentaron tres más, uno por pareja de anillos de la charola. Los tres salieron
+ * mal, y el motivo está en el original: la charola queda pegada al borde derecho del
+ * encuadre, así que **los anillos vienen ya cortados en la foto**. Ningún recorte
+ * arregla eso. Se vieron y se tiraron.
+ *
+ * ── LA RESOLUCIÓN SÍ DA, y se midió antes de recortar ───────────────────
+ * El listón no es teórico: la celda del carrusel del patio mide 262×177 px en un
+ * teléfono y se sirve con un archivo de 288×180 —densidad real 1.1×—, y 320×213 en
+ * escritorio con uno de 320. Estos recortes salen de 624 y 1000 px nativos, o sea
+ * por encima de lo que el patio cumple hoy.
+ *
+ * ── LOS PIES SON PROPUESTA, y ninguno dice «en venta» ──────────────────
+ * Mismo criterio que `galeriaInventario`: describen la PIEZA que se ve. Nadie ha
+ * confirmado que siga ahí, y prometerlo es el daño que el CLAUDE.md describe.
+ * «Breitling» se lee en la carátula, igual que el `310D` se lee en la carrocería.
+ */
+export const galeriaJoyeria: FotoDeGaleria[] = [
+  {
+    nombre: 'joy-reloj',
+    maxAncho: 600,
+    alt: 'Carátula de un cronógrafo Breitling con bisel de diamantes y números romanos, sobre fondo negro',
+    pie: 'Cronógrafo Breitling con bisel de diamantes'
+  },
+  {
+    nombre: 'joy-cadena',
+    maxAncho: 600,
+    alt: 'Cadena de oro de eslabón cubano, en diagonal sobre terciopelo negro',
+    pie: 'Cadena de eslabón cubano en oro'
+  },
+  {
+    nombre: 'joy-conjunto',
+    maxAncho: 800,
+    alt: 'Cronógrafo con bisel de diamantes junto a una cadena de oro y una charola con anillos de esmeraldas y zafiros',
+    pie: 'Reloj, cadena y anillos'
+  }
+];

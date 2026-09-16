@@ -41,6 +41,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0030 | [[ADR-0030-la-piedra-como-sujeto\|La piedra como sujeto, no como papel pintado]] | **ACEPTADA** · **enmienda el 0028** · completa la reversión del 0012 · siete páginas ganan contraste | 2026-09-14 |
 | 0031 | [[ADR-0031-blanco-puro-de-base\|Blanco puro de base]] | **ACEPTADA** · **enmienda el 0020 y el 0028** · cierra los tres cambios del 0029 · el oro cruza 4.5:1 sobre la base | 2026-09-14 |
 | 0032 | [[ADR-0032-la-foto-sale-del-marco\|La foto sale del marco, y no entra una galería]] | **ACEPTADA** · extiende el 0031 · **6 de 7 imágenes aportadas eran generadas** · entra el original 1206×1518 | 2026-09-15 |
+| 0033 | [[ADR-0033-secuencia-de-joyeria\|La secuencia de joyería, y el tercer WhatsApp que sobraba]] | **ACEPTADA** · **corrige el 0024: `bien-joyeria` y `bien-oro` son la MISMA foto** · carrusel multi-instancia · la página crece a 6.4 pantallas | 2026-09-15 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

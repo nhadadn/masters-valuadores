@@ -34,8 +34,17 @@
     etiqueta: string;
     /** Qué se dice debajo. Va marcado como propuesta por quien lo use. */
     nota?: string;
+    /**
+     * Prefijo de los `id` de las tarjetas · ADR-0033.
+     *
+     * Hacía falta al montar un SEGUNDO carrusel en la misma página: los `id` eran
+     * `foto-0`, `foto-1`… y con dos instancias se duplicaban. Ids repetidos no dan
+     * error visible —simplemente los puntos del segundo carrusel llevaban al
+     * primero—. Se deja con valor por defecto para que el del patio no cambie.
+     */
+    clave?: string;
   }
-  let { fotos, etiqueta, nota }: Props = $props();
+  let { fotos, etiqueta, nota, clave = 'foto' }: Props = $props();
 
   const mayorDe = (f: FotoDeGaleria) => {
     const a = anchosDe(f.maxAncho);
@@ -53,7 +62,7 @@
   aria-label="{etiqueta} · {fotos.length} fotografías, se recorren con las flechas"
 >
   {#each fotos as foto, i}
-    <li id="foto-{i}">
+    <li id="{clave}-{i}">
       <figure>
         <a href="/fotos/{foto.nombre}-{mayorDe(foto)}.jpg">
           <picture>
@@ -81,7 +90,7 @@
      JavaScript y con el boton de atras funcionando. -->
 <nav class="saltos" aria-label="Ir a una fotografía">
   {#each fotos as foto, i}
-    <a href="#foto-{i}"><span class="ver-solo-lectores">{foto.pie}</span><span aria-hidden="true" class="punto"></span></a>
+    <a href="#{clave}-{i}"><span class="ver-solo-lectores">{foto.pie}</span><span aria-hidden="true" class="punto"></span></a>
   {/each}
 </nav>
 
