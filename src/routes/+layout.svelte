@@ -216,7 +216,14 @@
     display: flex; align-items: center; gap: var(--e-3);
     padding: var(--e-2) var(--margen-lateral);
     background-color: var(--campo-alto);
-    background-image: var(--resplandor-fijo);
+    /* SIN RESPLANDOR · ADR-0044. Llevaba `--resplandor-fijo`, un radial de oro al
+       0.16 heredado del sitio oscuro. Medido en la página construida: teñía la banda
+       hasta **rgb(47,43,28)** por la derecha contra el **rgb(23,23,23)** plano del pie,
+       que está pegado debajo. Mismo token, distinto aspecto: una mitad parda y la otra
+       negra, con la costura a la vista.
+       El propio `tokens.css` ya avisaba de esto para el resplandor claro —«se lee como
+       una mancha sucia en vez de como luz»—. Aquí el pie es el ancla y un ancla no
+       tiene dos colores. */
     border-top: var(--regla-dorada) solid var(--oro-500);
     --oro-texto: var(--oro-500);   /* superficie oscura · 11.12:1 */
   }

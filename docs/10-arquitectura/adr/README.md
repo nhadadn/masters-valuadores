@@ -52,6 +52,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0041 | [[ADR-0041-el-hero-de-intencion\|El hero pasa de categoría a intención]] | **ACEPTADA** · enmienda el 0024 · **«hoy» se quedó fuera: es un plazo** · tercera ceguera tapada al validador | 2026-09-15 |
 | 0042 | [[ADR-0042-el-proceso-como-circuito\|El proceso como circuito, no como párrafo]] | **ACEPTADA** · enmienda el 0024 · sesión paralela · 52 → 29 palabras, cero JS | 2026-09-16 |
 | 0043 | [[ADR-0043-un-solo-suelo-una-sola-puerta\|Un solo suelo, una sola puerta, un solo negro]] | **ACEPTADA** · **enmienda el 0028, 0030 y 0031** · había TRES negros · la piedra estaba a media página en 3 de 4 | 2026-09-16 |
+| 0044 | [[ADR-0044-el-ancla-no-tiene-dos-colores\|El ancla no tiene dos colores]] | **ACEPTADA** · enmienda el 0019 · la banda y el pie eran el mismo token y **no se veían igual** | 2026-09-16 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

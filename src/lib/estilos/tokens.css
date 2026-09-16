@@ -351,6 +351,11 @@
      propia versión quieta del mismo gesto, así que se leen como la misma tierra sin
      volverse transparentes.
      16 % y no 20 %: estas franjas llevan encima tinta tenue del pie. */
+  /* `--resplandor-fijo` se quedó SIN CONSUMIDORES · ADR-0044. Lo usaban la banda de
+     contacto y la barra fija, y en las dos teñía el carbón de pardo: medido,
+     rgb(47,43,28) contra el rgb(23,23,23) plano del pie que tenían pegado debajo.
+     Se deja declarado —el `ADR-0019` lo justificó y puede volver el día que haya una
+     superficie oscura que no toque otra— pero hoy no lo pide nadie. */
   --resplandor-fijo: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.16) 0%, rgba(231, 192, 65, 0) 70%);
 
   /* ── Tipografía ──────────────────────────────────────────────────────── */
