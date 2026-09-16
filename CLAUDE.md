@@ -195,17 +195,32 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · **0 KB de JS en siete**, 11.2 KB en `/empeno-y-prestamo/` · HTML de 3.5 a
-6.5 KB gzip · 131 tests · objetivo táctil mínimo 44 px ·
+8 páginas · HTML de 3.5 a 6.5 KB gzip · **148 tests** · objetivo táctil mínimo 44 px ·
 16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
-Contraste mínimo por página, medido tras el `ADR-0031`: **8.56:1** en portada, contacto
-y las dos legales; **4.65:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
+**CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
+KB en `/empeno-y-prestamo/`». Las dos mitades son falsas y se vieron midiendo otra cosa,
+con `node herramientas/presupuesto.mjs` contra el build:
+
+```
+4.45  /empeno-y-prestamo/            2.05  /compra-venta-de-maquinaria/
+2.05  /fletes-y-logistica/              0  las otras cinco
+```
+
+Empeño son **4.45** desde el `ADR-0038`, no 11.2 — eso ya lo decía la tabla de Estado y
+este párrafo no se actualizó. Y **maquinaria y fletes no están en cero**: sirven
+`planeta.js` desde el `ADR-0026`, porque el planeta lo pinta cualquier giro con bienes.
+Taller no tiene bienes y por eso sí está en 0. **Son cinco páginas en cero, no siete**, y
+lleva así desde el ADR-0026. El `ADR-0042` no añadió un solo byte: es CSS.
+
+Contraste mínimo por página, medido tras el `ADR-0042`: **8.56:1** en portada, contacto
+y las dos legales; **5.76:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
 es el peor extremo pesimista de su velo de mármol y no lo que se ve en pantalla.
 
-El 4.65 **cruza el 4.5 de AA para texto normal**, que el oro no había alcanzado nunca
-sobre claro — pero lo cruza **sobre la superficie base, no sobre la losa de mármol**.
-La regla sigue siendo la del `tokens.css`: en texto chico va tinta; en display, oro.
+Las tres de giro estaban en **4.65:1** hasta el `ADR-0042` y subieron sin que ese fuera
+el objetivo: su peor combinación era el numeral `01` de los pasos en
+`--oro-texto-grande`, y al salir los numerales salió con ellos. La regla sigue siendo la
+del `tokens.css`: en texto chico va tinta; en display, oro.
 
 **LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
 
@@ -233,7 +248,7 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO y CA-10 · 125 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo y CA-10 · 148 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros

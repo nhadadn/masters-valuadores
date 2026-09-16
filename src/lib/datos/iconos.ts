@@ -40,7 +40,23 @@ export const iconos: Record<string, string> = {
   industrial:  '<circle cx="12" cy="12" r="3.4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>',
   agricola:    '<path d="M12 21V9.5"/><path d="M12 9.5c0-3 2-5.2 4.2-5.2 0 3-2 5.2-4.2 5.2z"/><path d="M12 9.5C12 6.5 10 4.3 7.8 4.3c0 3 2 5.2 4.2 5.2z"/><path d="M12 15c0-3 2-5.2 4.2-5.2 0 3-2 5.2-4.2 5.2z"/><path d="M12 15c0-3-2-5.2-4.2-5.2 0 3 2 5.2 4.2 5.2z"/>',
   contenedor:  '<rect x="2.5" y="7" width="19" height="10" rx="1"/><path d="M7 7v10M11 7v10M15 7v10"/>',
-  carga:       '<rect x="2.5" y="12" width="8" height="8"/><rect x="13.5" y="12" width="8" height="8"/><rect x="8" y="3.5" width="8" height="8"/>'
+  carga:       '<rect x="2.5" y="12" width="8" height="8"/><rect x="13.5" y="12" width="8" height="8"/><rect x="8" y="3.5" width="8" height="8"/>',
+
+  /**
+   * ── EL PROCESO ──────────────────────────────────────────────────────────
+   * Cuatro trazos para el flujo de la sección 2 · ADR-0042. Ninguno existía: el
+   * inventario de arriba nombra BIENES —lo que entra por la puerta— y estos nombran
+   * MOMENTOS —lo que pasa con ellos—. Son listas distintas y se notan aparte.
+   *
+   * `retorno` es el único que dice algo que el texto también dice. Los otros tres
+   * acompañan una etiqueta que se lee sola; ése carga el sentido del bloque —que el
+   * bien vuelve— y por eso es el que más se cuidó: la flecha sube Y gira, porque una
+   * flecha recta hacia la izquierda se lee «atrás», no «de regreso».
+   */
+  identificacion: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="8.5" cy="10.8" r="2.2"/><path d="M5 16.4a4 4 0 0 1 7 0"/><path d="M15 10h4M15 13.5h4"/>',
+  balanza:        '<circle cx="12" cy="4.6" r="1.6"/><path d="M12 6.2v13.3M7.5 19.5h9"/><path d="M4 8.6h16"/><path d="M4 8.6l-2 4.7a2.5 2.5 0 0 0 4 0z"/><path d="M20 8.6l-2 4.7a2.5 2.5 0 0 0 4 0z"/>',
+  efectivo:       '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.6v4.8M18 9.6v4.8"/>',
+  retorno:        '<path d="M19.5 18.5h-8a5.5 5.5 0 0 1 0-11h4"/><path d="M12 3.5L8 7.5l4 4"/>'
 };
 
 /** WhatsApp va relleno, no trazado: es un logotipo, no un ícono de interfaz. */

@@ -13,6 +13,23 @@
 
 export type EstadoGiro = 'construible' | 'bloqueado';
 
+/**
+ * Un momento del proceso · ADR-0042.
+ *
+ * DOS CAMPOS DE TEXTO Y NO UNO, porque hacen trabajos distintos: `que` es lo que se
+ * lee de un vistazo —cuatro palabras o menos, y hay un test que lo vigila— y `dato`
+ * es la condición que el paso arrastra y que nadie necesita en el primer barrido.
+ * Juntarlos otra vez en una frase es volver al párrafo que esto vino a sustituir.
+ */
+export interface PasoFlujo {
+  /** La acción, en CUATRO PALABRAS O MENOS. `tests/flujo.test.ts` lo verifica. */
+  que: string;
+  /** La condición o el requisito. Va en el chip. Opcional: no todo paso arrastra uno. */
+  dato?: string;
+  /** Nombre en `iconos.ts`. El test comprueba que exista: un ícono ausente pinta un hueco mudo. */
+  icono: string;
+}
+
 export interface Giro {
   /** Slug provisional. Definitivo pendiente de la Etapa 1. */
   slug: string;
@@ -164,11 +181,41 @@ export interface Giro {
   }[];
   /**
    * Los tres pasos del proceso · PROPUESTA SIN APROBAR.
-   * NINGUNO dice cuánto ni cuándo: eso va en el bloque de cifras, que sigue
-   * bloqueado. Cada uno asume algo y esos supuestos están listados en
+   * NINGUNO dice cuánto ni cuándo: eso iba en el bloque de cifras, que el ADR-0040
+   * borró junto con su CSS. Hoy la pregunta del encabezado **no tiene respuesta en
+   * la página** y no la tendrá hasta que cierren la tasa, el plazo y el aforo.
+   * Cada paso asume algo y esos supuestos están listados en
    * `docs/30-cliente/requerimientos-cristobal.md`.
+   *
+   * SIGUE SIENDO LA FUENTE cuando el giro no tiene `flujo`: ver abajo.
    */
   pasosPropuestos?: [string, string, string];
+  /**
+   * EL MISMO PROCESO, PARTIDO EN DOS · ADR-0042 · PROPUESTA SIN APROBAR.
+   *
+   * No es copy nuevo: son las frases de `pasosPropuestos` repartidas en la acción
+   * (`que`, que se lee de un vistazo) y el dato que esa acción arrastra (`dato`, que
+   * se lee si interesa). Ni una afirmación que no estuviera ya escrita arriba.
+   *
+   * POR QUÉ PARTIRLO Y NO ACORTARLO. Tres datos del proceso aparecen UNA sola vez en
+   * toda la página —la identificación vigente, el contrato y el resguardo— porque las
+   * secciones que los repetían se borraron en el ADR-0040. Recortar las frases los
+   * habría borrado del sitio. El chip existe para cargarlos sin que pesen en la
+   * lectura rápida.
+   */
+  flujo?: PasoFlujo[];
+  /**
+   * EL PASO QUE CIERRA EL CÍRCULO · ADR-0042. Solo empeño.
+   *
+   * VA EN EL DATO Y NO EN LA PLANTILLA, por la misma razón que `ctaPrestamo`: esta
+   * plantilla pinta las CUATRO páginas de giro. «Lo recuperas» es cierto en empeño y
+   * **falso** en compra-venta, fletes y taller — una máquina que vendes no vuelve, un
+   * flete no vuelve—. Escrito en el marcado se habría publicado en las cuatro.
+   *
+   * Su presencia es además lo que dibuja el corchete punteado: donde no hay retorno,
+   * el flujo es una línea recta, que es lo que esos tres procesos son.
+   */
+  retorno?: PasoFlujo;
   icono: string;
   estado: EstadoGiro;
   /** Qué decisión lo destraba, si está bloqueado. */
@@ -178,10 +225,10 @@ export interface Giro {
 export const giros: Giro[] = [
   // CUATRO GIROS · ADR-0008. El orden es el que dijo el cliente, NO una prioridad
   // de búsqueda: esa sale de la Etapa 1 y sigue sin ejecutarse.
-  { slug: 'empeno-y-prestamo',   registro: 'lujo', muestraInventario: true, muestraJoyeria: true, promesaPropuesta: 'Convierte tus bienes en efectivo.', ctaPrestamo: 'Quiero saber cuánto me prestan', pasosCortos: ['Trae tu bien', 'Lo valuamos', 'Sales con tu efectivo'], tituloBienes: '¿Qué puedes empeñar?', subtituloBienes: 'Valuamos diferentes tipos de bienes y te decimos cuánto podemos prestarte.', nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'bien-joyeria', fotoEsSuya: true, fotoMaxAncho: 1200, fotoRelacion: '1206 / 1518', fotoAlt: 'Reloj cronografo con bisel de diamantes, cadena de oro y una charola de anillos sobre fondo negro', subtitularPropuesto: 'Traes un bien, lo valuamos y te decimos cuánto. Si te sirve, sales con tu efectivo y tu bien queda resguardado hasta que lo recuperes.', pasosPropuestos: ['Traes tu bien y una identificación oficial vigente.', 'Lo valuamos y te decimos cuánto te podemos prestar.', 'Si aceptas, firmas tu contrato y te llevas el efectivo.'], bienesPropuestos: [{ que: 'Oro y joyería', fuente: 'publicacion', icono: 'joyeria', micro: 'Valuamos tus piezas de oro y joyería.', banda: true, foto: 'bien-oro', fotoMaxAncho: 800, fotoEsSuya: true, fotoAlt: 'Cadena de oro de eslabón cubano sobre terciopelo negro, junto a una charola de anillos con piedras' }, { que: 'Relojes', fuente: 'publicacion', icono: 'reloj', micro: 'Valuamos tu reloj.', foto: 'empeno', fotoMaxAncho: 1600, fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura' }, { que: 'Monedas', fuente: 'publicacion', icono: 'moneda', micro: 'Valuamos tus monedas.', foto: 'bien-monedas', fotoMaxAncho: 800, fotoAlt: 'Columnas de monedas de oro sobre una superficie metálica, con luz rasante' }, { que: 'Herramienta', fuente: 'letrero', icono: 'herramienta', micro: 'Valuamos tu herramienta.', foto: 'inv-soldadoras', fotoMaxAncho: 400, fotoEsSuya: true, fotoAlt: 'Máquinas de soldar alineadas contra una pared, bajo techo' }, { que: 'Autos', fuente: 'letrero', icono: 'auto', micro: 'Valuamos tu auto.' }, { que: 'Maquinaria', fuente: 'letrero', icono: 'maquinaria', micro: 'Valuamos tu maquinaria y equipo.', banda: true, foto: 'bien-maquinaria', fotoMaxAncho: 600, fotoEsSuya: true, fotoAlt: 'Rodillo compactador Benford de doble tambor entre otras máquinas, en el patio' }], icono: 'empeno',  estado: 'construible' },
-  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'patio', fotoEsSuya: true, fotoMaxAncho: 800, fotoAlt: 'Patio de MASTER VALUADORES con una retroexcavadora John Deere 310D, un rodillo Benford y montacargas', subtitularPropuesto: 'Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.', pasosPropuestos: ['Nos dices qué máquina tienes, o qué estás buscando.', 'La revisamos y la valuamos.', 'Acordamos el precio y cerramos la operación.'], bienesPropuestos: [{ que: 'Maquinaria pesada', fuente: 'letrero', icono: 'maquinaria' }, { que: 'Equipo industrial', fuente: 'publicacion', icono: 'industrial' }, { que: 'Equipo agrícola', fuente: 'publicacion', icono: 'agricola' }, { que: 'Herramienta', fuente: 'letrero', icono: 'herramienta' }, { que: 'Maquinaria de importación', fuente: 'publicacion', icono: 'contenedor' }], icono: 'renta', estado: 'construible' },
-  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', subtitularPropuesto: 'Transportamos y movemos carga. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.', pasosPropuestos: ['Nos dices qué hay que mover, desde dónde y hasta dónde.', 'Revisamos si entra en nuestro equipo y te cotizamos.', 'Acordamos la fecha y hacemos el traslado.'], bienesPropuestos: [{ que: 'Contenedores marítimos', fuente: 'letrero', icono: 'contenedor' }, { que: 'Maquinaria pesada', fuente: 'deducido', icono: 'maquinaria' }, { que: 'Carga general', fuente: 'deducido', icono: 'carga' }], icono: 'fletes',  estado: 'construible' },
-  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', subtitularPropuesto: 'Servicio de taller y venta de refacciones. Lo traes, lo revisamos y te decimos qué necesita.', pasosPropuestos: ['Traes la unidad o nos dices qué refacción buscas.', 'La revisamos y te decimos qué necesita.', 'Autorizas el trabajo y lo hacemos.'], icono: 'taller',  estado: 'construible' },
+  { slug: 'empeno-y-prestamo',   registro: 'lujo', muestraInventario: true, muestraJoyeria: true, promesaPropuesta: 'Convierte tus bienes en efectivo.', ctaPrestamo: 'Quiero saber cuánto me prestan', pasosCortos: ['Trae tu bien', 'Lo valuamos', 'Sales con tu efectivo'], tituloBienes: '¿Qué puedes empeñar?', subtituloBienes: 'Valuamos diferentes tipos de bienes y te decimos cuánto podemos prestarte.', nombre: 'Empeño y préstamo',            nombreCorto: 'Empeño',      frasePropuesta: 'Dejas un bien en garantía y sales con efectivo', fotoProvisional: 'bien-joyeria', fotoEsSuya: true, fotoMaxAncho: 1200, fotoRelacion: '1206 / 1518', fotoAlt: 'Reloj cronografo con bisel de diamantes, cadena de oro y una charola de anillos sobre fondo negro', subtitularPropuesto: 'Traes un bien, lo valuamos y te decimos cuánto. Si te sirve, sales con tu efectivo y tu bien queda resguardado hasta que lo recuperes.', pasosPropuestos: ['Traes tu bien y una identificación oficial vigente.', 'Lo valuamos y te decimos cuánto te podemos prestar.', 'Si aceptas, firmas tu contrato y te llevas el efectivo.'], flujo: [{ que: 'Traes tu bien', dato: 'con identificación oficial vigente', icono: 'identificacion' }, { que: 'Lo valuamos', dato: 'te decimos cuánto te podemos prestar', icono: 'balanza' }, { que: 'Sales con efectivo', dato: 'si aceptas, firmas tu contrato', icono: 'efectivo' }], retorno: { que: 'Lo recuperas', dato: 'tu bien queda resguardado', icono: 'retorno' }, bienesPropuestos: [{ que: 'Oro y joyería', fuente: 'publicacion', icono: 'joyeria', micro: 'Valuamos tus piezas de oro y joyería.', banda: true, foto: 'bien-oro', fotoMaxAncho: 800, fotoEsSuya: true, fotoAlt: 'Cadena de oro de eslabón cubano sobre terciopelo negro, junto a una charola de anillos con piedras' }, { que: 'Relojes', fuente: 'publicacion', icono: 'reloj', micro: 'Valuamos tu reloj.', foto: 'empeno', fotoMaxAncho: 1600, fotoAlt: 'Relojes de oro y joyería antigua sobre una superficie oscura' }, { que: 'Monedas', fuente: 'publicacion', icono: 'moneda', micro: 'Valuamos tus monedas.', foto: 'bien-monedas', fotoMaxAncho: 800, fotoAlt: 'Columnas de monedas de oro sobre una superficie metálica, con luz rasante' }, { que: 'Herramienta', fuente: 'letrero', icono: 'herramienta', micro: 'Valuamos tu herramienta.', foto: 'inv-soldadoras', fotoMaxAncho: 400, fotoEsSuya: true, fotoAlt: 'Máquinas de soldar alineadas contra una pared, bajo techo' }, { que: 'Autos', fuente: 'letrero', icono: 'auto', micro: 'Valuamos tu auto.' }, { que: 'Maquinaria', fuente: 'letrero', icono: 'maquinaria', micro: 'Valuamos tu maquinaria y equipo.', banda: true, foto: 'bien-maquinaria', fotoMaxAncho: 600, fotoEsSuya: true, fotoAlt: 'Rodillo compactador Benford de doble tambor entre otras máquinas, en el patio' }], icono: 'empeno',  estado: 'construible' },
+  { slug: 'compra-venta-de-maquinaria', nombre: 'Compra venta de maquinaria', nombreCorto: 'Maquinaria', frasePropuesta: 'Compra y venta de maquinaria y equipo', fotoProvisional: 'patio', fotoEsSuya: true, fotoMaxAncho: 800, fotoAlt: 'Patio de MASTER VALUADORES con una retroexcavadora John Deere 310D, un rodillo Benford y montacargas', subtitularPropuesto: 'Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.', pasosPropuestos: ['Nos dices qué máquina tienes, o qué estás buscando.', 'La revisamos y la valuamos.', 'Acordamos el precio y cerramos la operación.'], flujo: [{ que: 'Nos dices qué buscas', dato: 'o qué máquina quieres vender', icono: 'maquinaria' }, { que: 'La revisamos y valuamos', icono: 'balanza' }, { que: 'Cerramos la operación', dato: 'con el precio acordado', icono: 'finan' }], bienesPropuestos: [{ que: 'Maquinaria pesada', fuente: 'letrero', icono: 'maquinaria' }, { que: 'Equipo industrial', fuente: 'publicacion', icono: 'industrial' }, { que: 'Equipo agrícola', fuente: 'publicacion', icono: 'agricola' }, { que: 'Herramienta', fuente: 'letrero', icono: 'herramienta' }, { que: 'Maquinaria de importación', fuente: 'publicacion', icono: 'contenedor' }], icono: 'renta', estado: 'construible' },
+  { slug: 'fletes-y-logistica',  nombre: 'Fletes y logística',           nombreCorto: 'Fletes',      frasePropuesta: 'Transporte y movimiento de carga', fotoProvisional: 'fletes', fotoAlt: 'Camión de carga transportando un contenedor por una carretera', subtitularPropuesto: 'Transportamos y movemos carga. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.', pasosPropuestos: ['Nos dices qué hay que mover, desde dónde y hasta dónde.', 'Revisamos si entra en nuestro equipo y te cotizamos.', 'Acordamos la fecha y hacemos el traslado.'], flujo: [{ que: 'Nos dices qué mover', dato: 'desde dónde y hasta dónde', icono: 'carga' }, { que: 'Revisamos y cotizamos', dato: 'si entra en nuestro equipo', icono: 'balanza' }, { que: 'Hacemos el traslado', dato: 'en la fecha acordada', icono: 'fletes' }], bienesPropuestos: [{ que: 'Contenedores marítimos', fuente: 'letrero', icono: 'contenedor' }, { que: 'Maquinaria pesada', fuente: 'deducido', icono: 'maquinaria' }, { que: 'Carga general', fuente: 'deducido', icono: 'carga' }], icono: 'fletes',  estado: 'construible' },
+  { slug: 'taller-y-refaccionaria', nombre: 'Taller y refaccionaria',    nombreCorto: 'Taller',      frasePropuesta: 'Servicio de taller y venta de refacciones', fotoProvisional: 'taller', fotoAlt: 'Manos de un mecánico eligiendo dados de una caja de herramienta', subtitularPropuesto: 'Servicio de taller y venta de refacciones. Lo traes, lo revisamos y te decimos qué necesita.', pasosPropuestos: ['Traes la unidad o nos dices qué refacción buscas.', 'La revisamos y te decimos qué necesita.', 'Autorizas el trabajo y lo hacemos.'], flujo: [{ que: 'Traes tu unidad', dato: 'o nos dices qué refacción buscas', icono: 'taller' }, { que: 'La revisamos', dato: 'te decimos qué necesita', icono: 'balanza' }, { que: 'Hacemos el trabajo', dato: 'cuando tú lo autorizas', icono: 'herramienta' }], icono: 'taller',  estado: 'construible' },
 
   // SALIERON el 10 de septiembre por el ADR-0008: joyería, bazar y financiera.
   // No se borran de la historia: el ADR registra qué se soltó y qué costó.
