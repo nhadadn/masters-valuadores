@@ -15,6 +15,7 @@
    */
   import { sucursalPrincipal, estaConfirmado, direccionCompleta } from '$lib/config/negocio';
   import Insignia from './Insignia.svelte';
+  import Icono from './Icono.svelte';
   import PorConfirmar from './PorConfirmar.svelte';
 
   const tel = $derived(sucursalPrincipal.telefono);
@@ -54,7 +55,7 @@
                  y mueve la maqueta al montarse; este abre la app de mapas del
                  teléfono y cuesta cero bytes. -->
             <p class="comollegar">
-              <a href={mapa} target="_blank" rel="noopener">Cómo llegar</a>
+              <a href={mapa} target="_blank" rel="noopener">Cómo llegar <Icono nombre="ir" tam={16} grosor={2} /></a>
             </p>
           {/if}
         {:else}
@@ -108,12 +109,15 @@
   .numero a { display: inline-flex; align-items: center; min-height: var(--tactil); }
   .pendiente { margin-top: var(--e-1); }
   .direccion { margin-top: var(--e-1); color: var(--tinta-sobre-oscuro); }
+  /* SIN ESPACIADO DE ETIQUETA · ADR-0051. Llevaba el de las cejas —0.12 em— en un
+     enlace en minúsculas, y ese espaciado es solo para las etiquetas de 13 px en
+     mayúsculas. Lo mismo que se corrigió en la ficha de «DÓNDE ESTAMOS». */
   .comollegar a {
-    display: inline-flex; align-items: center; min-height: var(--tactil-piso);
-    font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso);
-    letter-spacing: var(--etiqueta-tracking);
+    display: inline-flex; align-items: center; gap: var(--e-1); min-height: var(--tactil-piso);
+    font-size: var(--pie-tam); font-weight: var(--cuerpo-fuerte-peso);
     color: var(--oro-texto);
     text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   /* El separador vertical de sus piezas. Solo cuando los dos datos van en fila. */

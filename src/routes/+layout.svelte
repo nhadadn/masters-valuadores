@@ -10,6 +10,7 @@
   import Meta from '$componentes/Meta.svelte';
   import ReglaDorada from '$componentes/ReglaDorada.svelte';
   import BandaContacto from '$componentes/BandaContacto.svelte';
+  import Monograma from '$componentes/Monograma.svelte';
   import type { Snippet } from 'svelte';
 
   let { children }: { children: Snippet } = $props();
@@ -35,10 +36,9 @@
 
 <header>
   <a href="/" class="marca" aria-label="{negocio.nombreComercial} — inicio">
-    <svg width="26" height="26" viewBox="0 0 260 258" aria-hidden="true">
-      <path fill="var(--oro-500)" d="M0,24 L130,154 L130,220 L46,152 L46,258 L0,258 Z M130,74 L196,8 L244,8 L260,24 L130,154 Z" />
-      <path fill="var(--negro-100)" d="M16,8 L64,8 L130,74 L130,154 L0,24 Z M260,24 L260,258 L214,258 L214,152 L130,220 L130,154 Z" />
-    </svg>
+    <!-- El trazo vive en `Monograma` desde el ADR-0051: el lienzo de «DÓNDE ESTAMOS» lo
+         pinta en grande y dos copias a mano se habrían separado. -->
+    <Monograma tam={26} />
     <span class="lockup">
       <span class="nombre">{negocio.nombreComercial}</span>
       <span class="bajada">VALUADORES</span>

@@ -49,8 +49,8 @@ const PIEZAS = [
   { n: 18, donde: '.pista',                 nombre: 'Carrusel del patio' },
   { n: 19, donde: '.saltos',                nombre: 'Puntos del carrusel' },
   { n: 20, donde: '.pasos',                 nombre: 'Pasos del proceso' },
-  { n: 23, donde: '.marco',                 nombre: 'Mapa' },
-  { n: 24, donde: '.ubicacion .datos',      nombre: 'Datos del local' },
+  { n: 23, donde: '.ubicacion .lienzo',     nombre: 'Mapa' },            // ADR-0051: el mapa se abre en el lienzo
+  { n: 24, donde: '.ubicacion .ficha',      nombre: 'Datos del local' },
   { n: 26, donde: '.cruzados',              nombre: 'Otras líneas' },
   { n: 27, donde: 'footer .banda',          nombre: 'Banda de contacto' },
   { n: 28, donde: 'footer',                 nombre: 'Pie' },

@@ -9,8 +9,7 @@
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
-  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
-  import Mapa from '$componentes/Mapa.svelte';
+  import Ubicacion from '$componentes/Ubicacion.svelte';
   import { negocio, estaConfirmado } from '$lib/config/negocio';
 
   const formularioListo = estaConfirmado(negocio.destinoFormulario);
@@ -27,12 +26,8 @@
 </Seccion>
 
 <Seccion fondo="crema" etiqueta="DÓNDE ESTAMOS">
-  <div class="ubicacion">
-    <Mapa />
-    <div class="datos">
-      <DatosDelLocal conTelefono />
-    </div>
-  </div>
+  <!-- EL LIENZO PARTIDO · ADR-0051. Aquí con teléfono en la ficha. -->
+  <Ubicacion titulo="Aquí nos encuentras" conTelefono />
 </Seccion>
 
 <!-- ADR-0027 · AQUÍ VIVÍA LA SECCIÓN «FORMULARIO».
@@ -47,13 +42,10 @@
   .migas { padding: 0 var(--margen-lateral); }
   h1 { font-size: var(--h1-tam); line-height: var(--h1-alto); font-weight: var(--h1-peso); margin-bottom: var(--e-4); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
-  .ubicacion { display: grid; gap: var(--e-6); }
-  .datos { display: grid; gap: var(--e-3); }
   /* Aquí vivía el CSS de `.form`, `.bloqueado` y `.muestra`: la sección de formulario
      que salió con el ADR-0027. Cuando se cierre D-13 y el formulario se construya,
      vuelve; el historial lo guarda. */
   @media (min-width: 768px) {
     .acciones { grid-auto-flow: column; justify-content: start; }
-    .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>

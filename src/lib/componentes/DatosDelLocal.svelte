@@ -14,11 +14,23 @@
    *
    * `data-negocio` declara la procedencia de cada cifra ante el guardia de fugas.
    * Ver la nota en `herramientas/validar-a11y.mjs`.
+   *
+   * ── LA FICHA DEL LIENZO · ADR-0051 ────────────────────────────────────────
+   * Vive dentro de `Ubicacion`, pegada al lienzo de la marca. Tres cosas cambiaron, las
+   * tres medidas en el sitio publicado antes de tocar:
+   *   · Los horarios eran filas flexibles con el día a `10ch`, y «Lunes a viernes» pasa
+   *     de 10: su hora empezaba 21 px más a la derecha que las de sábado y domingo. Ahora
+   *     son una lista de definición en rejilla, con la columna al día más largo.
+   *   · «Cómo llegar» era texto subrayado con el espaciado de las etiquetas —2.04 px en
+   *     minúsculas de 17 px— y una ↗ que el iPhone pinta como emoji. Ahora es el botón
+   *     primario de la casa, con la flecha dibujada.
+   *   · La dirección sube a título de pieza: es lo que se va a buscar.
    */
   import {
     sucursalPrincipal, estaConfirmado, direccionCompleta, horariosLegibles
   } from '$lib/config/negocio';
   import Icono from './Icono.svelte';
+  import Boton from './Boton.svelte';
   import PorConfirmar from './PorConfirmar.svelte';
 
   interface Props {
@@ -35,92 +47,97 @@
 </script>
 
 <div class="datos">
-  <p class="linea">
+  <div class="linea">
     <Icono nombre="mapa" tam={20} />
     {#if estaConfirmado(direccion)}
-      <span data-negocio="direccion">{direccion}</span>
+      <p class="direccion" data-negocio="direccion">{direccion}</p>
     {:else}
       <PorConfirmar que="calle, número, colonia y CP" decision="D-08" />
     {/if}
-  </p>
+  </div>
 
   <div class="linea">
     <Icono nombre="reloj" tam={20} />
     {#if estaConfirmado(horarios)}
-      <ul class="horarios" data-negocio="horarios">
+      <dl class="horarios" data-negocio="horarios">
         {#each horarios as h}
-          <li class:cerrado={h.cerrado}>
-            <span class="dias">{h.dias}</span>
-            <span class="horas">{h.horas}</span>
-          </li>
+          <dt class="dias">{h.dias}</dt>
+          <dd class="horas" class:cerrado={h.cerrado}>{h.horas}</dd>
         {/each}
-      </ul>
+      </dl>
     {:else}
       <PorConfirmar que="horarios de cada día" decision="D-08" />
     {/if}
   </div>
 
   {#if conTelefono}
-    <p class="linea">
+    <div class="linea">
       <Icono nombre="telefono" tam={20} />
       {#if estaConfirmado(tel)}
-        <a href="tel:{String(tel).replace(/\s/g, '')}" data-negocio="telefono">{tel}</a>
+        <a class="telefono" href="tel:{String(tel).replace(/\s/g, '')}" data-negocio="telefono">{tel}</a>
       {:else}
         <PorConfirmar que="teléfono y WhatsApp" decision="D-08" />
       {/if}
-    </p>
+    </div>
 
     <!-- UN TELÉFONO POR LÍNEA, si alguna lo tiene. Hoy ninguna · ADR-0047: el de joyería
          salió cuando el cliente acotó su oferta a cinco líneas. -->
     {#each otrasLineas as l}
       {#if estaConfirmado(l.telefono)}
-        <p class="linea">
+        <div class="linea">
           <Icono nombre="telefono" tam={20} />
           <span>
-            <a href="tel:{String(l.telefono).replace(/\s/g, '')}" data-negocio="telefono">{l.telefono}</a>
+            <a class="telefono" href="tel:{String(l.telefono).replace(/\s/g, '')}" data-negocio="telefono">{l.telefono}</a>
             <span class="cual">{l.linea}{l.nota ? ` · ${l.nota}` : ''}</span>
           </span>
-        </p>
+        </div>
       {/if}
     {/each}
   {/if}
 
   {#if estaConfirmado(mapa)}
-    <!-- Enlace, no mapa incrustado. Un iframe de Maps carga un tercero, pone cookies
-         de Google en la visita y desplaza la maqueta al montarse. Este abre la app de
-         mapas del teléfono —que es lo que la persona con prisa iba a hacer de todas
-         formas— y cuesta cero bytes. Si algún día se quiere el mapa dibujado, es una
-         decisión aparte y con costo medible. -->
-    <p class="linea">
-      <a class="comollegar" href={mapa} target="_blank" rel="noopener">
-        Cómo llegar <span aria-hidden="true">↗</span>
-      </a>
-    </p>
+    <!-- Enlace, no mapa incrustado. Abre la app de mapas del teléfono —que es lo que la
+         persona con prisa iba a hacer de todas formas— y cuesta cero bytes. El mapa
+         dibujado vive aparte, en el lienzo, y solo se carga si alguien lo pide. -->
+    <Boton href={mapa} externo>
+      <Icono nombre="ir" tam={20} grosor={2} />
+      Cómo llegar
+    </Boton>
   {/if}
 </div>
 
 <style>
-  .datos { display: grid; gap: var(--e-4); align-content: start; }
-  .linea { display: flex; gap: var(--e-3); align-items: start; }
-  .linea :global(svg) { flex-shrink: 0; margin-top: 2px; color: var(--oro-texto); }
+  .datos { display: grid; gap: var(--e-6); align-content: start; }
+  .linea { display: grid; grid-template-columns: 20px 1fr; gap: var(--e-3); align-items: start; }
+  .linea > :global(svg) { margin-top: 3px; color: var(--tinta-secundaria); }
 
-  .horarios { display: grid; gap: var(--e-1); }
-  .horarios li { display: flex; flex-wrap: wrap; gap: var(--e-1) var(--e-3); }
-  .dias { min-width: 10ch; color: var(--tinta-secundaria); }
-  .horas { font-weight: 700; }
-  .cerrado .horas { font-weight: 400; color: var(--tinta-secundaria); }
+  /* Título de pieza: es lo que alguien viene a buscar a esta sección. */
+  .direccion {
+    font-size: var(--h3-tam);
+    line-height: 1.35;
+    font-weight: var(--h3-peso);
+    color: var(--tinta);
+  }
 
-  .datos a {
-    min-height: var(--tactil-piso);
+  .horarios {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--e-1) var(--e-4);
+    margin: 0;
+    font-size: var(--cuerpo-tam);
+    line-height: 1.45;
+  }
+  .dias { color: var(--tinta-secundaria); }
+  .horas { margin: 0; font-weight: var(--cuerpo-fuerte-peso); color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .horas.cerrado { font-weight: 400; color: var(--tinta-secundaria); }
+
+  .telefono {
     display: inline-flex;
     align-items: center;
-  }
-  .cual { display: block; font-size: var(--etiqueta-tam); letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria); }
-  .comollegar {
-    color: var(--oro-texto);
-    font-weight: var(--etiqueta-peso);
-    letter-spacing: var(--etiqueta-tracking);
+    min-height: var(--tactil-piso);
+    font-weight: var(--cuerpo-fuerte-peso);
     text-decoration: underline;
-    gap: var(--e-1);
+    text-underline-offset: 3px;
   }
+  .cual { display: block; font-size: var(--pie-tam); color: var(--tinta-secundaria); }
 </style>

@@ -16,8 +16,7 @@
   import Icono from '$componentes/Icono.svelte';
   import Titular from '$componentes/Titular.svelte';
   import Foto from '$componentes/Foto.svelte';
-  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
-  import Mapa from '$componentes/Mapa.svelte';
+  import Ubicacion from '$componentes/Ubicacion.svelte';
   import PlanetaBienes from '$componentes/PlanetaBienes.svelte';
   import TiraPasos from '$componentes/TiraPasos.svelte';
   import FlujoProceso from '$componentes/FlujoProceso.svelte';
@@ -362,12 +361,8 @@
 
 <Seccion fondo="marfil">
   <h2><span class="num">3</span> {PREGUNTAS[3]}</h2>
-  <div class="ubicacion">
-    <Mapa />
-    <div class="datos">
-      <DatosDelLocal />
-    </div>
-  </div>
+  <!-- EL LIENZO PARTIDO · ADR-0051, sin título propio: la pregunta numerada ya lo es. -->
+  <Ubicacion />
 </Seccion>
 
 <!-- BLANCO · ADR-0043. Llevaba `piedra`, un tono cálido sólido —rgb(216,210,198)—
@@ -573,9 +568,6 @@
   }
   .subtitular { max-width: 56ch; margin: calc(var(--e-2) * -1) 0 var(--e-6); font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
 
-  .ubicacion { display: grid; gap: var(--e-6); }
-  .datos { display: grid; gap: var(--e-3); justify-items: start; }
-
   .cruzados { display: grid; gap: var(--e-2); margin-top: var(--e-4); }
   .cruzados a {
     display: flex; align-items: center; gap: var(--e-2);
@@ -587,7 +579,6 @@
 
   @media (min-width: 768px) {
     .acciones { grid-auto-flow: column; justify-content: start; }
-    .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
     .cruzados { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 </style>

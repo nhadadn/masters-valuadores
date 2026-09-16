@@ -17,18 +17,22 @@
     sobreOscuro?: boolean;
     anchoCompleto?: boolean;
     etiqueta?: string;
+    /** Abre en otra pestaña: «Cómo llegar» lleva a Google Maps · ADR-0051. */
+    externo?: boolean;
     children: Snippet;
     onclick?: () => void;
   }
   let {
     variante = 'primario', href, tipo = 'button', sobreOscuro = false,
-    anchoCompleto = true, etiqueta, children, onclick
+    anchoCompleto = true, etiqueta, externo = false, children, onclick
   }: Props = $props();
 </script>
 
 {#if href}
   <a
     {href}
+    target={externo ? '_blank' : undefined}
+    rel={externo ? 'noopener' : undefined}
     aria-label={etiqueta}
     class="boton {variante}"
     class:oscuro={sobreOscuro}
@@ -85,10 +89,12 @@
      Sin radio: el sello de sus piezas es un paralelogramo de arista viva, no una
      pastilla. El anillo de foco sigue el rectángulo, que es lo correcto: es el
      objetivo real. */
-  /* LA ETIQUETA VA EN TINTA OSCURA, no en blanca · ADR-0012. Desde que la acción
-     primaria es oro, blanco encima daría 1.75:1. El validador NO puede cazarlo
-     porque hoy no se dibuja ningún botón primario —D-13 bloquea el submit y el de
-     WhatsApp sale inerte—, así que se razona en vez de esperarlo. */
+  /* RELLENO, TINTA Y HOVER SALEN DEL REGISTRO · ADR-0051. Aquí decía «la etiqueta va en
+     tinta oscura» porque, desde el ADR-0012, la acción era oro. El ADR-0028 devolvió la
+     acción a carbón en el registro claro y cambió `--tinta-sobre-accion` a blanco, pero
+     este botón seguía pintando oro fijo: blanco sobre oro, 1.75:1. Nadie lo vio porque
+     ningún primario se dibujaba hasta «Cómo llegar». Ahora los tres salen de roles:
+     carbón con tinta blanca en claro, oro metálico con tinta negra en oscuro. */
   .primario {
     position: relative;
     isolation: isolate;
@@ -105,12 +111,13 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    /* ACABADO METÁLICO · ADR-0019. El color plano va SIEMPRE con el degradado y
-       lleva el stop más oscuro: un background-image deja el background-color en
-       transparente y la medición de contraste se va al fondo del ancestro. Aquí ya
-       pasó una vez y se reportó 1:1 sobre un botón que daba 9.29:1. */
-    background-color: var(--metal-oro-peor);
-    background-image: var(--metal-oro);
+    /* ACABADO METÁLICO · ADR-0019, solo en el registro oscuro desde el ADR-0051. El
+       color plano va SIEMPRE con el degradado y lleva el stop más oscuro: un
+       background-image deja el background-color en transparente y la medición de
+       contraste se va al fondo del ancestro. Aquí ya pasó una vez y se reportó 1:1
+       sobre un botón que daba 9.29:1. */
+    background-color: var(--accion-relleno);
+    background-image: var(--accion-metal);
     box-shadow: var(--metal-filo);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
     transition: background-color var(--mov-tactil) var(--mov-curva);

@@ -16,8 +16,7 @@
   import Foto from '$componentes/Foto.svelte';
   import CintaPalabras from '$componentes/CintaPalabras.svelte';
   import Titular from '$componentes/Titular.svelte';
-  import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
-  import Mapa from '$componentes/Mapa.svelte';
+  import Ubicacion from '$componentes/Ubicacion.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
 
@@ -177,14 +176,9 @@
 </Seccion>
 
 <Seccion fondo="crema" etiqueta="DÓNDE ESTAMOS">
-  <div class="ubicacion">
-    <!-- El hueco de la fachada se cerró: la foto real está arriba, de héroe. Lo que
-         sigue abierto aquí es el mapa, y depende de D-08. -->
-    <Mapa />
-    <div class="datos">
-      <DatosDelLocal />
-    </div>
-  </div>
+  <!-- EL LIENZO PARTIDO · ADR-0051. La marca y «Ver el mapa» en una mitad, la dirección,
+       los horarios y «Cómo llegar» en la otra. La fachada real sigue arriba, de héroe. -->
+  <Ubicacion titulo="Aquí nos encuentras" />
 </Seccion>
 
 <!-- AQUÍ IBA LA DIAGONAL Y SE RETIRÓ · 10 de septiembre, decisión de Nadir.
@@ -329,8 +323,7 @@
     gap: var(--e-3);
   }
 
-  .ubicacion { display: grid; gap: var(--e-6); }
-  .datos { display: grid; gap: var(--e-3); justify-items: start; }
+  /* `.ubicacion` y `.datos` se fueron a `Ubicacion.svelte` · ADR-0051. */
 
   @media (min-width: 768px) {
     .entrada { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
@@ -370,6 +363,5 @@
        un hijo, así que Svelte podó las tres reglas y nunca llegaron al build.
        Su propio comentario decía que el flujo automático daba el mismo dibujo, y eso
        es exactamente lo que se está viendo desde entonces. */
-    .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>

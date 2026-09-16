@@ -58,6 +58,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0048 | [[ADR-0048-las-lineas-en-mosaico\|Las líneas, en mosaico]] | **ACEPTADA** · enmienda el 0047 · **enmendada por el 0049**: la pieza ya no abre WhatsApp · la foto de archivo conserva su tinte · **+103.6 KB de fotos** | 2026-09-16 |
 | 0049 | [[ADR-0049-la-pieza-lleva-a-su-pagina\|La pieza lleva a su página; el botón verde, a WhatsApp]] | **ACEPTADA** · **enmienda el 0048** · dos enlaces hermanos · glifo de WhatsApp en vez de la flecha · botón de 44 px · la portada vuelve a enlazar sus cinco líneas | 2026-09-16 |
 | 0050 | [[ADR-0050-el-circuito-del-proceso-se-mueve\|El circuito del proceso se mueve]] | **ACEPTADA** · **enmienda la regla de movimiento de tokens.css y el 0042** · luz en bucle y armado al deslizar · **esconde texto hasta que llega**, con la objeción por escrito · en bucle, solo transform, opacity y visibility | 2026-09-16 |
+| 0051 | [[ADR-0051-donde-estamos-en-lienzo-partido\|«DÓNDE ESTAMOS», en lienzo partido con la marca]] | **ACEPTADA** · **enmienda el 0015** · el logo plano del sitio como lienzo, con «Ver el mapa» dentro · se descarta el logo con banderas por el 0001, 0004 y 0018 · **el botón primario por fin sigue el 0028**: carbón en claro | 2026-09-16 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

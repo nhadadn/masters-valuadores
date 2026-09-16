@@ -148,6 +148,13 @@
   --accion-hover:        #2A2A2A;
   --accion-presionada:   #0D0D0D;
   --tinta-sobre-accion:  var(--blanco);            /* 15.30:1 sobre carbón */
+  /* EL RELLENO DEL PRIMARIO TAMBIÉN ES ROL · ADR-0051. `Boton.primario` pintaba oro
+     metálico FIJO —de cuando todo el sitio era oscuro, ADR-0019— con la tinta y el hover
+     de `--accion`. En claro eso daba blanco sobre oro, 1.75:1, y un hover que lo volvía
+     carbón. No se veía porque ningún primario se pintaba; «Cómo llegar» es el primero.
+     Carbón liso en claro, oro metálico en oscuro, como ya decía esta regla. */
+  --accion-relleno:      var(--accion);
+  --accion-metal:        none;
 
   /* WHATSAPP TIENE ROL PROPIO · ADR-0046. Pintaba `--accion`, igual que cualquier otra
      acción, así que se leía como un botón más: en la portada había seis idénticos. */
@@ -604,6 +611,9 @@
   --accion-hover: #F0CE63;
   --accion-presionada: var(--oro-700);
   --tinta-sobre-accion: var(--negro-950);
+  /* El stop más oscuro como color plano, para que cualquier medición salga pesimista. */
+  --accion-relleno: var(--metal-oro-peor);
+  --accion-metal: var(--metal-oro);
 
   color: var(--tinta);
 }
