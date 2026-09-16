@@ -34,17 +34,12 @@
     etiqueta: string;
     /** Qué se dice debajo. Va marcado como propuesta por quien lo use. */
     nota?: string;
-    /**
-     * Prefijo de los `id` de las tarjetas · ADR-0033.
-     *
-     * Hacía falta al montar un SEGUNDO carrusel en la misma página: los `id` eran
-     * `foto-0`, `foto-1`… y con dos instancias se duplicaban. Ids repetidos no dan
-     * error visible —simplemente los puntos del segundo carrusel llevaban al
-     * primero—. Se deja con valor por defecto para que el del patio no cambie.
-     */
-    clave?: string;
   }
-  let { fotos, etiqueta, nota, clave = 'foto' }: Props = $props();
+  let { fotos, etiqueta, nota }: Props = $props();
+
+  /* El prop `clave` del ADR-0033 se fue con los puntos · ADR-0039: existía para que
+     los `id` de dos carruseles no chocaran, y los `id` existían para ser destino de
+     las anclas. Sin anclas no hacen falta ni los unos ni el otro. */
 
   const mayorDe = (f: FotoDeGaleria) => {
     const a = anchosDe(f.maxAncho);
@@ -57,12 +52,13 @@
      su etiqueta, el lector de pantalla anuncia que es y cuantas fotos trae. -->
 <ul
   class="pista"
+  data-auto
   tabindex="0"
   role="group"
   aria-label="{etiqueta} · {fotos.length} fotografías, se recorren con las flechas"
 >
   {#each fotos as foto, i}
-    <li id="{clave}-{i}">
+    <li>
       <figure>
         <a href="/fotos/{foto.nombre}-{mayorDe(foto)}.jpg">
           <picture>
@@ -86,21 +82,24 @@
   {/each}
 </ul>
 
-<!-- Los saltos son enlaces de ancla: el navegador desplaza la pista solo. Sin
-     JavaScript y con el boton de atras funcionando. -->
-<nav class="saltos" aria-label="Ir a una fotografía">
-  {#each fotos as foto, i}
-    <a href="#{clave}-{i}"><span class="ver-solo-lectores">{foto.pie}</span><span aria-hidden="true" class="punto"></span></a>
-  {/each}
-</nav>
+<!-- AQUÍ VIVÍAN LOS PUNTOS · ADR-0039.
+     Eran anclas de verdad, una por foto, con 44 px de objetivo táctil cada una.
+     Con nueve tarjetas se comían dos renglones enteros en un teléfono y no aportaban
+     nada que el gesto del dedo no hiciera ya.
+
+     LO QUE SE PIERDE: eran el indicador de posición —cuál de nueve vas— y la única
+     señal visible de que hay más a los lados, porque la barra de desplazamiento está
+     oculta. Lo segundo lo resuelve el avance automático de abajo: un carrusel que se
+     mueve se anuncia solo. Lo primero no se sustituye. -->
 
 {#if nota}
   <p class="nota" data-propuesta="true">{nota}</p>
 {/if}
 
-<!-- Arregla SOLO el salto vertical de los puntos y marca cual se esta viendo. Todo lo
-     demas del carrusel funciona sin esto; si no carga, los puntos siguen siendo anclas
-     de verdad y siguen cambiando de foto. Ver el encabezado del archivo. -->
+<!-- AVANZA SOLO · ADR-0039. Ya no arregla el salto de las anclas —no hay anclas—:
+     ahora adelanta una tarjeta cada pocos segundos. Si este archivo no carga, el
+     carrusel sigue siendo un contenedor de scroll con snap y se recorre igual con el
+     dedo, la rueda y el teclado. Nada depende de que exista. -->
 <svelte:head>
   <script src="/animacion/carrusel.js" defer></script>
 </svelte:head>
@@ -134,7 +133,9 @@
     -webkit-mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
 
-    /* La barra estorba mas de lo que ayuda cuando hay puntos debajo. */
+    /* La barra se oculta · y desde el ADR-0039 hay que decir lo que eso cuesta: sin
+       barra y sin puntos, en escritorio NO queda señal estática de que esto se
+       desplaza. La señal es el movimiento. */
     scrollbar-width: none;
   }
   .pista::-webkit-scrollbar { display: none; }
@@ -181,6 +182,11 @@
     object-fit: cover;
     background: var(--superficie-oscura);
     border: 1px solid var(--panel-borde);
+    /* RELIEVE · ADR-0039. Estática a propósito: animar `box-shadow` repinta en cada
+       cuadro, y con quince tarjetas sobre un teléfono de gama baja eso se nota. La
+       sensación de que la central sobresale la da la escala, que es `transform` y la
+       resuelve el compositor. */
+    box-shadow: var(--sombra-tarjeta);
   }
 
   figcaption {
@@ -211,62 +217,21 @@
        estaba en la maqueta, la creaba el propio giro. Asi que cada lado se tira hacia
        el centro en el mismo fotograma. Al 0 % la tarjeta viene por la derecha y tira
        hacia la izquierda; al 100 % se va por la izquierda y tira hacia la derecha. */
+    /* LA ESCALA ENTRA CON EL ADR-0039 · la contracción/dilatación que se pidió.
+       El giro ya encogía las laterales —cos(48°) = 0.67— pero solo en horizontal: se
+       leían como tarjetas de canto, no como tarjetas lejanas. El `scale` las encoge
+       también en vertical, así que la central **crece** de verdad contra las dos
+       vecinas. Es `transform`: no reflowea y no repinta. */
     @keyframes curvar {
-      0%   { transform: translateX(-86px) rotateY(-48deg) translateZ(-120px); opacity: 0.6; }
-      50%  { transform: translateX(0) rotateY(0deg) translateZ(0); opacity: 1; }
-      100% { transform: translateX(86px) rotateY(48deg) translateZ(-120px); opacity: 0.6; }
+      0%   { transform: translateX(-86px) rotateY(-48deg) translateZ(-120px) scale(0.84); opacity: 0.55; }
+      50%  { transform: translateX(0) rotateY(0deg) translateZ(0) scale(1); opacity: 1; }
+      100% { transform: translateX(86px) rotateY(48deg) translateZ(-120px) scale(0.84); opacity: 0.55; }
     }
   }
 
-  .saltos {
-    display: flex;
-    justify-content: center;
-    gap: var(--e-1);
-    margin-top: var(--e-3);
-    /* ENVUELVEN EN VEZ DE ENCOGER · ADR-0035.
-       Sin esto los puntos son ítems flex con `flex-shrink: 1`, o sea que los 44 px de
-       abajo eran una intención y no un piso. Al pasar la secuencia de joyería a nueve
-       tarjetas, nueve por 44 son 396 px contra los 350 de la caja en un teléfono, y el
-       sistema los encogió a 35 px SIN AVISAR: el validador de accesibilidad pasó de
-       CUMPLE a NO CUMPLE y el comentario de aquí al lado seguía prometiendo 44.
-       Ahora se van a un segundo renglón antes que perder tamaño. */
-    flex-wrap: wrap;
-  }
-
-  /* 44 px de objetivo tactil, como exige el sistema, aunque el punto se vea de 10.
-     `flex: 0 0 auto` es lo que lo hace un piso y no un deseo. */
-  .saltos a {
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-    width: 44px;
-    height: 44px;
-  }
-  .punto {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--tinta-tenue-oscuro, var(--negro-500));
-    border: 1px solid var(--oro-500);
-  }
-  .saltos a:hover .punto,
-  .saltos a:focus-visible .punto { background: var(--oro-500); }
-
-  /* La que se esta viendo. Lo pone el script; sin el, los puntos se quedan todos
-     iguales y el carrusel sigue funcionando. */
-  .saltos a[aria-current='true'] .punto {
-    background: var(--oro-500);
-    transform: scale(1.35);
-  }
-
-  .ver-solo-lectores {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
+  /* El CSS de `.saltos`, `.punto` y `.ver-solo-lectores` se fue con los puntos ·
+     ADR-0039. Era también donde vivía el `flex-wrap` del ADR-0035; con los puntos
+     fuera, ese piso táctil ya no tiene a quién proteger aquí. */
 
   .nota {
     max-width: 790px;

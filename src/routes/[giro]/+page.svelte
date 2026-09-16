@@ -68,7 +68,6 @@
   ];
 </script>
 
-
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: giro.nombreCorto }]} /></div>
 
 <Seccion etiqueta="LÍNEA DE NEGOCIO" fondo={veta}>
@@ -200,7 +199,6 @@
       <Carrusel
         fotos={galeriaJoyeria}
         etiqueta="Relojería, joyería y monedas"
-        clave="joya"
         nota={notaJoyeria}
       />
     {/if}
@@ -346,7 +344,6 @@
      pintaba «BIEN ACEPTADO — PENDIENTE» cuando un giro no tenía bienes, y el de la
      nota de «esta lista la dedujimos». Las dos eran marcas de borrador y salieron
      con el ADR-0027. Su CSS se va con ellas; el historial lo guarda. */
-
 
   /* Entradilla de la sección de bienes · ADR-0024. Una sola frase que lleva la
      promesa —«te decimos cuánto»— antes de la retícula. */

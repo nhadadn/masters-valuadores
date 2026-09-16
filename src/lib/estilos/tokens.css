@@ -327,6 +327,11 @@
   /* El filo de luz que separa una pieza metálica del fondo. Un píxel, no una sombra
      difusa: las sombras suaves leen a «tarjeta de aplicación», no a metal. */
   --metal-filo:     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  /* RELIEVE DE TARJETA · ADR-0039. Entra como token y no suelta en el componente
+     porque una sombra es un color, y un color literal en un componente es la bomba
+     que este repo ya desactivó cuatro veces. Dos capas: una corta que asienta la
+     pieza y una larga que la separa del fondo. */
+  --sombra-tarjeta: 0 2px 6px rgba(23, 23, 23, 0.10), 0 16px 34px rgba(23, 23, 23, 0.18);
   /* Resplandor de oro sobre claro: mucho más tenue. Al 0.20 que usa el oscuro, sobre
      acero se lee como una mancha sucia en vez de como luz. */
   --resplandor-claro: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.22) 0%, rgba(231, 192, 65, 0) 70%);

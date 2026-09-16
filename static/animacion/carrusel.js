@@ -1,130 +1,110 @@
 /**
- * LOS PUNTOS DEL CARRUSEL · ADR-0023 · MULTI-INSTANCIA DESDE EL ADR-0033
+ * EL CARRUSEL AVANZA SOLO · ADR-0039
  *
- * El carrusel entero —la curva, la profundidad, el arrastre, el gesto del dedo, la
- * rueda, el recorrido con el tabulador— funciona sin una linea de JavaScript. Esto
- * arregla UNA cosa concreta que el CSS no puede, y no toca nada mas.
+ * Sustituye por completo al script del ADR-0023, que existia para arreglar el salto
+ * vertical de los puntos de ancla. Los puntos se fueron, asi que ese trabajo tambien.
  *
- * ── QUE ARREGLA ────────────────────────────────────────────────────────────
- * Los puntos son enlaces de ancla. Al pulsarlos, el navegador lleva el destino a la
- * vista desplazando TODOS sus contenedores, y eso incluye la pagina: medido, un
- * salto vertical de 325 px cada vez que alguien cambiaba de foto.
+ * ── QUE HACE, Y POR QUE ASI ────────────────────────────────────────────────
+ * Adelanta UNA tarjeta cada pocos segundos, con el desplazamiento suave que ya
+ * declara el CSS.
  *
- * Se probaron tres arreglos solo con CSS —`scroll-snap-align: none center`,
- * `scroll-snap-type: proximity`, y los dos juntos— y los tres dieron exactamente los
- * mismos 325 px. No es el ajuste del snap: es como funciona la navegacion por ancla.
+ * No empuja el scroll cuadro a cuadro a proposito. La pista lleva
+ * `scroll-snap-type: x mandatory`, asi que un empujon continuo lo pelearia el snap:
+ * cada fotograma tiraria hacia delante y el snap tiraria de vuelta al centro mas
+ * cercano. Avanzar de tarjeta en tarjeta trabaja CON el snap en vez de contra el, y
+ * deja que la curva del `view-timeline` se anime durante el recorrido, que es
+ * exactamente el efecto que se busca.
  *
- * `block: 'nearest'` es la diferencia: si el destino ya se ve en vertical, no mueve
- * la pagina; solo desplaza el carrusel.
+ * ── VA Y VUELVE, no salta al principio ─────────────────────────────────────
+ * Al llegar al final invierte el sentido. La alternativa —volver de golpe a la
+ * primera— es un barrido largo de nueve tarjetas que marea; y la otra —clonar la
+ * pista para un bucle infinito— duplica el DOM y rompe el `view-timeline`, porque
+ * cada clon tendria su propia linea de tiempo.
  *
- * ── DOS CARRUSELES EN LA MISMA PAGINA · ADR-0033 ───────────────────────────
- * Aqui habia `document.querySelector('.pista')` en singular y
- * `document.querySelectorAll('.saltos a')` en global. Con la secuencia de joyeria
- * eso se rompia de dos maneras a la vez, y ninguna daba error en consola:
+ * ── SE DETIENE, Y HAY DOS CLASES DE PARADA ─────────────────────────────────
+ * Esto importa para la WCAG 2.2.2 («Pause, Stop, Hide»): algo que se mueve solo mas
+ * de cinco segundos tiene que poder pararse.
  *
- *   1. `pista` era siempre la PRIMERA, asi que los puntos del segundo carrusel
- *      median distancias contra las tarjetas del primero.
- *   2. `saltos` juntaba los puntos de los DOS, asi que `aria-current` se encendia
- *      en el carrusel equivocado.
+ *   · PAUSA, reversible: el puntero encima. Se reanuda al salir.
+ *   · ALTO, definitivo: el usuario toca, arrastra, rueda, pulsa una tecla o entra con
+ *     el tabulador. Ahi el carrusel es suyo y no se lo volvemos a mover nunca.
  *
- * Ahora cada pista se cablea con SU nav de saltos, buscandolo hacia delante entre
- * sus hermanos. No se empareja por indice global a proposito: si manana cambia el
- * orden del marcado, emparejar por indice cruzaria los puntos de un carrusel con
- * las tarjetas de otro, y eso volveria a fallar en silencio.
+ * La segunda es la que cumple el criterio: cualquier intento de tomar el control lo
+ * detiene de forma permanente. No hace falta un boton de pausa que nadie pulsa.
  *
- * ── Y EL ARCHIVO SE EJECUTA DOS VECES ──────────────────────────────────────
- * `Carrusel.svelte` inyecta este `<script>` por `svelte:head`, asi que con dos
- * instancias el HTML trae dos etiquetas identicas. El navegador lo descarga una vez
- * pero lo EJECUTA dos, y sin cerrojo se duplicarian los oyentes de clic y los
- * observadores. El cerrojo es una marca en `window`, no un contador de instancias:
- * lo unico que hace falta saber es si el cableado ya paso.
+ * ── Y NO SE MUEVE SI NO SE VE, NI SI NO LO QUIEREN ─────────────────────────
+ * Fuera de pantalla se congela: mismo criterio que `planeta.js` y `monedas.js`, y por
+ * el mismo motivo —la audiencia del contrato es un telefono de gama baja—. Con
+ * `prefers-reduced-motion: reduce` no arranca siquiera.
  *
- * ── SIN ESTO EL SITIO SIGUE FUNCIONANDO ────────────────────────────────────
- * Los puntos son anclas de verdad. Si este archivo no carga, siguen cambiando de
- * foto — con el salto. Nada depende de que esto exista.
+ * ── SIN ESTO EL CARRUSEL SIGUE ENTERO ──────────────────────────────────────
+ * Es un contenedor de scroll con snap. Si este archivo no carga, se recorre igual con
+ * el dedo, la rueda, la barra y las flechas. Nada depende de que exista.
  */
 (function () {
   'use strict';
 
-  if (window.__carruselCableado) return;
-  window.__carruselCableado = true;
+  /* `Carrusel.svelte` inyecta este <script> por `svelte:head`, una vez por instancia:
+     con dos carruseles el HTML trae dos etiquetas identicas y el navegador lo ejecuta
+     dos veces. Sin cerrojo se montarian dos temporizadores por pista. */
+  if (window.__carruselAuto) return;
+  window.__carruselAuto = true;
 
-  var pistas = document.querySelectorAll('.pista');
-  if (!pistas.length) return;
+  var CADA = 4500;   // ms entre tarjeta y tarjeta. «Poco a poco», no un pase de diapositivas.
 
-  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (quieto && quieto.matches) return;
 
-  /** El nav de saltos de ESTA pista: el primer hermano posterior que lo sea. */
-  function saltosDe(pista) {
-    var el = pista.nextElementSibling;
-    while (el) {
-      if (el.classList && el.classList.contains('saltos')) return el;
-      el = el.nextElementSibling;
+  var pistas = document.querySelectorAll('.pista[data-auto]');
+  for (var i = 0; i < pistas.length; i++) mover(pistas[i]);
+
+  function mover(pista) {
+    var tarjeta = pista.querySelector('li');
+    if (!tarjeta) return;
+
+    var sentido = 1;
+    var sobre = false;      // el puntero esta encima · pausa reversible
+    var visible = true;     // la pista esta en pantalla
+    var suyo = false;       // el usuario tomo el control · alto definitivo
+    var reloj = window.setInterval(paso, CADA);
+
+    function paso() {
+      if (suyo) { window.clearInterval(reloj); return; }
+      if (sobre || !visible) return;
+
+      var salto = tarjeta.getBoundingClientRect().width;
+      if (!salto) return;   // aun sin maquetar, no se fuerza nada
+
+      /* El margen de 4 px absorbe el redondeo del snap: sin el, la ultima tarjeta
+         podia quedarse a medio pixel del final y el sentido no se invertia nunca. */
+      var fin = pista.scrollWidth - pista.clientWidth - 4;
+      if (sentido > 0 && pista.scrollLeft >= fin) sentido = -1;
+      else if (sentido < 0 && pista.scrollLeft <= 4) sentido = 1;
+
+      pista.scrollBy({ left: salto * sentido, behavior: 'smooth' });
     }
-    return null;
-  }
 
-  function cablear(pista) {
-    var nav = saltosDe(pista);
-    if (!nav) return;
-    var saltos = nav.querySelectorAll('a[href^="#"]');
-    if (!saltos.length) return;
-
-    for (var i = 0; i < saltos.length; i++) {
-      saltos[i].addEventListener('click', function (e) {
-        var destino = document.getElementById(this.getAttribute('href').slice(1));
-        if (!destino || !destino.scrollIntoView) return;   // sin destino, que haga lo suyo
-        e.preventDefault();
-        destino.scrollIntoView({
-          block: 'nearest',                                 // ESTO es el arreglo
-          inline: 'center',
-          behavior: mq && mq.matches ? 'auto' : 'smooth'
-        });
-      });
+    /* ALTO DEFINITIVO. `passive: true` porque no se previene nada: solo se escucha
+       que el usuario quiso conducir. */
+    function mio() {
+      suyo = true;
+      window.clearInterval(reloj);
+    }
+    var propios = ['pointerdown', 'touchstart', 'wheel', 'keydown', 'focusin'];
+    for (var j = 0; j < propios.length; j++) {
+      pista.addEventListener(propios[j], mio, { passive: true, once: true });
     }
 
-    /**
-     * CUAL SE ESTA VIENDO.
-     *
-     * Seis puntos iguales no dicen en cual vas, y un carrusel sin esa señal se
-     * recorre a ciegas. `aria-current` lo dice tambien en voz alta, no solo en color.
-     */
+    /* PAUSA REVERSIBLE. Solo puntero: en tactil no existe «encima», y ahi el toque ya
+       cae en el alto definitivo. */
+    pista.addEventListener('mouseenter', function () { sobre = true; });
+    pista.addEventListener('mouseleave', function () { sobre = false; });
+
+    /* FUERA DE PANTALLA, QUIETO. Si el navegador no trae observador, se queda con el
+       comportamiento de siempre: se mueve. */
     if (!window.IntersectionObserver) return;
-    var tarjetas = pista.querySelectorAll('li');
-
-    /**
-     * LA ACTIVA ES LA MAS CERCANA AL CENTRO, no «una que se vea».
-     *
-     * El primer intento marcaba cualquier tarjeta que intersectara por encima del
-     * 60 %. En escritorio caben tres o cuatro a la vez y varias pasan ese umbral,
-     * asi que ganaba la ultima que procesara el navegador: se pulsaba el punto 4 y
-     * se encendia el 5. Medido.
-     *
-     * El observador solo sirve de aviso de que algo cambio; quien decide es la
-     * distancia al centro del marco, que no es ambigua.
-     */
-    function marcarLaDelCentro() {
-      var caja = pista.getBoundingClientRect();
-      var centro = caja.left + caja.width / 2;
-      var mejor = 0;
-      var minima = Infinity;
-      for (var j = 0; j < tarjetas.length; j++) {
-        var t = tarjetas[j].getBoundingClientRect();
-        var d = Math.abs(t.left + t.width / 2 - centro);
-        if (d < minima) { minima = d; mejor = j; }
-      }
-      for (var k = 0; k < saltos.length; k++) {
-        if (k === mejor) saltos[k].setAttribute('aria-current', 'true');
-        else saltos[k].removeAttribute('aria-current');
-      }
-    }
-
-    var observador = new IntersectionObserver(marcarLaDelCentro, {
-      root: pista,
-      threshold: [0, 0.25, 0.5, 0.75, 1]
-    });
-    for (var m = 0; m < tarjetas.length; m++) observador.observe(tarjetas[m]);
+    new IntersectionObserver(function (entradas) {
+      visible = entradas[0].isIntersecting;
+    }, { threshold: 0.1 }).observe(pista);
   }
-
-  for (var p = 0; p < pistas.length; p++) cablear(pistas[p]);
 })();
