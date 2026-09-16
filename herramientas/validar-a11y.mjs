@@ -83,6 +83,12 @@ for (const ancho of ANCHOS) {
         for (const p of ['::before', '::after']) {
           const cs = getComputedStyle(el, p);
           if (!cs || cs.content === 'none') continue;
+          // NI `display: none` NI `visibility: hidden` · ADR-0041. Un pseudo-elemento
+          // apagado conserva `position`, sus insets y su `background` en el árbol de
+          // estilo, así que este recorrido lo tomaba por el fondo real. Medido: dio
+          // 1.17:1 en un botón secundario cuyo texto en pantalla da 11.6:1 sobre
+          // mármol. Es el mismo tipo de ceguera que ya se arregló dos veces arriba.
+          if (cs.display === 'none' || cs.visibility === 'hidden') continue;
           if (cs.position !== 'absolute' && cs.position !== 'fixed') continue;
           if (!['top', 'right', 'bottom', 'left'].every((l) => cs[l] === '0px')) continue;
           const c = rgb(cs.backgroundColor);

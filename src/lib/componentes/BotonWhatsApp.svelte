@@ -21,9 +21,22 @@
      * y le ahorra a quien contesta la primera pregunta.
      */
     mensaje?: string;
+    /**
+     * Tratamiento SECUNDARIO · ADR-0041. Mismo contorno que `Boton.secundario`.
+     *
+     * Hacía falta al poner DOS acciones de WhatsApp juntas en el hero —«cuánto me
+     * prestan» y «envío una foto»—. Las tres variantes que había solo cambian ancho
+     * y alto, así que los dos botónes salían idénticos: dos bloques de carbón
+     * compitiendo, sin decir cuál es la acción principal.
+     *
+     * No se resolvió desde la página a propósito: el CSS con ámbito de una página no
+     * alcanza la raíz de un componente hijo — lección del ADR-0040.
+     */
+    secundario?: boolean;
   }
   let {
-    variante = 'bloque', sobreOscuro = false, origen, texto = 'WhatsApp', mensaje
+    variante = 'bloque', sobreOscuro = false, origen, texto = 'WhatsApp', mensaje,
+    secundario = false
   }: Props = $props();
 
   /* El armado vive en `$lib/datos/whatsapp`: lo comparte con la galeria de bienes,
@@ -33,12 +46,12 @@
 </script>
 
 {#if listo}
-  <a href={enlace} class="wa {variante}" class:oscuro={sobreOscuro} data-origen={origen} rel="noopener">
+  <a href={enlace} class="wa {variante}" class:oscuro={sobreOscuro} class:secundario data-origen={origen} rel="noopener">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html iconoWhatsApp}</svg>
     {texto}
   </a>
 {:else}
-  <span class="wa {variante} inerte" class:oscuro={sobreOscuro} data-origen={origen}>
+  <span class="wa {variante} inerte" class:oscuro={sobreOscuro} class:secundario data-origen={origen}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html iconoWhatsApp}</svg>
     {texto}
     <span class="marca">__POR_CONFIRMAR__</span>
@@ -143,4 +156,32 @@
     border: 1px solid var(--panel-borde);
     padding: 1px 6px;
   }
+
+  /* ── SECUNDARIO · ADR-0041 ─────────────────────────────────────
+     Va al FINAL y se escribe `.wa.secundario`, y las dos cosas hacen falta:
+
+       1 · El relleno oscuro NO lo pinta `background` —el computado del botón es
+           transparente— sino el `::before` de la arista. Poner `background:
+           transparent` no apagaba nada.
+       2 · `.wa:not(.barra)` vale 0,2,0 de especificidad y `.secundario` a secas 0,1,0,
+           así que perdía sin hacer ruido.
+
+     Se midió el fallo antes de corregirlo: el validador dio **1.17:1** para el texto
+     grafito sobre el carbón que el pseudo-elemento seguía pintando debajo. */
+  .wa.secundario {
+    color: var(--tinta);
+    box-shadow: inset 0 0 0 2px var(--tinta);
+    /* Se devuelve el acolchado que la arista reservaba para el corte. */
+    padding-inline-end: var(--e-4);
+  }
+  /* SIN arista. El ADR-0007 §5 la reserva para el botón PRIMARIO, y dos sellos en la
+     misma composición dejan de ser un sello. Igual que `Boton.secundario`.
+
+     `content: none` Y NO `display: none`, y la diferencia se midió: con `display` el
+     pseudo-elemento sigue existiendo en el árbol de estilo —conserva su `position`,
+     sus cuatro `0px` y su `background`— y el validador de accesibilidad lo leía como
+     el fondo real del botón: **1.17:1** sobre un control que en pantalla da 11.6:1.
+     `content: none` lo quita de verdad. El validador también se endureció para no
+     volver a caer, pero la forma correcta es ésta. */
+  .wa.secundario::before { content: none; }
 </style>

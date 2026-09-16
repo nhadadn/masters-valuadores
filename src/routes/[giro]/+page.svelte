@@ -23,6 +23,8 @@
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
   import { galeriaInventario, galeriaJoyeria, notaJoyeria } from '$lib/datos/galeria';
+  import { sucursalPrincipal, estaConfirmado, horariosLegibles } from '$lib/config/negocio';
+  import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -35,6 +37,43 @@
      habla la piedra: lo que su marca trata como lujo la enseña, el resto la calla.
      Sigue saliendo del DATO y no del slug. */
   const veta = $derived(giro.registro === 'lujo' ? 'marmol' : 'tenue');
+
+  /* ── EL HERO ORIENTADO A INTENCIÓN · ADR-0041 ────────────────────────────
+     NADA DE ESTO SE ESCRIBE AQUÍ. La ciudad, los horarios y la lista de bienes salen
+     de `negocio.ts` y de `giros.ts`; si el dato cambia, el hero cambia solo. Es la
+     misma regla del NAP: un dato tecleado dos veces se desincroniza una vez. */
+
+  /* El titular lleva la ciudad · «Empeño y préstamo en Torreón». Si la ciudad no
+     estuviera confirmada, el titular se queda como estaba en vez de pintar el
+     centinela en un `h1`. */
+  const titular = $derived(
+    estaConfirmado(sucursalPrincipal.ciudad)
+      ? `${giro.nombre} en ${sucursalPrincipal.ciudad}`
+      : giro.nombre
+  );
+
+  /* La lista de bienes en prosa, DERIVADA de la misma fuente que pinta el planeta.
+     Escribirla a mano habría creado dos listas que se contradicen el día que alguien
+     añada una categoría. Con menos de dos no hay frase: «Valuamos oro.» no es una
+     enumeración, es un recorte raro. */
+  const valuamos = $derived.by(() => {
+    const qs = (giro.bienesPropuestos ?? []).map((b) => b.que.toLowerCase());
+    if (qs.length < 2) return null;
+    return `Valuamos ${qs.slice(0, -1).join(', ')} y ${qs[qs.length - 1]}.`;
+  });
+
+  /* Dónde y cuándo, en un renglón. Se quita el día cerrado: «domingo cerrado» es
+     información de la sección de ubicación, no de la primera pantalla. */
+  const cuando = $derived.by(() => {
+    const h = horariosLegibles();
+    if (!estaConfirmado(h)) return null;
+    return h.filter((x) => !x.cerrado).map((x) => `${x.dias} ${x.horas}`).join(' · ');
+  });
+  const donde = $derived(
+    estaConfirmado(sucursalPrincipal.ciudad) && estaConfirmado(sucursalPrincipal.estado)
+      ? `${sucursalPrincipal.ciudad}, ${sucursalPrincipal.estado}`
+      : null
+  );
 
   /**
    * ¿Se pinta la segunda mitad de la entrada? · ADR-0038.
@@ -74,7 +113,7 @@
   <!-- ADR-0007 §4. Sin `segunda`: los nombres de giro son de un renglón —cuatro de
        los siete son una sola palabra— y partirlos para teñir la mitad sería inventar
        un énfasis que nadie autorizó. La segunda tinta espera copy. -->
-  <div class="encabezado"><Titular primera={giro.nombre} /></div>
+  <div class="encabezado"><Titular primera={titular} /></div>
   <!-- PROPUESTA SIN APROBAR. Dice lo que el giro es POR DEFINICIÓN: ni una cifra, ni
        un plazo, ni una lista de bienes. El CLAUDE.md lo permite con la condición de
        que vaya marcado, y la banda de BORRADOR de arriba es esa marca. -->
@@ -86,8 +125,48 @@
   {#if giro.promesaPropuesta}
     <p class="promesa" data-propuesta="true">{giro.promesaPropuesta}</p>
   {/if}
+  <!-- QUÉ VALUAMOS · ADR-0041. Derivado de `bienesPropuestos`, la MISMA fuente que
+       pinta el planeta de la sección 1. Dos listas escritas a mano se contradicen el
+       día que alguien añada una categoría; ésta no puede. -->
+  {#if valuamos}
+    <p class="valuamos" data-propuesta="true">{valuamos}</p>
+  {/if}
   {#if giro.pasosCortos}
     <TiraPasos pasos={giro.pasosCortos} />
+  {/if}
+
+  <!-- LAS DOS ACCIONES Y EL DÓNDE · ADR-0041.
+       Atadas a `ctaPrestamo`, que solo tiene empeño: «cuánto me prestan» es falso en
+       compra-venta, fletes y taller. Los dos botones van al MISMO canal con mensajes
+       distintos —cuánto, y foto— y por eso el segundo es de línea y no de bloque: son
+       dos intenciones, no dos botones iguales compitiendo.
+
+       El de la foto es el que el ADR-0036 quitó del panel de consulta. Vuelve, y al
+       hero: lo que sobraba era un BLOQUE de contacto a media página, no el canal. -->
+  {#if giro.ctaPrestamo}
+    <div class="acciones-hero">
+      <BotonWhatsApp
+        origen="giro-{giro.slug}-hero-cuanto"
+        texto={giro.ctaPrestamo}
+        mensaje="Hola, quiero saber cuánto me pueden prestar."
+      />
+      <BotonWhatsApp
+        secundario
+        origen="giro-{giro.slug}-hero-foto"
+        texto="Enviar foto por WhatsApp"
+        mensaje="Hola, quiero saber si aceptan este artículo. Les mando una foto."
+      />
+    </div>
+    {#if donde || cuando}
+      <p class="donde-cuando">
+        {#if donde}
+          <span><Icono nombre="mapa" tam={17} grosor={1.8} /> {donde} · Atención presencial</span>
+        {/if}
+        {#if cuando}
+          <span><Icono nombre="reloj" tam={17} grosor={1.8} /> {cuando}</span>
+        {/if}
+      </p>
+    {/if}
   {/if}
 </Seccion>
 
@@ -303,6 +382,35 @@
      Medido en la página construida, a 390 px de ventana: `scrollWidth` 1920 y la
      foto de entrada con 1920×2417 px en vez de 390×491. La sección pasó de 1061 a
      3044 px de alto. No dio ningún error: solo se desbordó la página entera. */
+  /* ── EL HERO DE INTENCIÓN · ADR-0041 ────────────────────────────── */
+  .valuamos {
+    max-width: 44ch;
+    /* SIN margen negativo arriba. Se copió de `.entradilla`, donde sube el texto
+       contra un `h2`; aquí lo pegaba a la promesa y las dos frases se tocaban. */
+    margin: var(--e-3) 0 var(--e-4);
+    font-size: var(--cuerpo-tam);
+    line-height: var(--cuerpo-alto);
+    color: var(--tinta-secundaria);
+  }
+  .acciones-hero { display: grid; gap: var(--e-3); margin-top: var(--e-6); }
+
+  /* Dónde y cuándo. Iconos del set, no emoji: el sistema no tiene ni uno y meter dos
+     aquí serían los únicos del sitio, con su propio tipo y su propio color. */
+  .donde-cuando {
+    display: grid;
+    gap: var(--e-1);
+    margin: var(--e-4) 0 0;
+    font-size: var(--pie-tam);
+    line-height: 1.4;
+    color: var(--tinta-secundaria);
+  }
+  .donde-cuando span { display: flex; align-items: center; gap: var(--e-2); }
+
+  @media (min-width: 768px) {
+    .acciones-hero { grid-auto-flow: column; justify-content: start; }
+    .donde-cuando { grid-auto-flow: column; justify-content: start; gap: var(--e-6); }
+  }
+
   .entrada-b { display: grid; gap: var(--e-6); grid-template-columns: minmax(0, 1fr); }
 
   /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
