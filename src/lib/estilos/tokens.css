@@ -108,16 +108,19 @@
      Los valores NO son nuevos: son exactamente los que el ADR-0019 midió y el
      validador viene aprobando desde entonces. Lo único que cambia es dónde viven.
      El registro oscuro se conserva entero abajo, en `.registro-oscuro`. */
-  --panel:               var(--blanco);
-  --panel-borde:         var(--negro-400);         /*  3.49:1 · piso de borde no-texto */
+  /* ACERO DE MARCA · ADR-0046. El suelo, las placas y el filete pasan al acero. El
+     negro-400 era el piso de borde sobre BLANCO; sobre el suelo de acero da 1.83:1. */
+  --suelo:               var(--acero-suelo);       /* el fondo del sitio · vive en `base.css` */
+  --panel:               var(--acero-placa);
+  --panel-borde:         var(--negro-600);         /*  4.55:1 sobre el suelo · piso de borde no-texto */
 
-  --superficie:          var(--blanco);
-  --superficie-alterna:  var(--crema-025);
+  --superficie:          var(--acero-placa);
+  --superficie-alterna:  var(--acero-ficha);
   --superficie-oscura:   var(--negro-950);
 
   --tinta:               var(--grafito);           /* 11.60:1 sobre crema-100 */
-  --tinta-secundaria:    var(--negro-600);         /*  8.68:1 sobre blanco */
-  --tinta-suave:         var(--negro-600);
+  --tinta-secundaria:    var(--negro-700);         /*  6.29:1 sobre el suelo · negro-600 daba 4.55 */
+  --tinta-suave:         var(--negro-700);
   --tinta-sobre-oscuro:  var(--blanco);
   --tinta-tenue-oscuro:  var(--negro-300);
   --acento-sobre-oscuro: var(--oro-500);
@@ -145,6 +148,15 @@
   --accion-hover:        #2A2A2A;
   --accion-presionada:   #0D0D0D;
   --tinta-sobre-accion:  var(--blanco);            /* 15.30:1 sobre carbón */
+
+  /* WHATSAPP TIENE ROL PROPIO · ADR-0046. Pintaba `--accion`, igual que cualquier otra
+     acción, así que se leía como un botón más: en la portada había seis idénticos. */
+  --accion-whatsapp:      var(--verde-whatsapp);
+  --tinta-sobre-whatsapp: var(--negro-950);        /*  9.80:1 sobre el verde */
+  /* EL MARCO. Sobre el acero el verde tiene la misma luz que el suelo (1.04:1): resaltaba
+     solo por color, que es lo primero que se pierde a pleno sol. El carbón le da la luz
+     que le falta: 9.40:1 contra el suelo y 9.04:1 contra el verde. */
+  --marco-whatsapp:       var(--carbon);
 
   /* ── El campo · degradado y resplandor que se mueve · ADR-0012 ───────────
      El campo baja de --campo-alto a negro. Encima, un resplandor de oro que NO está
@@ -313,6 +325,72 @@
     linear-gradient(97deg, transparent 60.8%, rgba(92, 86, 74, 0.08) 62.0%, transparent 63.1%),
     linear-gradient(116deg, transparent 21.4%, rgba(92, 86, 74, 0.06) 23.1%, transparent 24.2%),
     linear-gradient(180deg, var(--crema-025) 0%, var(--crema-100) 100%);
+
+  /* ═══ ACERO DE MARCA · ADR-0046 ══════════════════════════════════════════
+     «El acero debe ser aún más, parece blanco aún» — Nadir. Tenía razón, y se midió:
+     el suelo del prototipo anterior era L* 89 y azulado. El acero de su marca no es eso.
+
+     DE DÓNDE SALE EL TONO, medido en sus píxeles y no elegido:
+         la M de acero del tablero de marca   mediana #736F6C · L* 47 (P10 29 · P90 64)
+         «MÁSTER» de acero, mismo tablero      mediana L* 44
+         la piedra grafito de la fachada        mediana #2E2E2C · L* 19
+     Gris NEUTRO-CÁLIDO, no azul. Por eso no es la rampa `--acero-*` fría del ADR-0010,
+     que sigue declarada.
+
+     EL SUELO SE PARA EN L* 76, y lo fija la tinta, no el gusto. Con la tinta secundaria
+     en `--negro-700` se podría bajar hacia L* 65, pero ahí queda pegada al 4.5.
+         #BFBBB7 · tinta 8.03 · negro-700 6.29 · filete negro-600 4.55 · negro-400 1.83 ✗ */
+  --acero-suelo: #BFBBB7;
+  --acero-placa: #E6E3DF;   /* tarjetas, mapa, cajas · negro-700 9.38 · filete 6.78 */
+  --acero-ficha: #DDD9D5;   /* fichas chicas · negro-700 8.55 */
+
+  /* EL CEPILLADO DEL SUELO ES SOLO DE BRILLO. Aclara, así que no le quita contraste a
+     la tinta, y por eso el color plano que se declara debajo es el tono base: es el
+     peor extremo. El tope es EXACTO, por tabla de transferencia y no estimado: 11 % de
+     blanco en la línea más brillante y 7 % en las bandas anchas.
+
+     CUESTA, y se midió antes de elegirlo. En el prototipo, intercalado en los dos
+     órdenes contra el sitio en blanco: +160 ms de LCP en empeño y +174 en portada; con
+     el suelo liso, +96 y +70. El primer pintado se mueve lo mismo, así que es ráster de
+     filtro SVG antes del primer cuadro. Nadir eligió el cepillado conociendo el número. */
+  --cepillado-brillo: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'1400'%20height%3D'320'%3E%3Cfilter%20id%3D'b'%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.0017%201.35'%20numOctaves%3D'2'%20seed%3D'29'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%201%200%200%200%200'%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D'table'%20tableValues%3D'0%200%200%200.006%200.022%200.05%200.085%200.11'%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20filter%3D'url(%23b)'%2F%3E%3C%2Fsvg%3E");
+  --cepillado-lamina: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'1400'%20height%3D'320'%3E%3Cfilter%20id%3D'l'%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.0007%200.045'%20numOctaves%3D'2'%20seed%3D'43'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%201%200%200%200%200'%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D'table'%20tableValues%3D'0%200%200%200.02%200.04%200.06%200.07%200.07'%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20filter%3D'url(%23l)'%2F%3E%3C%2Fsvg%3E");
+  --cepillado-suelo: var(--cepillado-brillo), var(--cepillado-lamina);
+  --cepillado-suelo-tam: 1400px 320px, 1400px 320px;
+
+  /* ── PAVONADO · la entrada y las salas · ADR-0046 ─────────────────────────
+     Acero oscuro cepillado, dentro del rango de su propia M. La sección lleva
+     `.registro-oscuro`, así que el oro del titular pasa a `--oro-500`: es la única
+     forma de tener una entrada de acero FUERTE sin crear un oro más oscuro, que el
+     ADR-0007 §4 prohíbe.
+
+     EN OSCURO EL PEOR PUNTO ES EL MÁS CLARO: ahí pierde contraste la tinta clara. Los
+     brillos llevan tope por tabla —7 % la línea, 4 % la luz, 2 % las bandas— y los
+     surcos oscuros no cuestan nada. `--pavonado-peor` es ese punto y es lo que lee el
+     validador:
+         #535A61 · blanco 6.99 · negro-200 texto chico 4.83 · oro-500 4.00 */
+  --pavonado-alto: #3A424A;   /* oro-500 5.84 */
+  --pavonado-bajo: #283037;
+  --pavonado-peor: #535A61;
+  /* El `--borde-sutil` del registro oscuro está afinado para carbón y sobre pavonado
+     desaparece. Es el mismo filete, un paso más claro. */
+  --pavonado-filete: #4A525A;
+  --pavonado-luz: radial-gradient(30% 130% at 76% 38%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.012) 42%, rgba(255,255,255,0) 72%);
+  --pavonado-brillo: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'1400'%20height%3D'320'%3E%3Cfilter%20id%3D'b'%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.0017%201.35'%20numOctaves%3D'2'%20seed%3D'23'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%201%200%200%200%200'%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D'table'%20tableValues%3D'0%200%200%200.004%200.014%200.03%200.052%200.07'%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20filter%3D'url(%23b)'%2F%3E%3C%2Fsvg%3E");
+  --pavonado-surco: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'1400'%20height%3D'320'%3E%3Cfilter%20id%3D'r'%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.0024%200.95'%20numOctaves%3D'2'%20seed%3D'7'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%201%200%200%200'%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D'table'%20tableValues%3D'0%200%200.02%200.07%200.14%200.21%200.28%200.30'%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20filter%3D'url(%23r)'%2F%3E%3C%2Fsvg%3E");
+  --pavonado-lamina: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'1400'%20height%3D'320'%3E%3Cfilter%20id%3D'l'%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.0007%200.045'%20numOctaves%3D'2'%20seed%3D'41'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%201%200%200%200%200'%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D'table'%20tableValues%3D'0%200%200%200.005%200.01%200.015%200.02%200.02'%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20filter%3D'url(%23l)'%2F%3E%3C%2Fsvg%3E");
+  --pavonado:
+    var(--pavonado-luz), var(--pavonado-brillo), var(--pavonado-surco), var(--pavonado-lamina),
+    linear-gradient(180deg, var(--pavonado-alto) 0%, var(--pavonado-bajo) 100%);
+  --pavonado-tam: 100% 100%, 1400px 320px, 1400px 320px, 1400px 320px, 100% 100%;
+  --pavonado-repeticion: no-repeat, repeat, repeat, repeat, no-repeat;
+
+  /* ── EL VERDE DE WHATSAPP · ADR-0046 ──────────────────────────────────────
+     NO es un color de su marca, y se dijo antes de elegirlo: rompe la paleta de oro y
+     acero. Nadir lo eligió por reconocimiento, porque es el color que la audiencia
+     busca con el pulgar. Vive SOLO en el botón de WhatsApp.
+         etiqueta negro-950 9.80:1 · blanco 1.98:1, por eso la etiqueta es oscura */
+  --verde-whatsapp: #25D366;
 
   /* ── ORO METÁLICO · ADR-0019 ──────────────────────────────────────────────
      «Que se vea top tier», dicho por el cliente. La veta está en su propio material:

@@ -17,7 +17,7 @@
  *   npx serve build -l 5180        # en una terminal…
  *   node herramientas/auditar-fondos.mjs   # …y esto en otra
  */
-import { abrirChromium } from './herramientas/navegador.mjs';
+import { abrirChromium } from './navegador.mjs';
 const RUTAS = ['/', '/empeno-y-prestamo/', '/compra-venta-de-maquinaria/', '/fletes-y-logistica/',
                '/taller-y-refaccionaria/', '/contacto/', '/aviso-de-privacidad/', '/terminos/'];
 const nav = await abrirChromium();

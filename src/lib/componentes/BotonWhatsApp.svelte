@@ -67,8 +67,8 @@
     min-height: var(--tactil);
     padding: 0 var(--e-4);
     border-radius: var(--radio-boton);
-    background: var(--accion);
-    color: var(--tinta-sobre-accion);   /* 11.12:1 sobre el oro */
+    background: var(--accion-whatsapp);
+    color: var(--tinta-sobre-whatsapp);   /* 9.80:1 sobre el verde · rol propio · ADR-0046 */
     font-weight: var(--cuerpo-fuerte-peso);
     line-height: 1;
     transition: transform var(--mov-tactil) var(--mov-curva);
@@ -119,7 +119,7 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: var(--accion);
+    background: var(--accion-whatsapp);
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte)) 100%, 0 100%);
   }
   /* Sin relleno: el contorno punteado ya dice que esto no se puede tocar, y un
@@ -184,4 +184,19 @@
      `content: none` lo quita de verdad. El validador también se endureció para no
      volver a caer, pero la forma correcta es ésta. */
   .wa.secundario::before { content: none; }
+
+  /* EL MARCO · ADR-0046. Sobre el acero el verde tiene la misma luz que el suelo: resaltaba
+     solo por color. Un filo de carbón que sigue la arista le da el contraste de luz que
+     le falta, como el bisel de su M. Va en `::after`, DETRÁS del relleno y fuera del área
+     sensible: `pointer-events: none` y el `<a>` no cambia de tamaño. Ni la barra fija, que
+     ya vive sobre carbón, ni el secundario, ni el inerte. */
+  .wa:not(.barra):not(.secundario):not(.inerte)::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    z-index: -2;
+    pointer-events: none;
+    background: var(--marco-whatsapp);
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--diagonal-corte) - 2px) 100%, 0 100%);
+  }
 </style>

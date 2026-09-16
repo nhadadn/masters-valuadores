@@ -78,7 +78,7 @@
     min-height: 176px;                 /* medido: caja de título de 79 = 3 renglones */
     padding: var(--e-4) var(--e-3);
     background: var(--superficie);
-    border: 1px solid var(--negro-400);
+    border: 1px solid var(--panel-borde);   /* rol, no escalón · ADR-0046 */
     color: var(--tinta);
     overflow: hidden;                  /* la banda llega hasta el borde, sin asomarse */
     /* Solo `transform` y `border-color`: ninguno de los dos reflowea, así que la
@@ -131,7 +131,7 @@
   .pie {
     margin-top: auto;
     padding-top: var(--e-2);
-    border-top: 1px dashed var(--negro-400);
+    border-top: 1px dashed var(--panel-borde);
     font-size: 11px;
     line-height: 1.3;
     font-weight: var(--etiqueta-peso);

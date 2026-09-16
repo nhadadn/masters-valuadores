@@ -153,10 +153,10 @@
        Con la piedra concentrada en la entrada, la cabecera no necesita textura.
        BLANCA desde el ADR-0031, como el cuerpo: lo único que la separa de la página
        es su filete inferior, que es lo que hacen las tres referencias. */
-    background-color: var(--blanco);
+    background-color: var(--suelo);   /* ADR-0046 · sin cepillado: la cabecera es fija y el del cuerpo pasa por debajo */
     background-image: none;
     color: var(--tinta);
-    border-bottom: 1px solid var(--negro-200);
+    border-bottom: 1px solid var(--negro-500);   /* negro-200 sobre acero desaparece · negro-500 3.09:1 */
   }
   .marca { display: flex; align-items: center; gap: var(--e-3); min-height: var(--tactil); }
   .lockup { display: flex; flex-direction: column; gap: 3px; }

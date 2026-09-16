@@ -24,13 +24,23 @@ body {
 
      BLANCO PURO desde el ADR-0031. Las tres referencias del ADR-0029 arrancan de
      `#FFFFFF`; esto arrancaba de crema. La crema no era un color de su marca: era
-     el residuo de una rampa que ya no existe. El color lo ponen las fotografías. */
-  background-color: var(--blanco);
+     el residuo de una rampa que ya no existe. El color lo ponen las fotografías.
+
+     ACERO DE MARCA desde el ADR-0046: el gris de la M de su tablero, medido en sus
+     píxeles. Con solo siete fotografías propias, el blanco no tenía quién le pusiera
+     el color. */
+  background-color: var(--suelo);
   /* ADR-0030: el cuerpo ya NO lleva veta NI degradado. La piedra vive en la entrada
      y en ningún otro sitio.
      Plano y no rampa: la rampa se estiraba sobre los 4000 px del documento, así que
-     no se leía como degradado sino como tinte desigual entre secciones. */
-  background-image: none;
+     no se leía como degradado sino como tinte desigual entre secciones.
+
+     ADR-0046: vuelve a llevar textura, y no contradice al ADR-0030. Aquel quitó una
+     piedra repartida bajo un velo, que ENSUCIABA; esto es un cepillado de solo brillo,
+     que ACLARA. El color plano de arriba sigue siendo el peor extremo. Cuesta LCP, y
+     el número está en el token. */
+  background-image: var(--cepillado-suelo);
+  background-size: var(--cepillado-suelo-tam);
   color: var(--tinta);
   font-family: var(--fuente-base);
   font-size: var(--cuerpo-tam);

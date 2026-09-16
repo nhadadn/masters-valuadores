@@ -45,8 +45,10 @@
      en blanco. Tres de cuatro páginas tenían la piedra flotando en el medio.
 
      Ahora la entrada la lleva siempre. El registro `lujo` sigue existiendo para lo que
-     sí distingue —qué bienes, qué galería—, no para el fondo. */
-  const veta = 'marmol';
+     sí distingue —qué bienes, qué galería—, no para el fondo.
+
+     ACERO PAVONADO · ADR-0046. Sigue siendo de las cuatro; cambia el material. */
+  const veta = 'pavonado';
 
   /* ── EL HERO ORIENTADO A INTENCIÓN · ADR-0041 ────────────────────────────
      NADA DE ESTO SE ESCRIBE AQUÍ. La ciudad, los horarios y la lista de bienes salen
@@ -307,7 +309,8 @@
   </Seccion>
 {/if}
 
-<Seccion fondo="marfil">
+<!-- SALA PAVONADA · ADR-0046. El proceso en otro registro, como hace Suttons & Robertsons. -->
+<Seccion fondo="pavonado">
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
   <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
        diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
@@ -575,7 +578,7 @@
   .cruzados a {
     display: flex; align-items: center; gap: var(--e-2);
     min-height: var(--tactil); padding: 0 var(--e-4);
-    background: var(--superficie); border: 1px solid var(--negro-400);
+    background: var(--superficie); border: 1px solid var(--panel-borde);
     font-weight: var(--cuerpo-fuerte-peso);
   }
   .cruzados a:hover { border-color: var(--negro-950); }

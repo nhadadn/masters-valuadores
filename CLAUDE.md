@@ -110,7 +110,7 @@ enlazadas desde el pie.
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías |
+| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías. **ACERO DE MARCA desde el `ADR-0046`**: suelo `#BFBBB7` cepillado —el gris de la M de su tablero, medido en sus píxeles—, la entrada y una sala por página en acero pavonado con los roles oscuros, y WhatsApp en verde con marco de carbón. El mármol sale de la entrada |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · **4.45 KB gzip**, sin marco ni librería · `ADR-0023`, `ADR-0026` y `ADR-0033`. **CAYÓ de 12.10 a 4.54 el 15 de septiembre · `ADR-0038`**: al quitar la segunda mitad de la entrada se fue con ella la banda de monedas del `ADR-0021`, que queda inalcanzable. Margen de CA-10: **35.55 KB**. El carrusel cambió de trabajo el mismo día · `ADR-0039`: ya no arregla anclas, **avanza solo** — y el script nuevo pesa menos que el viejo. Las otras siete en 0 KB |
 | Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
@@ -213,16 +213,22 @@ este párrafo no se actualizó. Y **maquinaria y fletes no están en cero**: sir
 Taller no tiene bienes y por eso sí está en 0. **Son cinco páginas en cero, no siete**, y
 lleva así desde el ADR-0026. El `ADR-0042` no añadió un solo byte: es CSS.
 
-Contraste mínimo por página, medido tras el `ADR-0042`: **8.56:1** en portada, contacto
-y las dos legales; **5.76:1** en maquinaria, fletes y taller; **3.47:1** en empeño, que
-es el peor extremo pesimista de su velo de mármol y no lo que se ve en pantalla.
+Contraste mínimo por página, medido tras el `ADR-0046`: **4.00:1** en portada y empeño
+—el oro del titular sobre el punto más claro del acero pavonado—, **4.83:1** en
+maquinaria, fletes y taller —texto chico sobre ese mismo punto— y **6.29:1** en contacto
+y las dos legales —la tinta secundaria sobre el suelo de acero—. Son los PEORES puntos
+del cepillado, no el promedio.
+
+**CORREGIDO el mismo día.** Aquí decía, tras el `ADR-0042`, 8.56 en portada y 5.76 en
+las tres de giro. El `ADR-0043` ya los había movido y nadie lo anotó: medido antes de
+este cambio, **3.47** en portada y **6.47** en las tres.
 
 Las tres de giro estaban en **4.65:1** hasta el `ADR-0042` y subieron sin que ese fuera
 el objetivo: su peor combinación era el numeral `01` de los pasos en
 `--oro-texto-grande`, y al salir los numerales salió con ellos. La regla sigue siendo la
 del `tokens.css`: en texto chico va tinta; en display, oro.
 
-**LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
+**LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. **Desde el `ADR-0046` el elemento es texto y el mármol ya no se pide** (−9.8 KB, una petición menos), pero el cepillado cuesta **+70 ms en empeño y +132 en portada**, intercalado en los dos órdenes contra HEAD en esta máquina. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
 
 **NINGUNA cifra absoluta de LCP de este repo es comparable entre sesiones.** La máquina dio 4356, 8948 y 7636 ms para el mismo código; el 14 de septiembre por la noche ese mismo 1244 se midió en **3804 ms**, tres veces peor, sin tocar nada. Solo valen las parejas intercaladas en la misma fase — y **en los dos órdenes**: el `ADR-0030` vio una «regresión» de 700 ms que cambió de bando al invertir el orden.
 
@@ -255,6 +261,7 @@ node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y te
 node herramientas/medir-portada.mjs   # peso real y LCP en 4G · RUTA=/empeno-y-prestamo/ para otra
 npx serve build -l 5180               # en una terminal…
 node herramientas/validar-a11y.mjs    # …y esto en otra (BASE=http://127.0.0.1:5180)
+node herramientas/auditar-fondos.mjs  # ADR-0043 · el fondo real de cada bloque, en las ocho páginas
 node herramientas/medir-monedas.mjs   # ADR-0021 · lo que cuesta la banda de empeño
 cd diseno/sistema  && python verificar-contraste.py   # usan rutas relativas:
 cd diseno/pantallas && node validar.mjs               # hay que entrar a su carpeta

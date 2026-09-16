@@ -74,7 +74,7 @@
 
 <style>
   .hueco {
-    border: 1px dashed var(--negro-400);
+    border: 1px dashed var(--panel-borde);   /* rol, no escalón · ADR-0046 */
     /* BLANCO, no crema. Sobre el campo de acero frío el crema cálido se ve sucio,
        y en blanco el hueco se levanta del fondo como las tarjetas. De paso el oro
        del titular sube de 4.05:1 a 4.65:1. */

@@ -21,7 +21,7 @@
      * `crema` y `blanco` siguen aceptados y apuntan a `marfil`: había código
      * llamándolos y romperlo no aporta nada.
      */
-    fondo?: 'marmol' | 'medio' | 'tenue' | 'marfil' | 'piedra' | 'carbon' | 'blanco' | 'crema' | 'oscuro';
+    fondo?: 'marmol' | 'medio' | 'tenue' | 'marfil' | 'piedra' | 'carbon' | 'blanco' | 'crema' | 'oscuro' | 'pavonado';
     amplia?: boolean;
     etiqueta?: string;
     id?: string;
@@ -30,7 +30,7 @@
   let { fondo = 'marfil', amplia = false, etiqueta, id, children }: Props = $props();
 </script>
 
-<section {id} class="seccion {fondo}" class:amplia class:registro-oscuro={fondo === 'carbon' || fondo === 'oscuro'}>
+<section {id} class="seccion {fondo}" class:amplia class:registro-oscuro={fondo === 'carbon' || fondo === 'oscuro' || fondo === 'pavonado'}>
   <div class="caja">
     <!-- ADR-0007 §6: la regla se repite como divisor entre bloques. Va con la
          etiqueta, que es donde empieza el bloque, y solo si hay etiqueta: una regla
@@ -115,6 +115,23 @@
   .oscuro {
     background-color: var(--carbon);
     background-image: none;
+  }
+  /* PAVONADO · ADR-0046. Acero oscuro cepillado: la entrada de las cinco páginas con
+     hero y las salas. Lleva `.registro-oscuro`, así que los roles se dan la vuelta
+     solos. El color plano es el punto MÁS CLARO del cepillado, que en oscuro es el
+     peor. Y la etiqueta NO pasa a `--tinta-tenue-oscuro` como en `.oscuro`: sobre ese
+     punto daría 3.34:1 en texto chico; con el rol, 4.83. */
+  .pavonado {
+    --borde-sutil: var(--pavonado-filete);
+    /* EL ANILLO DE FOCO, aquí y no solo en `.registro-oscuro`. Sobre pavonado el
+       negro-950 da 1.45–2.78:1: el foco de los botones de la entrada no se veía. El
+       ADR-0045, en paralelo, lo da en blanco para todo el registro oscuro; este es el
+       mismo valor —6.99–13.39:1—, así que al unir las dos ramas no cambia nada. */
+    --foco-color: var(--blanco);
+    background-color: var(--pavonado-peor);
+    background-image: var(--pavonado);
+    background-size: var(--pavonado-tam);
+    background-repeat: var(--pavonado-repeticion);
   }
 
   .etiqueta {

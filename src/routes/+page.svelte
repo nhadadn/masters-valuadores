@@ -68,7 +68,12 @@
      casa. Ahora es una. La fotografía de la fachada se conserva — es el activo que el
      ADR-0009 dejó abierto y el ADR-0032 dio por cerrado, y sobre piedra clara se lee
      como material de marca en vez de como un banner sobre negro. -->
-<Seccion fondo="marmol" etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
+<!-- LA PUERTA, EN ACERO PAVONADO · ADR-0046.
+     Vuelve a ser oscura, y el ADR-0043 la había pasado a piedra clara el mismo día. Lo
+     que cambió es el material: el acero de su propia M es oscuro, y es la única forma
+     de una entrada de acero fuerte sin crear un oro más oscuro. Queda pegada a la cinta
+     de carbón, y se dijo antes de elegir. -->
+<Seccion fondo="pavonado" etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
   <div class="entrada">
     <div class="palabra">
       <!-- El corte a dos tintas no es invención: el borrador ya escribió el titular
@@ -156,7 +161,8 @@
        ADR-0008. En la pantalla solo ocupaba sitio. -->
 </Seccion>
 
-<Seccion etiqueta="POR QUÉ AQUÍ">
+<!-- SALA PAVONADA · ADR-0046. Parte los ~2000 px de suelo en habitaciones. -->
+<Seccion fondo="pavonado" etiqueta="POR QUÉ AQUÍ">
   <!-- Etiqueta de sección: el CLAUDE.md la permite redactar. No afirma nada del
        negocio, solo dice qué hace esa sección. -->
   <h2 class="titulo-seccion" data-propuesta="true">Por qué venir aquí</h2>
@@ -245,7 +251,10 @@
              UNA vez, lo pidan uno o dos bloques. Lo que sí baja son las peticiones,
              de 29 a 18. -->
         <Insignia icono={g.icono} etiqueta={g.nombre} segunda={g.frasePropuesta} />
+        <!-- SECUNDARIOS · ADR-0046. Eran seis botones iguales en la portada y así no
+             resalta ninguno. El principal es el de la entrada; estos eligen la línea. -->
         <BotonWhatsApp
+          secundario
           origen="linea-{g.slug}"
           texto="Escribir por {g.nombreCorto.toLowerCase()}"
           mensaje="Hola, escribo por {g.nombre.toLowerCase()}."
@@ -317,7 +326,7 @@
   .bloqueados {
     display: flex; flex-direction: column;
     min-height: 176px; height: 100%; padding: var(--e-4) var(--e-3);
-    border: 1px dashed var(--negro-400); background: var(--superficie);
+    border: 1px dashed var(--panel-borde); background: var(--superficie);
   }
   .cabeza {
     display: flex; align-items: center; gap: var(--e-2);
@@ -325,7 +334,7 @@
     letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria);
   }
   .fila { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-2); margin-top: var(--e-2); font-size: var(--pie-tam); font-weight: 600; color: var(--tinta-secundaria); }
-  .fila code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; border: 1px solid var(--negro-400); padding: 1px 5px; }
+  .fila code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; border: 1px solid var(--panel-borde); padding: 1px 5px; }
   .nota { margin-top: auto; font-size: 11px; line-height: 1.3; color: var(--tinta-secundaria); }
 
   /* Sin borde dorado: la insignia es la que trae el acento ahora. Dos gestos de oro

@@ -150,7 +150,7 @@
   .ciclo li:last-child .marca {
     background: var(--superficie);
     border: 2px solid var(--oro-500);
-    color: var(--oro-800);             /* 4.65:1 sobre blanco */
+    color: var(--oro-texto-grande);    /* ADR-0046 · rol: oro-800 en claro, oro-500 sobre pavonado (7.73:1). A mano daba 2.91 */
   }
 
   .texto {
