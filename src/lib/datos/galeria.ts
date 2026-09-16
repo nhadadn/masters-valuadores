@@ -35,6 +35,18 @@ export interface FotoDeGaleria {
   alt: string;
   /** Pie visible · PROPUESTA SIN APROBAR. */
   pie: string;
+  /**
+   * TRUE = imagen de REFERENCIA generada, no fotografía del negocio · ADR-0034.
+   *
+   * Nadir decidió publicarlas tras plantearse la objeción dos veces por escrito. El
+   * `ADR-0034` registra la objeción y el costo; aquí vive el HECHO, en el dato y no
+   * solo en un comentario, para que cualquiera pueda contarlas o rotularlas mañana
+   * sin volver a deducir cuál es cuál mirando píxeles.
+   *
+   * La nota del carrusel se calcula de este campo, así que no se puede quedar
+   * desactualizada al añadir o quitar imágenes.
+   */
+  referencia?: boolean;
 }
 
 export const galeriaInventario: FotoDeGaleria[] = [
@@ -137,5 +149,66 @@ export const galeriaJoyeria: FotoDeGaleria[] = [
     maxAncho: 800,
     alt: 'Cronógrafo con bisel de diamantes junto a una cadena de oro y una charola con anillos de esmeraldas y zafiros',
     pie: 'Reloj, cadena y anillos'
+  },
+
+  /* ── DE AQUÍ EN ADELANTE, IMÁGENES DE REFERENCIA · ADR-0034 ────────────────
+     No son suyas ni son fotografías: son generadas. Entran por decisión de Nadir,
+     reafirmada dos veces, y con la objeción registrada en el ADR-0034.
+
+     Van DESPUÉS de las tres suyas a propósito: la secuencia va de lo propio a lo
+     ilustrativo, no mezclado, para que la nota del final cubra una cola y no un
+     surtido.
+
+     Topadas a 600 px, y esto no es un detalle técnico: cada tarjeta del carrusel
+     ENLAZA al archivo más grande que exista, así que publicar el original de 1200
+     dejaba la versión inspeccionable a un toque. A 600 los defectos no se resuelven.
+
+     Los pies describen el OBJETO que se ve. Ninguno dice «tenemos», «en venta» ni
+     «disponible», que es la misma regla que `galeriaInventario`. */
+  {
+    nombre: 'lujo-vitrina',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Mostrador de relojería con una fila de relojes de oro y cadenas, con la tienda desenfocada al fondo',
+    pie: 'Vitrina de relojería y joyería'
+  },
+  {
+    nombre: 'lujo-cronografo',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Cronógrafo de oro con bisel de diamantes y carátula negra, sobre fondo oscuro',
+    pie: 'Cronógrafo de oro con bisel de diamantes'
+  },
+  {
+    nombre: 'lujo-esqueleto',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Reloj de esqueleto en oro rosa, con el movimiento a la vista, sobre tela negra',
+    pie: 'Reloj de esqueleto en oro rosa'
+  },
+  {
+    nombre: 'lujo-piel',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Reloj de oro con carátula negra y correa de piel, sobre fondo oscuro',
+    pie: 'Reloj de oro con correa de piel'
   }
 ];
+
+/**
+ * La nota del carrusel de joyería, calculada · ADR-0034.
+ *
+ * Se calcula del campo `referencia` para que NO pueda quedarse desactualizada. Si
+ * mañana entran fotos de Cristóbal y salen las generadas, la nota desaparece sola.
+ *
+ * Y es deliberadamente una nota, no el rótulo «FOTO DE ARCHIVO» que Nadir pidió
+ * quitar de la interfaz: una línea de crédito al pie de la secuencia, como la que
+ * lleva cualquier publicación, en vez de una etiqueta encima de cada imagen.
+ */
+export const notaJoyeria: string | undefined = (() => {
+  const n = galeriaJoyeria.filter((f) => f.referencia).length;
+  if (!n) return undefined;
+  return n === galeriaJoyeria.length
+    ? 'Imágenes de referencia, no de nuestro inventario.'
+    : `Las últimas ${n} son imágenes de referencia, no de nuestro inventario.`;
+})();

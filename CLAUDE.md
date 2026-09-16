@@ -55,6 +55,15 @@ Esta es la línea que sostiene el proyecto entero. Se marca y se sigue:
 
 Todo eso se marca `__POR_CONFIRMAR__` y el build de producción **falla** si sobrevive.
 
+**ENMENDADO el 15 de septiembre · `ADR-0034`.** La regla del `ADR-0007` —*«sus piezas
+usan imágenes de archivo o generadas: en el sitio van fotos suyas o va hueco»*— **ya no
+está entera**. El `ADR-0009` revirtió la mitad de archivo en septiembre 10 y el
+`ADR-0034` revirtió la de generadas hoy. Las dos por decisión de Nadir, las dos con la
+objeción registrada por escrito antes de ejecutarlas.
+
+Lo que queda de esa regla: **las imágenes que no son suyas se distinguen de las que sí**
+—hoy con una nota al pie de la secuencia— y **ninguna finge ser la fachada**.
+
 ### Lo que SÍ se puede redactar
 
 Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
@@ -103,7 +112,7 @@ enlazadas desde el pie.
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · **12.4 KB** propios, sin marco ni librería · `ADR-0021`, `ADR-0023`, `ADR-0026` y `ADR-0033`. Subió 0.9 KB al hacer el carrusel multi-instancia; el margen de CA-10 baja a **27.90 KB**. Las otras siete en 0 KB |
-| Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025` |
+| Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas

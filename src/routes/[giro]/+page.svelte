@@ -23,7 +23,7 @@
   import TiraPasos from '$componentes/TiraPasos.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
-  import { galeriaInventario, galeriaJoyeria } from '$lib/datos/galeria';
+  import { galeriaInventario, galeriaJoyeria, notaJoyeria } from '$lib/datos/galeria';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
@@ -144,7 +144,7 @@
   {/if}
   {#if giro.muestraJoyeria}
     <div class="joyeria">
-      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería y joyería" clave="joya" />
+      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería y joyería" clave="joya" nota={notaJoyeria} />
     </div>
   {/if}
 
@@ -253,9 +253,18 @@
      NO SE FUERZA A VERTICAL. Esta plantilla pinta las CUATRO páginas de giro y las
      otras tres llevan foto apaisada; cada giro declara la suya en `fotoRelacion`.
      Lo que cambia es el encuadre de la PÁGINA, no el de la foto. */
-  .entrada-b { display: grid; gap: var(--e-6); }
+  /* `minmax(0, 1fr)` Y `min-width: 0` NO SON ADORNO · ADR-0034.
+     Un ítem de rejilla tiene `min-width: auto`, o sea que **no baja de su ancho
+     mínimo de contenido**. La pista del carrusel son 7 tarjetas de 262 px en fila,
+     así que su mínimo son ~1834 px: al meter la secuencia dentro de la rejilla, la
+     columna se estiró y el `overflow-x: auto` del carrusel nunca llegó a actuar.
+
+     Medido en la página construida, a 390 px de ventana: `scrollWidth` 1920 y la
+     foto de entrada con 1920×2417 px en vez de 390×491. La sección pasó de 1061 a
+     3044 px de alto. No dio ningún error: solo se desbordó la página entera. */
+  .entrada-b { display: grid; gap: var(--e-6); grid-template-columns: minmax(0, 1fr); }
   /* La secuencia respira por debajo de la foto, no se pega a ella. */
-  .joyeria { margin-top: var(--e-6); }
+  .joyeria { margin-top: var(--e-6); min-width: 0; }
 
   /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
      bordes de la pantalla. */
