@@ -20,6 +20,7 @@
   import Mapa from '$componentes/Mapa.svelte';
   import PlanetaBienes from '$componentes/PlanetaBienes.svelte';
   import TiraPasos from '$componentes/TiraPasos.svelte';
+  import FlujoProceso from '$componentes/FlujoProceso.svelte';
   import MonedasQueCaen from '$componentes/MonedasQueCaen.svelte';
   import Carrusel from '$componentes/Carrusel.svelte';
   import { galeriaInventario, galeriaJoyeria, notaJoyeria } from '$lib/datos/galeria';
@@ -36,7 +37,16 @@
      Ya no decide si la sección es clara —ahora lo es toda la página— sino cuánto
      habla la piedra: lo que su marca trata como lujo la enseña, el resto la calla.
      Sigue saliendo del DATO y no del slug. */
-  const veta = $derived(giro.registro === 'lujo' ? 'marmol' : 'tenue');
+  /* LA PIEDRA ES DE LA ENTRADA, Y DE LAS CUATRO · ADR-0043.
+     Valía `registro === 'lujo' ? 'marmol' : 'tenue'`, o sea que solo empeño entraba
+     sobre piedra y las otras tres sobre blanco. Auditadas las ocho páginas salió el
+     resultado al revés de lo que el ADR-0030 decidió: en maquinaria y fletes la losa
+     de mármol caía en el índice 4 y en taller en el 3 — **a media página**, con el hero
+     en blanco. Tres de cuatro páginas tenían la piedra flotando en el medio.
+
+     Ahora la entrada la lleva siempre. El registro `lujo` sigue existiendo para lo que
+     sí distingue —qué bienes, qué galería—, no para el fondo. */
+  const veta = 'marmol';
 
   /* ── EL HERO ORIENTADO A INTENCIÓN · ADR-0041 ────────────────────────────
      NADA DE ESTO SE ESCRIBE AQUÍ. La ciudad, los horarios y la lista de bienes salen
@@ -211,7 +221,12 @@
      página, y ahora vive muy por debajo del pliegue. Dejarla eager habría sido pedir
      con prisa algo que nadie ve al entrar. -->
 {#if segundaMitad}
-<Seccion fondo="marmol">
+<!-- BLANCO, NO MÁRMOL · ADR-0043. Esta sección solo se pinta en los giros SIN galería
+     propia, y ahí caía a media página: una segunda losa de piedra, lejos de la entrada
+     y sin nada que la justifique. La piedra es de la entrada y de ningún otro sitio.
+     La foto grande se apoya en blanco, que es lo que pide el ADR-0031: el color lo
+     ponen las fotografías. -->
+<Seccion fondo="blanco">
   <div class="entrada-b">
   <!-- AQUÍ VIVÍA UN TERCER BOTÓN DE WHATSAPP · ADR-0033.
        Medido en vivo a 390 px, en esta misma pantalla cabían TRES llamadas a
@@ -296,28 +311,48 @@
   <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
   <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
        diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
-       algo: es la entradilla del proceso. -->
-  {#if giro.subtitularPropuesto}
+       algo: es la entradilla del proceso.
+
+       ADR-0043 · PERO NO CUANDO EL HERO YA LO DIJO. Donde hay `pasosCortos` —hoy solo
+       empeño— la tira del ADR-0024 ya contó la mecánica en la primera pantalla, y
+       este párrafo la volvía a contar veinticinco palabras más abajo. Se comprobó en
+       el HTML construido, no de memoria: `/empeno-y-prestamo/index.html` servía el
+       mismo proceso CUATRO veces —promesa, tira, subtitular y pasos—.
+
+       La condición es `pasosCortos` y no el slug porque la duplicación la CAUSA la
+       tira: el día que otro giro reciba una, hereda el arreglo sin tocar esto. Lo que
+       el subtitular decía y nadie más decía —que el bien queda resguardado— no se
+       perdió: bajó al chip del retorno, que es donde se lee mirando. -->
+  {#if giro.subtitularPropuesto && !giro.pasosCortos}
     <p class="subtitular" data-propuesta="true">{giro.subtitularPropuesto}</p>
-  {:else}
+  {:else if !giro.subtitularPropuesto}
     <Hueco etiqueta="SUBTITULAR — QUÉ RESUELVE, EN DOS RENGLONES" renglones={2} />
   {/if}
-  <!-- NINGUNO dice cuánto ni cuándo: eso es cifra y va en el bloque de abajo, que
-       sigue bloqueado. Lo que cada paso ASUME está listado en los requerimientos. -->
-  <ol class="pasos">
-    {#if giro.pasosPropuestos}
+  <!-- NINGUNO dice cuánto ni cuándo, y el encabezado de esta sección pregunta las dos
+       cosas. No es un descuido de este bloque: el bloque de cifras que las contestaba
+       lo borró el ADR-0040 y la tasa, el plazo y el aforo siguen sin cerrar. Queda
+       anotado aquí porque un flujo más limpio hace el hueco MÁS visible, no menos. -->
+  {#if giro.flujo}
+    <FlujoProceso pasos={giro.flujo} retorno={giro.retorno} />
+  {:else if giro.pasosPropuestos}
+    <!-- LA LISTA DE ANTES, viva a propósito · ADR-0043. Un giro sin `flujo` escrito no
+         se queda sin proceso: cae aquí. Borrar esta rama convertiría «falta partir el
+         copy» en «la sección desaparece». -->
+    <ol class="pasos">
       {#each giro.pasosPropuestos as paso, i}
         <li data-propuesta="true">
           <span class="paso-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <p>{paso}</p>
         </li>
       {/each}
-    {:else}
+    </ol>
+  {:else}
+    <ol class="pasos">
       {#each Array(3) as _, i}
         <li><Hueco etiqueta="PASO {i + 1} — QUÉ PASA Y CUÁNTO TARDA" renglones={2} /></li>
       {/each}
-    {/if}
-  </ol>
+    </ol>
+  {/if}
 </Seccion>
 
 <Seccion fondo="marfil">
@@ -330,7 +365,11 @@
   </div>
 </Seccion>
 
-<Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO" fondo="piedra">
+<!-- BLANCO · ADR-0043. Llevaba `piedra`, un tono cálido sólido —rgb(216,210,198)—
+     pensado como escalón entre la página y el pie cuando la página era crema. Con el
+     suelo en blanco puro del ADR-0031 son 154 px de galón cálido entre blanco y negro:
+     el escalón de verdad lo hace el pie. -->
+<Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO" fondo="blanco">
   <!-- AQUÍ HABÍA OTRA: «Sin estos enlaces cada página queda aislada y el multigiro
        no reparte autoridad.» Es la justificación SEO del bloque, escrita para el
        equipo y publicada por accidente. El visitante no necesita que le expliquen

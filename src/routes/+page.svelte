@@ -62,7 +62,13 @@
 <!-- ENTRADA OSCURA · ADR-0011. Se aparta de sus cinco piezas, donde el panel del
      titular es claro y lo oscuro es la fotografía. Decidido por Nadir el 10 de
      septiembre, con el argumento y el costo en el ADR. -->
-<Seccion fondo="oscuro" etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
+<!-- LA PUERTA DEL SITIO, EN PIEDRA · ADR-0043.
+     Valía `oscuro`. Auditadas las ocho páginas quedó a la vista que la entrada al SITIO
+     era carbón y la entrada a cada LÍNEA era mármol: dos puertas distintas para la misma
+     casa. Ahora es una. La fotografía de la fachada se conserva — es el activo que el
+     ADR-0009 dejó abierto y el ADR-0032 dio por cerrado, y sobre piedra clara se lee
+     como material de marca en vez de como un banner sobre negro. -->
+<Seccion fondo="marmol" etiqueta="GRUPO MÁSTER · TORREÓN, COAHUILA">
   <div class="entrada">
     <div class="palabra">
       <!-- El corte a dos tintas no es invención: el borrador ya escribió el titular
@@ -249,8 +255,16 @@
   </ul>
 </Seccion>
 
-<Seccion fondo="oscuro" etiqueta="CONTACTO">
-  <h2 class="titulo-seccion oscuro" data-propuesta="true">
+<!-- BLANCO · ADR-0043. Era el tercero de tres bloques oscuros seguidos —CONTACTO,
+     la banda de datos y el pie—: unos 1040 px de masa negra con las costuras dentro.
+     El pie ya es el ancla de contacto; esto no necesitaba serlo también.
+
+     Y SALE LA CLASE `oscuro` DEL `h2`: forzaba `--tinta-sobre-oscuro`, o sea blanco.
+     Sobre blanco desaparece. Es la quinta vez en este repo que un color forzado en el
+     marcado explota al cambiar la superficie de debajo, y la quinta vez que la
+     respuesta es dejar que el token del registro decida. -->
+<Seccion fondo="blanco" etiqueta="CONTACTO">
+  <h2 class="titulo-seccion" data-propuesta="true">
     ¿Tienes una duda? Escríbenos y te contestamos.
   </h2>
   <div class="acciones">
@@ -281,7 +295,9 @@
     font-weight: var(--h2-peso);
     margin-bottom: var(--e-4);
   }
-  .titulo-seccion.oscuro { color: var(--tinta-sobre-oscuro); }
+  /* `.titulo-seccion.oscuro` se fue con su único uso · ADR-0043. Forzaba blanco para
+     el `h2` de CONTACTO cuando esa sección era carbón; en blanco lo habría borrado.
+     No quedan más usos: los otros cuatro `titulo-seccion` nunca la llevaron. */
   .dif-titulo {
     font-size: var(--cuerpo-tam);
     line-height: var(--h3-alto);

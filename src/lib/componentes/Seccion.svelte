@@ -70,11 +70,28 @@
      de este componente— pero cinco de ellos pintan hoy el mismo `--blanco`. Que
      `.crema` no pinte crema es deuda de nombre, y está anotada en el ADR. */
   .marmol { background-color: var(--crema-100); }
+  /* ── EL SUELO VIVE EN UN SOLO SITIO · ADR-0043 ──────────────────────────
+     Estos cinco grados pintaban `--blanco` cada uno por su cuenta. Funcionaba, pero
+     dejaba el suelo repartido en cinco reglas: poner mañana una textura, un degradado
+     o un color de fondo al sitio no se veía, porque cada sección lo tapaba con su
+     propio blanco.
+
+     Ahora son TRANSPARENTES y el suelo lo pone `body` en `base.css`, que es el único
+     sitio donde hay que tocarlo. Es el campo libre que se pidió.
+
+     NO SE PIERDE LA PRECAUCIÓN DEL ADR-0028. Aquella decía que un color plano
+     declarado evita que el validador —o un navegador que falle al pintar— acabe
+     leyendo lo que haya detrás. Sigue habiendo un color plano declarado: está en
+     `body`, un nivel más arriba, y el recorrido de `validar-a11y` sube por los
+     ancestros hasta encontrarlo. Comprobado: el contraste no se mueve un punto.
+
+     La entrada conserva su `--crema-100` porque su velo SÍ es un degradado y ese
+     sigue siendo su peor extremo; el pie conserva su carbón. */
   .medio,
   .tenue,
   .marfil,
   .crema,
-  .blanco { background-color: var(--blanco); }
+  .blanco { background-color: transparent; }
 
   /* `cover` hace falta para la capa de textura. Desde el ADR-0030 solo LA ENTRADA
      lleva piedra; los otros cuatro grados valen `none` y se quedan en su color plano.

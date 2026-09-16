@@ -88,7 +88,16 @@
      La jerarquía se invierte: el CAMPO es lo más oscuro y los PANELES se levantan
      encima, que es justo al revés de lo que había —campo de acero, paneles blancos—
      pero la misma idea. */
-  --campo-alto:          #16181B;   /* del registro OSCURO · blanco 17.79:1 */
+  /* UN SOLO NEGRO EN TODA LA PÁGINA · ADR-0043.
+     Valía #16181B, de la época oscura. Auditadas las ocho páginas, el sitio pintaba
+     TRES negros en superficies grandes y a nadie se le había ocurrido que fueran uno:
+     `--carbon` #171717 en el pie y los paneles, este #16181B en la banda de contacto
+     y la barra fija, y #0C0D0F en la cinta de palabras. Cinco y once niveles de
+     separación: la distancia justa para que se vea la costura y no la intención.
+     En la portada el hero caía directo sobre la cinta y se veían los dos.
+     Ahora apunta al ancla del ADR-0028. Contraste con blanco: 17.6:1 contra 17.79 —
+     la diferencia no la mide nadie. */
+  --campo-alto:          var(--carbon);
   --campo-bajo:          var(--negro-950);
 
   /* ═══ LOS ROLES POR OMISIÓN SON LOS CLAROS · ADR-0028 ══════════════════════

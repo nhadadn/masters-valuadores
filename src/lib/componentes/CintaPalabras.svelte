@@ -52,7 +52,11 @@
 <style>
   .cinta {
     overflow: hidden;
-    background: var(--superficie-oscura);
+    /* `--carbon` y no `--superficie-oscura` · ADR-0043. Esto es una BANDA a sangre,
+       o sea un registro de página, y los registros de página llevan el único negro del
+       sitio. `--superficie-oscura` se queda para lo que es: el relleno que va DEBAJO
+       de una fotografía mientras carga, en el carrusel, el planeta y `Foto`. */
+    background: var(--carbon);
     color: var(--oro-500);            /* 11.12:1 sobre negro-950 */
     padding-block: var(--e-3);
     border-block: var(--regla-dorada) solid var(--oro-500);

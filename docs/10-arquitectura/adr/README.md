@@ -50,6 +50,8 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0039 | [[ADR-0039-el-carrusel-avanza-solo\|El carrusel avanza solo, y sin puntos]] | **ACEPTADA** · **enmienda el 0023 y el 0035** · dos clases de parada por la WCAG 2.2.2 · el script nuevo pesa menos que el viejo | 2026-09-15 |
 | 0040 | [[ADR-0040-css-podado-y-la-pausa-que-nunca-existio\|CSS podado, y la pausa del planeta que nunca existió]] | **ACEPTADA** · **corrige el 0026: su pausa nunca llegó al build** · 24 selectores a 0 · CSS servido idéntico | 2026-09-15 |
 | 0041 | [[ADR-0041-el-hero-de-intencion\|El hero pasa de categoría a intención]] | **ACEPTADA** · enmienda el 0024 · **«hoy» se quedó fuera: es un plazo** · tercera ceguera tapada al validador | 2026-09-15 |
+| 0042 | [[ADR-0042-el-proceso-como-circuito\|El proceso como circuito, no como párrafo]] | **ACEPTADA** · enmienda el 0024 · sesión paralela · 52 → 29 palabras, cero JS | 2026-09-16 |
+| 0043 | [[ADR-0043-un-solo-suelo-una-sola-puerta\|Un solo suelo, una sola puerta, un solo negro]] | **ACEPTADA** · **enmienda el 0028, 0030 y 0031** · había TRES negros · la piedra estaba a media página en 3 de 4 | 2026-09-16 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el
