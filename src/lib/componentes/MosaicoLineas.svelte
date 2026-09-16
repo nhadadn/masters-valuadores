@@ -1,10 +1,20 @@
 <script lang="ts">
   /**
-   * EL MOSAICO DE LÍNEAS · ADR-0048
+   * EL MOSAICO DE LÍNEAS · ADR-0048 · ADR-0049
    *
    * Sustituye a la reja de tarjetas de «Elige la línea que buscas». Nadir eligió el
-   * bento entre dos prototipos: la foto manda y cada pieza ABRE WHATSAPP con la línea
-   * ya escrita en el mensaje, en vez de llevar a la página de la línea.
+   * bento entre dos prototipos: la foto manda.
+   *
+   * ── DOS DESTINOS, DOS ENLACES · ADR-0049 ───────────────────────────────────
+   * La pieza lleva a la PÁGINA de su línea. Solo el botón verde abre WHATSAPP, con la
+   * línea ya escrita en el mensaje. Hasta el ADR-0049 la pieza entera abría WhatsApp.
+   *
+   * Son dos <a> HERMANOS dentro del <li>, no uno dentro de otro: un enlace dentro de
+   * otro es HTML inválido y cada navegador lo repara a su manera. El botón se coloca
+   * encima de la pieza desde el <li>.
+   *
+   * El botón lleva el glifo de WhatsApp —el mismo de `BotonWhatsApp`— y no la flecha:
+   * una flecha se lee «ir a», y eso ahora lo hace la pieza.
    *
    * ── QUÉ HACE, POR ANCHO ────────────────────────────────────────────────────
    *   · Teléfono: dos columnas, la primera línea a lo ancho.
@@ -16,21 +26,21 @@
    * cinco. Con cuatro o seis, el mosaico no deja huecos a medias: cae a dos por fila.
    *
    * ── EL HOVER, SOLO DONDE HAY PUNTERO ───────────────────────────────────────
-   * Con ratón, la foto crece a 1.03 y aparece la flecha. En táctil no existe «encima»:
-   * ahí la flecha se ve siempre, que es la única señal de que la pieza es un botón.
+   * Con ratón, la foto crece a 1.03 y aparece el botón. En táctil no existe «encima»:
+   * ahí el botón se ve siempre. Con teclado aparece al entrar en la pieza.
    *
    * ── LA FOTO DE ARCHIVO SIGUE MARCADA ───────────────────────────────────────
    * Se usa `Foto` tal cual, así que la de archivo conserva su rótulo, su tinte y su
    * `data-provisional` (ADR-0009). El prototipo los había perdido por extraer solo la
    * <picture>; aquí no se pierden.
    *
-   * ── SIN WHATSAPP CONFIRMADO, LA PÁGINA ─────────────────────────────────────
-   * `enlaceWhatsApp` devuelve `undefined` si el número no está confirmado. Entonces la
-   * pieza lleva a la página de su línea: nunca queda un enlace muerto.
+   * ── SIN WHATSAPP CONFIRMADO, SIN BOTÓN ─────────────────────────────────────
+   * `enlaceWhatsApp` devuelve `undefined` si el número no está confirmado. Entonces no se
+   * pinta el botón y la pieza sigue llevando a su página: nunca queda un enlace muerto.
    */
   import Foto from './Foto.svelte';
-  import Icono from './Icono.svelte';
   import type { Giro } from '$lib/datos/giros';
+  import { iconoWhatsApp } from '$lib/datos/iconos';
   import { enlaceWhatsApp } from '$lib/datos/whatsapp';
 
   interface Props { lineas: Giro[]; }
@@ -41,7 +51,7 @@
   {#each lineas as g, i}
     {@const wa = enlaceWhatsApp(`Hola, escribo por ${g.nombre.toLowerCase()}.`)}
     <li class="pieza" class:mayor={i === 0}>
-      <a class="enlace" href={wa ?? `/${g.slug}/`} rel={wa ? 'noopener' : undefined} data-origen="mosaico-{g.slug}">
+      <a class="enlace" href="/{g.slug}/">
         {#if g.fotoProvisional}
           <span class="foto-pieza">
             <Foto
@@ -58,9 +68,13 @@
           <span class="titulo">{g.nombreCorto}</span>
           {#if g.frasePropuesta}<span class="frase">{g.frasePropuesta}</span>{/if}
         </span>
-        <span class="flecha" aria-hidden="true"><Icono nombre="flecha" tam={22} grosor={2.2} /></span>
-        {#if wa}<span class="solo-lectores"> · escribir por WhatsApp</span>{/if}
       </a>
+      {#if wa}
+        <a class="wa-pieza" href={wa} rel="noopener" data-origen="mosaico-{g.slug}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html iconoWhatsApp}</svg>
+          <span class="solo-lectores">Escribir por WhatsApp sobre {g.nombreCorto.toLowerCase()}</span>
+        </a>
+      {/if}
     </li>
   {/each}
 </ul>
@@ -74,7 +88,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--e-2);
   }
-  .pieza { position: relative; min-width: 0; aspect-ratio: 4 / 5; }
+  /* `isolation`: el botón sube con z-index, y así no sale de la pieza a competir con la
+     cabecera fija. */
+  .pieza { position: relative; min-width: 0; aspect-ratio: 4 / 5; isolation: isolate; }
   .pieza.mayor { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
 
   .enlace {
@@ -130,6 +146,10 @@
     bottom: var(--e-3);
     z-index: 2;
     display: grid;
+    /* `minmax(0, 1fr)`: sin tope, «Financiamiento» ensancha la columna en la pieza alta de
+       1024 px y la frase se reparte en ese ancho, hasta debajo del botón. Así la frase se
+       queda en su caja; la palabra larga sobresale solo en su renglón, que va encima del botón. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 4px;
   }
   .titulo { font-size: var(--h3-tam); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
@@ -137,22 +157,31 @@
   .mayor .frase { display: block; }
   .mayor .texto { right: calc(var(--e-3) + 56px); }
 
-  /* La flecha va en el verde de WhatsApp: dice a dónde lleva la pieza. En las piezas
-     chicas del teléfono sube a la esquina: abajo chocaba con «Financiamiento». */
-  .flecha {
+  /* EL BOTÓN DE WHATSAPP · ADR-0049. Es lo único de la pieza que abre WhatsApp, así que ya
+     no es una señal sino un objetivo táctil. Mide el PISO (44), no los 48 de la casa: es la
+     acción SECUNDARIA de la pieza —la primera es ir a su página— y el WhatsApp principal
+     sigue en la barra fija y el flotante. En las piezas chicas del teléfono sube a la
+     esquina: abajo chocaba con «Financiamiento». */
+  .wa-pieza {
     position: absolute;
     right: var(--e-3);
     top: var(--e-3);
     z-index: 2;
-    width: 44px;
-    height: 44px;
+    width: var(--tactil-piso);
+    height: var(--tactil-piso);
     display: grid;
     place-items: center;
     background: var(--accion-whatsapp);
     color: var(--tinta-sobre-whatsapp);
     transition: transform 260ms var(--mov-curva), opacity 260ms var(--mov-curva);
   }
-  .mayor .flecha { top: auto; bottom: var(--e-3); }
+  .mayor .wa-pieza { top: auto; bottom: var(--e-3); }
+  /* EL FOCO, SOBRE FOTO. El anillo de la casa es negro-950 y sobre una foto oscura no se ve.
+     Aquí va blanco entre dos filos de negro-950: uno de los dos contrasta con cualquier foto. */
+  .wa-pieza:focus-visible {
+    outline-color: var(--blanco);
+    box-shadow: 0 0 0 calc(var(--foco-separacion) + var(--foco-grosor) + 3px) var(--negro-950);
+  }
 
   .solo-lectores {
     position: absolute;
@@ -163,12 +192,14 @@
     white-space: nowrap;
   }
 
+  /* El hover se escucha en el <li> y no en el enlace: el botón no está dentro del enlace,
+     y al llevarle el ratón se apagaría justo debajo del cursor. */
   @media (hover: hover) and (pointer: fine) {
-    .flecha { opacity: 0; transform: translateX(-8px); }
-    .enlace:hover .foto-pieza :global(img),
-    .enlace:focus-visible .foto-pieza :global(img) { transform: scale(1.03); }
-    .enlace:hover .flecha,
-    .enlace:focus-visible .flecha { opacity: 1; transform: translateX(0); }
+    .wa-pieza { opacity: 0; transform: translateX(-8px); }
+    .pieza:hover .foto-pieza :global(img),
+    .pieza:focus-within .foto-pieza :global(img) { transform: scale(1.03); }
+    .pieza:hover .wa-pieza,
+    .pieza:focus-within .wa-pieza { opacity: 1; transform: translateX(0); }
   }
 
   /* TABLETA · dos columnas holgadas. En cuatro, las piezas altas medían 159 px:
@@ -180,7 +211,7 @@
     .titulo { font-size: var(--h2-tam); }
     /* Con `.mayor` delante: la regla de teléfono tiene dos clases y le ganaría a esta. */
     .texto, .mayor .texto { left: var(--e-4); right: calc(var(--e-4) + 56px); bottom: var(--e-4); }
-    .flecha, .mayor .flecha { top: auto; right: var(--e-4); bottom: var(--e-4); }
+    .wa-pieza, .mayor .wa-pieza { top: auto; right: var(--e-4); bottom: var(--e-4); }
     .foto-pieza :global(figcaption) { top: var(--e-3); bottom: auto; }
   }
 
@@ -197,7 +228,7 @@
     .titulo { font-size: var(--h2-tam); }
     .mayor .titulo { font-size: var(--display-tam); }
     .texto, .mayor .texto { left: var(--e-4); right: calc(var(--e-4) + 56px); bottom: var(--e-4); }
-    .flecha, .mayor .flecha { top: auto; right: var(--e-4); bottom: var(--e-4); }
+    .wa-pieza, .mayor .wa-pieza { top: auto; right: var(--e-4); bottom: var(--e-4); }
     .foto-pieza :global(figcaption) { top: var(--e-3); bottom: auto; }
   }
 </style>

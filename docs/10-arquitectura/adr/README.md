@@ -55,7 +55,8 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0044 | [[ADR-0044-el-ancla-no-tiene-dos-colores\|El ancla no tiene dos colores]] | **ACEPTADA** · enmienda el 0019 · la banda y el pie eran el mismo token y **no se veían igual** | 2026-09-16 |
 | 0046 | [[ADR-0046-acero-de-marca-y-whatsapp-con-voz-propia\|Acero de marca, y WhatsApp con voz propia]] | **ACEPTADA** · **enmienda el 0030, 0031 y 0043** · se aparta del 0007 · el tono sale de los píxeles de su M · WhatsApp con rol propio · **LCP +70 / +132 ms**, medido | 2026-09-16 |
 | 0047 | [[ADR-0047-la-oferta-son-cinco-lineas\|La oferta son cinco líneas]] | **ACEPTADA** · **enmienda el 0008, 0014 y 0041** · cierra D-03, D-04 y D-18 · vuelve financiamiento · fuera «BLOQUEADOS» | 2026-09-16 |
-| 0048 | [[ADR-0048-las-lineas-en-mosaico\|Las líneas, en mosaico]] | **ACEPTADA** · enmienda el 0047 · cada pieza abre WhatsApp con la línea escrita · la foto de archivo conserva su tinte · **+103.6 KB de fotos** | 2026-09-16 |
+| 0048 | [[ADR-0048-las-lineas-en-mosaico\|Las líneas, en mosaico]] | **ACEPTADA** · enmienda el 0047 · **enmendada por el 0049**: la pieza ya no abre WhatsApp · la foto de archivo conserva su tinte · **+103.6 KB de fotos** | 2026-09-16 |
+| 0049 | [[ADR-0049-la-pieza-lleva-a-su-pagina\|La pieza lleva a su página; el botón verde, a WhatsApp]] | **ACEPTADA** · **enmienda el 0048** · dos enlaces hermanos · glifo de WhatsApp en vez de la flecha · botón de 44 px · la portada vuelve a enlazar sus cinco líneas | 2026-09-16 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

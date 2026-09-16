@@ -197,7 +197,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **155 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **159 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -255,14 +255,16 @@ lleva alto fijo: 176 a 390 de ancho, 150 a 1280. **Desde el `ADR-0047` las tarje
 el nombre corto**: «Venta de maquinaria, herramienta y autos» ocupaba cuatro renglones a 390
 y desalineaba la fila. El nombre largo vive en el `h1` de su página.
 **Y desde el `ADR-0048` la portada ya no usa tarjetas**: las líneas van en un mosaico
-(`MosaicoLineas`) cuyas piezas abren WhatsApp. `Tarjeta.svelte` queda sin usar.
+(`MosaicoLineas`). **Desde el `ADR-0049` cada pieza lleva a la página de su línea y solo su
+botón verde abre WhatsApp**; hasta entonces la pieza entera abría WhatsApp. `Tarjeta.svelte`
+queda sin usar.
 
 ---
 
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo y CA-10 · 148 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico y CA-10 · 159 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
