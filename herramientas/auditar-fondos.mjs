@@ -18,8 +18,8 @@
  *   node herramientas/auditar-fondos.mjs   # …y esto en otra
  */
 import { abrirChromium } from './navegador.mjs';
-const RUTAS = ['/', '/empeno-y-prestamo/', '/compra-venta-de-maquinaria/', '/fletes-y-logistica/',
-               '/taller-y-refaccionaria/', '/contacto/', '/aviso-de-privacidad/', '/terminos/'];
+const RUTAS = ['/', '/empeno-y-prestamo/', '/venta/', '/financiamiento/', '/fletes/',
+               '/taller/', '/contacto/', '/aviso-de-privacidad/', '/terminos/'];
 const nav = await abrirChromium();
 const ctx = await nav.newContext({ viewport: { width: 1280, height: 900 } });
 for (const r of RUTAS) {

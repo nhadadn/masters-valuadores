@@ -6,7 +6,7 @@
  *   LocalBusiness — el local, con @type en ARRAY porque el segundo tipo es la
  *                   categoría primaria de Google y esa sale de la Etapa 1 (D-02)
  *   WebSite       — el sitio
- * Los ocho giros entran como `department` del LocalBusiness: es lo que le dice a
+ * Los giros construibles —cinco desde el ADR-0047— entran como `department` del LocalBusiness: es lo que le dice a
  * Google que una sola ficha atiende varias líneas sin fingir varias empresas.
  *
  * ── CA-08 ──────────────────────────────────────────────────────────────────

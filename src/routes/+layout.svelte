@@ -50,7 +50,7 @@
   </a>
 
   <nav aria-label="Líneas de negocio" class="nav-escritorio">
-    {#each girosConstruibles.slice(0, 4) as g}
+    {#each girosConstruibles as g}
       <a href="/{g.slug}/">{g.nombreCorto}</a>
     {/each}
     <a href="/contacto/">Contacto</a>
@@ -253,8 +253,20 @@
     }
     /* `--oro-800` y no `--oro-500`: sobre marfil el oro de marca da 1.87:1 y deja de
        ser texto. El 800 existe justo para esto — 4.65:1 sobre blanco. */
-    .nav-escritorio a:hover { color: var(--oro-800); }
+    /* ADR-0047 · SOBRE ACERO EL ORO YA NO ES TEXTO. Aquí iba `--oro-800`, medido sobre
+       marfil; el ADR-0046 cambió el suelo y ese hover quedó en 2.44:1. El texto pasa a
+       negro-950 —10.19:1— y el oro se queda en el subrayado, que es adorno. */
+    .nav-escritorio a:hover {
+      color: var(--negro-950);
+      text-decoration: underline 2px var(--oro-500);
+      text-underline-offset: 6px;
+    }
     .caja { padding-inline: var(--e-12); }
+    /* CINCO LÍNEAS EN EL MENÚ · ADR-0047. A 768 px la cabecera pedía 729 px en 672: el
+       navegador encogía el monograma hasta borrarlo y aplastaba el botón de llamar.
+       Ninguno de los dos encoge, y hasta 1023 px los enlaces bajan a 15 px con medio
+       relleno: 433 px de menú y 35 libres. */
+    .marca, .llamar { flex-shrink: 0; }
     .flotante {
       display: block;
       position: fixed;
@@ -264,5 +276,8 @@
     }
     .caja { grid-template-columns: 1.2fr 1fr 1fr 0.8fr; gap: var(--e-12); }
     .barra-fija { display: none; }   /* en escritorio el contacto vive en el encabezado */
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav-escritorio a { padding: 0 var(--e-2); font-size: 15px; }
   }
 </style>

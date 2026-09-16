@@ -52,8 +52,11 @@
     bienes: Bien[];
     /** Para el mensaje de WhatsApp: de qué línea pregunta. */
     giro: string;
+    /** Arranque del mensaje · ADR-0047. Sin él, el de empeño: en venta o fletes pedir un
+        préstamo es justo lo que no se quiere. */
+    pregunta?: string;
   }
-  let { bienes, giro }: Props = $props();
+  let { bienes, giro, pregunta }: Props = $props();
 
   const paso = $derived(360 / bienes.length);
 
@@ -62,7 +65,7 @@
   const TAMANOS = '(min-width: 768px) 132px, 92px';
 
   const mensajeDe = (que: string) =>
-    'Hola, quiero saber cuánto me pueden prestar. Es de la categoría: ' + que + '.';
+    (pregunta ?? 'Hola, quiero saber cuánto me pueden prestar. Es de la categoría: ') + que + '.';
 </script>
 
 <div class="escenario" data-planeta>

@@ -69,28 +69,32 @@ const DE_GIRO: Record<string, { titulo: string; descripcion: string }> = {
     titulo: `Empeño y préstamo${enCiudad} · ${MARCA}`,
     descripcion: `Dejas un bien en garantía y sales con efectivo. Lo valuamos y te decimos cuánto te podemos prestar. Empeño${en}.`
   },
-  'compra-venta-de-maquinaria': {
-    titulo: `Compra venta de maquinaria${enCiudad} · ${negocio.nombreComercial}`,
-    descripcion: `Compramos maquinaria y equipo, y vendemos lo que tenemos disponible. Si quieres vender, lo valuamos antes de hablar de precio.${en ? ` ${lugar}.` : ''}`
+  'venta': {
+    titulo: `Venta de maquinaria, herramienta y autos${enCiudad} · ${negocio.nombreComercial}`,
+    descripcion: `Vendemos lo que tenemos: maquinaria, herramienta, autos y lo que no se recupera del empeño${en}. Pregúntanos qué hay disponible.`
   },
-  'fletes-y-logistica': {
-    titulo: `Fletes y logística${enCiudad} · ${MARCA}`,
+  'financiamiento': {
+    titulo: `Financiamiento de maquinaria${enCiudad} · ${MARCA}`,
+    descripcion: `Financiamos la maquinaria que vendemos${en}. Dinos qué equipo te interesa y te explicamos cómo funciona el financiamiento.`
+  },
+  'fletes': {
+    titulo: `Fletes${enCiudad} · ${MARCA}`,
     descripcion: `Transporte y movimiento de carga${en}. Dinos qué necesitas mover y a dónde, y te decimos si podemos hacerlo.`
   },
-  'taller-y-refaccionaria': {
-    titulo: `Taller y refaccionaria${enCiudad} · ${negocio.nombreComercial}`,
-    descripcion: `Servicio de taller y venta de refacciones${en}. Lo traes, lo revisamos y te decimos qué necesita antes de que autorices.`
+  'taller': {
+    titulo: `Taller${enCiudad} · ${negocio.nombreComercial}`,
+    descripcion: `Servicio de taller${en}. Traes tu unidad, la revisamos y te decimos qué necesita antes de que autorices el trabajo.`
   }
 };
 
 const FIJAS: Record<string, { titulo: string; descripcion: string }> = {
   '/': {
-    titulo: `Empeño, maquinaria, fletes y taller${enCiudad} · ${negocio.nombreComercial}`,
-    descripcion: `Cuatro líneas de negocio bajo una marca${en}: empeño y préstamo, compra venta de maquinaria, fletes y logística, y taller y refaccionaria.`
+    titulo: `Empeño, venta, financiamiento, fletes y taller${enCiudad}`,   // 57 de 60: con la marca no cabe
+    descripcion: `Cinco líneas de negocio bajo una marca${en}: empeño y préstamo, venta, financiamiento de maquinaria, fletes y taller.`
   },
   '/contacto/': {
     titulo: `Contacto · ${MARCA}${enCiudad}`,
-    descripcion: `Cómo localizar a ${MARCA}${en}. Escríbenos y te decimos si lo que traes entra en alguna de nuestras cuatro líneas.`
+    descripcion: `Cómo localizar a ${MARCA}${en}. Escríbenos y te decimos si lo que traes entra en alguna de nuestras cinco líneas.`
   },
   '/aviso-de-privacidad/': {
     titulo: `Aviso de privacidad · ${MARCA}`,

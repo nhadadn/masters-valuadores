@@ -80,7 +80,7 @@ describe('CA-S2 · cada página tiene descripción, y es propuesta', () => {
     }
   });
 
-  it('las ocho están marcadas como propuesta sin aprobar', () => {
+  it('todas están marcadas como propuesta sin aprobar', () => {
     expect(Object.values(fichas).every((f) => f.propuesta)).toBe(true);
   });
 });

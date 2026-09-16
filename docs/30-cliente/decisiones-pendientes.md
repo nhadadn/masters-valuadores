@@ -165,8 +165,24 @@ Eso mueve tres decisiones de este tablero:
 cinco piezas vivas. ¿La renta de maquinaria y herramienta sale del sitio a propósito, o
 se quedó fuera por descuido al enfocar?
 
+## Lo que cambió el 16 de septiembre · ADR-0047
+
+El cliente acotó su oferta a **cinco líneas: Empeño · Venta · Financiamiento · Fletes ·
+Taller**. Tres decisiones se cierran porque lo que preguntaban ya no es oferta, y se
+abren dos que el sitio no puede contestar solo.
+
+| # | Decisión | Qué la destraba | Quién |
+|---|---|---|---|
+| **D-19** | **Condiciones del financiamiento**: qué máquinas, requisitos, tasa y plazos, y qué obliga la ley a mostrar al anunciar un crédito | Si la página de financiamiento puede decir algo más que qué se financia y cómo se pide | Cristóbal |
+| **D-20** | **La lista de lo que se vende**: maquinaria, equipo industrial y agrícola, herramienta, autos y prendas de empeño. Autos y prendas salieron del letrero y de una respuesta de Nadir | Si la página de venta se queda como está | Cristóbal |
+
+Y **D-02 se agrava**: la ficha de Google dice **Bazar**, y bazar ya no es oferta del sitio.
+
 ## Cerradas
 
 | # | Decisión | Resuelta | Dónde quedó |
 |---|---|---|---|
 | D-05 | Alcance: multigiro bajo la marca MÁSTER | 2026-09-09 · Cristóbal | [[ADR-0003-alcance-multigiro]] |
+| D-03 | ¿Existe el servicio de avalúos periciales? | 2026-09-16 · Cristóbal · **fuera de la oferta** | [[ADR-0047-la-oferta-son-cinco-lineas]] |
+| D-04 | ¿Importaciones es otra entidad legal? | 2026-09-16 · Cristóbal · **fuera de la oferta** | [[ADR-0047-la-oferta-son-cinco-lineas]] |
+| D-18 | ¿Vuelve bazar? | 2026-09-16 · Cristóbal · **no vuelve** | [[ADR-0047-la-oferta-son-cinco-lineas]] |

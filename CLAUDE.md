@@ -93,7 +93,8 @@ HTML construido y no en una captura: sigue publicada una tarjeta **«BLOQUEADOS�
 decisiones internas— y **dos rótulos «FOTO DE ARCHIVO»**. Lo que el `ADR-0027` sí dejó
 en cero son las cuatro categorías que midió: banda, hueco «PENDIENTE», bloque de
 revisión y centinela visible. Estas dos son de otra familia y **siguen ahí, sin
-decidir**. En contacto no había formulario que proteger —solo el
+decidir**. **La tarjeta «BLOQUEADOS» salió el 16 de septiembre · `ADR-0047`**, con las tres
+líneas que esperaban decisión; los dos rótulos siguen. En contacto no había formulario que proteger —solo el
 bloque que explicaba por qué no lo hay— y se queda con WhatsApp, teléfono y mapa.
 **Las dos legales quedan en blanco con título** — 54 y 32 caracteres— y siguen
 enlazadas desde el pie.
@@ -120,6 +121,7 @@ enlazadas desde el pie.
 | Qué | Dónde | Quién |
 |---|---|---|
 | Multigiro bajo la marca MÁSTER | `ADR-0003` | Cristóbal |
+| **La oferta son cinco líneas**: empeño, venta, financiamiento, fletes y taller · enmienda el 0008 | `ADR-0047` | Cristóbal |
 | Identidad plana | `ADR-0004` | Nadir |
 | **La marca se escribe `MASTER`, sin S** — revierte la grafía del 0004 | `ADR-0018` | Cristóbal |
 | Acento `#E7C041` — el que la marca sí publica | `ADR-0006` | Nadir · revierte el `ADR-0005` |
@@ -143,7 +145,7 @@ src/lib/componentes/        los primitivos. CERO librería de UI
 src/lib/seo/jsonld.ts       el @graph. Lanza excepción si falta un dato
 src/lib/seo/enlaces.ts      origen del sitio, inventario de páginas, sitemap y robots
 src/lib/seo/meta.ts         título y descripción de cada ruta. TODAS son propuesta
-src/routes/                 8 páginas, todas prerenderizadas · ADR-0008
+src/routes/                 9 páginas, todas prerenderizadas · ADR-0008 · ADR-0047
 herramientas/               presupuesto de JS, accesibilidad, peso y generadores de imagen
 ```
 
@@ -170,7 +172,7 @@ respuesta por defecto es no.
 durante el prerender, así que la excepción revienta la publicación. `npm run build`
 sale con código 1 hoy, y **eso es correcto**. Escotilla: `npm run build:revision`.
 
-**3 · Una sola ruta `[giro]`.** Las cuatro páginas de giro son la misma plantilla.
+**3 · Una sola ruta `[giro]`.** Las cinco páginas de giro son la misma plantilla.
 `entries()` en `src/routes/[giro]/+page.ts:14` las prerenderiza igual.
 
 ---
@@ -195,16 +197,16 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-8 páginas · HTML de 3.5 a 6.5 KB gzip · **148 tests** · objetivo táctil mínimo 44 px ·
-16/16 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **155 tests** · objetivo táctil mínimo 44 px ·
+18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
 KB en `/empeno-y-prestamo/`». Las dos mitades son falsas y se vieron midiendo otra cosa,
 con `node herramientas/presupuesto.mjs` contra el build:
 
 ```
-4.45  /empeno-y-prestamo/            2.05  /compra-venta-de-maquinaria/
-2.05  /fletes-y-logistica/              0  las otras cinco
+4.45  /empeno-y-prestamo/            2.05  /venta/
+2.05  /fletes/                          0  las otras seis
 ```
 
 Empeño son **4.45** desde el `ADR-0038`, no 11.2 — eso ya lo decía la tabla de Estado y
@@ -212,10 +214,12 @@ este párrafo no se actualizó. Y **maquinaria y fletes no están en cero**: sir
 `planeta.js` desde el `ADR-0026`, porque el planeta lo pinta cualquier giro con bienes.
 Taller no tiene bienes y por eso sí está en 0. **Son cinco páginas en cero, no siete**, y
 lleva así desde el ADR-0026. El `ADR-0042` no añadió un solo byte: es CSS.
+**Desde el `ADR-0047` son seis en cero**: venta y fletes sirven `planeta.js`, y
+financiamiento y taller no tienen bienes. Medido con `presupuesto.mjs` sobre el build.
 
 Contraste mínimo por página, medido tras el `ADR-0046`: **4.00:1** en portada y empeño
 —el oro del titular sobre el punto más claro del acero pavonado—, **4.83:1** en
-maquinaria, fletes y taller —texto chico sobre ese mismo punto— y **6.29:1** en contacto
+venta, financiamiento, fletes y taller —texto chico sobre ese mismo punto— y **6.29:1** en contacto
 y las dos legales —la tinta secundaria sobre el suelo de acero—. Son los PEORES puntos
 del cepillado, no el promedio.
 
@@ -247,7 +251,11 @@ por su condición; `medir-monedas.mjs` ya no tiene qué medir en el sitio constr
 
 Titular más largo: «Renta de maquinaria y equipo» mide 392 px a h1 28/700 contra 350
 disponibles. **No cabe en un renglón en ninguna tipografía.** Por eso la tarjeta de giro
-lleva alto fijo: 176 a 390 de ancho, 150 a 1280.
+lleva alto fijo: 176 a 390 de ancho, 150 a 1280. **Desde el `ADR-0047` las tarjetas llevan
+el nombre corto**: «Venta de maquinaria, herramienta y autos» ocupaba cuatro renglones a 390
+y desalineaba la fila. El nombre largo vive en el `h1` de su página.
+**Y desde el `ADR-0048` la portada ya no usa tarjetas**: las líneas van en un mosaico
+(`MosaicoLineas`) cuyas piezas abren WhatsApp. `Tarjeta.svelte` queda sin usar.
 
 ---
 
@@ -261,7 +269,7 @@ node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y te
 node herramientas/medir-portada.mjs   # peso real y LCP en 4G · RUTA=/empeno-y-prestamo/ para otra
 npx serve build -l 5180               # en una terminal…
 node herramientas/validar-a11y.mjs    # …y esto en otra (BASE=http://127.0.0.1:5180)
-node herramientas/auditar-fondos.mjs  # ADR-0043 · el fondo real de cada bloque, en las ocho páginas
+node herramientas/auditar-fondos.mjs  # ADR-0043 · el fondo real de cada bloque, en las nueve páginas
 node herramientas/medir-monedas.mjs   # ADR-0021 · lo que cuesta la banda de empeño
 cd diseno/sistema  && python verificar-contraste.py   # usan rutas relativas:
 cd diseno/pantallas && node validar.mjs               # hay que entrar a su carpeta

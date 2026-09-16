@@ -70,14 +70,12 @@
       {/if}
     </p>
 
-    <!-- LA JOYERÍA ATIENDE EN OTRO NÚMERO Y CON CITA.
-         Sale de la tanda del 11 de septiembre: siete piezas de MÁSTER JOYERÍA con
-         un número propio. Va aquí y no en la banda de contacto porque la banda es
-         la acción rápida —llamar ya— y esto es lo contrario: pedir una cita. -->
+    <!-- UN TELÉFONO POR LÍNEA, si alguna lo tiene. Hoy ninguna · ADR-0047: el de joyería
+         salió cuando el cliente acotó su oferta a cinco líneas. -->
     {#each otrasLineas as l}
       {#if estaConfirmado(l.telefono)}
         <p class="linea">
-          <Icono nombre="joyeria" tam={20} />
+          <Icono nombre="telefono" tam={20} />
           <span>
             <a href="tel:{String(l.telefono).replace(/\s/g, '')}" data-negocio="telefono">{l.telefono}</a>
             <span class="cual">{l.linea}{l.nota ? ` · ${l.nota}` : ''}</span>

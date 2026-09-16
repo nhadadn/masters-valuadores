@@ -8,6 +8,14 @@
       "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
     }
   },
+  "redirects": [
+    { "source": "/compra-venta-de-maquinaria/", "destination": "/venta/", "permanent": false },
+    { "source": "/compra-venta-de-maquinaria", "destination": "/venta/", "permanent": false },
+    { "source": "/fletes-y-logistica/", "destination": "/fletes/", "permanent": false },
+    { "source": "/fletes-y-logistica", "destination": "/fletes/", "permanent": false },
+    { "source": "/taller-y-refaccionaria/", "destination": "/taller/", "permanent": false },
+    { "source": "/taller-y-refaccionaria", "destination": "/taller/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",

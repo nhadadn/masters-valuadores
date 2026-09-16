@@ -71,7 +71,9 @@
   const valuamos = $derived.by(() => {
     const qs = (giro.bienesPropuestos ?? []).map((b) => b.que.toLowerCase());
     if (qs.length < 2) return null;
-    return `Valuamos ${qs.slice(0, -1).join(', ')} y ${qs[qs.length - 1]}.`;
+    /* EL VERBO ES DE LA LÍNEA · ADR-0047. Era «Valuamos» para todas, y en fletes publicaba
+       «Valuamos maquinaria pesada y carga general»: un servicio que esa página no da. */
+    return `${giro.verboBienes ?? 'Valuamos'} ${qs.slice(0, -1).join(', ')} y ${qs[qs.length - 1]}.`;
   });
 
   /* Dónde y cuándo, en un renglón. Se quita el día cerrado: «domingo cerrado» es
@@ -149,7 +151,7 @@
 
   <!-- LAS DOS ACCIONES Y EL DÓNDE · ADR-0041.
        Atadas a `ctaPrestamo`, que solo tiene empeño: «cuánto me prestan» es falso en
-       compra-venta, fletes y taller. Los dos botones van al MISMO canal con mensajes
+       venta, financiamiento, fletes y taller. Los dos botones van al MISMO canal con mensajes
        distintos —cuánto, y foto— y por eso el segundo es de línea y no de bloque: son
        dos intenciones, no dos botones iguales compitiendo.
 
@@ -192,7 +194,7 @@
     {#if giro.subtituloBienes}
       <p class="entradilla" data-propuesta="true">{giro.subtituloBienes}</p>
     {/if}
-    <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
+    <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} pregunta={giro.preguntaBien} />
 
     <!-- AQUÍ VIVÍA EL PANEL DE CONSULTA · ADR-0036, y era del ADR-0024.
          Un `aside` de carbón con «¿No sabes si aceptamos lo que traes?» y un botón
@@ -311,7 +313,7 @@
 
 <!-- SALA PAVONADA · ADR-0046. El proceso en otro registro, como hace Suttons & Robertsons. -->
 <Seccion fondo="pavonado">
-  <h2><span class="num">2</span> {PREGUNTAS[1]}</h2>
+  <h2><span class="num">2</span> {giro.tituloProceso ?? PREGUNTAS[1]}</h2>
   <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
        diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
        algo: es la entradilla del proceso.

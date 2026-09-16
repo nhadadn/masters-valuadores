@@ -47,7 +47,7 @@ describe('los department salen de los giros y solo de los construibles', () => {
 
   it('hay un department por giro construible', () => {
     expect(local.department).toHaveLength(girosConstruibles.length);
-    expect(girosConstruibles.length).toBe(4);   // ADR-0008
+    expect(girosConstruibles.length).toBe(5);   // ADR-0047
   });
 
   it('ningún giro bloqueado aparece: declararlo sería prometer una página que no existe', () => {
@@ -55,11 +55,11 @@ describe('los department salen de los giros y solo de los construibles', () => {
     for (const g of girosBloqueados) {
       expect(slugs.some((u: string) => u.includes(g.slug))).toBe(false);
     }
-    // Tres desde el ADR-0014: importaciones (D-04), avalúos (D-03) y bazar (D-18).
+    // Cero desde el ADR-0047: el cliente acotó su oferta y los tres bloqueados salieron.
     // Bazar volvió como pregunta abierta, no como página: Google los clasifica así
     // y el ADR-0008 lo había sacado. Sigue sin generar ruta, que es lo que este
     // test protege.
-    expect(girosBloqueados.length).toBe(3);
+    expect(girosBloqueados.length).toBe(0);
   });
 
   it('cada department cuelga de la misma Organization', () => {

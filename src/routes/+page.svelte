@@ -10,7 +10,7 @@
   import Seccion from '$componentes/Seccion.svelte';
   import Boton from '$componentes/Boton.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
-  import Tarjeta from '$componentes/Tarjeta.svelte';
+  import MosaicoLineas from '$componentes/MosaicoLineas.svelte';
   import Icono from '$componentes/Icono.svelte';
   import Insignia from '$componentes/Insignia.svelte';
   import Foto from '$componentes/Foto.svelte';
@@ -18,7 +18,7 @@
   import Titular from '$componentes/Titular.svelte';
   import DatosDelLocal from '$componentes/DatosDelLocal.svelte';
   import Mapa from '$componentes/Mapa.svelte';
-  import { girosConstruibles, girosBloqueados } from '$lib/datos/giros';
+  import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
 
   /**
@@ -87,7 +87,7 @@
              así que la estructura es suya y solo cambian las líneas nombradas. -->
         <Titular
           tam="display"
-          primera="Empeño, maquinaria, fletes y taller en Torreón."
+          primera="Empeño, venta, financiamiento, fletes y taller en Torreón."
           segunda="Todo {negocio.nombreComercial}."
         />
       </div>
@@ -137,20 +137,10 @@
   <!-- «Es una instrucción, no un eslogan: es exactamente lo que esa sección le pide
        al visitante.» — del borrador. -->
   <h2 class="titulo-seccion" data-propuesta="true">Elige la línea que buscas</h2>
-  <ul class="reticula">
-    {#each girosConstruibles as g, i}
-      <li><Tarjeta href="/{g.slug}/" titulo={g.nombre} icono={g.icono} nota={g.frasePropuesta} foto={g.fotoProvisional} fotoAlt={g.fotoAlt} fotoEsSuya={g.fotoEsSuya} fotoMaxAncho={g.fotoMaxAncho} indice={i} /></li>
-    {/each}
-    <li>
-      <div class="bloqueados">
-        <p class="cabeza"><Icono nombre="bloq" tam={18} /> BLOQUEADOS</p>
-        {#each girosBloqueados as g}
-          <p class="fila"><span>{g.nombre}</span><code>{g.bloqueadoPor}</code></p>
-        {/each}
-        <p class="nota">Entran cuando se cierren esas dos decisiones.</p>
-      </div>
-    </li>
-  </ul>
+  <!-- EL MOSAICO · ADR-0048. Aquí vivía la reja de tarjetas. Cada pieza abre WhatsApp con la
+       línea escrita en el mensaje; las páginas de cada línea siguen enlazadas desde el
+       menú y el pie. -->
+  <MosaicoLineas lineas={girosConstruibles} />
   <!-- AQUÍ HABÍA UNA NOTA Y SE QUITÓ: «El orden es provisional. La prioridad la
        decide el estudio de búsqueda, no la intuición.»
 
@@ -321,21 +311,7 @@
   .palabra { display: grid; gap: var(--e-3); }
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-2); }
 
-  .reticula { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); margin-top: var(--e-4); }
 
-  .bloqueados {
-    display: flex; flex-direction: column;
-    min-height: 176px; height: 100%; padding: var(--e-4) var(--e-3);
-    border: 1px dashed var(--panel-borde); background: var(--superficie);
-  }
-  .cabeza {
-    display: flex; align-items: center; gap: var(--e-2);
-    font-size: 11px; font-weight: var(--etiqueta-peso);
-    letter-spacing: var(--etiqueta-tracking); color: var(--tinta-secundaria);
-  }
-  .fila { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-2); margin-top: var(--e-2); font-size: var(--pie-tam); font-weight: 600; color: var(--tinta-secundaria); }
-  .fila code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; border: 1px solid var(--panel-borde); padding: 1px 5px; }
-  .nota { margin-top: auto; font-size: 11px; line-height: 1.3; color: var(--tinta-secundaria); }
 
   /* Sin borde dorado: la insignia es la que trae el acento ahora. Dos gestos de oro
      en el mismo bloque compiten y ninguno significa nada. */
@@ -359,8 +335,6 @@
   @media (min-width: 768px) {
     .entrada { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
     .acciones { grid-auto-flow: column; justify-content: start; }
-    .reticula { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-3); }
-    .bloqueados { min-height: 150px; }
     .diferenciadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     /* PRIMER INTENTO, MEDIDO Y DESCARTADO: seis columnas con la principal en tres y
        una para cada una de las otras. La geometría no daba — si la principal se
@@ -371,7 +345,9 @@
        La jerarquía no cabe en una sola fila. Va en dos: la principal ocupa el ancho
        entero y por dentro se parte en foto + contenido, y las otras tres se reparten
        tres columnas cómodas debajo. */
-    .lineas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--e-6) var(--e-4); }
+    /* ADR-0047 · con cinco líneas quedan cuatro debajo de la principal: en dos columnas,
+       dos por fila. En tres quedaba una huérfana. */
+    .lineas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-6) var(--e-4); }
     /* LA JERARQUÍA SOBREVIVE SIN LA FOTO.
        La principal se destacaba con una imagen grande a la izquierda. Al quitarse
        la foto, el destaque pasa al ANCHO y a la composición: ocupa la fila entera y

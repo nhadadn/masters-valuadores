@@ -27,15 +27,10 @@
    *     PARCIAL: no sirve a quien lee con el cursor lejos y sin tocar teclado. Un
    *     botón de pausa necesitaría JavaScript, y `csr = false`. Queda anotado.
    */
-  const PALABRAS = [
-    'Empeño',
-    'Compra y venta',
-    'Maquinaria',
-    'Herramientas',
-    'Autos',
-    'Contenedores marítimos',
-    'Valuaciones'
-  ];
+  /* ADR-0047 · LAS PALABRAS YA NO SALEN DEL LETRERO sino de la oferta que el cliente
+     acotó: cinco líneas y ninguna otra. El letrero de la fachada sigue diciendo
+     «contenedores marítimos» y «valuaciones» en la foto; el sitio ya no. */
+  const PALABRAS = ['Empeño', 'Venta', 'Financiamiento', 'Fletes', 'Taller'];
 </script>
 
 <div class="cinta">
