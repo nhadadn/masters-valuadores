@@ -144,17 +144,15 @@
       <Foto nombre={giro.fotoProvisional} alt={giro.fotoAlt ?? ''} provisional={!giro.fotoEsSuya} maxAncho={giro.fotoMaxAncho ?? 1600} relacion={giro.fotoRelacion ?? '16 / 9'} tamanos="(min-width: 768px) 60vw, 100vw" />
     </div>
   {/if}
-  {#if giro.muestraJoyeria}
-    <div class="joyeria">
-      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería, joyería y monedas" clave="joya" nota={notaJoyeria} />
-    </div>
-  {/if}
-
   </div>
-  <!-- LA SECUENCIA DE JOYERÍA · ADR-0033. Rellena los 152 px de mármol vacío que
-       quedaban bajo la foto, medidos en vivo. Va DESPUÉS de la foto grande: primero
-       la pieza entera, luego los detalles.
-       Son tres vistas de UNA sola fotografía y eso está dicho en `galeria.ts`. -->
+  <!-- LA TIRA DE JOYERÍA SE FUE DE AQUÍ · ADR-0037.
+       El ADR-0033 la puso dentro de esta rejilla para rellenar 152 px de mármol
+       vacío, y funcionó para eso. El problema era otro: vivía en una sección **sin
+       etiqueta y sin título** —contenido huérfano de 1187 px— mientras la del patio,
+       con seis fotos, tenía el armazón completo. Ahora las dos comparten sección,
+       título y registro, más abajo.
+       NO se subió el patio al mármol, y el motivo es del ADR-0022: «vestir una
+       retroexcavadora de boutique contradice su propia marca». -->
   <!-- ADR-0021 · va DESPUÉS de las acciones, nunca antes: lo primero que tiene que
        encontrar alguien con prisa es el botón, no el adorno.
        Del DATO y no del slug, igual que el mármol del ADR-0020: `lujo` es lo que su
@@ -164,13 +162,38 @@
   {/if}
 </Seccion>
 
-{#if giro.muestraInventario}
-  <Seccion etiqueta="SU PATIO Y SU EQUIPO" fondo="tenue">
+<!-- UNA SOLA SECCIÓN PARA LAS DOS TIRAS · ADR-0037.
+     Medído antes de unificarlas: la de joyería estaba en una sección de 1187 px SIN
+     etiqueta y SIN título, y la del patio tenía etiqueta + título para 435 px. Las dos
+     enseñan lo mismo —cosas que pasaron por su mostrador— con armazones distintos.
+
+     El título se queda como estaba, «Algo de lo que han tenido», porque ya era correcto
+     para las dos: pasado, sin prometer que siga ahí. La etiqueta cambia porque «SU PATIO
+     Y SU EQUIPO» dejaba fuera la joyería.
+
+     Cada tira lleva su propio rótulo en `h3`: sin ellos, catorce fotos seguidas de un
+     reloj y una retroexcavadora no dicen que son dos conjuntos. -->
+{#if giro.muestraInventario || giro.muestraJoyeria}
+  <Seccion etiqueta="PIEZAS Y EQUIPO" fondo="tenue">
     <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
-    <Carrusel
-      fotos={galeriaInventario}
-      etiqueta="Su patio y su equipo"
-    />
+
+    {#if giro.muestraJoyeria}
+      <h3 class="tira-titulo">Relojería, joyería y monedas</h3>
+      <Carrusel
+        fotos={galeriaJoyeria}
+        etiqueta="Relojería, joyería y monedas"
+        clave="joya"
+        nota={notaJoyeria}
+      />
+    {/if}
+
+    {#if giro.muestraInventario}
+      <h3 class="tira-titulo">Patio y equipo</h3>
+      <Carrusel
+        fotos={galeriaInventario}
+        etiqueta="Su patio y su equipo"
+      />
+    {/if}
   </Seccion>
 {/if}
 
@@ -265,8 +288,6 @@
      foto de entrada con 1920×2417 px en vez de 390×491. La sección pasó de 1061 a
      3044 px de alto. No dio ningún error: solo se desbordó la página entera. */
   .entrada-b { display: grid; gap: var(--e-6); grid-template-columns: minmax(0, 1fr); }
-  /* La secuencia respira por debajo de la foto, no se pega a ella. */
-  .joyeria { margin-top: var(--e-6); min-width: 0; }
 
   /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
      bordes de la pantalla. */
@@ -275,21 +296,17 @@
   .acciones { display: grid; gap: var(--e-3); }
 
   @media (min-width: 768px) {
-    /* POR ÁREAS, NO POR ORDEN · ADR-0033. El teléfono quiere botón → foto grande →
-       detalles, y ese es el orden del DOM. En escritorio la foto ocupa la columna
-       derecha ENTERA y la izquierda se reparte entre el botón y la secuencia, sin
-       tocar el marcado — que es justo para lo que existen las áreas.
-       Antes la izquierda era mármol vacío con un botón flotando en medio. */
+    /* Dos columnas otra vez · ADR-0037. Las áreas del ADR-0033 existían para colocar
+       la tira de joyería en la columna izquierda; con la tira fuera, sobran.
+       EL COSTO, dicho: la izquierda vuelve a ser mármol con un botón apoyado en el
+       pie de la foto. Se acepta a cambio de que las dos tiras vivan juntas. */
     .entrada-b {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      grid-template-areas: 'acciones foto' 'joyeria foto';
-      grid-template-rows: auto 1fr;
-      align-items: start;
-      gap: var(--e-6) var(--e-12);
+      align-items: end;
+      gap: var(--e-12);
     }
-    .acciones { grid-area: acciones; }
-    .foto-giro { grid-area: foto; }
-    .joyeria { grid-area: joyeria; align-self: end; }
+    /* Los botones se apoyan en el pie de la foto, no flotan a media altura. */
+    .acciones { align-self: end; padding-bottom: var(--e-8); }
 
     /* SANGRA HASTA EL BORDE DE LA VENTANA, no hasta el filo del acolchado.
        Cancelar solo el acolchado NO basta: `.caja` está limitada a `--ancho-maximo`
@@ -315,6 +332,17 @@
 
   /* Entradilla de la sección de bienes · ADR-0024. Una sola frase que lleva la
      promesa —«te decimos cuánto»— antes de la retícula. */
+  /* El rótulo de cada tira · ADR-0037. Por debajo del `h2` de la sección y por encima
+     del pie de foto: es una división dentro del bloque, no un bloque nuevo. */
+  .tira-titulo {
+    margin: var(--e-8) 0 var(--e-2);
+    font-size: var(--cuerpo-tam);
+    font-weight: var(--cuerpo-fuerte-peso);
+    line-height: 1.3;
+    color: var(--tinta-secundaria);
+  }
+  .tira-titulo:first-of-type { margin-top: var(--e-4); }
+
   .entradilla {
     max-width: 46ch;
     margin: calc(var(--e-2) * -1) 0 var(--e-4);

@@ -45,6 +45,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0034 | [[ADR-0034-entran-imagenes-generadas\|Entran imágenes generadas, como referencia]] | **ACEPTADA** · **revierte el «van fotos suyas o va hueco» del 0007** · objeción registrada · a tamaño de publicación los defectos NO se ven | 2026-09-15 |
 | 0035 | [[ADR-0035-monedas-y-el-piso-tactil\|Monedas en la secuencia, y el piso táctil que llevaba roto]] | **ACEPTADA** · extiende el 0034 · **el objetivo táctil de 44 px llevaba roto desde el 0023** · quinto fantasma de LCP | 2026-09-15 |
 | 0036 | [[ADR-0036-fuera-el-panel-de-consulta\|Fuera el panel de consulta: había demasiado «contáctanos»]] | **ACEPTADA** · **revierte en parte el 0024** · 14 puntos de contacto medidos · los bloques de contacto bajan de 3 a 2 | 2026-09-15 |
+| 0037 | [[ADR-0037-una-seccion-para-las-dos-tiras\|Una sola sección para las dos tiras]] | **ACEPTADA** · **enmienda el 0033** · la dirección la fijó el 0022: el patio no sube al mármol | 2026-09-15 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el
