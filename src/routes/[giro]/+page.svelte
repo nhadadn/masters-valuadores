@@ -12,7 +12,6 @@
   /* `Hueco` solo vive en ramas de reserva que hoy no pinta ningún giro: los cuatro
      tienen subtitular y pasos. Se queda por si entra un giro sin copy. */
   import Hueco from '$componentes/Hueco.svelte';
-  import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import Migas from '$componentes/Migas.svelte';
   import Icono from '$componentes/Icono.svelte';
   import Titular from '$componentes/Titular.svelte';
@@ -89,17 +88,20 @@
     {/if}
     <PlanetaBienes bienes={giro.bienesPropuestos} giro={giro.slug} />
 
-    <!-- El CTA que contesta la pregunta que trae la gente · ADR-0024. Va justo
-         después del planeta, donde acaba de nacerle la duda. -->
-    <aside class="consulta registro-oscuro">
-      <p class="titulo" data-propuesta="true">¿No sabes si aceptamos lo que traes?</p>
-      <p class="dice" data-propuesta="true">Mándanos una foto por WhatsApp y lo vemos.</p>
-      <BotonWhatsApp
-        origen="giro-{giro.slug}-consulta-foto"
-        texto="Enviar foto por WhatsApp"
-        mensaje="Hola, quiero saber si aceptan este artículo. Les mando una foto."
-      />
-    </aside>
+    <!-- AQUÍ VIVÍA EL PANEL DE CONSULTA · ADR-0036, y era del ADR-0024.
+         Un `aside` de carbón con «¿No sabes si aceptamos lo que traes?» y un botón
+         amarillo de «Enviar foto por WhatsApp».
+
+         Sale por exceso de contacto, no por estar mal. Medido en vivo a 390 px, esta
+         página tenía **14 puntos de contacto**: 9 de WhatsApp, 3 de teléfono y 2 al
+         formulario. De los 9, seis son los discos del planeta —que no se leen como
+         un bloque de contacto— y los otros tres sí: este panel, la barra fija y el
+         pie. Se va el que menos falta hace, porque la barra fija cubre WhatsApp de
+         forma permanente (el argumento del ADR-0027).
+
+         LO QUE SE PIERDE, y hay que decirlo: era el único sitio de la página que
+         atendía a quien trae algo **que no está en las seis categorías**. El planeta
+         enumera; esto acogía el resto. Ver el ADR-0036. -->
   </Seccion>
 {/if}
 <!-- ADR-0022 · LA RETÍCULA DE FOTOS REALES.
@@ -363,32 +365,8 @@
     color: var(--tinta-secundaria);
   }
 
-  /* El bloque de consulta por WhatsApp · ADR-0024. */
-  /* PANEL DE CARBÓN SOBRE LA PIEDRA · ADR-0028. Era un panel blanco sobre campo
-     oscuro; invertido el sitio, un panel blanco sobre piedra clara desaparece.
-     Ahora es al revés: carbón rodeado de mármol, con el oro solo en la arista.
-     La clase `registro-oscuro` va en el marcado y le da los roles; por eso el botón
-     de dentro vuelve a oro sin que nadie se lo diga. */
-  .consulta {
-    margin-top: var(--e-6);
-    padding: var(--e-6) var(--e-4);
-    background: var(--carbon);
-    border: 0;
-    border-left: 3px solid var(--oro-500);
-  }
-  .consulta .titulo {
-    margin: 0;
-    font-size: var(--cuerpo-tam);
-    font-weight: var(--cuerpo-fuerte-peso);
-    line-height: 1.3;
-    color: var(--tinta);
-  }
-  .consulta .dice {
-    margin: var(--e-1) 0 var(--e-3);
-    font-size: var(--cuerpo-tam);
-    line-height: 1.45;
-    color: var(--tinta-secundaria);
-  }
+  /* El CSS de `.consulta` —el panel de carbón del ADR-0024, reinvertido por el
+     ADR-0028— se fue con su marcado en el ADR-0036. El historial lo guarda. */
 
   .requisitos {
     display: grid;
@@ -418,8 +396,7 @@
   .subtitular { max-width: 56ch; margin: calc(var(--e-2) * -1) 0 var(--e-6); font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
   .cifras { border: 1px solid var(--negro-400); padding: var(--e-4); margin-top: var(--e-6); display: grid; gap: var(--e-3); }
 
-  /* La regla de `li` se fue con las cuatro cajas: ahora es UN bloque. La de arriba,
-     junto a `.consulta`, es la que manda. */
+  /* La regla de `li` se fue con las cuatro cajas: ahora es UN bloque. */
   .casilla { width: 22px; height: 22px; border: 2px solid var(--borde-campo); border-radius: var(--radio-campo); }
 
   .ubicacion { display: grid; gap: var(--e-6); }
