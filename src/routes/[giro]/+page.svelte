@@ -385,38 +385,21 @@
     .promesa { font-size: 1.75rem; }
   }
 
-  /* El bloque de revisión · ADR-0025. Deliberadamente sobrio y sin gracia: no es
-     producto, es un recado para Cristóbal. Se va con la banda BORRADOR. */
-  .revision {
-    margin-top: var(--e-6);
-    padding: var(--e-3) var(--e-4);
-    border: 1px dashed var(--panel-borde);
-    background: var(--superficie-alterna);
-  }
-  .rev-et {
-    margin: 0 0 var(--e-2);
-    font-size: var(--etiqueta-tam);
-    font-weight: var(--etiqueta-peso);
-    letter-spacing: var(--etiqueta-tracking);
-    color: var(--tinta-secundaria);
-  }
-  .rev-lista {
-    margin: var(--e-3) 0 0;
-    padding-left: var(--e-4);
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--tinta-secundaria);
-  }
+  /* ── AQUÍ VIVÍA EL CSS DE LO QUE YA NO SE PINTA · ADR-0040 ────────────────
+     Dieciocho selectores muertos, todos del mismo origen: secciones que se quitaron
+     y dejaron su hoja. Svelte los reportaba en cada build, dos veces cada uno.
 
-  /* El CSS de `.consulta` —el panel de carbón del ADR-0024, reinvertido por el
-     ADR-0028— se fue con su marcado en el ADR-0036. El historial lo guarda. */
+       · `.revision`, `.rev-et`, `.rev-lista`  — el recado para Cristóbal · ADR-0025,
+         retirado por el ADR-0027
+       · `.requisitos`                         — la sección «¿Qué necesito llevar?»
+       · `.cifras`, `.casilla`                 — el bloque de porcentaje, plazo y tasa
+       · `.acordeon *`, `.signo*`, `.respuesta` — el acordeón «¿Puedo recuperar mi bien?»,
+         que tenía cuatro preguntas y ni una respuesta escrita
+       · `.datos p`, `.bienes`                 — restos de la retícula y del bloque de datos
+       · `.consulta` y sus dos hijos           — el panel del ADR-0024, retírado por el 0036
 
-  .requisitos {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--e-3);
-    align-items: start;
-  }
+     Un selector muerto no cuesta bytes que se noten: cuesta que el próximo que lea
+     esto crea que existe un bloque que no existe. El historial guarda lo borrado. */
 
   .pasos { display: grid; gap: var(--e-4); }
   .pasos li {
@@ -437,33 +420,9 @@
     font-variant-numeric: tabular-nums;
   }
   .subtitular { max-width: 56ch; margin: calc(var(--e-2) * -1) 0 var(--e-6); font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
-  .cifras { border: 1px solid var(--negro-400); padding: var(--e-4); margin-top: var(--e-6); display: grid; gap: var(--e-3); }
-
-  /* La regla de `li` se fue con las cuatro cajas: ahora es UN bloque. */
-  .casilla { width: 22px; height: 22px; border: 2px solid var(--borde-campo); border-radius: var(--radio-campo); }
 
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); justify-items: start; }
-  .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
-
-  .acordeon li { border-bottom: 1px solid var(--borde-sutil); }
-  .acordeon summary {
-    display: flex; align-items: center; justify-content: space-between; gap: var(--e-3);
-    min-height: 56px; padding: var(--e-3) var(--e-1);
-    cursor: pointer; list-style: none;
-    font-weight: var(--cuerpo-fuerte-peso);
-  }
-  .acordeon summary::-webkit-details-marker { display: none; }
-  /* El signo se dibuja con CSS: dos trazos que se cruzan y uno se esconde al abrir. */
-  .signo { position: relative; width: 22px; height: 22px; flex-shrink: 0; }
-  .signo::before, .signo::after {
-    content: ''; position: absolute; background: var(--tinta);
-    left: 50%; top: 50%; transform: translate(-50%, -50%);
-  }
-  .signo::before { width: 16px; height: 2px; }
-  .signo::after { width: 2px; height: 16px; transition: opacity var(--mov-tactil) var(--mov-curva); }
-  details[open] .signo::after { opacity: 0; }
-  .respuesta { padding: 0 var(--e-1) var(--e-4); }
 
   .cruzados { display: grid; gap: var(--e-2); margin-top: var(--e-4); }
   .cruzados a {
@@ -476,7 +435,6 @@
 
   @media (min-width: 768px) {
     .acciones { grid-auto-flow: column; justify-content: start; }
-    .bienes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
     .cruzados { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }

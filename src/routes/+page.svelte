@@ -297,7 +297,6 @@
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-2); }
 
   .reticula { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-2); margin-top: var(--e-4); }
-  .aviso { font-size: var(--pie-tam); color: var(--tinta-secundaria); margin-top: var(--e-4); }
 
   .bloqueados {
     display: flex; flex-direction: column;
@@ -331,7 +330,6 @@
 
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); justify-items: start; }
-  .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
 
   @media (min-width: 768px) {
     .entrada { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
@@ -364,14 +362,13 @@
       padding-bottom: var(--e-6);
       border-bottom: 1px solid var(--panel-borde);
     }
-    /* Colocación EXPLÍCITA, no heredada de la colocación automática: la izquierda es
-       la columna de identidad y acción —quién es la línea y el botón para escribir—
-       y la derecha es la lista de lo que entra. Dejarlo al flujo automático daba el
-       mismo dibujo por casualidad, y una casualidad se rompe en cuanto alguien añada
-       un elemento en medio. El orden del marcado es: insignia · hueco · botón. */
-    .lineas .principal > :nth-child(1) { grid-column: 1; grid-row: 1; }
-    .lineas .principal > :nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
-    .lineas .principal > :nth-child(3) { grid-column: 1; grid-row: 2; align-self: end; }
+    /* AQUÍ HABÍA UNA COLOCACIÓN EXPLÍCITA POR `nth-child` · ADR-0040, y estaba rota
+       por partida doble. Pedía tres hijos —«insignia · hueco · botón»— y el hueco se
+       fue con el ADR-0027, así que el `:nth-child(3)` no existía. Y los dos que
+       quedan son COMPONENTES: el CSS con ámbito de esta página no alcanza la raíz de
+       un hijo, así que Svelte podó las tres reglas y nunca llegaron al build.
+       Su propio comentario decía que el flujo automático daba el mismo dibujo, y eso
+       es exactamente lo que se está viendo desde entonces. */
     .ubicacion { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
   }
 </style>

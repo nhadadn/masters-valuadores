@@ -266,9 +266,25 @@
     filter: drop-shadow(0 8px 20px rgba(231, 192, 65, 0.45));
   }
 
-  /* Fuera de pantalla se congela. Lo pone el script; sin él, gira igual. */
-  .escenario[data-quieto] .anillo,
-  .escenario[data-quieto] .contra { animation-play-state: paused; }
+  /* Fuera de pantalla se congela. Lo pone el script; sin él, gira igual.
+     ── `:global()` NO ES ADORNO, Y AQUÍ COSTÓ UN FALLO MUDO · ADR-0040 ─────────
+     Esto estaba escrito como `.escenario[data-quieto] .anillo` a secas. `data-quieto`
+     lo pone `planeta.js` en tiempo de ejecución, así que Svelte NO lo ve en el marcado,
+     lo declara selector sin usar y **lo borra del CSS compilado**. No es un aviso
+     cosmético: la regla no llegaba al build.
+
+     Comprobado en la página construida antes de arreglarlo: con el planeta fuera de
+     pantalla el atributo SÍ estaba —`data-quieto: true`— y la animación seguía en
+     `running`. un `grep` de `data-quieto` sobre el CSS construido no encontraba nada.
+
+     O sea que la pausa del ADR-0026 —la que ahorra batería en el teléfono de gama baja
+     del contrato— **nunca funcionó en el sitio publicado**. Con `:global()` en la parte
+     del atributo, Svelte deja de podarla; `.escenario` y `.anillo` siguen con ámbito,
+     así que no se escapa a ningún otro componente. */
+  :global {
+    .escenario[data-quieto] .anillo,
+    .escenario[data-quieto] .contra { animation-play-state: paused; }
+  }
 
   /* Quien pidió menos movimiento recibe el planeta quieto, no menos planeta. */
   @media (prefers-reduced-motion: reduce) {

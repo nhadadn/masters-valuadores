@@ -248,6 +248,14 @@ cd diseno/pantallas && node validar.mjs               # hay que entrar a su carp
 Antes de declarar cualquier cosa terminada: corre lo que aplique y **reporta el
 resultado real**, no el esperado.
 
+**Y un aviso que costó caro descubrir · `ADR-0040`.** Un «Unused CSS selector» de Svelte
+**no autoriza a borrar**. Si la clase o el atributo los pone un script en tiempo de
+ejecución, ese aviso no dice «esto sobra»: dice **«esto se está tirando y tu regla no
+existe en producción»**. Así llevaba rota desde el `ADR-0026` la pausa del planeta fuera
+de pantalla — el script ponía `data-quieto` y no había nadie escuchando. Se arregla con
+el bloque `:global { … }` de Svelte 5; `:global(...)` con un descendiente dentro es
+sintaxis de Svelte 4 y **no compila**.
+
 ---
 
 ## Lo que falta, y nada de esto es técnico

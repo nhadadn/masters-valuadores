@@ -48,6 +48,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0037 | [[ADR-0037-una-seccion-para-las-dos-tiras\|Una sola sección para las dos tiras]] | **ACEPTADA** · **enmienda el 0033** · la dirección la fijó el 0022: el patio no sube al mármol | 2026-09-15 |
 | 0038 | [[ADR-0038-fuera-la-segunda-mitad-de-la-entrada\|Fuera la segunda mitad de la entrada, y con ella la banda de monedas]] | **ACEPTADA** · **retira de hecho el 0021** · el JS de empeño cae de 12.10 a 4.54 KB gzip | 2026-09-15 |
 | 0039 | [[ADR-0039-el-carrusel-avanza-solo\|El carrusel avanza solo, y sin puntos]] | **ACEPTADA** · **enmienda el 0023 y el 0035** · dos clases de parada por la WCAG 2.2.2 · el script nuevo pesa menos que el viejo | 2026-09-15 |
+| 0040 | [[ADR-0040-css-podado-y-la-pausa-que-nunca-existio\|CSS podado, y la pausa del planeta que nunca existió]] | **ACEPTADA** · **corrige el 0026: su pausa nunca llegó al build** · 24 selectores a 0 · CSS servido idéntico | 2026-09-15 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

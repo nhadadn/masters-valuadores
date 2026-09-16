@@ -49,7 +49,6 @@
   .acciones { display: grid; gap: var(--e-3); margin-top: var(--e-4); }
   .ubicacion { display: grid; gap: var(--e-6); }
   .datos { display: grid; gap: var(--e-3); }
-  .datos p { display: flex; gap: var(--e-2); align-items: flex-start; }
   /* Aquí vivía el CSS de `.form`, `.bloqueado` y `.muestra`: la sección de formulario
      que salió con el ADR-0027. Cuando se cierre D-13 y el formulario se construya,
      vuelve; el historial lo guarda. */
