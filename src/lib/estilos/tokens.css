@@ -424,6 +424,12 @@
      velo da #505152 —blanco 7.95:1, negro-200 5.49:1—, así que el texto no depende de qué
      foto haya. Al fondo de la pieza, al 0.90: 15.34:1. */
   --velo-foto: linear-gradient(180deg, rgba(12, 13, 15, 0) 30%, rgba(12, 13, 15, 0.72) 62%, rgba(12, 13, 15, 0.9) 100%);
+  /* LA LUZ DEL CIRCUITO · ADR-0050. La que recorre el proceso. Más clara que el --oro-500
+     porque la línea ya ES --oro-500: una luz del mismo tono no se distingue de lo que
+     ilumina. Es DECORATIVA —nunca lleva texto encima ni hace de borde—, así que no tiene
+     contraste que cumplir. El halo es la misma luz al 0.55, para el resplandor. */
+  --luz-circuito:  #F7E3A1;
+  --halo-circuito: rgba(247, 227, 161, 0.55);
   /* Resplandor de oro sobre claro: mucho más tenue. Al 0.20 que usa el oscuro, sobre
      acero se lee como una mancha sucia en vez de como luz. */
   --resplandor-claro: radial-gradient(130% 400% at 85% 0%, rgba(231, 192, 65, 0.22) 0%, rgba(231, 192, 65, 0) 70%);
@@ -540,6 +546,17 @@
      el visitante toca, no lo que aparece. La audiencia llega con prisa, desde un
      teléfono de gama baja y a plena luz; una animación de entrada le retrasa el
      contenido que vino a leer para impresionar a quien no está mirando.
+
+     LA EXCEPCIÓN · ADR-0050. El circuito del proceso (`FlujoProceso`) se mueve sin que
+     nadie lo toque: una luz lo recorre en bucle y la sección se arma al deslizar, TEXTO
+     INCLUIDO. Lo decidió Nadir el 16 de septiembre, con la objeción puesta por escrito
+     antes: esconde texto hasta que llega a la pantalla. Fuera de esa pieza, la regla de
+     arriba sigue entera.
+
+     Y UNA REGLA QUE VALE PARA TODO BUCLE, desde el mismo ADR: se anima solo `transform`,
+     `opacity` y `visibility`. Medido con el procesador a 1/4, la misma luz hecha con
+     `clip-path` ocupó 3.8–4.1 s de hilo principal por cada 7.2 s de ciclo —repintaba el
+     acero en cada cuadro—, y hecha trasladando una luz ya pintada, 52–91 ms.
 
      --mov-elevacion vale 0 bajo `prefers-reduced-motion`. Ver `base.css`: el bloque
      de reducción de ahí solo acorta la duración, así que sin esto el desplazamiento
