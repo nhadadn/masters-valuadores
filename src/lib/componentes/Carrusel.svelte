@@ -223,12 +223,22 @@
     justify-content: center;
     gap: var(--e-1);
     margin-top: var(--e-3);
+    /* ENVUELVEN EN VEZ DE ENCOGER · ADR-0035.
+       Sin esto los puntos son ítems flex con `flex-shrink: 1`, o sea que los 44 px de
+       abajo eran una intención y no un piso. Al pasar la secuencia de joyería a nueve
+       tarjetas, nueve por 44 son 396 px contra los 350 de la caja en un teléfono, y el
+       sistema los encogió a 35 px SIN AVISAR: el validador de accesibilidad pasó de
+       CUMPLE a NO CUMPLE y el comentario de aquí al lado seguía prometiendo 44.
+       Ahora se van a un segundo renglón antes que perder tamaño. */
+    flex-wrap: wrap;
   }
 
-  /* 44 px de objetivo tactil, como exige el sistema, aunque el punto se vea de 10. */
+  /* 44 px de objetivo tactil, como exige el sistema, aunque el punto se vea de 10.
+     `flex: 0 0 auto` es lo que lo hace un piso y no un deseo. */
   .saltos a {
     display: grid;
     place-items: center;
+    flex: 0 0 auto;
     width: 44px;
     height: 44px;
   }

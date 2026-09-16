@@ -209,7 +209,9 @@ La regla sigue siendo la del `tokens.css`: en texto chico va tinta; en display, 
 
 **LCP de empeño: 1244 ms** · `ADR-0029` · el elemento es la textura de mármol, 10.7 KB en AVIF. Fuentes: 78.5 KB — Archivo en 4 pesos más EB Garamond 400 · 173.5 KB, 0 de terceros.
 
-**NINGUNA cifra absoluta de LCP de este repo es comparable entre sesiones.** La máquina dio 4356, 8948 y 7636 ms para el mismo código; el 14 de septiembre por la noche ese mismo 1244 se midió en **3804 ms**, tres veces peor, sin tocar nada. Solo valen las parejas intercaladas en la misma fase — y **en los dos órdenes**: el `ADR-0030` vio una «regresión» de 700 ms que cambió de bando al invertir el orden. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
+**NINGUNA cifra absoluta de LCP de este repo es comparable entre sesiones.** La máquina dio 4356, 8948 y 7636 ms para el mismo código; el 14 de septiembre por la noche ese mismo 1244 se midió en **3804 ms**, tres veces peor, sin tocar nada. Solo valen las parejas intercaladas en la misma fase — y **en los dos órdenes**: el `ADR-0030` vio una «regresión» de 700 ms que cambió de bando al invertir el orden.
+
+**Y añadido el 15 de septiembre · `ADR-0035`: un grupo apretado de lecturas NO prueba nada si todas se toman en la misma fase.** Esa noche tres lecturas seguidas dieron 3840, 3828 y 3944 —desviación de 60 ms, o sea con toda la pinta de ser real— contra los 1344 de veinte minutos antes para el MISMO código. Intercalado, el commit anterior también medía ~3900. La baja varianza engaña igual que la alta. En las otras tres de giro, 1888–1904 ms desde el `ADR-0023`. La foto de entrada
 llevaba `loading="lazy"` siendo el elemento LCP, en las cuatro, desde el `ADR-0009`.
 Vale cerca de un segundo y se destapó midiendo otra cosa.
 

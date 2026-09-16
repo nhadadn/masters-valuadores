@@ -192,6 +192,31 @@ export const galeriaJoyeria: FotoDeGaleria[] = [
     referencia: true,
     alt: 'Reloj de oro con carátula negra y correa de piel, sobre fondo oscuro',
     pie: 'Reloj de oro con correa de piel'
+  },
+
+  /* MONEDAS · y aquí el riesgo es de otra clase, así que queda anotado.
+     En los relojes el defecto vivía en texto diminuto de carátula. En una moneda
+     mexicana **el texto ES el tema** y la inscripción está fijada por ley: un
+     Centenario dice «1821 1947», no «19S07», y el 10 pesos de esta imagen trae un
+     literal «SUBJ» en el exergo. Ampliadas al 100 % son errores evidentes para
+     cualquiera que haya empeñado un centenario, que en la Laguna es mucha gente.
+
+     Se midió antes de publicarlas: a 320×213, la celda real del carrusel, **lo
+     legible es lo correcto** —«ORO PURO», «PLATA PURA», «1000 g»— y lo erróneo
+     desaparece. Por eso van topadas a 600 y nunca al tamaño del original. */
+  {
+    nombre: 'lujo-monedas-claro',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Monedas mexicanas de oro y plata —entre ellas una onza Libertad— apiladas sobre mármol claro con vetas doradas',
+    pie: 'Monedas de oro y plata'
+  },
+  {
+    nombre: 'lujo-monedas-oscuro',
+    maxAncho: 600,
+    referencia: true,
+    alt: 'Lingotes de oro y plata junto a monedas mexicanas de oro y plata, sobre mármol oscuro',
+    pie: 'Lingotes y monedas'
   }
 ];
 

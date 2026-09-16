@@ -144,7 +144,7 @@
   {/if}
   {#if giro.muestraJoyeria}
     <div class="joyeria">
-      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería y joyería" clave="joya" nota={notaJoyeria} />
+      <Carrusel fotos={galeriaJoyeria} etiqueta="Relojería, joyería y monedas" clave="joya" nota={notaJoyeria} />
     </div>
   {/if}
 
