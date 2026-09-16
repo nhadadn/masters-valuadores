@@ -111,7 +111,7 @@ enlazadas desde el pie.
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías |
-| JavaScript | **Solo en `/empeno-y-prestamo/`** · **12.4 KB** propios, sin marco ni librería · `ADR-0021`, `ADR-0023`, `ADR-0026` y `ADR-0033`. Subió 0.9 KB al hacer el carrusel multi-instancia; el margen de CA-10 baja a **27.90 KB**. Las otras siete en 0 KB |
+| JavaScript | **Solo en `/empeno-y-prestamo/`** · **4.54 KB gzip**, sin marco ni librería · `ADR-0023`, `ADR-0026` y `ADR-0033`. **CAYÓ de 12.10 a 4.54 el 15 de septiembre · `ADR-0038`**: al quitar la segunda mitad de la entrada se fue con ella la banda de monedas del `ADR-0021`, que queda inalcanzable. Margen de CA-10: **35.46 KB**. Las otras siete en 0 KB |
 | Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
@@ -218,6 +218,11 @@ Vale cerca de un segundo y se destapó midiendo otra cosa.
 La banda de monedas, medida contra la misma página sin ella y en la misma fase:
 **+509 ms de hilo mientras caen**, **+66 ms ya asentadas**, cero tareas largas, y 49
 fps con el reloj a 1/4. `node herramientas/medir-monedas.mjs`.
+
+**YA NO SE PINTA · `ADR-0038`.** Vivía dentro de la segunda mitad de la entrada, que
+desde el 15 de septiembre solo se pinta en los giros SIN galería propia — y empeño es
+el único giro `lujo`, o sea el único que la mostraba. El marcado sigue ahí, guardado
+por su condición; `medir-monedas.mjs` ya no tiene qué medir en el sitio construido.
 
 Titular más largo: «Renta de maquinaria y equipo» mide 392 px a h1 28/700 contra 350
 disponibles. **No cabe en un renglón en ninguna tipografía.** Por eso la tarjeta de giro

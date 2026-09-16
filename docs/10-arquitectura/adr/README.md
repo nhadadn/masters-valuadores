@@ -46,6 +46,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0035 | [[ADR-0035-monedas-y-el-piso-tactil\|Monedas en la secuencia, y el piso táctil que llevaba roto]] | **ACEPTADA** · extiende el 0034 · **el objetivo táctil de 44 px llevaba roto desde el 0023** · quinto fantasma de LCP | 2026-09-15 |
 | 0036 | [[ADR-0036-fuera-el-panel-de-consulta\|Fuera el panel de consulta: había demasiado «contáctanos»]] | **ACEPTADA** · **revierte en parte el 0024** · 14 puntos de contacto medidos · los bloques de contacto bajan de 3 a 2 | 2026-09-15 |
 | 0037 | [[ADR-0037-una-seccion-para-las-dos-tiras\|Una sola sección para las dos tiras]] | **ACEPTADA** · **enmienda el 0033** · la dirección la fijó el 0022: el patio no sube al mármol | 2026-09-15 |
+| 0038 | [[ADR-0038-fuera-la-segunda-mitad-de-la-entrada\|Fuera la segunda mitad de la entrada, y con ella la banda de monedas]] | **ACEPTADA** · **retira de hecho el 0021** · el JS de empeño cae de 12.10 a 4.54 KB gzip | 2026-09-15 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

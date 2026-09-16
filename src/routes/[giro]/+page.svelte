@@ -36,6 +36,22 @@
      Sigue saliendo del DATO y no del slug. */
   const veta = $derived(giro.registro === 'lujo' ? 'marmol' : 'tenue');
 
+  /**
+   * ¿Se pinta la segunda mitad de la entrada? · ADR-0038.
+   *
+   * Es el bloque de CTA + foto grande + banda de monedas del ADR-0027. Se quita de
+   * los giros que YA tienen galería propia, y hoy eso es solo empeño:
+   *
+   *   · su foto grande era **la misma fotografía** que tres tarjetas de la tira,
+   *     así que la página ensañaba dos veces lo mismo con distinto tamaño;
+   *   · y las monedas dibujadas eran «ocho discos planos en fila», dicho por Nadir.
+   *
+   * NO se quita de los otros tres. Medido en vivo antes de tocar: maquinaria, fletes
+   * y taller tienen **cero carruseles**, o sea que esta sección es su Única
+   * fotografía y su único botón. Borrarla de la plantilla los dejaba sin imagen.
+   */
+  const segundaMitad = $derived(!(giro.muestraJoyeria || giro.muestraInventario));
+
   const PREGUNTAS = [
     '¿Aceptan lo que traigo?',
     '¿Cuánto me dan y cuándo?',
@@ -116,6 +132,7 @@
      La foto YA NO es `prioritaria`: lo era por ser el elemento LCP cuando abría la
      página, y ahora vive muy por debajo del pliegue. Dejarla eager habría sido pedir
      con prisa algo que nadie ve al entrar. -->
+{#if segundaMitad}
 <Seccion fondo="marmol">
   <div class="entrada-b">
   <!-- AQUÍ VIVÍA UN TERCER BOTÓN DE WHATSAPP · ADR-0033.
@@ -161,6 +178,7 @@
     <MonedasQueCaen />
   {/if}
 </Seccion>
+{/if}
 
 <!-- UNA SOLA SECCIÓN PARA LAS DOS TIRAS · ADR-0037.
      Medído antes de unificarlas: la de joyería estaba en una sección de 1187 px SIN
