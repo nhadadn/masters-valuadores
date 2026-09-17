@@ -396,7 +396,9 @@
   .num {
     flex-shrink: 0; width: 30px; height: 30px; border-radius: var(--radio-pastilla);
     display: inline-flex; align-items: center; justify-content: center;
-    background: var(--oro-500); color: var(--negro-950); font-size: 15px; line-height: 1;
+    background: var(--oro-500); color: var(--negro-950); line-height: 1;
+    /* 14 y no 15 · ADR-0053: el numeral del disco va al tamaño de apoyo, en peso de título. */
+    font-size: var(--pie-tam); font-weight: var(--h2-peso);
   }
   /* CAMBIO 05 · la fotografía contrasta CONTRA la piedra, no dentro de una tarjeta
      blanca. Radio moderado, sombra muy suave y contraste algo subido: el objeto de

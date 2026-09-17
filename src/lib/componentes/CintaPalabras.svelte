@@ -77,8 +77,12 @@
     padding-inline: var(--e-4);
     font-size: var(--h3-tam);
     line-height: 1.2;
-    font-weight: var(--titular-peso);
-    letter-spacing: var(--titular-tracking);
+    /* MAYÚSCULAS DE ETIQUETA, NO DE TITULAR · ADR-0053. Tomaba `--titular-peso` y
+       `--titular-tracking`, que el ADR-0029 cambió a 400 y −0.01em para la Garamond del
+       titular: la cinta, que es Archivo, quedó en mayúsculas delgadas y apretadas, la única
+       así en el sitio. Las mayúsculas del sitio van en 700 y con aire, como las cejas. */
+    font-weight: var(--etiqueta-peso);
+    letter-spacing: var(--etiqueta-tracking);
     text-transform: uppercase;
     white-space: nowrap;
   }

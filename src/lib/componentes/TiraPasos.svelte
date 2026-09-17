@@ -58,8 +58,11 @@
   li:first-child { border-top: 0; }
 
   .num {
-    font-size: 1.375rem;
-    font-weight: 900;
+    /* 700 y no 900 · ADR-0053. Era el último texto del sitio en 900, el peso que el
+       ADR-0007 trajo para un titular que desde el ADR-0029 es Garamond. Un peso más solo
+       para tres numerales es mezcolanza, y además una descarga de fuente solo para ellos. */
+    font-size: var(--h2-tam);
+    font-weight: var(--h2-peso);
     line-height: 1;
     /* `--oro-texto-grande` y no `--oro-500`: en el registro claro el oro de marca
        sobre panel da 1.87:1 y deja de ser texto. El token ya resuelve los dos

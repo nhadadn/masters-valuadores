@@ -60,6 +60,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0050 | [[ADR-0050-el-circuito-del-proceso-se-mueve\|El circuito del proceso se mueve]] | **ACEPTADA** · **enmienda la regla de movimiento de tokens.css y el 0042** · luz en bucle y armado al deslizar · **esconde texto hasta que llega**, con la objeción por escrito · en bucle, solo transform, opacity y visibility | 2026-09-16 |
 | 0051 | [[ADR-0051-donde-estamos-en-lienzo-partido\|«DÓNDE ESTAMOS», en lienzo partido con la marca]] | **ACEPTADA** · **enmienda el 0015** · el logo plano del sitio como lienzo, con «Ver el mapa» dentro · se descarta el logo con banderas por el 0001, 0004 y 0018 · **el botón primario por fin sigue el 0028**: carbón en claro | 2026-09-16 |
 | 0052 | [[ADR-0052-sale-te-atendemos-y-llamar-llama\|Sale «Te atendemos por WhatsApp», y «Llamar» llama]] | **ACEPTADA** · cierra lo abierto por el 0048, 0049 y 0051 · repetía los 5 mensajes del mosaico · **los tres «Llamar» rebotaban entre portada y contacto** | 2026-09-16 |
+| 0053 | [[ADR-0053-el-pie-en-una-ficha-y-una-sola-escala\|El pie en una ficha, y una sola escala tipográfica]] | **ACEPTADA** · **enmienda el 0007 §2**: la banda se funde en el pie · respeta el 0036 · pie de 902 a 540 px en teléfono · **de 31 a 25 combinaciones tipográficas**, sin 800 ni 900 · guardia `inventario-tipografico.mjs` | 2026-09-16 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

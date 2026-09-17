@@ -52,7 +52,7 @@ const PIEZAS = [
   { n: 23, donde: '.ubicacion .lienzo',     nombre: 'Mapa' },            // ADR-0051: el mapa se abre en el lienzo
   { n: 24, donde: '.ubicacion .ficha',      nombre: 'Datos del local' },
   { n: 26, donde: '.cruzados',              nombre: 'Otras líneas' },
-  { n: 27, donde: 'footer .banda',          nombre: 'Banda de contacto' },
+  { n: 27, donde: 'footer .datos',          nombre: 'Datos del pie' },       // ADR-0053: la banda se fundió en el pie
   { n: 28, donde: 'footer',                 nombre: 'Pie' },
   { n: 29, donde: '.barra-fija',            nombre: 'Barra fija', soloAncho: 390 },
   { n: 30, donde: '.flotante',              nombre: 'Botón flotante', soloAncho: 1280 }

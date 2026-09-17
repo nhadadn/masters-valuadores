@@ -191,7 +191,9 @@
 
   figcaption {
     padding: var(--e-2) 0 0;
-    font-size: 0.8125rem;
+    /* 14 y no 13 · ADR-0053: 13 px es el tamaño de las cejas en mayúsculas, no de un pie
+       de foto en minúsculas. El texto de apoyo del sitio va a `--pie-tam`. */
+    font-size: var(--pie-tam);
     line-height: 1.35;
     color: var(--tinta);
     text-align: center;
@@ -236,7 +238,7 @@
   .nota {
     max-width: 790px;
     margin-top: var(--e-3);
-    font-size: 0.875rem;
+    font-size: var(--pie-tam);
     line-height: 1.5;
     color: var(--tinta-secundaria);
   }

@@ -2,14 +2,14 @@
   import '../app.css';
   import { dev } from '$app/environment';
   import { grafoSerializado } from '$lib/seo/jsonld';
-  import { negocio, sucursalPrincipal, estaConfirmado, horariosLegibles } from '$lib/config/negocio';
+  import { negocio, sucursalPrincipal, estaConfirmado, horariosLegibles, direccionCompleta } from '$lib/config/negocio';
+  import { enlaceTelefono } from '$lib/datos/telefono';
   import { girosConstruibles } from '$lib/datos/giros';
   import Icono from '$componentes/Icono.svelte';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
   import PorConfirmar from '$componentes/PorConfirmar.svelte';
   import Meta from '$componentes/Meta.svelte';
   import ReglaDorada from '$componentes/ReglaDorada.svelte';
-  import BandaContacto from '$componentes/BandaContacto.svelte';
   import Monograma from '$componentes/Monograma.svelte';
   import type { Snippet } from 'svelte';
 
@@ -21,6 +21,8 @@
   const grafo = grafoSerializado(!dev, permisivo);
   const tel = sucursalPrincipal.telefono;
   const horarios = horariosLegibles();
+  const direccion = direccionCompleta();
+  const mapa = sucursalPrincipal.mapaUrl;
 </script>
 
 <svelte:head>
@@ -70,40 +72,63 @@
 <main id="contenido">{@render children()}</main>
 
 <footer class="registro-oscuro">
-  <!-- ADR-0007 §2. La banda va arriba del pie, no dentro: es lo que alguien busca
-       cuando ya decidió llamar, y en sus piezas cierra la composición. -->
-  <BandaContacto />
+  <!-- EL PIE EN UNA FICHA · ADR-0053. Aquí iba `BandaContacto` —«LLÁMANOS · DÓNDE
+       ESTAMOS»— encima de un pie con horario, líneas y legal: dos bloques oscuros seguidos,
+       902 px en teléfono, repitiendo lo que «DÓNDE ESTAMOS» ya dice arriba. Ahora es uno.
+       Lo que NO se pierde, por el ADR-0036: nombre, dirección y teléfono ESCRITOS en cada
+       página —en ocho de las nueve el número solo estaba en la banda— y el aviso de
+       privacidad enlazado, que el mapa de Google obliga a tener a mano. -->
   <div class="regla-pie"><ReglaDorada ancho="completo" /></div>
   <div class="caja">
-    <div class="bloque">
-      <p class="nombre-pie">{negocio.nombreComercial} VALUADORES</p>
+    <div class="datos">
+      <p class="marca-pie"><Monograma tam={28} /><span>{negocio.nombreComercial} VALUADORES</span></p>
+      {#if estaConfirmado(tel)}
+        <!-- `data-negocio`: el número SALE de `negocio.ts`. El validador lo tolera solo por
+             eso; ver la nota del guardia en validar-a11y.mjs. -->
+        <a class="telefono-pie" href={enlaceTelefono()} data-negocio="telefono">
+          <Icono nombre="telefono" tam={20} grosor={1.9} />{tel}
+        </a>
+      {:else}
+        <p><PorConfirmar que="teléfono" decision="D-08" sobreOscuro /></p>
+      {/if}
+      {#if estaConfirmado(direccion)}
+        <div class="fila">
+          <Icono nombre="mapa" tam={20} />
+          <div>
+            <p class="direccion-pie" data-negocio="direccion">{direccion}</p>
+            {#if estaConfirmado(mapa)}
+              <a class="ir" href={mapa} target="_blank" rel="noopener">Cómo llegar <Icono nombre="ir" tam={16} grosor={2} /></a>
+            {/if}
+          </div>
+        </div>
+      {:else}
+        <p><PorConfirmar que="calle, número, colonia y CP" decision="D-08" sobreOscuro /></p>
+      {/if}
     </div>
+
     <div class="bloque">
-      <p class="etiqueta">HORARIOS Y REDES</p>
-      <!-- Dirección y teléfono ya no se repiten aquí: viven en la banda de arriba.
-           El WhatsApp tampoco: es el mismo número y el botón está siempre en pantalla. -->
+      <!-- «HORARIOS Y REDES» se quedó en HORARIO: las redes siguen por confirmar (D-10) y
+           la etiqueta prometía algo que no estaba. -->
+      <p class="etiqueta">HORARIO</p>
       {#if estaConfirmado(horarios)}
-        <ul class="horarios" data-negocio="horarios">
-          {#each horarios as h}
-            <li><span class="dias">{h.dias}</span> <span>{h.horas}</span></li>
-          {/each}
-        </ul>
+        <dl class="horarios" data-negocio="horarios">
+          {#each horarios as h}<dt>{h.dias}</dt><dd>{h.horas}</dd>{/each}
+        </dl>
       {:else}
         <p class="dato"><PorConfirmar que="horarios de cada día" decision="D-08" sobreOscuro /></p>
       {/if}
     </div>
-    <div class="bloque">
+
+    <nav class="bloque lineas" aria-label="Líneas de negocio, al pie">
       <p class="etiqueta">LÍNEAS</p>
       <ul>
-        {#each girosConstruibles as g}<li><a href="/{g.slug}/">{g.nombre}</a></li>{/each}
+        {#each girosConstruibles as g}<li><a href="/{g.slug}/">{g.nombreCorto}</a></li>{/each}
       </ul>
-    </div>
-    <div class="bloque">
-      <p class="etiqueta">LEGAL</p>
-      <ul>
-        <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
-        <li><a href="/terminos/">Términos</a></li>
-      </ul>
+    </nav>
+
+    <div class="legal">
+      <a href="/aviso-de-privacidad/">Aviso de privacidad</a>
+      <a href="/terminos/">Términos</a>
     </div>
   </div>
 </footer>
@@ -191,25 +216,58 @@
   .regla-pie { background: var(--negro-950); }
   .caja {
     max-width: var(--ancho-maximo); margin-inline: auto; display: grid; gap: var(--e-6);
-    padding: var(--e-8) var(--margen-lateral) var(--e-12);
+    padding: var(--e-8) var(--margen-lateral) var(--e-4);
   }
-  .nombre-pie { font-weight: 700; letter-spacing: 0.03em; }
+
+  /* LA FICHA DEL PIE · ADR-0053. Nombre, número y dirección arriba; el número manda, como
+     mandaba en la banda: es lo que busca quien ya decidió llamar. */
+  .datos { display: grid; gap: var(--e-3); }
+  .marca-pie { display: flex; align-items: center; gap: var(--e-3); font-weight: 700; letter-spacing: 0.03em; }
+  .telefono-pie {
+    display: inline-flex; align-items: center; gap: var(--e-3); justify-self: start;
+    min-height: var(--tactil-piso);
+    font-size: var(--h2-tam); font-weight: var(--h2-peso); color: var(--tinta);
+  }
+  .fila { display: grid; grid-template-columns: 20px 1fr; gap: var(--e-3); align-items: start; }
+  .telefono-pie :global(svg), .fila > :global(svg) { color: var(--oro-500); flex-shrink: 0; }
+  .fila > :global(svg) { margin-top: 1px; }
+  .direccion-pie { font-size: var(--pie-tam); line-height: var(--pie-alto); color: var(--tinta-secundaria); }
+  .ir {
+    display: inline-flex; align-items: center; gap: var(--e-1); min-height: var(--tactil-piso);
+    font-size: var(--pie-tam); font-weight: var(--cuerpo-fuerte-peso); color: var(--oro-500);
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
   .etiqueta {
     font-size: var(--etiqueta-tam); font-weight: var(--etiqueta-peso);
     letter-spacing: var(--etiqueta-tracking); color: var(--tinta-tenue-oscuro);
-    margin-bottom: var(--e-3);
+    margin-bottom: var(--e-2);
   }
   .dato { margin-top: var(--e-2); }
-  .horarios { margin-top: var(--e-2); display: grid; gap: var(--e-1); font-size: var(--pie-tam); }
-  .horarios li { display: flex; flex-wrap: wrap; gap: var(--e-1) var(--e-3); }
-  .dias { min-width: 10ch; color: var(--tinta-secundaria); }
-  footer li a {
-    display: block; min-height: var(--tactil-piso);
-    display: flex; align-items: center;
-    font-size: var(--pie-tam); color: var(--tinta-secundaria);
+  /* EL HORARIO EN COLUMNA: el día iba a `10ch` y «Lunes a viernes» pasa de 10, así que su
+     hora empezaba 17 px más a la derecha que las otras. */
+  .horarios {
+    display: grid; grid-template-columns: max-content 1fr; gap: 2px var(--e-4);
+    font-size: var(--pie-tam); line-height: var(--pie-alto);
   }
+  .horarios dt { color: var(--tinta-secundaria); }
+  .horarios dd { color: var(--tinta); }
+
+  /* LAS LÍNEAS EN FILA y con su nombre corto, como en el menú de arriba. Eran cinco
+     renglones de 44 px con el nombre largo, uno bajo otro. */
+  .lineas ul { display: flex; flex-wrap: wrap; gap: 0 var(--e-6); }
+  /* 44 × 44 COMO PISO EN LOS DOS LADOS: «Taller» mide 34 px de ancho, y en fila un enlace
+     corto se volvía un objetivo más angosto que el dedo. El validador lo cazó. */
+  .lineas a, .legal a {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: var(--tactil-piso); min-width: var(--tactil-piso);
+    font-size: var(--pie-tam);
+  }
+  .lineas a { color: var(--tinta); }
+  .legal { display: flex; flex-wrap: wrap; gap: 0 var(--e-6); padding-top: var(--e-1); border-top: 1px solid var(--borde-sutil); }
+  .legal a { color: var(--tinta-secundaria); }
   /* En el pie sí cabe el oro de marca: sobre carbón da 11.12:1. */
-  footer li a:hover { color: var(--oro-500); }
+  .lineas a:hover, .legal a:hover { color: var(--oro-500); }
 
   .barra-fija {
     position: sticky; bottom: 0; z-index: 10;
@@ -274,7 +332,8 @@
       bottom: var(--e-6);
       z-index: 20;
     }
-    .caja { grid-template-columns: 1.2fr 1fr 1fr 0.8fr; gap: var(--e-12); }
+    .caja { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--e-6) var(--e-12); padding-top: var(--e-12); }
+    .legal { grid-column: 1 / -1; }
     .barra-fija { display: none; }   /* en escritorio el contacto vive en el encabezado */
   }
   @media (min-width: 768px) and (max-width: 1023px) {

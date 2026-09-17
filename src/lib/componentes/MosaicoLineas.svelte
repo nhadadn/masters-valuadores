@@ -152,8 +152,11 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 4px;
   }
-  .titulo { font-size: var(--h3-tam); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
-  .frase { display: none; font-size: 15px; line-height: 1.35; color: var(--negro-200); }
+  /* LA ESCALA DE LA CASA · ADR-0053. Llevaba 700 fijo con −0.01em —el espaciado que solo
+     usa el titular en Garamond— y la frase a 15 px, entre el 14 de apoyo y el 17 de cuerpo.
+     Ahora cada tamaño trae su peso: h3 en teléfono, h2 y display desde tableta. */
+  .titulo { font-size: var(--h3-tam); line-height: 1.15; font-weight: var(--h3-peso); }
+  .frase { display: none; font-size: var(--pie-tam); line-height: var(--pie-alto); color: var(--negro-200); }
   .mayor .frase { display: block; }
   .mayor .texto { right: calc(var(--e-3) + 56px); }
 
@@ -208,7 +211,7 @@
     .mosaico { grid-auto-rows: 240px; gap: var(--e-3); }
     .pieza, .pieza.mayor { aspect-ratio: auto; }
     .frase { display: block; }
-    .titulo { font-size: var(--h2-tam); }
+    .titulo { font-size: var(--h2-tam); font-weight: var(--h2-peso); }
     /* Con `.mayor` delante: la regla de teléfono tiene dos clases y le ganaría a esta. */
     .texto, .mayor .texto { left: var(--e-4); right: calc(var(--e-4) + 56px); bottom: var(--e-4); }
     .wa-pieza, .mayor .wa-pieza { top: auto; right: var(--e-4); bottom: var(--e-4); }
@@ -225,8 +228,8 @@
     .mosaico:has(> .pieza:nth-child(5):last-child) > .pieza:nth-child(4) { grid-column: 4; grid-row: 2 / 4; }
     .mosaico:has(> .pieza:nth-child(5):last-child) > .pieza:nth-child(5) { grid-column: 1 / 3; grid-row: 3; }
     .frase { display: block; }
-    .titulo { font-size: var(--h2-tam); }
-    .mayor .titulo { font-size: var(--display-tam); }
+    .titulo { font-size: var(--h2-tam); font-weight: var(--h2-peso); }
+    .mayor .titulo { font-size: var(--display-tam); font-weight: var(--display-peso); }
     .texto, .mayor .texto { left: var(--e-4); right: calc(var(--e-4) + 56px); bottom: var(--e-4); }
     .wa-pieza, .mayor .wa-pieza { top: auto; right: var(--e-4); bottom: var(--e-4); }
     .foto-pieza :global(figcaption) { top: var(--e-3); bottom: auto; }

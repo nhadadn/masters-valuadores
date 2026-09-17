@@ -89,7 +89,8 @@
     padding: 0 var(--e-4) 0 var(--e-3);
     box-shadow: inset 0 0 0 2px var(--oro-500);
     color: var(--blanco);
-    font-size: 15px;
+    /* Etiqueta de control al tamaño de los botones de la casa: 17 y 600 · ADR-0053. */
+    font-size: var(--cuerpo-tam);
     font-weight: var(--cuerpo-fuerte-peso);
     cursor: pointer;
     list-style: none;

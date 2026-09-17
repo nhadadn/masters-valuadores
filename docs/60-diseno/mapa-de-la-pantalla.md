@@ -60,11 +60,11 @@ y sus números quedan vacantes, no reutilizados:
 | 18 | **Carrusel del patio** | Las fotos que se deslizan de lado | `Carrusel.svelte` |
 | 19 | **Puntos del carrusel** | Los seis puntitos de debajo | `Carrusel.svelte` |
 | 20 | **Pasos del proceso** | `01 / 02 / 03` con su frase larga | `[giro]/+page.svelte` |
-| 23 | **Mapa** | El mapa de Google. Carga al tocarlo | `Mapa.svelte` |
-| 24 | **Datos del local** | Dirección, horarios, «Cómo llegar» | `DatosDelLocal.svelte` |
+| 23 | **Mapa** | El lienzo con la marca y «Ver el mapa»: el mapa de Google carga al tocarlo, dentro del lienzo · ADR-0051 | `Ubicacion.svelte` · `Mapa.svelte` |
+| 24 | **Datos del local** | La ficha junto al lienzo: dirección, horarios, «Cómo llegar» · ADR-0051 | `DatosDelLocal.svelte` |
 | 26 | **Otras líneas** | Los enlaces a maquinaria, fletes y taller | `[giro]/+page.svelte` |
-| 27 | **Banda de contacto** | Teléfono y dirección, justo encima del pie | `BandaContacto.svelte` |
-| 28 | **Pie** | Todo el bloque final: razón social, horarios, legales | `+layout.svelte` |
+| 27 | **Datos del pie** | Nombre, teléfono y dirección, dentro del pie. Era la banda de contacto, que se fundió en el pie · ADR-0053 | `+layout.svelte` |
+| 28 | **Pie** | Todo el bloque final: datos, horario, líneas y legales | `+layout.svelte` |
 | 29 | **Barra fija** | La barra de WhatsApp pegada abajo. **Solo en teléfono** | `+layout.svelte` |
 | 30 | **Botón flotante** | El WhatsApp que flota a la derecha. **Solo en escritorio** | `+layout.svelte` |
 

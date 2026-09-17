@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render } from 'svelte/server';
 import Ubicacion from '../src/lib/componentes/Ubicacion.svelte';
-import BandaContacto from '../src/lib/componentes/BandaContacto.svelte';
+import { readFileSync } from 'node:fs';
 import {
   negocio, sucursalPrincipal, direccionCompleta, horariosLegibles, mapaEmbed, estaConfirmado
 } from '../src/lib/config/negocio';
@@ -62,9 +62,10 @@ describe('DÓNDE ESTAMOS · lienzo partido · ADR-0051', () => {
     expect((f.match(/<dd\b/g) ?? []).length).toBe(dias);
   });
 
-  it('ninguna flecha de texto, ni aquí ni en la banda del pie', () => {
-    const banda = render(BandaContacto, { props: {} }).body;
-    for (const html of [conTitulo, banda]) expect(html).not.toMatch(/[↗↘→]/);
+  it('ninguna flecha de texto, ni aquí ni en el pie', () => {
+    // La banda del pie salió con el ADR-0053; su «Cómo llegar» vive ahora en la plantilla común.
+    const pie = readFileSync('src/routes/+layout.svelte', 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/<style>[\s\S]*<\/style>/, '');
+    for (const html of [conTitulo, pie]) expect(html).not.toMatch(/[↗↘→]/);
   });
 
   it('el título es opcional: la página de línea ya trae su pregunta numerada', () => {

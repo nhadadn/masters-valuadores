@@ -246,8 +246,9 @@
     text-align: center;
     font-size: 0.625rem;
     line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -0.01em;
+    /* 700 y no 800 · ADR-0053: el sitio no carga el 800, así que el navegador lo fingía
+       con el peso más cercano. Y sin el −0.01em, que solo lleva el titular en Garamond. */
+    font-weight: var(--etiqueta-peso);
   }
 
   .sol {

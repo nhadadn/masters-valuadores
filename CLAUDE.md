@@ -129,6 +129,7 @@ enlazadas desde el pie.
 | **Lenguaje visual derivado de sus publicaciones** | `ADR-0007` | Nadir · **falta implementarlo** |
 | Tipografía Archivo, autoalojada | `ADR-0002` | Nadir |
 | **DOS familias desde el 14 de septiembre** · EB Garamond solo en el titular y su promesa · enmienda el 0002 | `ADR-0029` | Nadir |
+| **Una sola escala tipográfica**: Archivo solo en 400, 600 y 700 y los tamaños de `tokens.css`; fuera de escala solo la marca escrita, el titular Garamond y los rótulos del planeta. Lo vigila `inventario-tipografico.mjs` | `ADR-0053` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -198,7 +199,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **178 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **176 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -265,7 +266,7 @@ queda sin usar.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar y CA-10 · 178 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar y CA-10 · 176 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
@@ -273,6 +274,7 @@ node herramientas/medir-portada.mjs   # peso real y LCP en 4G · RUTA=/empeno-y-
 npx serve build -l 5180               # en una terminal…
 node herramientas/validar-a11y.mjs    # …y esto en otra (BASE=http://127.0.0.1:5180)
 node herramientas/auditar-fondos.mjs  # ADR-0043 · el fondo real de cada bloque, en las nueve páginas
+node herramientas/inventario-tipografico.mjs  # ADR-0053 · sale con 1 si aparece una combinación tipográfica fuera de la escala
 node herramientas/medir-monedas.mjs   # ADR-0021 · lo que cuesta la banda de empeño
 cd diseno/sistema  && python verificar-contraste.py   # usan rutas relativas:
 cd diseno/pantallas && node validar.mjs               # hay que entrar a su carpeta
