@@ -255,7 +255,10 @@
 
   /* LAS LÍNEAS EN FILA y con su nombre corto, como en el menú de arriba. Eran cinco
      renglones de 44 px con el nombre largo, uno bajo otro. */
-  .lineas ul { display: flex; flex-wrap: wrap; gap: 0 var(--e-6); }
+  /* EN TELÉFONO, LAS CINCO EN UN RENGLÓN · ADR-0055. Con 24 px entre enlace y enlace
+     pedían 377 px y «Taller» caía sola al segundo renglón. Los cinco suman 281: con 8 px
+     de piso caben desde 313 —un teléfono de 360 deja 320— y lo que sobra se reparte. */
+  .lineas ul { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--e-2); }
   /* 44 × 44 COMO PISO EN LOS DOS LADOS: «Taller» mide 34 px de ancho, y en fila un enlace
      corto se volvía un objetivo más angosto que el dedo. El validador lo cazó. */
   .lineas a, .legal a {
@@ -334,6 +337,9 @@
     }
     .caja { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--e-6) var(--e-12); padding-top: var(--e-12); }
     .legal { grid-column: 1 / -1; }
+    /* En la columna del pie los cinco no caben en un renglón a ningún ancho: vuelven a ir
+       juntos a la izquierda, con sus 24 px. */
+    .lineas ul { justify-content: flex-start; gap: 0 var(--e-6); }
     .barra-fija { display: none; }   /* en escritorio el contacto vive en el encabezado */
   }
   @media (min-width: 768px) and (max-width: 1023px) {

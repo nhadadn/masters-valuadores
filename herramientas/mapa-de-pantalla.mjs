@@ -51,7 +51,7 @@ const PIEZAS = [
   { n: 20, donde: '.pasos',                 nombre: 'Pasos del proceso' },
   { n: 23, donde: '.ubicacion .lienzo',     nombre: 'Mapa' },            // ADR-0051: el mapa se abre en el lienzo
   { n: 24, donde: '.ubicacion .ficha',      nombre: 'Datos del local' },
-  { n: 26, donde: '.cruzados',              nombre: 'Otras líneas' },
+  // 26 · «Otras líneas» salió · ADR-0055: el pie ya llevaba los mismos enlaces
   { n: 27, donde: 'footer .datos',          nombre: 'Datos del pie' },       // ADR-0053: la banda se fundió en el pie
   { n: 28, donde: 'footer',                 nombre: 'Pie' },
   { n: 29, donde: '.barra-fija',            nombre: 'Barra fija', soloAncho: 390 },

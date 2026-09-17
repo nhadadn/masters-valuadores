@@ -25,13 +25,11 @@
   import { galeriaInventario, galeriaJoyeria, notaJoyeria } from '$lib/datos/galeria';
   import { sucursalPrincipal, estaConfirmado, horariosLegibles } from '$lib/config/negocio';
   import BotonWhatsApp from '$componentes/BotonWhatsApp.svelte';
-  import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
   const giro = $derived(data.giro);
-  const otras = $derived(girosConstruibles.filter((g) => g.slug !== giro.slug));
   /* Cuánta veta lleva la ENTRADA de este giro · ADR-0020, adaptado por el 0028.
      Ya no decide si la sección es clara —ahora lo es toda la página— sino cuánto
      habla la piedra: lo que su marca trata como lujo la enseña, el resto la calla.
@@ -365,21 +363,15 @@
   <Ubicacion />
 </Seccion>
 
-<!-- BLANCO · ADR-0043. Llevaba `piedra`, un tono cálido sólido —rgb(216,210,198)—
-     pensado como escalón entre la página y el pie cuando la página era crema. Con el
-     suelo en blanco puro del ADR-0031 son 154 px de galón cálido entre blanco y negro:
-     el escalón de verdad lo hace el pie. -->
-<Seccion etiqueta="OTRAS LÍNEAS DEL GRUPO" fondo="blanco">
-  <!-- AQUÍ HABÍA OTRA: «Sin estos enlaces cada página queda aislada y el multigiro
-       no reparte autoridad.» Es la justificación SEO del bloque, escrita para el
-       equipo y publicada por accidente. El visitante no necesita que le expliquen
-       por qué hay enlaces: necesita los enlaces. La razón vive en el ADR-0003. -->
-  <ul class="cruzados">
-    {#each otras as g}
-      <li><a href="/{g.slug}/"><Icono nombre={g.icono} tam={20} /> {g.nombre}</a></li>
-    {/each}
-  </ul>
-</Seccion>
+<!-- AQUÍ ESTABA «OTRAS LÍNEAS DEL GRUPO» · ADR-0055. Cuatro tarjetas con el nombre largo
+     de las otras líneas, justo encima del pie. Salió porque repetía navegación: el pie de
+     las nueve páginas lleva los cinco enlaces desde el ADR-0053, y en escritorio también la
+     cabecera. En teléfono medía 328 px y la tarjeta se separaba del acero a 1.49:1.
+
+     Su razón —que sin estos enlaces cada página quedaba aislada— era cierta cuando nada
+     más las unía. Hoy las une el pie. La página de línea termina como contacto: la
+     ubicación y el pie. -->
+
 
 <style>
   /* CAMBIO 03 · navegación editorial: sin recuadro y con aire. Tenía `--superficie`
@@ -570,17 +562,9 @@
   }
   .subtitular { max-width: 56ch; margin: calc(var(--e-2) * -1) 0 var(--e-6); font-size: var(--cuerpo-tam); line-height: var(--cuerpo-alto); color: var(--tinta-suave); }
 
-  .cruzados { display: grid; gap: var(--e-2); margin-top: var(--e-4); }
-  .cruzados a {
-    display: flex; align-items: center; gap: var(--e-2);
-    min-height: var(--tactil); padding: 0 var(--e-4);
-    background: var(--superficie); border: 1px solid var(--panel-borde);
-    font-weight: var(--cuerpo-fuerte-peso);
-  }
-  .cruzados a:hover { border-color: var(--negro-950); }
+  /* `.cruzados` salió con su sección · ADR-0055. */
 
   @media (min-width: 768px) {
     .acciones { grid-auto-flow: column; justify-content: start; }
-    .cruzados { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 </style>
