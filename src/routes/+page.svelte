@@ -19,6 +19,7 @@
   import Ubicacion from '$componentes/Ubicacion.svelte';
   import { girosConstruibles } from '$lib/datos/giros';
   import { negocio } from '$lib/config/negocio';
+  import { enlaceTelefono } from '$lib/datos/telefono';
 
   /**
    * TEXTO PROPUESTO, SIN APROBAR · docs/70-contenido/propuesta-textos.md
@@ -36,6 +37,10 @@
    * quedó mal una vez; ahora sale de `girosConstruibles.length` y no puede mentir.
    * El propio borrador ya había señalado ese riesgo para otra alternativa.
    */
+  /* «LLAMAR» LLAMA · ADR-0052. Los dos botones de esta página llevaban a contacto, y el de
+     contacto traía de vuelta aquí. Sin número confirmado, contacto sigue siendo el destino. */
+  const llamar = enlaceTelefono() ?? '/contacto/';
+
   const CUANTAS = ['cero', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
   const lineas = $derived(CUANTAS[girosConstruibles.length] ?? String(girosConstruibles.length));
 
@@ -96,7 +101,7 @@
       </p>
       <div class="acciones">
         <BotonWhatsApp origen="portada-entrada" />
-        <Boton variante="secundario" href="/contacto/">
+        <Boton variante="secundario" href={llamar}>
           <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
         </Boton>
       </div>
@@ -192,61 +197,12 @@
      tiene dónde vivir de verdad. Hasta entonces, no hay diagonal: es mejor que no
      esté a que esté de adorno. Ver CA-01 en la SPEC-0002. -->
 
-<!-- ── LÍNEAS DE WHATSAPP · tomado de la referencia que le gusta al cliente ──────
-     De `prestamoexpress.com.mx` se toma ESTRUCTURA, no aspecto: una línea por
-     categoría, cada una con su ícono y con LA LISTA DE LO QUE CUBRE. Allí dice
-     «Línea Autos y Maquinaria — Retroexcavadora, Cargadores, Excavadoras…».
-
-     Hace tres cosas a la vez: el mensaje llega preclasificado, el visitante ve que
-     hay alguien que entiende SU caso, y —lo que más importa aquí— esa lista es
-     exactamente el «qué bienes aceptan» que a Masters le falta. Le da casa a la
-     información que de todos modos hay que pedirle a Cristóbal.
-
-     DIFERENCIA CON LA REFERENCIA: ellos tienen cuatro números distintos. Masters
-     tiene uno solo, así que lo que separa las líneas es el MENSAJE PREVIO, no el
-     número. Cuando el cliente confirme si hay más de un número, esto ya está listo. -->
-<Seccion etiqueta="TE ATENDEMOS POR WHATSAPP">
-  <h2 class="titulo-seccion" data-propuesta="true">Escríbenos por la línea que te toca</h2>
-  <ul class="lineas">
-    {#each girosConstruibles as g, i}
-      <!-- LA PRIMERA OCUPA EL DOBLE · decisión de Nadir, 11 de septiembre.
-           Cuatro fotos idénticas en fila se leían como hoja de contactos: mismo
-           tamaño, mismo recorte, mismo peso, y nada decía cuál línea manda.
-
-           EL COSTO, ANOTADO: esto presupone que empeño es la línea principal, y eso
-           lo decide el estudio de búsqueda de la Etapa 1, no nosotros. Va atado al
-           ORDEN de `giros.ts`, que también es provisional: el día que cambie el
-           orden, cambia sola cuál se agranda. Es lo correcto — el destaque sigue a
-           la prioridad, no a un giro escrito a mano aquí. -->
-      <li class:principal={i === 0}>
-        <!-- AQUÍ HABÍA UNA FOTO Y SE QUITÓ · 11 de septiembre, decisión de Nadir.
-             Entró porque la referencia del cliente apoya cada línea en una imagen.
-             Pero al ilustrar también las tarjetas de «Elige la línea que buscas»,
-             las mismas cuatro fotos salían DOS VECES en la portada: los relojes
-             arriba y otra vez aquí, el cargador arriba y otra vez aquí.
-
-             Cada bloque hace un trabajo distinto y solo uno necesita la imagen:
-             arriba es NAVEGACIÓN —reconocer la línea antes de entrar— y aquí es
-             CONTACTO, donde mandan la lista de bienes y el botón.
-
-             LA RAZÓN ES VISUAL Y SOLO VISUAL. Se escribió aquí que esto ahorraba
-             ~85 KB y era falso: medido antes y después, la portada pesa 225.4 KB en
-             los dos casos. Son los mismos cuatro archivos y un archivo se descarga
-             UNA vez, lo pidan uno o dos bloques. Lo que sí baja son las peticiones,
-             de 29 a 18. -->
-        <Insignia icono={g.icono} etiqueta={g.nombre} segunda={g.frasePropuesta} />
-        <!-- SECUNDARIOS · ADR-0046. Eran seis botones iguales en la portada y así no
-             resalta ninguno. El principal es el de la entrada; estos eligen la línea. -->
-        <BotonWhatsApp
-          secundario
-          origen="linea-{g.slug}"
-          texto="Escribir por {g.nombreCorto.toLowerCase()}"
-          mensaje="Hola, escribo por {g.nombre.toLowerCase()}."
-        />
-      </li>
-    {/each}
-  </ul>
-</Seccion>
+<!-- AQUÍ ESTABA «TE ATENDEMOS POR WHATSAPP» · ADR-0052, decisión de Nadir.
+     Una línea por giro con su botón, tomada de la referencia del cliente. Desde el ADR-0049
+     sus cinco botones abrían WhatsApp con los MISMOS cinco mensajes que los botones verdes
+     del mosaico, y los nombres y frases de cada línea ya estaban arriba: 895 px, casi la
+     quinta parte de la portada en teléfono, repitiendo. El día que haya un número por línea, los
+     botones del mosaico son los que lo reciben. -->
 
 <!-- BLANCO · ADR-0043. Era el tercero de tres bloques oscuros seguidos —CONTACTO,
      la banda de datos y el pie—: unos 1040 px de masa negra con las costuras dentro.
@@ -262,7 +218,7 @@
   </h2>
   <div class="acciones">
     <BotonWhatsApp origen="portada-contacto" />
-    <Boton variante="secundario" href="/contacto/">
+    <Boton variante="secundario" href={llamar}>
       <Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar
     </Boton>
   </div>
@@ -311,17 +267,7 @@
      en el mismo bloque compiten y ninguno significa nada. */
   .diferenciadores { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
 
-  /* Una línea por giro. En móvil van apiladas; a partir de 768 en cuatro columnas,
-     como en la referencia. */
-  .lineas { display: grid; gap: var(--e-6); margin-top: var(--e-4); }
-  /* `1fr` en la fila del medio empuja el botón al fondo, así los cuatro quedan a la
-     misma altura aunque las listas midan distinto. Sin esto la retícula se desalinea
-     igual que se desalinearon las tarjetas de giro. */
-  .lineas li {
-    display: grid;
-    grid-template-rows: auto 1fr auto;        /* insignia · lista · botón */
-    gap: var(--e-3);
-  }
+  /* `.lineas` salió con su sección · ADR-0052. */
 
   /* `.ubicacion` y `.datos` se fueron a `Ubicacion.svelte` · ADR-0051. */
 
@@ -329,39 +275,5 @@
     .entrada { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--e-16); }
     .acciones { grid-auto-flow: column; justify-content: start; }
     .diferenciadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    /* PRIMER INTENTO, MEDIDO Y DESCARTADO: seis columnas con la principal en tres y
-       una para cada una de las otras. La geometría no daba — si la principal se
-       queda la mitad, las otras tres reciben un sexto cada una: 180 px a 1280 de
-       ancho. El resultado fue texto en columnas de dos palabras («COMPRA VENTA / DE
-       MAQUINARIA») y botones envueltos en dos renglones.
-
-       La jerarquía no cabe en una sola fila. Va en dos: la principal ocupa el ancho
-       entero y por dentro se parte en foto + contenido, y las otras tres se reparten
-       tres columnas cómodas debajo. */
-    /* ADR-0047 · con cinco líneas quedan cuatro debajo de la principal: en dos columnas,
-       dos por fila. En tres quedaba una huérfana. */
-    .lineas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-6) var(--e-4); }
-    /* LA JERARQUÍA SOBREVIVE SIN LA FOTO.
-       La principal se destacaba con una imagen grande a la izquierda. Al quitarse
-       la foto, el destaque pasa al ANCHO y a la composición: ocupa la fila entera y
-       por dentro se parte en dos — la insignia manda a la izquierda, la lista y el
-       botón a la derecha. Sigue diciendo cuál línea pesa más, sin una imagen que
-       ya vive arriba en su tarjeta. */
-    .lineas .principal {
-      grid-column: 1 / -1;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-      grid-template-rows: auto 1fr auto;
-      column-gap: var(--e-12);
-      align-items: start;
-      padding-bottom: var(--e-6);
-      border-bottom: 1px solid var(--panel-borde);
-    }
-    /* AQUÍ HABÍA UNA COLOCACIÓN EXPLÍCITA POR `nth-child` · ADR-0040, y estaba rota
-       por partida doble. Pedía tres hijos —«insignia · hueco · botón»— y el hueco se
-       fue con el ADR-0027, así que el `:nth-child(3)` no existía. Y los dos que
-       quedan son COMPONENTES: el CSS con ámbito de esta página no alcanza la raíz de
-       un hijo, así que Svelte podó las tres reglas y nunca llegaron al build.
-       Su propio comentario decía que el flujo automático daba el mismo dibujo, y eso
-       es exactamente lo que se está viendo desde entonces. */
   }
 </style>

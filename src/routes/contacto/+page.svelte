@@ -11,8 +11,12 @@
   import Icono from '$componentes/Icono.svelte';
   import Ubicacion from '$componentes/Ubicacion.svelte';
   import { negocio, estaConfirmado } from '$lib/config/negocio';
+  import { enlaceTelefono } from '$lib/datos/telefono';
 
   const formularioListo = estaConfirmado(negocio.destinoFormulario);
+  /* «LLAMAR» LLAMA · ADR-0052. Llevaba a la portada, que a su vez mandaba aquí. Sin número
+     confirmado no se pinta: esta ya es la página de contacto. */
+  const llamar = enlaceTelefono();
 </script>
 
 <div class="migas"><Migas pasos={[{ texto: 'Inicio', href: '/' }, { texto: 'Contacto' }]} /></div>
@@ -21,7 +25,9 @@
   <h1>Contacto</h1>
   <div class="acciones">
     <BotonWhatsApp origen="contacto-entrada" />
-    <Boton variante="secundario" href="/"><Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar</Boton>
+    {#if llamar}
+      <Boton variante="secundario" href={llamar}><Icono nombre="telefono" tam={20} grosor={1.9} /> Llamar</Boton>
+    {/if}
   </div>
 </Seccion>
 
