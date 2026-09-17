@@ -4,6 +4,7 @@
  * Recorre cada página prerenderizada en un navegador real, con la fuente cargada,
  * y mide tres cosas: el contraste de todo texto contra su fondo resuelto, el
  * tamaño de todos los objetivos táctiles, y si algún dato de negocio se coló.
+ * Desde el ADR-0056, una cuarta: que la página no sea más ancha que la ventana.
  *
  * Uso:  npx serve build -l 8123   y luego   node herramientas/validar-a11y.mjs
  */
@@ -158,18 +159,42 @@ for (const ancho of ANCHOS) {
         cifras: (cuerpo.match(/\b\d{3}[ .-]?\d{3}[ .-]?\d{4}\b|\$\s?\d|\b\d{1,2}:\d{2}\b/g) ?? [])
       };
     });
-    filas.push({ ancho, ruta, ...r });
+    /* DESBORDE HORIZONTAL · ADR-0056 · WCAG 1.4.10.
+       Una página más ancha que la ventana no se ve rota: en un teléfono el navegador
+       maqueta más ancho y ENCOGE todo, y ninguno de los criterios de arriba lo nota. Así
+       estuvieron empeño, venta y fletes desde el ADR-0026.
+       Y puede depender del momento de una animación: el anillo del planeta daba 420 px
+       de documento a 390 y 3046 a 1280 en su peor fase. Por eso cada animación de reloj
+       se congela en 12 fases de su ciclo y se toma el peor caso. Se mide después de lo
+       demás porque deja las animaciones pausadas. */
+    const desborde = await p.evaluate(() => {
+      const relojes = document.getAnimations().filter((a) => a.timeline === document.timeline);
+      const fases = relojes.length ? 12 : 1;
+      let peor = 0;
+      for (let k = 0; k < fases; k++) {
+        for (const a of relojes) {
+          const ciclo = a.effect?.getComputedTiming?.().duration;
+          if (typeof ciclo !== 'number' || !isFinite(ciclo) || ciclo <= 0) continue;
+          a.pause();
+          a.currentTime = (ciclo * k) / fases;
+        }
+        const doc = document.documentElement;
+        peor = Math.max(peor, doc.scrollWidth - doc.clientWidth);
+      }
+      return peor;
+    });
+    filas.push({ ancho, ruta, ...r, desborde });
     await p.close();
   }
 }
 await navegador.close();
 
-const malo = (f) => f.contraste.length || f.tactil.length || f.cifras.length || f.h1 !== 1 || f.idioma !== 'es-MX' || !f.titulo;
+const malo = (f) => f.contraste.length || f.tactil.length || f.cifras.length || f.h1 !== 1 || f.idioma !== 'es-MX' || !f.titulo || f.desborde > 0;
 
-console.log('| Ancho | Ruta | Contraste mín. | Táctil mín. | Huecos | h1 | Veredicto |');
-console.log('|---|---|---|---|---|---|---|');
+console.log('| Ancho | Ruta | Contraste mín. | Táctil mín. | Huecos | h1 | Desborde | Veredicto |');
+console.log('|---|---|---|---|---|---|---|---|');
 for (const f of filas) {
-  console.log(`| ${f.ancho} | ${f.ruta} | ${f.minR}:1 | ${f.minT} px | ${f.pendientes} | ${f.h1} | ${malo(f) ? 'NO CUMPLE' : 'CUMPLE'} |`);
+  console.log(`| ${f.ancho} | ${f.ruta} | ${f.minR}:1 | ${f.minT} px | ${f.pendientes} | ${f.h1} | ${f.desborde} px | ${malo(f) ? 'NO CUMPLE' : 'CUMPLE'} |`);
 }
 const fallidas = filas.filter(malo);
 if (fallidas.length) {
@@ -180,6 +205,7 @@ if (fallidas.length) {
     f.tactil.forEach((x) => console.log('  táctil:', JSON.stringify(x)));
     if (f.cifras.length) console.log('  cifras:', f.cifras.join(' | '));
     if (f.h1 !== 1) console.log('  h1:', f.h1);
+    if (f.desborde > 0) console.log(`  desborde: ${f.desborde} px más ancha que la ventana, en su peor fase`);
   }
 }
 console.log(`\nVEREDICTO: ${fallidas.length ? 'NO CUMPLE' : 'CUMPLE'} · ${filas.length} combinaciones página × ancho`);

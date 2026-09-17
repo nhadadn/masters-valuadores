@@ -133,12 +133,23 @@
     perspective-origin: 50% 50%;
   }
 
+  /* EL ANILLO ES UN PUNTO, NO UNA CAJA · ADR-0056.
+     Tenía `inset: 0`: una caja invisible del tamaño del escenario que giraba en 3D con
+     los discos. Inclinada y en perspectiva, su borde cercano se proyectaba más ancho que
+     la página —420 px de documento en un teléfono de 390, 3046 a 1280 en la peor fase— y
+     el navegador del teléfono maquetaba más ancho y encogía la página entera.
+     La caja no pinta nada: los discos solo usan su centro. En 0 × 0 sobre ese mismo
+     centro, el origen del giro y el de la perspectiva no se mueven, así que cada disco
+     queda donde estaba — comprobado píxel a píxel en el ADR. */
   .anillo {
     list-style: none;
     margin: 0;
     padding: 0;
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
     transform-style: preserve-3d;
     transform: rotateX(var(--incl)) rotateY(0deg);
     animation: girar var(--vuelta) linear infinite;

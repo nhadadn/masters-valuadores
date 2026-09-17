@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "build", "-l", "5180"],
       "port": 5180
+    },
+    {
+      "name": "masters-build-5191",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "build", "-l", "5191", "--no-port-switching"],
+      "port": 5191
     }
   ]
 }
