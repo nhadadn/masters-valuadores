@@ -64,6 +64,12 @@ objeción registrada por escrito antes de ejecutarlas.
 Lo que queda de esa regla: **las imágenes que no son suyas se distinguen de las que sí**
 —hoy con una nota al pie de la secuencia— y **ninguna finge ser la fachada**.
 
+**ENMENDADO el 16 de septiembre · `ADR-0054`. En el planeta de bienes, NO se distinguen.**
+«Autos» en empeño y «Carga general» en fletes llevan foto de banco y, con «Relojes» y
+«Monedas», son cuatro discos que no son suyos y no llevan marca. Decisión de Nadir —*«No es
+necesario distinguir/avisar que no son fotos del cliente»*—, con la objeción por escrito en el
+ADR. La nota al pie de la secuencia de joyería sigue.
+
 ### Lo que SÍ se puede redactar
 
 Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
@@ -113,7 +119,7 @@ enlazadas desde el pie.
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
 | Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías. **ACERO DE MARCA desde el `ADR-0046`**: suelo `#BFBBB7` cepillado —el gris de la M de su tablero, medido en sus píxeles—, la entrada y una sala por página en acero pavonado con los roles oscuros, y WhatsApp en verde con marco de carbón. El mármol sale de la entrada |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · **4.45 KB gzip**, sin marco ni librería · `ADR-0023`, `ADR-0026` y `ADR-0033`. **CAYÓ de 12.10 a 4.54 el 15 de septiembre · `ADR-0038`**: al quitar la segunda mitad de la entrada se fue con ella la banda de monedas del `ADR-0021`, que queda inalcanzable. Margen de CA-10: **35.55 KB**. El carrusel cambió de trabajo el mismo día · `ADR-0039`: ya no arregla anclas, **avanza solo** — y el script nuevo pesa menos que el viejo. Las otras siete en 0 KB |
-| Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
+| Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Autos —solo en el disco de empeño— y carga general entraron de banco el 16 de septiembre**, sin marca · `ADR-0054`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
 
 ### Decisiones cerradas
@@ -130,6 +136,7 @@ enlazadas desde el pie.
 | Tipografía Archivo, autoalojada | `ADR-0002` | Nadir |
 | **DOS familias desde el 14 de septiembre** · EB Garamond solo en el titular y su promesa · enmienda el 0002 | `ADR-0029` | Nadir |
 | **Una sola escala tipográfica**: Archivo solo en 400, 600 y 700 y los tamaños de `tokens.css`; fuera de escala solo la marca escrita, el titular Garamond y los rótulos del planeta. Lo vigila `inventario-tipografico.mjs` | `ADR-0053` | Nadir |
+| **Fotos de banco en el planeta, sin marca**: «Autos» en empeño y «Carga general» en fletes · enmienda la regla que quedaba del 0007 | `ADR-0054` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -199,7 +206,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **176 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **180 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -266,7 +273,7 @@ queda sin usar.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar y CA-10 · 176 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta y CA-10 · 180 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
