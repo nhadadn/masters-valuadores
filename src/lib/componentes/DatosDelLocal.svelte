@@ -27,7 +27,7 @@
    *   · La dirección sube a título de pieza: es lo que se va a buscar.
    */
   import {
-    sucursalPrincipal, estaConfirmado, direccionCompleta, horariosLegibles
+    negocio, sucursalPrincipal, estaConfirmado, direccionCompleta, horariosLegibles
   } from '$lib/config/negocio';
   import Icono from './Icono.svelte';
   import Boton from './Boton.svelte';
@@ -44,13 +44,19 @@
   const mapa = $derived(sucursalPrincipal.mapaUrl);
   const tel = $derived(sucursalPrincipal.telefono);
   const otrasLineas = $derived(sucursalPrincipal.telefonosDeLinea ?? []);
+  /* ADR-0058 · la referencia va junto a la dirección; el correo, con el teléfono. */
+  const referencia = $derived(sucursalPrincipal.referencia);
+  const correo = $derived(negocio.correo);
 </script>
 
 <div class="datos">
   <div class="linea">
     <Icono nombre="mapa" tam={20} />
     {#if estaConfirmado(direccion)}
-      <p class="direccion" data-negocio="direccion">{direccion}</p>
+      <div>
+        <p class="direccion" data-negocio="direccion">{direccion}</p>
+        {#if estaConfirmado(referencia)}<p class="referencia" data-negocio="referencia">{referencia}</p>{/if}
+      </div>
     {:else}
       <PorConfirmar que="calle, número, colonia y CP" decision="D-08" />
     {/if}
@@ -79,6 +85,13 @@
         <PorConfirmar que="teléfono y WhatsApp" decision="D-08" />
       {/if}
     </div>
+
+    {#if estaConfirmado(correo)}
+      <div class="linea">
+        <Icono nombre="correo" tam={20} />
+        <a class="correo" href="mailto:{correo}" data-negocio="correo">{correo}</a>
+      </div>
+    {/if}
 
     <!-- UN TELÉFONO POR LÍNEA, si alguna lo tiene. Hoy ninguna · ADR-0047: el de joyería
          salió cuando el cliente acotó su oferta a cinco líneas. -->
@@ -131,7 +144,15 @@
   .horas { margin: 0; font-weight: var(--cuerpo-fuerte-peso); color: var(--tinta); font-variant-numeric: tabular-nums; }
   .horas.cerrado { font-weight: 400; color: var(--tinta-secundaria); }
 
-  .telefono {
+  /* La referencia para llegar · ADR-0058: debajo de la dirección, en tinta secundaria. */
+  .referencia {
+    margin-top: var(--e-1);
+    font-size: var(--cuerpo-tam);
+    line-height: var(--cuerpo-alto);
+    color: var(--tinta-secundaria);
+  }
+
+  .telefono, .correo {
     display: inline-flex;
     align-items: center;
     min-height: var(--tactil-piso);
@@ -139,5 +160,6 @@
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+  .correo { overflow-wrap: anywhere; }
   .cual { display: block; font-size: var(--pie-tam); color: var(--tinta-secundaria); }
 </style>

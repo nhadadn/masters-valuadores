@@ -47,6 +47,11 @@ export interface Sucursal {
   /** La ficha de Google de esta sucursal. Va al `hasMap` del grafo. */
   mapaUrl: Dato<string>;
   /**
+   * Cómo reconocer el local desde la calle · ADR-0058. Va JUNTO a la dirección, nunca en
+   * su lugar: la dirección es la de su ficha de Google y el NAP tiene que ser idéntico.
+   */
+  referencia: Dato<string>;
+  /**
    * Líneas que atienden en OTRO número. No es lo normal y por eso es una lista y
    * no un campo: la mayoría comparte el teléfono del local.
    */
@@ -71,6 +76,8 @@ export interface Negocio {
   redes: Dato<string[]>;
   /** A dónde llegan los envíos del formulario. Un sitio estático no los procesa. D-13. */
   destinoFormulario: Dato<string>;
+  /** El correo del negocio, para escribir y para el `email` del grafo · ADR-0058. */
+  correo: Dato<string>;
 }
 
 export const negocio: Negocio = {
@@ -122,6 +129,14 @@ export const negocio: Negocio = {
   descripcion: POR_CONFIRMAR,        // copy, no se inventa
   redes: POR_CONFIRMAR,              // D-10
   destinoFormulario: POR_CONFIRMAR,  // D-13
+  /**
+   * CORREO · aplicado el 17 de septiembre de 2026 · ADR-0058.
+   *
+   * Lo publican ellos: en su tablero de marca (tanda del 11 de septiembre), en el volante
+   * «Taller mecánico diesel» y en sus dos banners «Todo tiene valor» (tanda del 17). Nadir
+   * aprobó ponerlo en el sitio el mismo día. Ver docs/30-cliente/evidencia-tanda-17-septiembre.md.
+   */
+  correo: 'mastervaluadores@outlook.com',
   sucursales: [
     {
       id: 'torreon',
@@ -150,6 +165,12 @@ export const negocio: Negocio = {
       ciudad: 'Torreón',             // documentado por el cliente en su propio material
       estado: 'Coahuila',            // documentado
       codigoPostal: '27110',
+      /**
+       * REFERENCIA · aplicada el 17 de septiembre de 2026 · ADR-0058. Literal de su pieza
+       * «Máster Joyería»: «FRENTE A AL SUPER DEL PERIFÉRICO». Se escribe como la escribieron
+       * ellos. Nadir aprobó ponerla junto a la dirección el mismo día.
+       */
+      referencia: 'Frente a Al Super del Periférico',
       pais: 'MX',
       /**
        * CONFIRMADO por Nadir el 11 de septiembre de 2026: «el teléfono es el mismo

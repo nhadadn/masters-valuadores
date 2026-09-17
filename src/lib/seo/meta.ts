@@ -83,7 +83,8 @@ const DE_GIRO: Record<string, { titulo: string; descripcion: string }> = {
   },
   'taller': {
     titulo: `Taller${enCiudad} · ${negocio.nombreComercial}`,
-    descripcion: `Servicio de taller${en}. Traes tu unidad, la revisamos y te decimos qué necesita antes de que autorices el trabajo.`
+    // ADR-0058 · con lo que dice su volante del taller, no con lo que suponíamos.
+    descripcion: `Taller mecánico diésel${en}: camiones, pick ups, autobuses y maquinaria pesada. Diagnóstico donde te encuentres y unidad de rescate.`
   }
 };
 

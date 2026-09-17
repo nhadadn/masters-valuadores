@@ -103,7 +103,8 @@ export function construirGrafo(opciones: OpcionesGrafo = {}) {
     description: negocio.descripcion,
     sameAs: negocio.redes,
     address: direccion(s),
-    telephone: s.telefono
+    telephone: s.telefono,
+    email: negocio.correo
   };
 
   const local = {
@@ -116,6 +117,7 @@ export function construirGrafo(opciones: OpcionesGrafo = {}) {
     url: base,
     address: direccion(s),
     telephone: s.telefono,
+    email: negocio.correo,
     openingHoursSpecification: horarios(s),
     geo: { '@type': 'GeoCoordinates', latitude: s.latitud, longitude: s.longitud },
     // Su ficha de Google, que EXISTE y está sin reclamar. Declararla aquí le dice a

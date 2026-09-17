@@ -58,7 +58,9 @@ export const iconos: Record<string, string> = {
   efectivo:       '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.6v4.8M18 9.6v4.8"/>',
   retorno:        '<path d="M19.5 18.5h-8a5.5 5.5 0 0 1 0-11h4"/><path d="M12 3.5L8 7.5l4 4"/>',
   /* «Cómo llegar» · ADR-0051. Dibujada: la ↗ de texto el iPhone la pinta como emoji azul. */
-  ir:             '<path d="M7 17L17 7M9 7h8v8"/>'
+  ir:             '<path d="M7 17L17 7M9 7h8v8"/>',
+  /* El correo del negocio · ADR-0058. Un sobre: rectángulo y la solapa en V. */
+  correo:         '<rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.5 7l8.5 6 8.5-6"/>'
   /* Aquí vivió `flecha`, la del mosaico del ADR-0048. Salió con el ADR-0049: el botón de
      la pieza abre WhatsApp y lleva su glifo. Era '<path d="M5 12h14M13 6l6 6-6 6"/>'. */
 };

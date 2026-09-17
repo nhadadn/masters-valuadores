@@ -30,7 +30,9 @@ const PATRONES: { nombre: string; re: RegExp }[] = [
   { nombre: 'horario tipo 9:00', re: /\b\d{1,2}:\d{2}\b/ },
   { nombre: 'precio', re: /\$\s?\d/ },
   { nombre: 'porcentaje', re: /\b\d{1,3}\s?%(?!\))/ },
-  { nombre: 'código postal', re: /\bC\.?P\.?\s?\d{5}\b/i }
+  { nombre: 'código postal', re: /\bC\.?P\.?\s?\d{5}\b/i },
+  // ADR-0058 · desde que el sitio publica su correo, un correo escrito a mano es fuga.
+  { nombre: 'correo', re: /[\w.+-]+@[\w-]+\.[a-z]{2,}/i }
 ];
 
 describe('CA-06 · ningún dato de negocio se filtró fuera de negocio.ts', () => {

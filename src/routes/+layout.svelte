@@ -23,6 +23,8 @@
   const horarios = horariosLegibles();
   const direccion = direccionCompleta();
   const mapa = sucursalPrincipal.mapaUrl;
+  const correo = negocio.correo;                       // ADR-0058
+  const referencia = sucursalPrincipal.referencia;     // ADR-0058
 </script>
 
 <svelte:head>
@@ -91,11 +93,18 @@
       {:else}
         <p><PorConfirmar que="teléfono" decision="D-08" sobreOscuro /></p>
       {/if}
+      {#if estaConfirmado(correo)}
+        <!-- EL CORREO · ADR-0058. Lo publican en su tablero de marca y en sus piezas. -->
+        <a class="correo-pie" href="mailto:{correo}" data-negocio="correo">
+          <Icono nombre="correo" tam={20} />{correo}
+        </a>
+      {/if}
       {#if estaConfirmado(direccion)}
         <div class="fila">
           <Icono nombre="mapa" tam={20} />
           <div>
             <p class="direccion-pie" data-negocio="direccion">{direccion}</p>
+            {#if estaConfirmado(referencia)}<p class="direccion-pie" data-negocio="referencia">{referencia}</p>{/if}
             {#if estaConfirmado(mapa)}
               <a class="ir" href={mapa} target="_blank" rel="noopener">Cómo llegar <Icono nombre="ir" tam={16} grosor={2} /></a>
             {/if}
@@ -229,7 +238,14 @@
     font-size: var(--h2-tam); font-weight: var(--h2-peso); color: var(--tinta);
   }
   .fila { display: grid; grid-template-columns: 20px 1fr; gap: var(--e-3); align-items: start; }
-  .telefono-pie :global(svg), .fila > :global(svg) { color: var(--oro-500); flex-shrink: 0; }
+  /* EL CORREO · ADR-0058. A tamaño de apoyo: el número sigue mandando. */
+  .correo-pie {
+    display: inline-flex; align-items: center; gap: var(--e-3); justify-self: start;
+    min-height: var(--tactil-piso);
+    font-size: var(--pie-tam); color: var(--tinta);
+    text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere;
+  }
+  .telefono-pie :global(svg), .correo-pie :global(svg), .fila > :global(svg) { color: var(--oro-500); flex-shrink: 0; }
   .fila > :global(svg) { margin-top: 1px; }
   .direccion-pie { font-size: var(--pie-tam); line-height: var(--pie-alto); color: var(--tinta-secundaria); }
   .ir {
