@@ -141,9 +141,9 @@
   <!-- «Es una instrucción, no un eslogan: es exactamente lo que esa sección le pide
        al visitante.» — del borrador. -->
   <h2 class="titulo-seccion" data-propuesta="true">Elige la línea que buscas</h2>
-  <!-- EL MOSAICO · ADR-0048 · ADR-0049. Aquí vivía la reja de tarjetas. Cada pieza lleva a
-       la página de su línea, y solo su botón verde abre WhatsApp con la línea escrita en
-       el mensaje. -->
+  <!-- EL MOSAICO · ADR-0048 · ADR-0049 · ADR-0057. Aquí vivía la reja de tarjetas. Cada
+       pieza lleva a la página de su línea. Los botones verdes de WhatsApp de cada pieza
+       salieron en el ADR-0057, por excesivos. -->
   <MosaicoLineas lineas={girosConstruibles} />
   <!-- AQUÍ HABÍA UNA NOTA Y SE QUITÓ: «El orden es provisional. La prioridad la
        decide el estudio de búsqueda, no la intuición.»

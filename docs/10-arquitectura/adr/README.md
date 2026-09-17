@@ -64,6 +64,7 @@ una decisión mala documentada vale más que una buena olvidada.
 | 0054 | [[ADR-0054-fotos-de-archivo-en-el-planeta\|Dos fotos de archivo en el planeta, sin marca]] | **ACEPTADA** · **enmienda la regla que quedaba del 0007**: en el planeta, las fotos que no son suyas no se distinguen · «Autos» en empeño y «Carga general» en fletes, de Unsplash · cuatro candidatas medidas en su disco · la objeción, por escrito | 2026-09-16 |
 | 0055 | [[ADR-0055-sale-otras-lineas-del-grupo\|Sale «Otras líneas del grupo»]] | **ACEPTADA** · repetía los enlaces del pie (0053) justo encima de él · 328 px en teléfono y tarjeta a 1.49:1 contra el acero · **en teléfono las cinco líneas del pie van en un renglón** | 2026-09-16 |
 | 0056 | [[ADR-0056-el-anillo-es-un-punto\|El anillo del planeta es un punto, no una caja]] | **ACEPTADA** · corrige un defecto que venía del 0026: la caja invisible del anillo, girada en 3D, ensanchaba la página —420 px de documento a 390, 3046 a 1280— y el teléfono la encogía · 0 píxeles distintos dentro de la sección · **`validar-a11y.mjs` mide desborde horizontal** | 2026-09-16 |
+| 0057 | [[ADR-0057-salen-los-botones-de-whatsapp-del-mosaico\|Salen los botones de WhatsApp del mosaico]] | **ACEPTADA** · **enmienda el 0049**: la pieza sigue llevando a su página y el botón verde sale, por excesivo · WhatsApp visibles en la portada de 8 a 3 · el texto recupera 56 px | 2026-09-17 |
 
 El 0005 se aceptó por la mañana como decisión de trabajo. Por la tarde llegaron cinco
 publicaciones vivas del cliente y **desmintieron la premisa en la que se apoyaba**: el

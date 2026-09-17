@@ -265,7 +265,8 @@ el nombre corto**: «Venta de maquinaria, herramienta y autos» ocupaba cuatro r
 y desalineaba la fila. El nombre largo vive en el `h1` de su página.
 **Y desde el `ADR-0048` la portada ya no usa tarjetas**: las líneas van en un mosaico
 (`MosaicoLineas`). **Desde el `ADR-0049` cada pieza lleva a la página de su línea y solo su
-botón verde abre WhatsApp**; hasta entonces la pieza entera abría WhatsApp. `Tarjeta.svelte`
+botón verde abre WhatsApp**; hasta entonces la pieza entera abría WhatsApp. **Y desde el `ADR-0057`
+el mosaico no abre WhatsApp**: los cinco botones verdes salieron por excesivos. `Tarjeta.svelte`
 queda sin usar.
 
 ---

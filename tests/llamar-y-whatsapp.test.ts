@@ -4,6 +4,7 @@ import Portada from '../src/routes/+page.svelte';
 import Contacto from '../src/routes/contacto/+page.svelte';
 import { sucursalPrincipal, estaConfirmado } from '../src/lib/config/negocio';
 import { enlaceTelefono } from '../src/lib/datos/telefono';
+import { hayWhatsApp } from '../src/lib/datos/whatsapp';
 
 /**
  * ADR-0052 · la portada no repite WhatsApp, y «Llamar» llama.
@@ -32,8 +33,10 @@ const llamadas = (html: string) =>
 
 describe('la portada no repite WhatsApp y «Llamar» llama · ADR-0052', () => {
   it('ningún mensaje de WhatsApp se repite en la portada', () => {
+    // Desde el ADR-0057 la portada no lleva mensajes escritos: eran los de los botones del
+    // mosaico, que salieron. Lo que no puede es quedarse sin WhatsApp.
+    if (hayWhatsApp()) expect(portada).toMatch(/href="https:\/\/wa\.me\/\d+/);
     const m = mensajes(portada);
-    expect(m.length).toBeGreaterThan(0);
     expect(m.filter((x, i) => m.indexOf(x) !== i)).toEqual([]);
   });
 
