@@ -253,7 +253,7 @@
   </div>
   <!-- ADR-0009. Las páginas de giro NO tenían ranura de foto: el CLAUDE.md pedía
        «fachada y una por giro» y solo existía la de la portada. Aquí se abre, con
-       foto de archivo provisional y rotulada. -->
+       foto de archivo provisional —rotulada hasta el ADR-0061—. -->
   {#if giro.fotoProvisional}
     <div class="foto-giro">
       <!-- `prioritaria` · ESTA FOTO ES EL LCP DE LA PAGINA, y llevaba `loading="lazy"`
@@ -464,6 +464,10 @@
   /* A SANGRE en teléfono: cancela el acolchado lateral de la sección y toca los dos
      bordes de la pantalla. */
   .foto-giro { margin-inline: calc(var(--margen-lateral) * -1); }
+  /* OJO · este filtro PISA el tinte de `Foto` —el que marca la foto de archivo—. Medido en
+     /taller/ el 17 de septiembre: la imagen lleva `.tenida` y computa este filtro, no el
+     duotono. Desde el ADR-0061 no hay rótulo, así que en fletes y taller la foto de
+     archivo no lleva ninguna marca visible. Se deja así por decisión de Nadir. */
   .foto-giro :global(img) { filter: contrast(1.08) saturate(1.04); }
   .acciones { display: grid; gap: var(--e-3); }
 

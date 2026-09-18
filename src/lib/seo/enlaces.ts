@@ -124,9 +124,9 @@ export function absoluta(ruta: string, origen: Dato<string> = ORIGEN): Dato<stri
 /**
  * LA IMAGEN DE LA TARJETA DE ENLACE · una sola para todo el sitio, y es la fachada.
  *
- * Las otras cuatro fotos son de banco (ADR-0009) y en la página salen rotuladas
- * como provisionales. Una tarjeta de WhatsApp no tiene dónde poner ese rótulo: se
- * vería una excavadora de catálogo firmada por Masters, sin aviso. La fachada es
+ * Las otras cuatro fotos son de banco (ADR-0009) y en la página salían rotuladas
+ * como provisionales —el rótulo salió con el ADR-0061—. Una tarjeta de WhatsApp no
+ * tenía dónde ponerlo: se vería una excavadora de catálogo firmada por Masters. La fachada es
  * la única foto real que existe, es la ventaja que ninguna cadena puede copiar
  * (`docs/60-diseno/brief-de-fotos.md`) y es la que va en las ocho páginas.
  */

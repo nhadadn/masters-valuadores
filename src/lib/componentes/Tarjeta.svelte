@@ -53,7 +53,6 @@
         tamanos="(min-width: 768px) 25vw, 50vw"
         provisional={!fotoEsSuya}
         maxAncho={fotoMaxAncho}
-        compacto
       />
     </span>
   {/if}

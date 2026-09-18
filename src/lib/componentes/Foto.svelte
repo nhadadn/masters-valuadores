@@ -11,6 +11,8 @@
    *
    *   1 · Se marca en pantalla. El rótulo dice que es de archivo y que se sustituye.
    *       Mismo criterio que la banda de BORRADOR del copy.
+   *       RETIRADO por el ADR-0061, decisión de Nadir: ya no hay rótulo. Queda el
+   *       tinte y `data-provisional`, que no se ve.
    *   2 · NINGUNA finge ser la fachada. Ese hueco no se rellena con un local ajeno:
    *       poner el escaparate de otro, con su rótulo, es el negocio de otro
    *       presentado como el de Cristóbal. `RanuraImagen` sigue ahí para eso.
@@ -34,18 +36,16 @@
     /** La de la entrada se carga de inmediato: es el LCP. El resto, diferida. */
     prioritaria?: boolean;
     /**
-     * `true` = foto de archivo del ADR-0009: lleva rótulo y `data-provisional`.
-     * `false` = foto REAL del negocio. Sin rótulo, porque no hay nada que advertir.
+     * `true` = foto de archivo del ADR-0009: lleva el tinte y `data-provisional`.
+     * `false` = foto REAL del negocio, a todo color.
+     *
+     * YA NO LLEVA RÓTULO · ADR-0061. La pastilla «FOTO DE ARCHIVO» salió por decisión de
+     * Nadir. `data-provisional` se queda: no se ve, y es lo que permite contar cuántas
+     * fotos de archivo siguen publicadas.
      */
     provisional?: boolean;
     /** Alto real del archivo, para reservar el hueco sin CLS. */
     alto?: number;
-    /**
-     * Rótulo corto. En una miniatura el aviso completo ocupaba 77 px sobre 179 de
-     * imagen —el 43 %— y competía con la foto. Dice lo mismo con menos: sigue
-     * diciendo que es de archivo, que es lo que no se puede omitir.
-     */
-    compacto?: boolean;
     /**
      * Corta el borde con la diagonal del ADR-0007. Solo para la fachada, por ahora:
      * el gesto se gasta si se repite cinco veces en una pantalla.
@@ -74,7 +74,7 @@
   }
   let {
     nombre, alt, relacion = '16 / 9', prioritaria = false,
-    provisional = true, alto = 1067, compacto = false, diagonal = false,
+    provisional = true, alto = 1067, diagonal = false,
     tamanos = '(min-width: 768px) 50vw, 100vw', maxAncho = 1600
   }: Props = $props();
 
@@ -97,7 +97,8 @@
     El duotono las vuelve una sola familia Y hace un segundo trabajo: **lo teñido no
     es suyo**. La fachada, que sí es suya, se queda a todo color y por contraste pasa
     a ser la imagen que manda en la portada. El tinte refuerza el ADR-0009 en vez de
-    competir con su rótulo.
+    competir con su rótulo. Desde el ADR-0061 ya no hay rótulo y el tinte se queda: es
+    también lo que las vuelve una familia.
 
     Cómo, y por qué no de la forma obvia: ver la nota del duotono en el `<style>`.
     El primer intento tapaba la foto con una capa de oro y la anulaba.
@@ -145,26 +146,11 @@
       style="aspect-ratio: {relacion}"
     />
     </picture>
-    {#if provisional}
-      <!--
-        EL RÓTULO BAJA DE VOLUMEN, NO DE CONTENIDO.
-
-        Era una barra de ancho completo bajo cada foto, en oro y en caps. En la reja de
-        cuatro, el ojo leía «PROVISIONAL» cuatro veces antes de ver una sola imagen: el
-        aviso era lo más fuerte del bloque.
-
-        El ADR-0009 pide MARCARLAS, no que el rótulo grite más que la foto. Ahora es una
-        pastilla en la esquina, sobre tierra oscura opaca, con el mismo texto y el mismo
-        contraste. Sigue siendo `data-provisional` y sigue siendo legible.
-      -->
-      <figcaption class:compacto>
-        {#if compacto}
-          FOTO DE ARCHIVO
-        {:else}
-          FOTO DE ARCHIVO · se sustituye por una del negocio
-        {/if}
-      </figcaption>
-    {/if}
+    <!-- AQUÍ IBA EL RÓTULO «FOTO DE ARCHIVO» · ADR-0061. Una pastilla en la esquina de
+         cada foto de archivo, del ADR-0009. Salió por decisión de Nadir, con el mismo
+         criterio que el ADR-0054 aplicó al planeta: «No es necesario distinguir/avisar
+         que no son fotos del cliente». Se publicaba cuatro veces: las dos fotos de
+         archivo, en el mosaico y en su página. -->
   </div>
 </figure>
 
@@ -242,23 +228,5 @@
 
   /* Ya no hay capa que recortar: el tinte vive en el filtro de la imagen. */
 
-  /* ── EL RÓTULO ──────────────────────────────────────────────────────────
-     Pastilla en la esquina, no barra de ancho completo. `--superficie-oscura` es
-     opaca, así que el validador resuelve el contraste contra ella y no contra la
-     foto teñida: 19.44:1, el mismo de antes. */
-  figcaption {
-    position: absolute;
-    z-index: 2;
-    left: var(--e-2);
-    bottom: var(--e-2);
-    max-width: calc(100% - var(--e-4));
-    background: var(--superficie-oscura);
-    color: var(--tinta-sobre-oscuro);
-    border-radius: var(--radio-boton);
-    padding: var(--e-1) var(--e-2);
-    font-size: var(--etiqueta-tam);
-    line-height: var(--etiqueta-alto);
-    font-weight: var(--etiqueta-peso);
-    letter-spacing: var(--etiqueta-tracking);
-  }
+  /* `figcaption` salió con su rótulo · ADR-0061. */
 </style>

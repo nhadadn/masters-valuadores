@@ -70,6 +70,14 @@ Lo que queda de esa regla: **las imágenes que no son suyas se distinguen de las
 necesario distinguir/avisar que no son fotos del cliente»*—, con la objeción por escrito en el
 ADR. La nota al pie de la secuencia de joyería sigue.
 
+**ENMENDADO el 17 de septiembre · `ADR-0061`. Salen los rótulos «FOTO DE ARCHIVO».** Eran
+cuatro, no dos: las fotos de archivo de fletes y taller, en el mosaico de la portada y otra vez en
+su página. Decisión de Nadir —*«NO, QUÍTALOS»*—, con la objeción por escrito en el ADR. Queda
+`data-provisional`, que no se ve, y el tinte en el mosaico. **En las páginas de fletes y taller la
+foto de archivo ya no lleva ninguna marca visible**: la plantilla le pisa el tinte, y así estaba
+desde antes. Lo único que hoy distingue en pantalla una imagen ajena es la nota de la secuencia de
+joyería.
+
 ### Lo que SÍ se puede redactar
 
 Corregido el 10 de septiembre. Redactar no es inventar afirmaciones:
@@ -100,7 +108,8 @@ decisiones internas— y **dos rótulos «FOTO DE ARCHIVO»**. Lo que el `ADR-00
 en cero son las cuatro categorías que midió: banda, hueco «PENDIENTE», bloque de
 revisión y centinela visible. Estas dos son de otra familia y **siguen ahí, sin
 decidir**. **La tarjeta «BLOQUEADOS» salió el 16 de septiembre · `ADR-0047`**, con las tres
-líneas que esperaban decisión; los dos rótulos siguen. En contacto no había formulario que proteger —solo el
+líneas que esperaban decisión. **Los rótulos salieron el 17 de septiembre · `ADR-0061`** —eran
+cuatro: las mismas dos fotos, también en su página—. En contacto no había formulario que proteger —solo el
 bloque que explicaba por qué no lo hay— y se queda con WhatsApp, teléfono y mapa.
 **Las dos legales quedan en blanco con título** — 54 y 32 caracteres— y siguen
 enlazadas desde el pie.
@@ -139,6 +148,7 @@ enlazadas desde el pie.
 | **Fotos de banco en el planeta, sin marca**: «Autos» en empeño y «Carga general» en fletes · enmienda la regla que quedaba del 0007 | `ADR-0054` | Nadir |
 | **La ubicación de las líneas, en franja**: se queda el mapa, el horario vive en el pie · enmienda el 0051 | `ADR-0059` | Nadir |
 | **Los claros vuelven a pintar**: `blanco` el blanco y `marfil` la placa de acero · enmienda el 0043 | `ADR-0060` | Nadir |
+| **Salen los rótulos «FOTO DE ARCHIVO»**, los cuatro · enmienda el 0009 | `ADR-0061` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -208,7 +218,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **194 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **197 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -281,7 +291,7 @@ queda sin usar.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia, cierre de línea, grados claros y CA-10 · 194 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia, cierre de línea, grados claros, rótulos de archivo y CA-10 · 197 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros

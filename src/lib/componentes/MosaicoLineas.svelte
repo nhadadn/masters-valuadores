@@ -23,10 +23,10 @@
    * ── EL HOVER, SOLO DONDE HAY PUNTERO ───────────────────────────────────────
    * Con ratón, la foto crece a 1.03. Con teclado crece al entrar en la pieza.
    *
-   * ── LA FOTO DE ARCHIVO SIGUE MARCADA ───────────────────────────────────────
-   * Se usa `Foto` tal cual, así que la de archivo conserva su rótulo, su tinte y su
-   * `data-provisional` (ADR-0009). El prototipo los había perdido por extraer solo la
-   * <picture>; aquí no se pierden.
+   * ── LA FOTO DE ARCHIVO, SIN RÓTULO · ADR-0061 ─────────────────────────────
+   * Se usa `Foto` tal cual, así que la de archivo conserva su tinte y su
+   * `data-provisional` (ADR-0009). El rótulo «FOTO DE ARCHIVO» salió por decisión de
+   * Nadir, con el mismo criterio que el ADR-0054 aplicó al planeta.
    */
   import Foto from './Foto.svelte';
   import type { Giro } from '$lib/datos/giros';
@@ -45,7 +45,6 @@
               nombre={g.fotoProvisional}
               alt={g.fotoAlt ?? ''}
               provisional={!g.fotoEsSuya}
-              compacto
               maxAncho={g.fotoMaxAncho ?? 1600}
               tamanos="(min-width: 1024px) 50vw, 90vw"
             />
@@ -94,8 +93,9 @@
     background: var(--velo-foto);
   }
 
-  /* La foto LLENA la pieza. `Foto` trae su propia proporción en línea y su rótulo abajo a
-     la izquierda —donde aquí vive el título—, así que se le ajusta desde fuera. */
+  /* La foto LLENA la pieza. `Foto` trae su propia proporción en línea, así que se le
+     ajusta desde fuera. Su rótulo, que aquí había que subir por encima del título, salió
+     con el ADR-0061 y sus tres reglas con él. */
   .foto-pieza,
   .foto-pieza :global(.foto),
   .foto-pieza :global(.lienzo),
@@ -113,13 +113,6 @@
     transform: scale(1);
     transition: transform 420ms var(--mov-curva);
   }
-  .foto-pieza :global(figcaption) {
-    top: auto;
-    right: auto;
-    left: var(--e-3);
-    bottom: calc(var(--e-3) + 30px);
-  }
-
   .texto {
     position: absolute;
     left: var(--e-3);
@@ -156,7 +149,6 @@
     .titulo { font-size: var(--h2-tam); font-weight: var(--h2-peso); }
     /* Con `.mayor` delante: la regla de teléfono tiene dos clases y le ganaría a esta. */
     .texto, .mayor .texto { left: var(--e-4); right: var(--e-4); bottom: var(--e-4); }
-    .foto-pieza :global(figcaption) { top: var(--e-3); bottom: auto; }
   }
 
   /* ESCRITORIO · cuatro por tres. Sin cinco piezas exactas, dos por fila. */
@@ -172,6 +164,5 @@
     .titulo { font-size: var(--h2-tam); font-weight: var(--h2-peso); }
     .mayor .titulo { font-size: var(--display-tam); font-weight: var(--display-peso); }
     .texto, .mayor .texto { left: var(--e-4); right: var(--e-4); bottom: var(--e-4); }
-    .foto-pieza :global(figcaption) { top: var(--e-3); bottom: auto; }
   }
 </style>
