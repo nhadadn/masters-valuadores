@@ -9,17 +9,17 @@
 
   interface Props {
     /**
-     * Cuánta piedra deja ver esta sección · ADR-0028.
+     * Qué superficie pinta esta sección · ADR-0028, y otra vez en serio desde el ADR-0060.
      *
-     *   marmol   la entrada. Veta marcada, corrida a un extremo
-     *   medio    el bloque de consulta
-     *   tenue    donde manda la fotografía: bienes y patio
-     *   marfil   proceso y ubicación. Sin veta: claridad
-     *   piedra   «otras líneas». Sólida, escalón hacia el pie
+     *   pavonado la entrada y una sala por página. Acero oscuro · ADR-0046
+     *   tenue    el suelo de acero, sin pintar: los bienes
+     *   crema    el suelo de acero, sin pintar: portada y contacto
+     *   blanco   BLANCO: la foto de la línea, el carrusel y el contacto de la portada
+     *   marfil   PLACA de acero: la ubicación de las líneas, contacto y legales
      *   carbon   ancla oscura
      *
-     * `crema` y `blanco` siguen aceptados y apuntan a `marfil`: había código
-     * llamándolos y romperlo no aporta nada.
+     * `marmol`, `medio`, `piedra` y `oscuro` siguen aceptados y hoy no los pide ninguna
+     * página.
      */
     fondo?: 'marmol' | 'medio' | 'tenue' | 'marfil' | 'piedra' | 'carbon' | 'blanco' | 'crema' | 'oscuro' | 'pavonado';
     amplia?: boolean;
@@ -89,9 +89,25 @@
      sigue siendo su peor extremo; el pie conserva su carbón. */
   .medio,
   .tenue,
-  .marfil,
-  .crema,
-  .blanco { background-color: transparent; }
+  .crema { background-color: transparent; }
+
+  /* ── LOS CLAROS VUELVEN A PINTAR · ADR-0060 ─────────────────────────────
+     Desde el ADR-0043 eran los cinco transparentes y el suelo lo ponía `body`. Con un
+     solo registro claro daba igual; con el acero del ADR-0046 dejó secciones claras
+     SEGUIDAS que eran la misma superficie: el planeta y la foto en venta y fletes, el
+     planeta y el carrusel en empeño, «Dónde estamos» y el contacto en la portada, y las
+     dos de contacto. Medido en el sitio publicado a 390 px: la plantilla de línea pedía
+     `tenue`, `blanco` y `marfil`, y el navegador pintaba tres veces el suelo.
+
+     Pintan dos, con tokens que ya existían: `blanco` el blanco y `marfil` la placa de
+     acero. `tenue` y `crema` siguen siendo el suelo. Que ninguna sección clara toque a
+     otra del mismo grado lo vigila `tests/grados-claros.test.ts`.
+
+     EL PRECIO. La placa es también el color de `--panel`, así que una caja de placa
+     dentro de una sección `marfil` pierde el borde. Hoy la única es la ficha de la
+     ubicación de las líneas, y ahí se acepta: la separa la costura dorada. */
+  .marfil { background-color: var(--acero-placa); }
+  .blanco { background-color: var(--blanco); }
 
   /* `cover` hace falta para la capa de textura. Desde el ADR-0030 solo LA ENTRADA
      lleva piedra; los otros cuatro grados valen `none` y se quedan en su color plano.

@@ -296,7 +296,9 @@
      Cada tira lleva su propio rótulo en `h3`: sin ellos, catorce fotos seguidas de un
      reloj y una retroexcavadora no dicen que son dos conjuntos. -->
 {#if giro.muestraInventario || giro.muestraJoyeria}
-  <Seccion etiqueta="PIEZAS Y EQUIPO" fondo="tenue">
+  <!-- EN BLANCO · ADR-0060. Era `tenue`, igual que el planeta de encima, y los dos
+       escaparates se leían como un solo bloque de 1 311 px con 21 imágenes. -->
+  <Seccion etiqueta="PIEZAS Y EQUIPO" fondo="blanco">
     <h2 class="titulo-galeria" data-propuesta="true">Algo de lo que han tenido</h2>
 
     {#if giro.muestraJoyeria}

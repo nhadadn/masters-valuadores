@@ -117,7 +117,7 @@ enlazadas desde el pie.
 | Contenido | **CERO**. Es el trabajo que sigue |
 | Descubribilidad | **IMPLEMENTADA** · SPEC-0003 · 10/10. Título, descripción, canónica, tarjeta de enlace, `sitemap.xml` y `robots.txt` |
 | Publicación | Bloqueada por el **dominio** (D-07) y por el copy. El NAP ya no la bloquea |
-| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías. **ACERO DE MARCA desde el `ADR-0046`**: suelo `#BFBBB7` cepillado —el gris de la M de su tablero, medido en sus píxeles—, la entrada y una sala por página en acero pavonado con los roles oscuros, y WhatsApp en verde con marco de carbón. El mármol sale de la entrada |
+| Registros visuales | **INVERTIDOS el 14 de septiembre** · `ADR-0028`. La piedra clara es el registro de la casa y el carbón el ancla del pie. Los roles oscuros viven enteros en `.registro-oscuro`. **ENMENDADO el mismo día · `ADR-0030`**: los cinco grados siguen existiendo, pero **solo dos pintan algo**. La piedra se concentra en la entrada; el resto es marfil plano. Se retiró la mancha de oro que vagaba por el cuerpo. **BLANCO PURO desde el `ADR-0031`**: cuerpo, cabecera y los grados planos en `#FFFFFF`; el color lo ponen las fotografías. **ACERO DE MARCA desde el `ADR-0046`**: suelo `#BFBBB7` cepillado —el gris de la M de su tablero, medido en sus píxeles—, la entrada y una sala por página en acero pavonado con los roles oscuros, y WhatsApp en verde con marco de carbón. El mármol sale de la entrada. **LOS CLAROS VUELVEN A PINTAR desde el `ADR-0060`**: `blanco` pinta el blanco y `marfil` la placa de acero; `tenue` y `crema` siguen siendo el suelo. Ninguna sección clara toca a otra del mismo grado, y lo vigila un test |
 | JavaScript | **Solo en `/empeno-y-prestamo/`** · **4.45 KB gzip**, sin marco ni librería · `ADR-0023`, `ADR-0026` y `ADR-0033`. **CAYÓ de 12.10 a 4.54 el 15 de septiembre · `ADR-0038`**: al quitar la segunda mitad de la entrada se fue con ella la banda de monedas del `ADR-0021`, que queda inalcanzable. Margen de CA-10: **35.55 KB**. El carrusel cambió de trabajo el mismo día · `ADR-0039`: ya no arregla anclas, **avanza solo** — y el script nuevo pesa menos que el viejo. Las otras siete en 0 KB |
 | Fotografías reales | **SIETE**, no ocho · seis del patio · `ADR-0022`, más **UNA** de su joyería. **CORREGIDO el 15 de septiembre · `ADR-0033`**: el `ADR-0024` contaba dos, pero `bien-joyeria` y `bien-oro` son **la misma toma en dos recortes** — comprobado mirándolas. De esa única foto salen además las tres vistas de `galeriaJoyeria`. **Falta autos**; monedas entró de banco · `ADR-0025`. **Autos —solo en el disco de empeño— y carga general entraron de banco el 16 de septiembre**, sin marca · `ADR-0054`. **Y desde el 15 de septiembre el sitio publica CUATRO IMÁGENES GENERADAS** como referencia en la secuencia de joyería · `ADR-0034`: decisión de Nadir tras plantearse la objeción dos veces. Llevan nota al pie y están marcadas `referencia: true` en `galeria.ts` |
 | Indexación | **Apagada a propósito** hasta que cierre D-07 · `ADR-0013` |
@@ -138,6 +138,7 @@ enlazadas desde el pie.
 | **Una sola escala tipográfica**: Archivo solo en 400, 600 y 700 y los tamaños de `tokens.css`; fuera de escala solo la marca escrita, el titular Garamond y los rótulos del planeta. Lo vigila `inventario-tipografico.mjs` | `ADR-0053` | Nadir |
 | **Fotos de banco en el planeta, sin marca**: «Autos» en empeño y «Carga general» en fletes · enmienda la regla que quedaba del 0007 | `ADR-0054` | Nadir |
 | **La ubicación de las líneas, en franja**: se queda el mapa, el horario vive en el pie · enmienda el 0051 | `ADR-0059` | Nadir |
+| **Los claros vuelven a pintar**: `blanco` el blanco y `marfil` la placa de acero · enmienda el 0043 | `ADR-0060` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -207,7 +208,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **191 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **194 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -232,6 +233,11 @@ Contraste mínimo por página, medido tras el `ADR-0046`: **4.00:1** en portada 
 venta, financiamiento, fletes y taller —texto chico sobre ese mismo punto— y **6.29:1** en contacto
 y las dos legales —la tinta secundaria sobre el suelo de acero—. Son los PEORES puntos
 del cepillado, no el promedio.
+
+**CORREGIDO el 17 de septiembre · `ADR-0060`.** Medido con `validar-a11y.mjs` en el sitio publicado y
+en el build del ADR-0060, con el mismo resultado en los dos: **4.00:1** en portada, contacto y las
+cinco líneas, y **6.29:1** en las dos legales. El 4.83 de venta, financiamiento, fletes y taller y
+el 6.29 de contacto ya no se sostenían antes de ese cambio; pintar los claros no movió ningún mínimo.
 
 **CORREGIDO el mismo día.** Aquí decía, tras el `ADR-0042`, 8.56 en portada y 5.76 en
 las tres de giro. El `ADR-0043` ya los había movido y nadie lo anotó: medido antes de
@@ -275,7 +281,7 @@ queda sin usar.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia, cierre de línea y CA-10 · 191 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia, cierre de línea, grados claros y CA-10 · 194 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros
