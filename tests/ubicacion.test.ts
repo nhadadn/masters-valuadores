@@ -25,6 +25,7 @@ import {
 
 const conTitulo = render(Ubicacion, { props: { titulo: 'Aquí nos encuentras' } }).body;
 const sinTitulo = render(Ubicacion, { props: {} }).body;
+const franja = render(Ubicacion, { props: { franja: true } }).body;
 const lienzo = (html: string) => html.slice(html.indexOf('class="lienzo'), html.indexOf('class="ficha'));
 const ficha = (html: string) => html.slice(html.indexOf('class="ficha'));
 
@@ -71,5 +72,32 @@ describe('DÓNDE ESTAMOS · lienzo partido · ADR-0051', () => {
   it('el título es opcional: la página de línea ya trae su pregunta numerada', () => {
     expect(conTitulo).toMatch(/<h2[^>]*>Aquí nos encuentras<\/h2>/);
     expect(sinTitulo).not.toMatch(/<h2\b/);
+  });
+});
+
+/**
+ * LA FRANJA · ADR-0059. En las páginas de línea la ubicación y el pie decían lo mismo:
+ * 704 px de sección más 573 de pie a 390 de ancho. La franja se queda con lo que el pie
+ * no tiene —el mapa— y con lo que se busca con prisa; el horario lo dice solo el pie.
+ */
+describe('la franja de las páginas de línea · ADR-0059', () => {
+  it('se queda el mapa, la dirección, la referencia y «Cómo llegar»', () => {
+    if (estaConfirmado(mapaEmbed())) expect(lienzo(franja)).toContain('Ver el mapa');
+    const f = ficha(franja);
+    expect(f).toContain(direccionCompleta() as string);
+    if (estaConfirmado(sucursalPrincipal.referencia)) expect(f).toContain(sucursalPrincipal.referencia as string);
+    expect(f).toContain(`href="${sucursalPrincipal.mapaUrl}"`);
+  });
+
+  it('sin horarios: los dice el pie, justo debajo', () => {
+    const f = ficha(franja);
+    expect(f).not.toContain('data-negocio="horarios"');
+    expect(f).not.toMatch(/<dl\b/);
+  });
+
+  it('portada y contacto siguen con la versión completa', () => {
+    expect(ficha(conTitulo)).toContain('data-negocio="horarios"');
+    expect(conTitulo).not.toMatch(/class="ubicacion[^"]*\bfranja\b/);
+    expect(franja).toMatch(/class="ubicacion[^"]*\bfranja\b/);
   });
 });

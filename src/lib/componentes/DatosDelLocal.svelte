@@ -36,8 +36,13 @@
   interface Props {
     /** Contacto lo muestra; la portada y los giros ya lo tienen en la banda. */
     conTelefono?: boolean;
+    /**
+     * La ficha de la franja · ADR-0059. En las páginas de línea el pie, justo debajo, ya
+     * dice el horario: aquí no se repite, y la dirección baja a cuerpo en peso fuerte.
+     */
+    franja?: boolean;
   }
-  let { conTelefono = false }: Props = $props();
+  let { conTelefono = false, franja = false }: Props = $props();
 
   const direccion = $derived(direccionCompleta());
   const horarios = $derived(horariosLegibles());
@@ -49,7 +54,7 @@
   const correo = $derived(negocio.correo);
 </script>
 
-<div class="datos">
+<div class="datos" class:franja>
   <div class="linea">
     <Icono nombre="mapa" tam={20} />
     {#if estaConfirmado(direccion)}
@@ -62,19 +67,22 @@
     {/if}
   </div>
 
-  <div class="linea">
-    <Icono nombre="reloj" tam={20} />
-    {#if estaConfirmado(horarios)}
-      <dl class="horarios" data-negocio="horarios">
-        {#each horarios as h}
-          <dt class="dias">{h.dias}</dt>
-          <dd class="horas" class:cerrado={h.cerrado}>{h.horas}</dd>
-        {/each}
-      </dl>
-    {:else}
-      <PorConfirmar que="horarios de cada día" decision="D-08" />
-    {/if}
-  </div>
+  <!-- EL HORARIO NO VA EN LA FRANJA · ADR-0059: el pie de la misma pantalla lo dice. -->
+  {#if !franja}
+    <div class="linea">
+      <Icono nombre="reloj" tam={20} />
+      {#if estaConfirmado(horarios)}
+        <dl class="horarios" data-negocio="horarios">
+          {#each horarios as h}
+            <dt class="dias">{h.dias}</dt>
+            <dd class="horas" class:cerrado={h.cerrado}>{h.horas}</dd>
+          {/each}
+        </dl>
+      {:else}
+        <PorConfirmar que="horarios de cada día" decision="D-08" />
+      {/if}
+    </div>
+  {/if}
 
   {#if conTelefono}
     <div class="linea">
@@ -130,6 +138,14 @@
     line-height: 1.35;
     font-weight: var(--h3-peso);
     color: var(--tinta);
+  }
+  /* En la franja la dirección baja a cuerpo · ADR-0059: el bloque es un recordatorio al
+     final de la página, no la sección que la gente vino a buscar. Sigue en tinta y en
+     peso fuerte, un escalón por encima de la referencia. */
+  .franja .direccion {
+    font-size: var(--cuerpo-tam);
+    line-height: var(--cuerpo-alto);
+    font-weight: var(--cuerpo-fuerte-peso);
   }
 
   .horarios {

@@ -60,8 +60,8 @@ y sus números quedan vacantes, no reutilizados:
 | 18 | **Carrusel del patio** | Las fotos que se deslizan de lado | `Carrusel.svelte` |
 | 19 | **Puntos del carrusel** | Los seis puntitos de debajo | `Carrusel.svelte` |
 | 20 | **Pasos del proceso** | `01 / 02 / 03` con su frase larga | `[giro]/+page.svelte` |
-| 23 | **Mapa** | El lienzo con la marca y «Ver el mapa»: el mapa de Google carga al tocarlo, dentro del lienzo · ADR-0051 | `Ubicacion.svelte` · `Mapa.svelte` |
-| 24 | **Datos del local** | La ficha junto al lienzo: dirección, horarios, «Cómo llegar» · ADR-0051 | `DatosDelLocal.svelte` |
+| 23 | **Mapa** | El lienzo con la marca y «Ver el mapa»: el mapa de Google carga al tocarlo, dentro del lienzo · ADR-0051. **En las páginas de línea, más bajo**: la franja del ADR-0059 | `Ubicacion.svelte` · `Mapa.svelte` |
+| 24 | **Datos del local** | La ficha junto al lienzo: dirección, horarios, «Cómo llegar» · ADR-0051. **En las páginas de línea, sin horarios**: los dice el pie · ADR-0059 | `DatosDelLocal.svelte` |
 | 26 | ~~**Otras líneas**~~ | **Ya no.** Salió con el ADR-0055: el pie lleva los mismos enlaces en las nueve páginas | — |
 | 27 | **Datos del pie** | Nombre, teléfono y dirección, dentro del pie. Era la banda de contacto, que se fundió en el pie · ADR-0053 | `+layout.svelte` |
 | 28 | **Pie** | Todo el bloque final: datos, horario, líneas y legales | `+layout.svelte` |

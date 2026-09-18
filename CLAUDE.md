@@ -137,6 +137,7 @@ enlazadas desde el pie.
 | **DOS familias desde el 14 de septiembre** · EB Garamond solo en el titular y su promesa · enmienda el 0002 | `ADR-0029` | Nadir |
 | **Una sola escala tipográfica**: Archivo solo en 400, 600 y 700 y los tamaños de `tokens.css`; fuera de escala solo la marca escrita, el titular Garamond y los rótulos del planeta. Lo vigila `inventario-tipografico.mjs` | `ADR-0053` | Nadir |
 | **Fotos de banco en el planeta, sin marca**: «Autos» en empeño y «Carga general» en fletes · enmienda la regla que quedaba del 0007 | `ADR-0054` | Nadir |
+| **La ubicación de las líneas, en franja**: se queda el mapa, el horario vive en el pie · enmienda el 0051 | `ADR-0059` | Nadir |
 | SPEC-0001 aprobada e implementada | `SPEC-0001` | Nadir |
 | **Sin dominio el sitio no se deja indexar** — se abre solo al cerrar D-07 | `ADR-0013` | Nadir |
 
@@ -206,7 +207,7 @@ cableado**. Es parte del trabajo.
 
 ### Números medidos, no estimados
 
-9 páginas · HTML de 3.3 a 7.9 KB gzip · **186 tests** · objetivo táctil mínimo 44 px ·
+9 páginas · HTML de 3.3 a 7.9 KB gzip · **191 tests** · objetivo táctil mínimo 44 px ·
 18/18 combinaciones página × ancho cumplen · 12/12 de las piezas del ADR-0007.
 
 **CORREGIDO el 16 de septiembre · `ADR-0042`.** Aquí decía «**0 KB de JS en siete**, 11.2
@@ -274,7 +275,7 @@ queda sin usar.
 ## Verificación
 
 ```
-npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia y CA-10 · 186 tests
+npm test                              # grafo, giros, fugas, tokens, SEO, flujo, mosaico, movimiento, ubicación, llamar, fotos del planeta, otras líneas, correo y referencia, cierre de línea y CA-10 · 191 tests
 npm run build                         # DEBE fallar mientras falten datos
 npm run build:revision                # permisivo, para medir
 node herramientas/presupuesto.mjs     # CA-10 · TODO el JS de cada página y terceros

@@ -25,7 +25,16 @@
    *
    * ── EL TÍTULO ES OPCIONAL ─────────────────────────────────────────────────
    * La portada y contacto lo traen. La página de línea no: ya tiene su pregunta numerada
-   * encima, «¿Dónde están y están abiertos?», como el resto de sus secciones.
+   * encima, «¿Dónde están?», como el resto de sus secciones.
+   *
+   * ── LA FRANJA · ADR-0059 ──────────────────────────────────────────────────
+   * En las páginas de línea esto es el penúltimo bloque, y el pie —justo debajo— ya trae
+   * dirección, referencia, horario, teléfono y «Cómo llegar». Medido a 390 px: 704 px de
+   * sección más 573 de pie diciendo lo mismo, el 53 % de la página de taller.
+   *
+   * Con `franja` se queda lo que el pie NO tiene —el mapa, dentro del lienzo— y lo que
+   * se busca con prisa: la dirección y el botón. El lienzo baja de 4:3 a un alto fijo y el
+   * horario se queda solo en el pie. Portada y contacto siguen con la versión completa.
    */
   import { negocio } from '$lib/config/negocio';
   import Monograma from './Monograma.svelte';
@@ -36,11 +45,13 @@
   interface Props {
     titulo?: string;
     conTelefono?: boolean;
+    /** La versión corta de las páginas de línea · ADR-0059. */
+    franja?: boolean;
   }
-  let { titulo, conTelefono = false }: Props = $props();
+  let { titulo, conTelefono = false, franja = false }: Props = $props();
 </script>
 
-<div class="ubicacion" class:con-titulo={!!titulo}>
+<div class="ubicacion" class:con-titulo={!!titulo} class:franja>
   {#if titulo}
     <!-- Etiqueta de sección: el CLAUDE.md la permite redactar. No afirma nada del negocio. -->
     <h2 class="titulo" data-propuesta="true">{titulo}</h2>
@@ -61,7 +72,7 @@
   </div>
 
   <div class="ficha">
-    <DatosDelLocal {conTelefono} />
+    <DatosDelLocal {conTelefono} {franja} />
   </div>
 </div>
 
@@ -144,5 +155,18 @@
     .texto { gap: 10px; }
     .nombre { font-size: 64px; }
     .bajada { font-size: 30px; }
+  }
+
+  /* ── LA FRANJA · ADR-0059 ────────────────────────────────────────────────
+     El lienzo deja la proporción 4:3 —263 px de alto a 390, medido— por un alto que
+     solo tiene que alojar la marca y «Ver el mapa». La marca NO se encoge: la bajada
+     en oro necesita sus 19 px en peso 700 para contar como texto grande (ver arriba). */
+  .franja .lienzo { aspect-ratio: auto; min-height: 190px; }
+  @media (min-width: 768px) {
+    .franja .lienzo { min-height: 240px; }
+  }
+  @media (min-width: 1024px) {
+    .franja .lienzo { min-height: 280px; }
+    .franja .lockup { padding-top: var(--e-8); }
   }
 </style>

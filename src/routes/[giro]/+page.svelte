@@ -74,7 +74,8 @@
   });
 
   /* Dónde y cuándo, en un renglón. Se quita el día cerrado: «domingo cerrado» es
-     información de la sección de ubicación, no de la primera pantalla. */
+     información del pie —desde el ADR-0059 el único que da el horario completo—, no de
+     la primera pantalla. */
   const cuando = $derived.by(() => {
     const h = horariosLegibles();
     if (!estaConfirmado(h)) return null;
@@ -102,13 +103,22 @@
    */
   const segundaMitad = $derived(!(giro.muestraJoyeria || giro.muestraInventario));
 
+  /* «¿Dónde están?» era «¿Dónde están y están abiertos?» hasta el ADR-0059: la sección
+     ya no dice el horario —lo dice el pie, justo debajo— y la pregunta no puede prometer
+     lo que el bloque no contesta. */
   const PREGUNTAS = [
     '¿Aceptan lo que traigo?',
     '¿Cuánto me dan y cuándo?',
     '¿Qué necesito llevar?',
-    '¿Dónde están y están abiertos?',
+    '¿Dónde están?',
     '¿Puedo recuperar mi bien?'
   ];
+
+  /* LA NUMERACIÓN NO SALTA · ADR-0059. Iba escrita a mano —1, 2 y 3— y la sección 1 solo
+     existe si la línea tiene bienes: en financiamiento y taller la primera sección
+     numerada era la «2». Ahora cuenta las que se pintan. */
+  const numProceso = $derived(giro.bienesPropuestos?.length ? 2 : 1);
+  const numUbicacion = $derived(numProceso + 1);
   // Sin estado ni JavaScript: <details> nativo. Ver la nota de csr en +layout.ts.
   const PREGUNTAS_FRECUENTES = [
     '¿Qué pasa si no pago a tiempo?',
@@ -310,7 +320,7 @@
 
 <!-- SALA PAVONADA · ADR-0046. El proceso en otro registro, como hace Suttons & Robertsons. -->
 <Seccion fondo="pavonado">
-  <h2><span class="num">2</span> {giro.tituloProceso ?? PREGUNTAS[1]}</h2>
+  <h2><span class="num">{numProceso}</span> {giro.tituloProceso ?? PREGUNTAS[1]}</h2>
   <!-- ADR-0024 · este párrafo vivía en el hero, entre la tira de pasos y el botón,
        diciendo en prosa lo mismo que la tira dice en tres palabras. Aquí sí describe
        algo: es la entradilla del proceso.
@@ -358,9 +368,12 @@
 </Seccion>
 
 <Seccion fondo="marfil">
-  <h2><span class="num">3</span> {PREGUNTAS[3]}</h2>
-  <!-- EL LIENZO PARTIDO · ADR-0051, sin título propio: la pregunta numerada ya lo es. -->
-  <Ubicacion />
+  <h2><span class="num">{numUbicacion}</span> {PREGUNTAS[3]}</h2>
+  <!-- EL LIENZO PARTIDO · ADR-0051, sin título propio: la pregunta numerada ya lo es.
+       EN FRANJA · ADR-0059: el mapa, la dirección y «Cómo llegar». El horario lo dice el
+       pie. Medido a 390 px antes del cambio, esta sección y el pie sumaban 1 277 px con
+       los mismos datos. -->
+  <Ubicacion franja />
 </Seccion>
 
 <!-- AQUÍ ESTABA «OTRAS LÍNEAS DEL GRUPO» · ADR-0055. Cuatro tarjetas con el nombre largo
